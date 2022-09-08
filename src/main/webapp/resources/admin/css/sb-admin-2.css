@@ -11281,10 +11281,23 @@ body.sidebar-toggled footer.sticky-footer {
 }
 
 /* 2022-09-08 chi9148 */
-#content {
-  padding-top: 1.5rem
+#wrapper {
+  width: 100%;
 }
-
+#content {
+  padding: 1.5rem
+}
 .cstmTitle {
   margin-bottom: 1rem
+}
+.cstmContent1 {
+  width: 1000px;
+}
+
+.cstmContent1 input.form-control-user {
+  padding: 1rem
+}
+
+.cstmContent1 .btn {
+	font-size: 14px;
 }
