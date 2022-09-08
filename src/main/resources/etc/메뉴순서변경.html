@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>메뉴순서변경</title>
+    <style>
+        *{padding:0;margin:0;box-sizing: border-box;}
+        .wrapper {width: 700px;padding:20px;}
+        .left {width: 29%; display:inline-block;border:1px solid #ccc;vertical-align: top;padding:10px;}
+        .right {width: 70%; display:inline-block;border:1px solid #ccc;vertical-align: top;padding:10px;}
+    </style>
+</head>
+<body>
+    <div class="wrapper">
+        <div id="left" class="left">
+
+        </div>
+        <div id="right" class="right">
+            <ul id="rightUl"></ul>
+        </div>
+    </div>
+<script type="text/javascript">
+    var menuList = ['통합게시판', '간편게시판', '스탭게시판', '등업게시판', '메모게시판', '출석부'];
+    var left = document.getElementById('left');
+    var right = document.getElementById('right');
+    var rightUl = document.getElementById('rightUl');
+    var moveMenu = null;
+
+    // 드래그 이벤트가 들어왔을 때 기본 기능 초기화
+    right.ondragover = function(e) {
+        e.preventDefault();
+    }
+
+    // 왼쪽 메뉴 생성
+    makLeft();
+
+    function makLeft() {
+        var ul = document.createElement('ul');
+
+        for(var i=0;i<menuList.length;i++) {
+            var li = document.createElement('li');
+            var menuName = menuList[i];
+
+            li.onclick = addRight;
+            li.innerText = menuName;
+            ul.appendChild(li);
+        }
+
+        left.appendChild(ul);
+    }
+
+    // 오른쪽 메뉴 추가
+    function addRight() {
+        var cloneLi = event.target.cloneNode(true);
+        var rightMenuList = document.getElementsByClassName('rightMenu');
+        var deletA = document.createElement('a');
+        var index = sortRightMenuIndex();
+        
+        cloneLi.innerText = (index+1) +  '. 새로운' + cloneLi.innerText;    // 순서 확인용으로 메뉴명 앞에 번호 지정
+        cloneLi.className = 'rightMenu';
+        cloneLi.draggable = true;               // 1. 드래그 가능하도록 설정
+        cloneLi.ondragstart = saveMoveManu;     // 2. 드래그가 시작되면 전역변수에 드래그 되는 메뉴 저장
+        cloneLi.ondrop = changeMenuOder;        // 3. 드롭되었을 때 메뉴 순서 변경
+        cloneLi.dataset.index = index;
+
+        deletA.innerText = 'X';
+        deletA.title = '메뉴삭제';
+        deletA.href = 'javascript:deleteRightMenu(' + index + ')';
+
+        cloneLi.appendChild(deletA);
+        rightUl.appendChild(cloneLi);   
+    }
+
+    // 드래그 이벤트 시작시 moveMenu(전역변수)에 드래그되는 메뉴 대입
+    function saveMoveManu() {
+        moveMenu = event.target;
+    }
+
+    // 메뉴 순서 변경
+    function changeMenuOder() {
+        var rightMenuList = document.getElementsByClassName('rightMenu');
+        var targetMenu = event.target;
+        var targetIndex = Number(targetMenu.dataset.index);
+        var moveIndex = Number(moveMenu.dataset.index);
+        var lastIndex = rightMenuList.length - 1;
+        var parent = targetMenu.parentElement;
+
+        // 드롭 대상이 되는 메뉴가 아래 있을 경우
+        if(targetIndex > moveIndex) {
+            targetIndex++;
+            if(targetIndex <= lastIndex) {
+                parent.insertBefore(moveMenu, parent.children[targetIndex]);
+            } else {
+                parent.appendChild(moveMenu);
+            }
+        // 드롭 대상이 되는 메뉴가 위 있을 경우    
+        } else {
+            parent.insertBefore(moveMenu, parent.children[targetIndex]);
+        }
+
+        sortRightMenuIndex();
+    }
+
+    // 오른쪽 메뉴 인덱스 정렬
+    function sortRightMenuIndex() {
+        var rightMenuList = document.getElementsByClassName('rightMenu');
+
+        for(var i=0;i<rightMenuList.length;i++) {
+            var rightMenu = rightMenuList[i];
+            var deletA = rightMenu.children[0];
+
+            rightMenu.dataset.index = i;
+            deletA.href = 'javascript:deleteRightMenu(' + i + ')';
+        }
+
+        return rightMenuList.length;
+    }
+
+    // 오른쪽 메뉴 삭제
+    function deleteRightMenu(index) {
+        var rightMenuList = document.getElementsByClassName('rightMenu');
+        rightMenuList[index].parentElement.removeChild(rightMenuList[index]);
+        sortRightMenuIndex();
+    }
+</script>   
+</body>
+</html>

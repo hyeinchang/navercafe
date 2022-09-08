@@ -1,0 +1,125 @@
+@charset "UTF-8";
+/* index 카페목록 테이블 */
+table.cstmTbl1 {color: #141618 !important; border: 1px solid #eee;}
+table.cstmTbl1 > thead {background: #2B2E31;color:#fff;}
+table.cstmTbl1 th {border-bottom: none !important;}
+table.cstmTbl1 td {border-top: 1px solid #eee !important;}
+table.cstmTbl1 td:not(:first-child) {border-left: 1px solid #eee;}
+table.cstmTbl1 td:hover {text-decoration:underline; cursor:pointer;}
+table.cstmTbl1 th, table.cstmTbl1 td {padding: 10px !important;}
+
+/* 느낌표(!) 아이콘 정의 */
+.fa-exclamation::before {content: "\0021";}
+
+/* 로그인 -> 회원정보 영역 */
+.logout_custom {background: url(../img/cstm_logout.png) no-repeat center/contain; display: inline-block;width: 12px;height: 12px; vertical-align: middle; margin-right: 3px;}
+.login_user_area {border: 1px solid #ddd;padding:10px;border-radius:10px;font-size:13px;}
+.login_user_area > div {display:inline-block;}
+.login_user_area > div:not(:last-child) {margin-right:10px;}
+
+/* 카페 타이틀 */
+.setting-title img {max-height:340px;width:100%;}
+.default-title {border: 1px solid #ddd; width: 100%; height: 180px; padding: 20px 30px;
+ border-radius: 10px;}
+.default-title > h1 {color: #000;}
+
+/* main */
+.cstmAside {padding: 0 !important; width: 20%;}
+.cstmContent {padding: 0 0 60px 0 !important;width: 78%;}
+.cstmAside .widget {margin:0 0 35px 0!important; padding:0 !important;}
+.cstmAside .cafeInfo{font-size: 12px;}
+
+/* 카페 메뉴 */
+.mananger_info {white-space:nowrap;overflow:hidden;text-overflow: ellipsis;}
+
+.ico_setting {
+    background-position: -41px -112px;
+    width: 10px;
+    height: 10px;
+}
+
+.ico_setting, .ico_stat, .ico_vst, .ico_wrt, .ico, .ico_cmt {
+    display: inline-block;
+    background-image: url(../img/sp_icon_white_72ca546e.svg);
+    background-repeat: no-repeat;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.lab_thmb {
+	display: inline-block;
+    background-image: url(../img/sp_icon_06952b76.svg);
+    background-repeat: no-repeat;
+    vertical-align: middle;
+    margin-right: 5px;
+}
+
+.ico_stat {
+    background-position: -119px -61px;
+    width: 10px;
+    height: 10px;
+}
+
+.lab_thmb {
+	display:block;
+    position: absolute;
+	margin: 40px;
+    font-size: 0;
+    line-height: 0;
+    background-position: -172px -226px;
+    width: 16px;
+    height: 16px;
+    cursor: pointer;
+}
+
+.ico_vst {
+    background-position: -119px -4px;
+    width: 10px;
+    height: 12px;
+}
+
+.ico_wrt {
+    background-position: -59px -112px;
+    width: 10px;
+    height: 10px;
+}
+
+.ico {
+    background-position: -52px -66px;
+    width: 16px;
+    height: 14px;
+}
+
+.ico_cmt {
+    background-position: -119px -43px;
+    width: 10px;
+    height: 10px;
+}
+
+.info-cafe:not(:last-child) {margin-right: 10px;}
+.recent_posts > li {height: auto;margin: 0 !important; padding: 15px 10px 15px 10px ; display: block; width:auto;}
+.recent_posts > li:not(:last-child) {border-bottom: 1px solid #ddd;}
+img.profileImg {border:none !important;border-radius:100%;width:58px;height:58px;}
+.cafeSetting, .gradeInfo {font-size: 12px; margin-top: 5px;}
+.gradeInfo img {border:none !important; float:none !important; margin:0 !important;}
+.gradeText {border: 1px solid #ddd;font-size:10px;vertical-align:middle;padding:2px;margin-right:2px;}
+
+/* main 카페 대문 */
+.frontArea{padding: 0 10px;border: 1px solid #ddd;padding:20px;}
+.default_front {color: #000;border-radius:10px;font-size:14px; background: url(../img/think-different.png) no-repeat right bottom/contain;}
+.default_front > span.text-primary {font-size:16px; font-weight:bold;}
+
+/* main bottom 영역 */
+.mainBottom {margin: auto;padding: 0 10px;}
+.mainBottom .component1 {display: inline-block;width:300px;vertical-align:top;}
+.mainBottom .component1:not(:last-child){margin-right:20px;}
+.mainBottom .component1 > .title {font-size:16px;}
+.mainBottom .component1 > .title a {font-size:14px;float:right;}
+.mainBottom .component1 > ul {margin-left:20px; font-size:14px;}
+.mainBottom .component1 > ul > li > a {white-space: nowrap; word-break: break-word; text-overflow: ellipsis; overflow: hidden; display: block;}
+.mainBottom .component2 {display: inline-block;width:200px;vertical-align:top;background:#ddd;border-radius:10px;padding: 10px;margin-top:20px;}
+.mainBottom .component2:not(:last-child){margin-right:20px;}
+.mainBottom .component2 > h4 {font-size:16px;}
+.mainBottom .component2 > h4 a {font-size:14px;float:right;}
+.mainBottom .component2 > ul {margin-left:20px; font-size:14px;}
+.mainBottom .component2 > ul > li > a {white-space: nowrap; word-break: break-word; text-overflow: ellipsis; overflow: hidden; display: block;}
