@@ -107,12 +107,8 @@
   <!-- Template Main Javascript File -->
   <script src="${contextPath}/resources/MaxiBiz/js/main.js"></script>
   
-  <form name="cafeForm" method="post">
+  <form name="cafeForm" method="get">
   	<input type="hidden" name="cafeId" value="${cafeDTO.cafeId}">
-  	<input type="hidden" name="cafeName" value="${cafeDTO.cafeName}">
-  	<input type="hidden" name="cafeTitle" value="${cafeDTO.cafeTitle}">
-  	<textarea name="cafeFront" style="display:none;">${cafeDTO.cafeFront}</textarea>
-  	<input type="hidden" name="cafeSkin" value="${cafeDTO.cafeSkin}">
   </form>
 <script type="text/javascript">
   function changeCafeMenu(path) {

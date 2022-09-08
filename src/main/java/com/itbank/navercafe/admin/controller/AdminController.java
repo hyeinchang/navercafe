@@ -9,7 +9,7 @@ import com.itbank.navercafe.user.cafe.dto.CafeDTO;
 @Controller
 @RequestMapping("/admin")
 public class AdminController {
-	@RequestMapping("")
+	@GetMapping("")
 	public String index(CafeDTO cafeDTO) {
 		System.out.println("cafeId : " + cafeDTO.getCafeId());
 		return "admin/index";
