@@ -33,9 +33,8 @@
 <!-- 구글 라인차트 -->
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
 
-
 <!-- datatables.net -->
-   <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
 <link href="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.css" />
 
@@ -43,5 +42,5 @@
 
 <body id="page-top">
 
-<h2> 여기가 헤더 333 </h2>
+<h2> 여기가 헤더 3334444 </h2>
 <hr>
