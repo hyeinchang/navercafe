@@ -3,7 +3,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <c:set var="address" value="${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}"/>
 
-  <!-- Page Wrapper -->
+  	<!-- Page Wrapper -->
     <div id="wrapper">
 		<!-- Content Wrapper -->
         <div id="content-wrapper" class="d-flex flex-column">
@@ -13,6 +13,8 @@
 					
             	<!-- Page Heading -->
                	<h1 class="h3 text-gray-800 cstmTitle">기본정보</h1>
+               	
+               	<!-- cstmContent1 -->
                	<div class="cstmContent1">
                	
                		<form class="user">
@@ -49,7 +51,7 @@
                           </a>
              		</div>
                	</div>
-					
+				<!-- End of cstmContent1 -->	
 					
             </div>
             <!-- End of Main Content -->
