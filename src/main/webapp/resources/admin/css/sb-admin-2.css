@@ -11282,22 +11282,45 @@ body.sidebar-toggled footer.sticky-footer {
 
 /* 2022-09-08 chi9148 */
 #wrapper {
-  width: 100%;
+  	width: 100%;
 }
 #content {
-  padding: 1.5rem
+  	padding: 1.5rem
 }
 .cstmTitle {
-  margin-bottom: 1rem
+  	margin-bottom: 1rem
 }
 .cstmContent1 {
-  width: 1000px;
+   	padding: 1rem; display: inline-block;
 }
 
 .cstmContent1 input.form-control-user {
-  padding: 1rem
+  	padding: 1rem;
 }
 
 .cstmContent1 .btn {
-	font-size: 14px;
+	font-size: 0.8rem;
+}
+
+.cstmContent1 .form-control {
+	display: inline-block; width: auto;	font-size: 0.8rem;
+} 
+
+.cstmContent1 .form-group > label {
+	width: 100px; vertical-align: top; font-size: 0.8rem; font-weight: bold;
+}
+
+.cstmContent1 .form-group > input {
+	width: 300px; font-size: 0.8rem;
+}
+
+.cstmContent1 .form-group > input:not(:last-child) {
+	/*margin-right: 10px;*/	
+}
+.cstmContent1 .form-group > textarea {
+	width: 500px; height: 100px; resize: none; font-size: 0.8rem; font-weight: normal;
+}
+
+.cstmContent1 .btnArea {
+	padding: 1rem 0; text-align:center;
 }
