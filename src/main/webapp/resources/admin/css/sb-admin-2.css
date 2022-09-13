@@ -11318,7 +11318,7 @@ body.sidebar-toggled footer.sticky-footer {
 	/*margin-right: 10px;*/	
 }
 .cstmContent1 .form-group > textarea {
-	width: 500px; height: 100px; resize: none; font-size: 0.8rem; font-weight: normal;
+	resize: none; font-size: 0.8rem; font-weight: normal;
 }
 
 .cstmContent1 .btnArea {

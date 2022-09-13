@@ -74,6 +74,7 @@ nhn.husky.EZCreator = new (function(){
 				elIFrame.style.width =  "100%";
 				elIFrame.style.height = nEditorHeight+ "px";
 				elIFrame.contentWindow.document.body.style.margin = "0";
+				elIFrame.style.background = "#fff"; //2022-09-13 chi9148 에디터 배경색 수정
 			}catch(e){
 				nhn.husky.EZCreator.hideBlocker(true);
 				elIFrame.style.border = "5px solid red";

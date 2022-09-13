@@ -84,8 +84,5 @@
 	function pasteHTML(filepath){
 		var sHTML = '<img src="${contextPath}/resources/upload/'+filepath+'">';
 		oEditors.getById["content"].exec("PASTE_HTML", [sHTML]);
-		setTimeout(function(){
-			oEditors.getById["content"].exec("PASTE_HTML", [sHTML]);
-			}, 10000);
 	}
 </script>      

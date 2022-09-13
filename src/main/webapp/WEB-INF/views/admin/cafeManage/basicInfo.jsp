@@ -38,7 +38,7 @@
                         </div>
                          <div class="form-group">
                         	<label>카페 소개</label>
-                            <textarea class="form-control" placeholder="카페 소개를 입력해주십시오."></textarea>
+                            <textarea class="form-control" placeholder="카페 소개를 입력해주십시오." cols="50" rows="5"></textarea>
                         </div>
                      </form>
              		
