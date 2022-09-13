@@ -77,8 +77,9 @@ $(document).ready(function () {
 		let checkObj = $(".registerBan-cb-item:checked");
 		let checkObjval = "";
 		
+		
 		if (checkObj.length == 1) {
-			checkObjval = checkObj.value;
+			checkObjval = checkObj[0].value;
 		}	else if (checkObj.length > 1) {
 				for (var i = 0; i < checkObj.length; i++) {
 					if (checkObj[i].checked === true) {
@@ -86,6 +87,7 @@ $(document).ready(function () {
 				}
 			}
 			checkObjval = checkObjval.substring(0, checkObjval.length-1);
+			console.log(checkObjval);
 		} else {
 			alert('멤버를 선택하세요')
 			return;

@@ -20,7 +20,7 @@ $(document).ready(function () {
     "autoWidth": false,
     language : {
         "decimal":        "",
-        "emptyTable":     "데이터가 없습니다 :(",
+        "emptyTable":     "등록된 가입 불가 회원이 없습니다.",
         "info":           "Showing _START_ to _END_ of _TOTAL_ entries",
         "infoEmpty":      "Showing 0 to 0 of 0 entries",
         "infoFiltered":   "(filtered from _MAX_ total entries)",
@@ -78,7 +78,7 @@ $(document).ready(function () {
 		let checkObjval = "";
 		
 		if (checkObj.length == 1) {
-			checkObjval = checkObj.value;
+			checkObjval = checkObj[0].value;
 		}	else if (checkObj.length > 1) {
 				for (var i = 0; i < checkObj.length; i++) {
 					if (checkObj[i].checked === true) {
@@ -91,21 +91,12 @@ $(document).ready(function () {
 			return;
 		}
 
-		if(id === 'deport') {
-			console.log('디포트래!')
-			$('#deportMembers').val(checkObjval);
-			document.getElementById('f-deport').submit();
-		} else if (id === "email") {
-			console.log('이메일 보내줘')
-			$('#emailMembers').val(checkObjval);
-			document.getElementById('f-email').submit();
-		} else if (id === "modify") {
-			console.log('등급 변경해줘')
-			$('#modifyMembers').val(checkObjval);
-			document.getElementById('f-modify').submit();
-		}
-		
-		return;
+		if(id === 'unban') {
+			if(window.confirm('재가입이 가능하도록 처리하겠습니까?')) {
+				$('#unbanMembers').val(checkObjval);
+				document.getElementById('f-unban2').submit();
+			}
+		} 
 		
 	}
 	
@@ -120,6 +111,7 @@ $(document).ready(function () {
            <div class="d-sm-flex align-items-center justify-content-between mb-4">
                <h1 class="h3 mb-0 text-gray-800">가입 불가 관리</h1>
            </div>
+           		<div>운영자가 가입 불가 처리한 멤버를 보여주며, 우리 카페에 가입하지 않은 사람을 가입하지 못하도록 할 수 있습니다.</div>
            <hr>
 				<!-- DataTales Example -->
 				<div class="card shadow mb-4">
@@ -129,12 +121,9 @@ $(document).ready(function () {
             <tr>
                 <th> <input type="checkbox" class="registerBan-cb-all"></th>
                 <th>별명(아이디)</th>
-                <th>멤버등급</th>
-                <th>가입일</th>
-                <th>최종방문일</th>
-                <th>방문수</th>
-                <th>게시글 수</th>
-                <th>댓글 수</th>
+                <th>사유</th>
+                <th>처리일</th>
+                <th>처리자</th>
             </tr>
         </thead>
         
@@ -146,9 +135,6 @@ $(document).ready(function () {
                 <td>${dto.userLevel }</td>
                 <td>${dto.userPoint }</td>
                 <td>${dto.userEmail }</td>
-                <td>${dto.userId }</td>
-                <td>2121212</td>
-                <td>${dto.userLevel }</td>
             </tr>
         </c:forEach>
         </tbody>
@@ -156,34 +142,16 @@ $(document).ready(function () {
         <tfoot>
             <tr>
             	<th> &nbsp;&nbsp; <input type="checkbox" class="registerBan-cb-all"> </th>
-                <th colspan="7">
+                <th colspan="4">
 					선택 멤버를 
-					<select>
-							<option>응애멤버1</option>
-							<option>응애멤버2</option>
-							<option>응애멤버3</option>
-						<c:forEach var="gradeList" items=""> 
-						</c:forEach>
-					</select>
-					(으)로
-					<input type="button" value="변경" id="modify" onclick="manageMember(this.id)"> &nbsp;
-					<b>ㅣ&nbsp; </b>
-					<input type="button" value="강제탈퇴" id="deport" onclick="manageMember(this.id)"> &nbsp;
-					<b>ㅣ&nbsp; </b>
-					<input type="button" value="메일" id="email" onclick="manageMember(this.id)">
+					<input type="button" value="가입불가 해제" id="unban" onclick="manageMember(this.id)"> &nbsp;
                 </th>
             </tr>
         </tfoot>
     </table>
     
-<form action="deportMembers" id="f-deport" method="post">
-	<input type="hidden" value="" name="deportMembers" id="deportMembers">
-</form>
-<form action="emailMembers" id="f-email" method="post">
-	<input type="hidden" value="" name="emailMembers" id="emailMembers">
-</form>
-<form action="modifyMembers" id="f-modify" method="post">
-	<input type="hidden" value="" name="modifyMembers" id="modifyMembers">
+<form action="unbanMembers2" id="f-unban2" method="post">
+	<input type="hidden" value="" name="unbanMembers" id="unbanMembers">
 </form>
     	</div>
     </div>
