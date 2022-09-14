@@ -5,13 +5,13 @@ public interface AdminBoardMapper {
 	
 	public int deportMembers(String userId);
 	
-	public int unbanMembers();
+	public int unbanMembers(String userId);
 	
-	public int unbanMembers2();
+	public int banMembers(String userId);
 	
 	public int acceptMembers(String userId);
 	
-	public int rejectMembers();
+	public int rejectMembers(String userId);
 
 	public int deleteRequest(String userId);
 }

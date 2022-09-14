@@ -77,24 +77,49 @@ public class AdminMemberStaffServiceImpl implements AdminMemberStaffService{
 	}
 
 	@Override
-	// id값으로 가입불가 해제
+	// id값으로 블랙리스트에서 아이디 삭제 + 카페아이디 필요
 	public String unbanMembers(String unbanMembers) {
 		ArrayList<String> idList = nameSort(unbanMembers);
 		
+		int result = 0;
 		String msg,url;
-		return "";
-//		return getMessage(msg,url);
+		
+		for(int i = 0; i < idList.size(); i++) {
+			result += mapper.unbanMembers(idList.get(i)); // (idList.get(i),cafeId)
+		}
+		
+		if(result == idList.size()) {
+			msg = "재가입 가능한 멤버로 변경하였습니다.";
+			url = "manageDeportedMembers";
+		} else {
+			msg = "오류가 발생했습니다";
+			url = "manageDeportedMembers";
+		}
+		
+		return getMessage(msg, url);
 	}
 
 	@Override
-	// id값으로 가입불가 지정 + 사유값 들어와야함
+	// id값으로 블랙리스트 등록 + cafeid + 사유
 	public String banMembers(String banMembers) {
 		ArrayList<String> idList = nameSort(banMembers);
 		
+		int result = 0;
 		String msg, url;
-		return "";
-//		return getMessage(msg,url);
 		
+		for(int i = 0; i< idList.size(); i++) {
+			result += mapper.banMembers(idList.get(i)); // (idList.get(i), cafeId, reason)
+		}
+		
+		if(result == idList.size()) {
+			msg = "성공적으로 반영 되었습니다..";
+			url = "manageDeportedMembers";
+		} else {
+			msg = "오류가 발생했습니다";
+			url = "manageDeportedMembers";
+		}
+		
+		return getMessage(msg,url);
 	}
 
 }
