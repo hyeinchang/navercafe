@@ -40,7 +40,8 @@ public class AdminMemberStaffServiceImpl implements AdminMemberStaffService{
 		
 		
 		String msg,url;
-		return getMessage(msg,url);
+		return "";
+		//return getMessage(msg,url);
 	}
 
 	@Override
@@ -71,7 +72,8 @@ public class AdminMemberStaffServiceImpl implements AdminMemberStaffService{
 		ArrayList<String> idList = nameSort(emailMembers);
 		
 		String msg,url;
-		return getMessage(msg,url);
+		return "";
+//		return getMessage(msg,url);
 	}
 
 	@Override
@@ -80,7 +82,8 @@ public class AdminMemberStaffServiceImpl implements AdminMemberStaffService{
 		ArrayList<String> idList = nameSort(unbanMembers);
 		
 		String msg,url;
-		return getMessage(msg,url);
+		return "";
+//		return getMessage(msg,url);
 	}
 
 	@Override
@@ -89,7 +92,8 @@ public class AdminMemberStaffServiceImpl implements AdminMemberStaffService{
 		ArrayList<String> idList = nameSort(banMembers);
 		
 		String msg, url;
-		return getMessage(msg,url);
+		return "";
+//		return getMessage(msg,url);
 		
 	}
 
