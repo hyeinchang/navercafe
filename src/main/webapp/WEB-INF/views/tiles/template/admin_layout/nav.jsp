@@ -3,7 +3,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <c:set var="adminPath" value="${contextPath}/resources/admin"/>
 <c:set var="adminViewPath" value="${contextPath }/admin" />
-
+${cafeId}
   <!-- Page Wrapper -->
     <div id="wrapper">
     
@@ -11,7 +11,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
              <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="${adminViewPath }">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="${adminViewPath}">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -49,9 +49,9 @@
                 <div id="cafeManage" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <!-- <h6 class="collapse-header">Custom Components:</h6> -->
-                        <a class="collapse-item" href="${adminViewPath }/basicInfo">기본 정보</a>
-                        <a class="collapse-item" href="${adminViewPath }/eventManage">이벤트 관리</a>
-                        <a class="collapse-item" href="${adminViewPath }/layoffManager">매니저 위임</a>
+                        <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/basicInfo')">기본 정보</a>
+                        <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/eventManage')">이벤트 관리</a>
+                        <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/layoffManager')">매니저 위임</a>
                     </div>
                 </div>
             </li>
@@ -65,9 +65,9 @@
                 </a>
                 <div id="memberStaff" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="${adminViewPath }/manageAllMembers">전체 멤버 관리</a>
-                        <a class="collapse-item" href="${adminViewPath }/manageDeportedMembers">강제탈퇴 멤버 관리</a>
-                        <a class="collapse-item" href="${adminViewPath }/manageStaffs">스텝 관리</a>
+                        <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/manageAllMembers')">전체 멤버 관리</a>
+                        <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/manageDeportedMembers')">강제탈퇴 멤버 관리</a>
+                        <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/manageStaffs')">스텝 관리</a>
                     </div>
                 </div>
             </li>
@@ -80,10 +80,10 @@
                 </a>
                 <div id="registerGrade" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="${adminViewPath }/manageMembersGrade">멤버 등급 관리</a>
-                        <a class="collapse-item" href="${adminViewPath }/manageRegisterBan">가입 불가 관리</a>
-                        <a class="collapse-item" href="${adminViewPath }/manageRegisterInfo">가입 정보 관리</a>
-                        <a class="collapse-item" href="${adminViewPath }/manageRegisterRequest">가입 신청 관리</a>
+                        <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/manageMembersGrade')">멤버 등급 관리</a>
+                        <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/manageRegisterBan')">가입 불가 관리</a>
+                        <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/manageRegisterInfo')">가입 정보 관리</a>
+                        <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/manageRegisterRequest')">가입 신청 관리</a>
                     </div>
                 </div>
             </li>
@@ -96,7 +96,7 @@
                 </a>
                 <div id="menu" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="${adminViewPath }/menu">메뉴 관리</a>
+                        <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/menu')">메뉴 관리</a>
                     </div>
                 </div>
             </li>
@@ -109,9 +109,9 @@
                 </a>
                 <div id="deco" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="${adminViewPath }/frontdoor">카페 대문</a>
-                        <a class="collapse-item" href="${adminViewPath }/skin">스킨</a>
-                        <a class="collapse-item" href="${adminViewPath }/title">타이틀</a>
+                        <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/frontdoor')">카페 대문</a>
+                        <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/skin')">스킨</a>
+                        <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/title')">타이틀</a>
                     </div>
                 </div>
             </li>
@@ -124,7 +124,7 @@
                 </a>
                 <div id="email" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="${adminViewPath }/email">메일 보내기</a>
+                        <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/email')">메일 보내기</a>
                     </div>
                 </div>
             </li>
@@ -142,3 +142,12 @@
 
         </ul>
         <!-- End of Sidebar -->
+<form name="cafeForm">
+	<input type="hidden" name="cafeId" value="${cafeDTO.cafeId}">
+</form>        
+<script type="text/javascript">
+	function changeMenu(path) {
+		document.cafeForm.action = path;
+		document.cafeForm.submit();
+	}
+</script>        

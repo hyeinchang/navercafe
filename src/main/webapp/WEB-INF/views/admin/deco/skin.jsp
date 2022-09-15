@@ -16,7 +16,17 @@
                	
                	<!-- cstmContent1 -->
                	<div class="cstmContent1" style="width:650px;">
-               		<img src="${skinLocation}/skin_aphalt.png">
+               		<div>
+               			<ul>
+               				<c:forEach var="skin" items="${skinList}">
+               				<li><img src="${skinLocation}/skin_${skin}.png" width="100px" height="100px"></li>
+               				</c:forEach>
+               			</ul>
+               		</div>
+               		
+               		
+               		
+               		
               
              		
              		<div class="btnArea">
