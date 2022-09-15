@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<c:set var="address" value="${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}"/>
 
   	<!-- Page Wrapper -->
     <div id="wrapper">
@@ -18,11 +17,11 @@
                	<div class="cstmContent1" style="width:650px;">
                	
                		<form class="user">
-                         <div class="form-group">
+                        <div class="form-group">
                         	<label>카페 대문</label>
                             <textarea id="cafeFront" name="cafeFront" class="form-control" placeholder="카페 대문 내용을 입력해주십시오."></textarea>
                         </div>
-                     </form>
+                    </form>
              		
              		<div class="btnArea">
              			<a href="#" class="btn btn-primary btn-icon-split">

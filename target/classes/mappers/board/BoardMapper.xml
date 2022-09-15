@@ -5,3 +5,4 @@
 <mapper namespace="com.project.navercafe.mybatis.board.BoardMapper">
 
 </mapper>
+
