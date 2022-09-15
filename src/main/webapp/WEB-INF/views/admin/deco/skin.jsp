@@ -19,7 +19,7 @@
                		<div>
                			<ul>
                				<c:forEach var="skin" items="${skinList}">
-               				<li><img src="${skinLocation}/skin_${skin}.png" width="100px" height="100px"></li>
+               				<li><img src="${skinLocation}/skin_${skin}.png" width="200px"></li>
                				</c:forEach>
                			</ul>
                		</div>
