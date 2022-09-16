@@ -3,6 +3,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <c:set var="skinLocation" value="${contextPath}/resources/img/sample/skin"/>
 
+
   	<!-- Page Wrapper -->
     <div id="wrapper">
 		<!-- Content Wrapper -->

@@ -38,6 +38,9 @@
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
 <link href="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.css" />
 
+<!-- 2022-09-16 chi9148 custom css 추가 -->
+<link href="${contextPath}/resources/css/custom_user.css" rel="stylesheet">
+  
 </head> 
 
 <body id="page-top">
