@@ -1,1 +1,11 @@
 @charset "UTF-8";
+
+/* 꾸미기 > 스킨 페이지 */
+.cstmGallery1 {margin:0 auto;}
+.cstmGallery1 > ul {margin:0 auto; padding:0;display:inline-block;}
+.cstmGallery1 > ul > li  {list-style:none;display:inline-block;padding:10px;text-align: center;}
+.cstmGallery1 > ul > li > img {display:block;cursor:pointer;}
+
+.modalMask {display:none;position:absolute; width:100%; height:100%; background: rgba(0,0,0,0.5); top: 0;left: 0; z-index: 1;cursor:pointer;}
+.modalBody {border-radius: 10px;background:#fff;;margin: 10px auto;display:inline-block;background: rgba(0,0,0,0.6);padding: 20px;}
+.closeModal{text-align:center;margin-top:10px;color:#fff;}
