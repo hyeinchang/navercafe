@@ -1,5 +1,6 @@
 	package com.itbank.navercafe.admin.registergrade.controller;
 
+import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.itbank.navercafe.admin.cafemember.dto.AdminCafeMemberDTO;
+import com.itbank.navercafe.admin.registergrade.dto.RegisterInfoDTO;
 import com.itbank.navercafe.admin.registergrade.service.RegisterGradeService;
 
 @Controller
@@ -45,7 +47,17 @@ public class AdminRegisterGradeController {
 	}
 	
 	@GetMapping("manageRegisterInfo")
-	public String manageRegisterInfo() {
+	public String manageRegisterInfo(Model model, String cafeId) {
+		RegisterInfoDTO dto = new RegisterInfoDTO();
+		dto.setExplanation("카페설명입니다");
+		dto.setJoin_question(true);
+		dto.setQ1Content("1번질문 내용");
+		dto.setQ2Content("2222222");
+		
+		model.addAttribute("regiInfo", dto);
+		
+		// rgs.getCafeInfo(cafeId, model); 가입신청 넣을때 뿌려주는 인포 그대로 가져오면됨
+		
 		return "admin/registerGrade/manageRegisterInfo";
 	}
 	
@@ -77,6 +89,15 @@ public class AdminRegisterGradeController {
 		resp.setContentType("text/html; charset=utf-8");
 		PrintWriter out = resp.getWriter();
 		out.print(msg);
+	}
+	
+	@PostMapping("modifyRegisterInfo")
+	public void modifyRegisterInfo(HttpServletRequest req, HttpServletResponse resp) throws Exception {
+		//String msg = rgs.modifyRegisterInfo();
+		
+		resp.setContentType("text/html; charset=utf-8");
+		PrintWriter out = resp.getWriter();
+		//out.print(msg);
 	}
 	
 	
