@@ -21,13 +21,14 @@
                	<div class="cstmContent1" style="width:1010px;">
                	
                		<form name="skinForm">
+               			<input type="hidden" name="cafeId" value="${cafeDTO.cafeId}">
+               			
 	               		<div class="cstmGallery1">
-	               			<input type="hidden" name="cafeId" value="${cafeDTO.cafeId}">
 	               			<ul>
 	               				<c:forEach var="skin" items="${skinList}">
 	               				<li>
 	               					<div>${skin}</div>
-	               					<img src="${skinLocation}/skin_${skin}.png" width="300px" onclick="chooseSkin()">
+	               					<img src="${skinLocation}/skin_${skin}.png" alt="${skinLocation}/skin_${skin}.png" width="300px" onclick="chooseSkin()" title="이미지 보기">
 	               					<input type="radio" name="cafeSkin" value="${skin}"${cafeDTO.cafeSkin == skin ? ' checked' : ''}>
 	               				</li>
 	               				</c:forEach>

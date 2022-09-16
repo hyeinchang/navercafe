@@ -3,6 +3,8 @@ package com.itbank.navercafe.admin.deco.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -55,7 +57,7 @@ public class AdminDecoController {
 		
 		System.out.println("cafeId : " + cafeDTO.getCafeId());
 		System.out.println("skin : " + cafeDTO.getCafeSkin());
-		
+	
 		result = 1;
 		
 		map.put("result", result);
@@ -65,7 +67,13 @@ public class AdminDecoController {
 	
 	
 	@GetMapping("title")
-	public String title() {
+	public String title(HttpServletRequest request, CafeDTO cafeDTO, Model model) {
+		String contextPath = request.getContextPath();
+		
+		cafeDTO.setCafeTitle(contextPath + "/resources/upload/1794220617_XSpkAiBo_pexels-eberhard-grossgasteiger-1287142.jpg");
+		
+		model.addAttribute("cafeDTO", cafeDTO);
+		
 		return "admin/deco/title";
 	}
 	
