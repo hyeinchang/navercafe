@@ -1,16 +1,20 @@
 package com.itbank.navercafe.admin.deco.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
 
 @Controller
-@RequestMapping("admin")
+@RequestMapping("/admin/deco")
 public class AdminDecoController {
 	
 	@GetMapping("frontdoor")
@@ -18,7 +22,7 @@ public class AdminDecoController {
 		return "admin/deco/frontdoor";
 	}
 	
-	
+	// 스킨 설정 페이지로 이동
 	@GetMapping("skin")
 	public String skin(CafeDTO cafeDTO, Model model) {
 		ArrayList<String> skinList = new ArrayList<>();
@@ -32,10 +36,31 @@ public class AdminDecoController {
 		skinList.add("turquoise");
 		skinList.add("yellow");
 		
+		if(cafeDTO.getCafeSkin() == null) {
+			cafeDTO.setCafeSkin("default");
+		}
+			
 		model.addAttribute("skinList", skinList);
 		model.addAttribute("cafeDTO", cafeDTO);
 		
 		return "admin/deco/skin";
+	}
+	
+	// 스킨 저장
+	@PostMapping(value="skinSave", produces="application/json; charset=utf8")
+	@ResponseBody
+	public HashMap<Object, Object> skinSave(@RequestBody CafeDTO cafeDTO) {
+		HashMap<Object, Object> map = new HashMap<>();
+		int result = 0;
+		
+		System.out.println("cafeId : " + cafeDTO.getCafeId());
+		System.out.println("skin : " + cafeDTO.getCafeSkin());
+		
+		result = 1;
+		
+		map.put("result", result);
+
+		return map;
 	}
 	
 	

@@ -109,9 +109,9 @@ ${cafeId}
                 </a>
                 <div id="deco" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/frontdoor')">카페 대문</a>
-                        <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/skin')">스킨</a>
-                        <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/title')">타이틀</a>
+                        <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/deco/frontdoor')">카페 대문</a>
+                        <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/deco/skin')">스킨</a>
+                        <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/deco/title')">타이틀</a>
                     </div>
                 </div>
             </li>
