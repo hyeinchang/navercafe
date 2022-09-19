@@ -31,7 +31,6 @@
 								<div class="form-group">
 		                    		<div class="previewArea">
 			               				<div class="fileUpload">
-			               					<!-- <h3>파일업로드</h3> -->
 			               					<div title="업로드하실 파일을 드래그해주십시오.">
 									            <span class="fileAdd">+</span>
 									        </div>
@@ -39,7 +38,6 @@
 			               				</div>
 			               				
 			               				<div class="preview">
-			               					<!-- <h3>카페 타이틀</h3> -->
 			               					<c:choose>
 			               						<c:when test="${cafeDTO.cafeTitle ne null && cafeDTO.cafeTitle.length() != 0}">
 										    	<img src="${cafeDTO.cafeTitle}" id="previewImg">
@@ -111,20 +109,13 @@ function setFileAreaEvent() {
  	// 파일 드래그 영역에 파일이 들어왔을 때
  	fileArea.ondragover = function() {
      	event.preventDefault();
-     	//modifyFileAreaStyle();
 	}
 
  	// 파일 드래그 영역에 파일을 드롭했을 때
  	fileArea.ondrop = function() {
      	event.preventDefault();
      	saveDragFiles(event.dataTransfer.files);
-     	//resetFileAreaStyle();
  	}
-
- 	// 파일 드래그 영역에서 드래그가 나갔을 때
- 	/*fileArea.ondragleave = function(e) {
-     	resetFileAreaStyle();
- 	}*/
 }
 
 //이미지 미리보기
@@ -186,21 +177,5 @@ function validateFile(files) {
 	}
 	
 	return true;
-}
-
-//파일 드래그 영역의 스타일 변환
-function modifyFileAreaStyle() {
-	var fileArea = document.getElementById('fileArea');
-	
-	fileArea.style.background = '#cdf';
-	fileArea.style.color = '#fff';
-}
-
-//파일 드래그 영역의 스타일 복구
-function resetFileAreaStyle() {
-	var fileArea = document.getElementById('fileArea');
-	
-	fileArea.style.background = '';
-	fileArea.style.color = '';
 }
 </script>           
