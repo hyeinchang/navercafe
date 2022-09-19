@@ -156,11 +156,11 @@ function saveDragFiles(files) {
 function validateFile(files) {
 	var file = null;
 	
-	 // 파일여부 확인
-	 if(!files || files.length == 0) {
-	     alert('파일이 아닙니다.');
-	     return false;
-	 }
+	// 파일여부 확인
+	if(!files || files.length == 0) {
+		alert('파일이 아닙니다.');
+	    return false;
+	}
 
 	// 한 개의 파일만 업로드
 	if(files.length > 1) {
