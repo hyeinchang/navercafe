@@ -36,8 +36,12 @@
 		<beans:property name="defaultEncoding" value="utf-8"/>
 	</beans:bean>
 	
+	<!-- chi9148 별도로 지정한 설정 파일 읽어옴 -->
+	<beans:bean class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+        <beans:property name="location" value="/config/config.properties"/>
+        <beans:property name="fileEncoding" value="UTF-8" />
+    </beans:bean>
+	
 	<context:component-scan base-package="com.itbank.navercafe" />
-	
-	
 	
 </beans:beans>

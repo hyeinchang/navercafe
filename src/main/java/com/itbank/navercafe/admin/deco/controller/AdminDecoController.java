@@ -1,10 +1,13 @@
 package com.itbank.navercafe.admin.deco.controller;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,11 +18,15 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.itbank.navercafe.comon.file.FileUtils;
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
 
 @Controller
 @RequestMapping("/admin/deco")
 public class AdminDecoController {
+	
+	@Autowired
+	FileUtils fileUploader;
 	
 	@GetMapping("frontdoor")
 	public String frontdoor() {
@@ -72,7 +79,7 @@ public class AdminDecoController {
 	public String title(HttpServletRequest request, CafeDTO cafeDTO, Model model) {
 		String contextPath = request.getContextPath();
 		
-		//cafeDTO.setCafeTitle(contextPath + "/resources/upload/1794220617_XSpkAiBo_pexels-eberhard-grossgasteiger-1287142.jpg");
+		cafeDTO.setCafeTitle(contextPath + "/resources/upload/1794220617_XSpkAiBo_pexels-eberhard-grossgasteiger-1287142.jpg");
 		
 		model.addAttribute("cafeDTO", cafeDTO);
 		
@@ -88,7 +95,16 @@ public class AdminDecoController {
 		
 		System.out.println("cafeId : " + multiRequest.getParameter("cafeId"));
 		System.out.println("tileImage : " + multiFile.getOriginalFilename());
-
+		try {
+			fileUploader.test(multiFile);
+		} catch (IllegalStateException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	
 		result = 1;
 		
 		map.put("result", result);
