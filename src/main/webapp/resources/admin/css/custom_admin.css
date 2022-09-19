@@ -13,7 +13,8 @@ input[type="radio"] {cursor:pointer;}
 
 /* 꾸미기 > 타이틀 페이지 */
 form[name="titleForm"] .previewArea {width:100%; overflow-x: hidden; white-space: nowrap;}
-form[name="titleForm"] .previewArea > div {display: inline-block;width:550px;vertical-align:top;}
+form[name="titleForm"] .previewArea > div {display: inline-block;max-width:550px;vertical-align:top;}
+form[name="titleForm"] .previewArea > div.fileUpload {width:550px;}
 form[name="titleForm"] .previewArea > div:not(:last-child) {margin-right:20px;}
 form[name="titleForm"] .previewArea img {width:550px;}
 form[name="titleForm"] .previewArea > div > div {/*min-height: 300px; border: 1px solid #e3e6f0; background: #fff;*/ margin: 0 auto; border-radius: 10px;color: #ddd;text-align:center;}

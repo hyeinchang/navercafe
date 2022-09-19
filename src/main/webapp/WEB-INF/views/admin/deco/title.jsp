@@ -19,7 +19,7 @@
                	<p class="mb-4">이미지 최적 사이즈는 가로 1140px, 세로 50~340px 입니다.</p>
               
                	<!-- cstmContent1 -->
-               	<div class="cstmContent1" style="width:1200px;">
+               	<div class="cstmContent1" style="">
                	
                		<form name="titleForm">
                			<input type="hidden" name="cafeId" value="${cafeDTO.cafeId}">
@@ -41,7 +41,7 @@
 			               				<div class="preview">
 			               					<!-- <h3>카페 타이틀</h3> -->
 			               					<c:choose>
-			               						<c:when test="${cafeDTO.cafeTitle ne null || cafeDTO.cafeTitle.length() != 0}">
+			               						<c:when test="${cafeDTO.cafeTitle ne null && cafeDTO.cafeTitle.length() != 0}">
 										    	<img src="${cafeDTO.cafeTitle}" id="previewImg">
 				               					</c:when>
 				               					<c:otherwise>
