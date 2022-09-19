@@ -3,20 +3,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <c:set var="skinLocation" value="${contextPath}/resources/img/sample/skin"/>
 <style>
-#fileArea, .preview > .noImage {height: 300px; border: 1px solid #e3e6f0; margin: 0 auto; background: #fff;  border-radius: 10px; padding-top:20px;color: #ddd;}
-#fileArea p, .preview > .noImage p {font-size: 30px; width: 100%; text-align: center; font-weight: bold;}
-#textArea {width: 800px; height: 300px; border: 1px solid black; margin: 15px auto; background: #fff; overflow: auto;}
-#uploadArea {width: 800px; height: 200px; border: 1px solid black; margin: 15px auto; background: #fff; overflow: auto;}
-.fileDataUl {padding : 0;}
-.fileDataUl>li {list-style : none;}
-.previewArea {width:100%; max-height: 500px;overflow:auto;}
-.previewArea > div {display: inline-block;width:500px;vertical-align:top;}
-.previewArea > div:not(:last-child) {margin-right:20px;}
-.previewArea img {width:500px;}
 
-span.pointer1 {display:inline-block;}
-span.pointer1::after {content: "";width: 20px;height: 5px; background: #000; display: inline-block;margin: -3px 0 0 -5px; vertical-align: middle;}
-span.pointer1::before {content: "";display: inline-block;  border-top: 6px solid transparent;border-right: 14px solid #000; border-bottom: 6px solid transparent; }
 </style>
 
   	<!-- Page Wrapper -->
@@ -43,33 +30,33 @@ span.pointer1::before {content: "";display: inline-block;  border-top: 6px solid
 							<div class="card-body">
 								<div class="form-group">
 		                    		<div class="previewArea">
-			               				<div class="preview">
-			               					<h3>미리보기</h3>
-			               					<!-- <img src="${cafeDTO.cafeTitle}"> -->
-			               					<div class="noImage">
-									            <p>등록된 이미지가 없습니다.</p>
-									        </div>
-			               				</div>
-               			
 			               				<div class="fileUpload">
 			               					<h3>파일업로드</h3>
-			               					 <div id="fileArea">
-									            <p>파일 드래그 영역</p>
+			               					<div id="fileArea">
+									            <p>업로드 파일 드래그 영역</p>
 									        </div>
+									        <input type="file" id="titleImage" name="titleImage" onchange="previewImage()">
+			               				</div>
+			               				
+			               				<div class="preview">
+			               					<h3>카페 타이틀</h3>
+			               					<c:choose>
+			               						<c:when test="${cafeDTO.cafeTitle ne null || cafeDTO.cafeTitle.length() != 0}">
+										    	<img src="${cafeDTO.cafeTitle}" id="previewImg">
+				               					</c:when>
+				               					<c:otherwise>
+				               					<img src="" id="previewImg" style="display:none;">
+				               					</c:otherwise>
+			               					</c:choose>
 			               				</div>
                						</div>
 	                       		</div>
 							</div>
 						</div>
-               			
-				       
-				        <div id="textArea"></div>
-				        <div id="uploadArea"></div>
-    					
        				</form>
        				
        				<div class="btnArea">
-             			<a href="javascript:saveSkin()" class="btn btn-primary btn-icon-split">
+             			<a href="javascript:saveTitle()" class="btn btn-primary btn-icon-split">
                               <span class="icon text-white-50">
                                    <i class="fas fa-check"></i>
                               </span>
@@ -83,30 +70,137 @@ span.pointer1::before {content: "";display: inline-block;  border-top: 6px solid
             <!-- End of Main Content -->
              
 <script type="text/javascript">
-var dragFileList = new Array();
-var dragTarget = null;
-var fileArea = document.getElementById('fileArea');
-console.log(fileArea);
+document.body.onload = setFileAreaEvent;
 
-fileArea.ondragover = function(e) {
-	e.preventDefault();
-	this.style.background = '#cdf';
-	this.style.color = '#fff';
+// 카페 타이틀 저장
+function saveTitle() {
+	var titleForm = document.titleForm;
+	var titleImage = document.getElementById('titleImage');
+	var xhr = new XMLHttpRequest();
 	
-	 var files = e.dataTransfer.files.length > 0 && e.dataTransfer.files;
-	 console.log(e.dataTransfer.files);
+	if(titleImage.files.length == 0) {
+		alert('타이틀 이미지 파일을 등록해주십시오.');
+		return;
+	}
+	
+	xhr.open('post', '${contextPath}/admin/deco/saveTitle', true);
+	
+	xhr.onreadystatechange = function() {
+		if(xhr.readyState == 4 && xhr.status == 200) {
+			var response = xhr.response;
+ 			var data = JSON.parse(response);
+ 			var message = '';
+ 			
+ 			if(data.result == 1) {
+ 				message = '저장되었습니다.';
+ 			} else {
+ 				message = '저장에 실패했습니다.';
+ 			}
+ 			
+ 			alert(message);
+		}
+	}
+	
+	xhr.send(new FormData(titleForm));
 }
 
-fileArea.ondrop = function(e) {
-	e.preventDefault();
-	//console.log(event);
+//드래그 파일 영역에 이벤트 설정
+function setFileAreaEvent() {
+ 	var fileArea = document.getElementById('fileArea');
+
+ 	// 파일 드래그 영역에 파일이 들어왔을 때
+ 	fileArea.ondragover = function() {
+     	event.preventDefault();
+     	modifyFileAreaStyle();
+	}
+
+ 	// 파일 드래그 영역에 파일을 드롭했을 때
+ 	fileArea.ondrop = function() {
+     	event.preventDefault();
+     	saveDragFiles(event.dataTransfer.files);
+     	resetFileAreaStyle();
+ 	}
+
+ 	// 파일 드래그 영역에서 드래그가 나갔을 때
+ 	fileArea.ondragleave = function(e) {
+     	resetFileAreaStyle();
+ 	}
 }
 
-fileArea.ondragleave = function(e) {
-	this.style.background = '';
-	this.style.color = '';
-	e.preventDefault();
-	console.log('....2');
-	//console.log(event);
+//이미지 미리보기
+function previewImage() {
+	var titleImage = document.getElementById('titleImage');
+	
+	if(validateFile(titleImage.files)) {
+		var imageFile = titleImage.files[0];
+		var fileReader = new FileReader();
+		
+		fileReader.readAsDataURL(imageFile);
+		fileReader.onload = function() {
+	 		var previewImg = document.getElementById('previewImg');
+			
+	 		previewImg.style.display = '';
+			previewImg.src = fileReader.result;
+			previewImg.alt = imageFile.name;
+		}
+	} else {
+		titleImage.files = null;
+		titleImage.value = '';
+	}
+}
+
+//드래그 파일 영역에 드롭된 파일을 input에 저장
+function saveDragFiles(files) {
+	if(validateFile(files)) {
+    	var titleForm = document.titleForm;
+    	var titleImage = titleForm.titleImage;
+    	
+    	file = files[0];
+     	titleImage.files = files;
+     	previewImage();
+ 	}
+}
+
+//드롭한 파일 유효성 확인
+function validateFile(files) {
+	var file = null;
+	
+	 // 파일여부 확인
+	 if(!files || files.length == 0) {
+	     alert('파일이 아닙니다.');
+	     return false;
+	 }
+
+	// 한 개의 파일만 업로드
+	if(files.length > 1) {
+		alert('한개의 파일만 업로드할 수 있습니다.');
+		return false;
+	}
+
+	file = files[0];
+
+	// 이미지 파일만 업로드
+	if(file.type.toLowerCase().indexOf('image') < 0) {
+		alert('이미지 파일이 아닙니다.');
+		return false;
+	}
+	
+	return true;
+}
+
+//파일 드래그 영역의 스타일 변환
+function modifyFileAreaStyle() {
+	var fileArea = document.getElementById('fileArea');
+	
+	fileArea.style.background = '#cdf';
+	fileArea.style.color = '#fff';
+}
+
+//파일 드래그 영역의 스타일 복구
+function resetFileAreaStyle() {
+	var fileArea = document.getElementById('fileArea');
+	
+	fileArea.style.background = '';
+	fileArea.style.color = '';
 }
 </script>           

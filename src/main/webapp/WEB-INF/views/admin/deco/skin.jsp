@@ -79,7 +79,7 @@
  		var xhr = new XMLHttpRequest();
  	 	var data = {cafeId : skinForm.cafeId.value, cafeSkin : skinForm.cafeSkin.value};
  	 	
- 	 	xhr.open('post', '${contextPath}/admin/deco/skinSave', true);
+ 	 	xhr.open('post', '${contextPath}/admin/deco/saveSkin', true);
  		xhr.setRequestHeader('Content-Type', 'application/json');
  		
  	 	xhr.onreadystatechange = function() {
