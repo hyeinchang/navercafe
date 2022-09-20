@@ -6,13 +6,13 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
+
 
 import com.itbank.navercafe.user.board.dto.BoardDTO;
 import com.itbank.navercafe.user.board.dto.LikesDTO;
 
 
-@Repository
+
 public interface BoardMapper {
 	public ArrayList<BoardDTO> getBoardList();
 	public BoardDTO getUserBoard(int boardNum);

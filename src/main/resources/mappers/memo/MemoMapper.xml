@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.project.navercafe.mybatis.memo.MemoMapper">
+<mapper namespace="com.itbank.navercafe.mybatis.memo.MemoMapper">
 
 	<resultMap type="com.itbank.navercafe.user.memo.dto.MemoDTO" id="project_memo_board">
 		<id property="memoNum" column="memo_num"/>

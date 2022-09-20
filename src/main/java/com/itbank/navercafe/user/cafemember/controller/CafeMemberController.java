@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.util.FileCopyUtils;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.itbank.navercafe.user.cafemember.service.CafeMemberService;
@@ -21,13 +22,14 @@ import com.itbank.navercafe.user.cafemember.service.CafeMemberService;
 
 
 @Controller
+@RequestMapping("/user/board")
 public class CafeMemberController {
 	@Autowired CafeMemberService cafeSer;
 	
-	@GetMapping("goCafeMemberList")
+	@GetMapping("/goCafeMemberList")
 	public String goCafeMemberList(Model model) {
 		model.addAttribute("cafeMemberList",cafeSer.getCafeMemberList());
-		return "cafeMember/cafeMemberList";
+		return "user/board/cafeMemberList";
 	}
 	@GetMapping("goRegCafeMember")
 	public String goRegCafeMember() {

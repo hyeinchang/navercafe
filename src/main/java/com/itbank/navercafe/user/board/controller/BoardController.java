@@ -20,20 +20,20 @@ import com.itbank.navercafe.user.reply.service.ReplyService;
 @Controller
 @RequestMapping("/user/board")
 public class BoardController {
+	@Autowired BoardService ser;
+	@Autowired ReplyService replySer;
+	@Autowired CafeMemberService boardCafeSer;
+	
 	@RequestMapping("/writeForm")
 	public String writeForm(CafeDTO cafeDTO, Model model) {
 		model.addAttribute("cafeDTO", cafeDTO);
 		return "user/board/writeForm";
 	}
-	
-	@Autowired BoardService ser;
-	@Autowired ReplyService replySer;
-	@Autowired CafeMemberService boardCafeSer;
-	
-	@GetMapping("goBoardList")
+
+	@GetMapping("/goBoardList")
 	public String goBoardList(Model model){
 		model.addAttribute("boardList",ser.getBoardList());
-		return "board/boardList";
+		return "user/board/boardList";
 	}
 
 	@GetMapping("goBoardInside")

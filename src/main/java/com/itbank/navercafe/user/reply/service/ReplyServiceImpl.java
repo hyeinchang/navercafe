@@ -12,7 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.itbank.navercafe.comon.file.FileService;
+//import com.itbank.navercafe.comon.file.FileService;
 import com.itbank.navercafe.mybatis.cafemember.CafeMemberMapper;
 import com.itbank.navercafe.mybatis.reply.ReplyMapper;
 import com.itbank.navercafe.user.reply.dto.ReplyDTO;
@@ -23,7 +23,7 @@ import com.itbank.navercafe.user.reply.dto.ReplyDTO;
 public class ReplyServiceImpl implements ReplyService{
 
 	@Autowired ReplyMapper rm;
-	@Autowired FileService replyFileService;
+	//@Autowired FileService replyFileService;
 	@Autowired CafeMemberMapper cafeMemberMap;
 	
 	@Override
@@ -56,7 +56,7 @@ public class ReplyServiceImpl implements ReplyService{
 //		System.out.println("내용:"+mul.getParameter("replyContent"));
 //		System.out.println("이미지파일:"+file);
 		if(file.getSize()!=0) {
-			dto.setReplyImgName(replyFileService.saveFile(file));
+			//dto.setReplyImgName(replyFileService.saveFile(file));
 		}else {
 			dto.setReplyImgName("nan");
 		}
