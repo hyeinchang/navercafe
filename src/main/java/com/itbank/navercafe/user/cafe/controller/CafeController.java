@@ -1,4 +1,4 @@
-package com.itbank.navercafe.user.controller;
+package com.itbank.navercafe.user.cafe.controller;
 
 import java.util.ArrayList;
 
@@ -19,7 +19,7 @@ import com.itbank.navercafe.user.member.dto.MemberDTO;
 
 @Controller
 @RequestMapping("/user")
-public class UserController {
+public class CafeController {
 	@GetMapping("/main")
 	public String index(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes, 
 			@RequestParam(value="cafeId", required=false) String cafeId, HttpSession session) {
@@ -90,7 +90,7 @@ public class UserController {
 			break;
 		case 2 : skin = "blue";
 			cafeDTO.setCafeFront("<img src=\"" + request.getContextPath() + "/resources/upload/free-icon-joy-7021182.png\" id=\"userImg4894358\" style=\"width: 512px; height: 512px;\" alt=\"대문이미지\" onload=\"resizeImage(4894358)\" name=\"cafeuserimg\" onclick=\"popview(this)\"><div><br></div><div>카페 대문</div>");
-			cafeDTO.setCafeTitle(request.getContextPath() + "/resources/upload/1794220617_XSpkAiBo_pexels-eberhard-grossgasteiger-1287142.jpg");
+		
 			cafeDTO.setCafeManagerNickName("정보처리산업기사");
 			
 			if(session.getAttribute("loginId") != null && session.getAttribute("loginId").equals("chi9148")) {
@@ -108,7 +108,7 @@ public class UserController {
 					"            frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>");
 			break;
 		case 4 : skin = "mustard";
-			cafeDTO.setCafeTitle(request.getContextPath() + "/resources/upload/demo_01.jpg");
+			
 			break;
 		case 5 : skin = "pomegranate";
 			cafeDTO.setCafeLayout(1);

@@ -1,10 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<c:set var="skinLocation" value="${contextPath}/resources/img/sample/skin"/>
-<style>
-
-</style>
 
   	<!-- Page Wrapper -->
     <div id="wrapper">
@@ -23,6 +19,7 @@
                	
                		<form name="titleForm">
                			<input type="hidden" name="cafeId" value="${cafeDTO.cafeId}">
+               			<input type="hidden" name="titleNum" value="${cafeDTO.titleNum}">
                			<div class="card mb-4">
 							<div class="card-header">
 								<b>카페 타이틀 이미지 업로드</b>
@@ -39,8 +36,8 @@
 			               				
 			               				<div class="preview">
 			               					<c:choose>
-			               						<c:when test="${cafeDTO.cafeTitle ne null && cafeDTO.cafeTitle.length() != 0}">
-										    	<img src="${cafeDTO.cafeTitle}" id="previewImg">
+			               						<c:when test="${cafeDTO.titleNum ne null && cafeDTO.titleNum > 0}">
+										    	<img src="${contextPath}/file/download?titleNum=${cafeDTO.titleNum}" id="previewImg">
 				               					</c:when>
 				               					<c:otherwise>
 				               					<img src="" id="previewImg" style="display:none;">
@@ -59,17 +56,86 @@
                                    <i class="fas fa-check"></i>
                               </span>
                               <span class="text">저장하기</span>
-                          </a>
+                         </a>
+						<c:if test="${cafeDTO.titleNum ne null && cafeDTO.titleNum > 0}">
+						<a href="javascript:deleteTitle()" class="btn btn-danger btn-icon-split">
+                              <span class="icon text-white-50">
+                                   <i class="fas fa-trash"></i>
+                              </span>
+                              <span class="text">대문삭제</span>
+                        </a>
+						</c:if>
              		</div>
                	</div>
 				<!-- End of cstmContent1 -->	
 					
             </div>
             <!-- End of Main Content -->
-
-      
+		
+      		<ul id="testUl">
+      			
+      			<li>
+      				<form name="testForm" id="testForm1">
+      				<input type="text" name="hello" value="hello1">
+      				<input type="text" name="bye" value="bye1">
+      				</form>
+      			</li>
+      			
+      			
+      			<li>
+      				<form name="testForm" id="testForm2">
+      				<input type="text" name="hello" value="hello2">
+      				<input type="text" name="bye" value="bye2">
+      				</form>
+      			</li>
+      			
+      		
+      			<li>
+      				<form name="testForm" id="testForm3">
+      				<input type="text" name="hello" value="hello3">
+      				<input type="text" name="bye" value="bye3">
+      				</form>
+      			</li>
+      			<li>
+      				<form name="testForm" id="testForm4">
+      				<input type="text" name="hello" value="hello4">
+      				<input type="text" name="bye" value="bye4">
+      				</form>
+      			</li>
+      		</ul>
+      		
 <script type="text/javascript">
 document.body.onload = setFileAreaEvent;
+
+var testList = new Array();
+var testFormList = document.testForm;
+
+for(var i=0; i<testFormList.length; i++) {
+	var testForm = testFormList[i];
+	var obj = new Object();
+	
+	for(var j=0; j<testForm.length; j++) {
+		var element = testForm[j];
+		
+		if(element.name) {
+			obj[element.name] = element.value;
+			
+		}
+		
+	}
+	testList.push(obj);
+}
+console.log(testList);
+
+$.ajax({
+	type : 'post'
+	, contentType : 'application/json'
+	, url : '${contextPath}/admin/deco/test'
+	, data : {testList : JSON.stringify(testList)}
+	, success : function(data) {
+		console.log(data);
+	}
+});
 
 // 카페 타이틀 저장
 function saveTitle() {
@@ -101,6 +167,15 @@ function saveTitle() {
 	}
 	
 	xhr.send(new FormData(titleForm));
+}
+
+//카페 타이틀 삭제
+function deletTitle() {
+	var titleForm = document.titleForm;
+	
+	titleForm.action = '${contextPath}/deco/deleteTitle';
+	titleForm.method = 'post';
+	titleForm.submit();
 }
 
 //드래그 파일 영역에 이벤트 설정
