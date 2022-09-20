@@ -125,15 +125,22 @@ for(var i=0; i<testFormList.length; i++) {
 	}
 	testList.push(obj);
 }
-console.log(testList);
 
+
+var data = JSON.stringify(testList);
+var params = {};
+
+console.log("testList : " + testList)
+console.log("data : " + data);
 $.ajax({
 	type : 'post'
 	, contentType : 'application/json'
 	, url : '${contextPath}/admin/deco/test'
+	, traditional : true
 	, dataType : 'json'
-	, data : {testList : JSON.stringify(testList)}
-	, success : function(data) {
+	//, data : {data : JSON.stringify(params)}
+	, data : data
+	, success : function(testList) {
 		console.log(data);
 	}
 });

@@ -18,7 +18,7 @@
 		     ${cafeDTO.cafeFront}
 		   </div>
 		 </c:otherwise> 
-		 </c:choose>  
+		 </c:choose> 
          </div>
          <!-- end 대문 -->
        	 
