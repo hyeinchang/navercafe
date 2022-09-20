@@ -20,7 +20,9 @@ public class FileController {
 	
 	@GetMapping("/download")
 	public void download(HttpServletResponse response, String fileName) {
+		
 		response.setHeader("Content-Disposition", "attachment; fileName=" + fileName);
+		
 		try {
 			fileUtils.download(response, "test", fileName);
 		} catch (IllegalStateException e) {
