@@ -19,7 +19,7 @@
                	<p class="mb-4">이미지 최적 사이즈는 가로 1140px, 세로 50~340px 입니다.</p>
               
                	<!-- cstmContent1 -->
-               	<div class="cstmContent1" style="width:1200px;">
+               	<div class="cstmContent1" style="">
                	
                		<form name="titleForm">
                			<input type="hidden" name="cafeId" value="${cafeDTO.cafeId}">
@@ -27,21 +27,19 @@
 							<div class="card-header">
 								<b>카페 타이틀 이미지 업로드</b>
 							</div>
-							<div class="card-body">
+							<div class="card-body" id="fileArea">
 								<div class="form-group">
 		                    		<div class="previewArea">
 			               				<div class="fileUpload">
-			               					<h3>파일업로드</h3>
-			               					<div id="fileArea">
-									            <p>업로드 파일 드래그 영역</p>
+			               					<div title="업로드하실 파일을 드래그해주십시오.">
+									            <span class="fileAdd">+</span>
 									        </div>
 									        <input type="file" id="titleImage" name="titleImage" onchange="previewImage()">
 			               				</div>
 			               				
 			               				<div class="preview">
-			               					<h3>카페 타이틀</h3>
 			               					<c:choose>
-			               						<c:when test="${cafeDTO.cafeTitle ne null || cafeDTO.cafeTitle.length() != 0}">
+			               						<c:when test="${cafeDTO.cafeTitle ne null && cafeDTO.cafeTitle.length() != 0}">
 										    	<img src="${cafeDTO.cafeTitle}" id="previewImg">
 				               					</c:when>
 				               					<c:otherwise>
@@ -112,19 +110,12 @@ function setFileAreaEvent() {
  	// 파일 드래그 영역에 파일이 들어왔을 때
  	fileArea.ondragover = function() {
      	event.preventDefault();
-     	modifyFileAreaStyle();
 	}
 
  	// 파일 드래그 영역에 파일을 드롭했을 때
  	fileArea.ondrop = function() {
      	event.preventDefault();
      	saveDragFiles(event.dataTransfer.files);
-     	resetFileAreaStyle();
- 	}
-
- 	// 파일 드래그 영역에서 드래그가 나갔을 때
- 	fileArea.ondragleave = function(e) {
-     	resetFileAreaStyle();
  	}
 }
 
@@ -166,11 +157,11 @@ function saveDragFiles(files) {
 function validateFile(files) {
 	var file = null;
 	
-	 // 파일여부 확인
-	 if(!files || files.length == 0) {
-	     alert('파일이 아닙니다.');
-	     return false;
-	 }
+	// 파일여부 확인
+	if(!files || files.length == 0) {
+		alert('파일이 아닙니다.');
+	    return false;
+	}
 
 	// 한 개의 파일만 업로드
 	if(files.length > 1) {
@@ -187,21 +178,5 @@ function validateFile(files) {
 	}
 	
 	return true;
-}
-
-//파일 드래그 영역의 스타일 변환
-function modifyFileAreaStyle() {
-	var fileArea = document.getElementById('fileArea');
-	
-	fileArea.style.background = '#cdf';
-	fileArea.style.color = '#fff';
-}
-
-//파일 드래그 영역의 스타일 복구
-function resetFileAreaStyle() {
-	var fileArea = document.getElementById('fileArea');
-	
-	fileArea.style.background = '';
-	fileArea.style.color = '';
 }
 </script>           
