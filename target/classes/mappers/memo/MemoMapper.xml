@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.navercafe.mybatis.memo.MemoMapper">
+
+	<resultMap type="com.itbank.navercafe.user.memo.dto.MemoDTO" id="project_memo_board">
+		<id property="memoNum" column="memo_num"/>
+		<result property="userId" column="user_id"/>
+		<result property="memoContent" column="memo_content"/>
+		<result property="memoSaveDate" column="memo_saveDate"/>
+		<result property="memoStepOnly" column="memo_step_only"/>
+	</resultMap>
+
+	<select id="getMemoList" resultType="HashMap">
+		select M.user_id,M.memo_content,M.memo_saveDate,
+		n.cafe_user_image,n.cafe_user_nickname from project_memo_board M
+		inner join project_cafe_member N on M.user_id=N.user_id
+	</select>
+	
+	
+</mapper>

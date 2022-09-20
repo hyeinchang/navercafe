@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.project.navercafe.mybatis.reply.ReplyMapper">
+
+	<resultMap type="com.itbank.navercafe.user.reply.dto.ReplyDTO" id="project_reply">
+		<id property="replyNum" column="reply_num"/>
+		<result property="boardNum" column="board_num"/>
+		<result property="replyContent" column="reply_content"/>
+		<result property="replySaveDate" column="reply_saveDate"/>
+		<result property="userId" column="user_id"/>
+		<result property="replyImgName" column="reply_img_name"/>
+		<result property="replyGroup" column="reply_group"/>
+		<result property="replyStep" column="reply_step"/>
+	</resultMap>
+	
+	<select id="getReplyCount" resultType="int">
+		select count(*) from project_reply where board_num=#{boardNum}
+	</select>
+	
+	<select id="getReplyList" resultType="HashMap">
+		select R.reply_num,R.board_num,R.reply_content,R.reply_saveDate,R.user_id,
+		R.reply_img_name,R.reply_group,R.reply_step,C.cafe_user_nickname,C.cafe_user_image
+		from project_reply R inner join project_cafe_member C on R.user_id=C.user_id
+		where board_num=#{boardNum} order by reply_num desc
+	</select>
+	
+	<insert id="saveReply">
+		insert into project_reply(reply_num,board_num,reply_content,user_id,
+		reply_img_name,reply_group,reply_step) 
+		values(reply_num_seq.nextval,#{boardNum},#{replyContent},#{userId},#{replyImgName},
+		reply_num_seq.currval,#{replyStep})
+	</insert>
+	
+	<insert id="saveGroupNumReply">
+		insert into project_reply(reply_num,board_num,reply_content,user_id,
+		reply_img_name,reply_group,reply_step) 
+		values(reply_num_seq.nextval,#{boardNum},#{replyContent},#{userId},#{replyImgName},
+		#{replyGroup},#{replyStep})
+	</insert>
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+</mapper>
