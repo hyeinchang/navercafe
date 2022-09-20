@@ -131,6 +131,7 @@ $.ajax({
 	type : 'post'
 	, contentType : 'application/json'
 	, url : '${contextPath}/admin/deco/test'
+	, dataType : 'json'
 	, data : {testList : JSON.stringify(testList)}
 	, success : function(data) {
 		console.log(data);

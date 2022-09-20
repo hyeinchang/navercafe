@@ -3,6 +3,7 @@ package com.itbank.navercafe.admin.deco.controller;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itbank.navercafe.admin.deco.service.AdminDecoService;
 import com.itbank.navercafe.comon.file.FileUtils;
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
@@ -121,16 +124,23 @@ public class AdminDecoController {
 
 	@PostMapping(value="test", produces="application/json; charset=utf8")
 	@ResponseBody
-	public HashMap<Object, Object> test( @RequestBody List<HashMap<Object, Object>> testList) {
+	public HashMap<Object, Object> test( @RequestParam Map<Object, Object> params) {
 		HashMap<Object, Object> map = new HashMap<>();
 		int result = 0;
 		
 
 		
 		try {
-			System.out.println(testList.get(0).get("hello"));
-			System.out.println(testList.get(1).get("hello"));
+			String json  = params.get("testList").toString();
+			
+			ObjectMapper mapper = new ObjectMapper();			
 
+			List<Map<String, Object>> list = mapper.readValue(json, new TypeReference<ArrayList<Map<String, Object>>>(){});
+			
+			for(Map<String, Object> m : list) {
+				System.out.println(m.get("hello"));
+			}
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
