@@ -69,11 +69,20 @@
 	function saveFront() {
 		var frontForm = document.frontForm;
 		var xhr = new XMLHttpRequest();
-		var data = {cafeId : frontForm.cafeId.value, cafeFront : frontForm.cafeFront.value};
+		var data = new Object();
+		var cafeId = frontForm.cafeId.value;
+		var editorDirectory = 'front';
 		
-		updateEditorContent(contentAreaId, '${contextPath}', 'front');
+		if(cafeId && cafeId.length > 0) {
+			editorDirectory += '/' + cafeId;
+		}
 		
-		xhr.open('post', '${contextPath}/admin/deco/saveFront', true);
+		updateEditorContent(contentAreaId, '${contextPath}', editorDirectory);
+		
+		data.cafeId = cafeId;
+		data.cafeFront = frontForm.cafeFront.value;
+		
+		xhr.open('post', '${contextPath}/admin/deco/saveFront', false);
 		xhr.setRequestHeader('Content-Type', 'application/json');
 		
 		xhr.onreadystatechange = function() {

@@ -79,9 +79,9 @@
 						} else {
 							target.className.replace(tempEditorImageClass, '');
 						}
-					}
-				}
-			} 
+					}//while
+				}//if
+			}//if
 		}
 		xhr.send(uploadData);
 	}
