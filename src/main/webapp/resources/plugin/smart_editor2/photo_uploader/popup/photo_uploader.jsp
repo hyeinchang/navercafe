@@ -1,5 +1,8 @@
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import="com.oreilly.servlet.MultipartRequest, com.oreilly.servlet.multipart.DefaultFileRenamePolicy, java.util.*, java.io.*"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <style type="text/css">
 /* NHN Web Standard 1Team JJS 120106 */ 
@@ -39,19 +42,72 @@ h1{color:#333;font-size:14px;letter-spacing:-1px}
 :root  .upload{padding:6px 0 2px 6px;}
 </style>
 
-<script language="javascript">
+<script type="text/javascript">
 	function fn_imageUp() {
 		document.editor_upimage.submit();
 	}
 	
+	/* 2022-09-21 chi9148 수정 */
+	// editor를 사용하는 페이지에 editorFileForm에 파일을 복사해놓고 저장할 때 업로드
 	function fn_imageUp5() {
-		document.editor_upimage5.submit();
+		//document.editor_upimage5.submit();
+		var orgPage = window.opener.parent;
+		var editorFileForm = orgPage.document.editorFileForm;
+		var cloneFile = null;
+		var index = 0;
+		
+		if(!editorFileForm) {
+			editorFileForm = document.createElement('form');
+			editorFileForm.id = 'editorFileForm';
+			editorFileForm.name = 'editorFileForm';
+			editorFileForm.style.display = 'none';
+			orgPage.document.body.appendChild(editorFileForm);
+		}
+		
+		index = editorFileForm.length;
+		cloneFile = document.editor_upimage5.Filedata.cloneNode(true);
+		cloneFile.dataset.index = index;
+		editorFileForm.appendChild(cloneFile);
+		readImageSrc(cloneFile.files[0], index);
 	}
 	
+	function validateFile() {
+		var target = event.target;
+		var files = target.files;
+		var check = true;
+		
+		if(files.length != 1) {
+			alert('이미지는 하나만 등록할 수 있습니다.');
+			check = false;
+		}
+		
+		if(files[0].type.indexOf('image') < 0) {
+			alert('이미지 파일만 등록할 수 있습니다.');
+			check = false;
+		}
+		
+		if(!check) {
+			target.files = null;
+			target.value = '';
+			target.focus();
+		}
+	}
+	
+	function readImageSrc(file, index) {
+		var fileReader = new FileReader();
+
+		fileReader.readAsDataURL(file);		
+		fileReader.onload = function() {
+			var orgPage = window.opener.parent;
+			var src = fileReader.result;
+			
+			orgPage.pasteHTML_custom(src, index);
+		}
+ 	}
+	/* end 2022-09-21 chi9148 수정 */
 </script>
 
-</head>
-<body>
+</head>
 <div id="pop_wrap">
 	<!-- header -->
     <div id="pop_header">
@@ -98,7 +154,7 @@ h1{color:#333;font-size:14px;letter-spacing:-1px}
         </div> -->
 		<form id="editor_upimage5" name="editor_upimage5" action="file_uploader.jsp" method="post" enctype="multipart/form-data" onSubmit="return false;">
         <div id="pop_content2">
-			<input type="file" class="upload" id="uploadInputBox" name="Filedata">
+			<input type="file" class="upload" id="uploadInputBox" name="Filedata" onchange="validateFile()">
             <p class="dsc" id="info"><strong>10MB</strong>이하의 이미지 파일만 등록할 수 있습니다.<br>(JPG, GIF, PNG, BMP)</p>
         </div>
 		</form>

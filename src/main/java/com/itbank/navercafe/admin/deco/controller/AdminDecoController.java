@@ -121,37 +121,6 @@ public class AdminDecoController {
 		return map;
 	}
 	
-
-	@PostMapping(value="test", produces="application/json; charset=utf8")
-	@ResponseBody
-	public HashMap<Object, Object> test( @RequestParam Map<Object, Object> params) {
-		HashMap<Object, Object> map = new HashMap<>();
-		int result = 0;
-		
-
-		
-		try {
-			String json  = params.get("testList").toString();
-			
-			ObjectMapper mapper = new ObjectMapper();			
-
-			List<Map<String, Object>> list = mapper.readValue(json, new TypeReference<ArrayList<Map<String, Object>>>(){});
-			
-			for(Map<String, Object> m : list) {
-				System.out.println(m.get("hello"));
-			}
-			
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	
-		result = 1;
-		
-		map.put("result", result);
-		
-		return map;
-	}
-	
 	// 타이틀 설정페이지로 이동
 	@GetMapping("deleteTitle")
 	public String deleteTitle(HttpServletRequest request, CafeDTO cafeDTO) {
