@@ -90,8 +90,7 @@ function saveTitle() {
 	
 	xhr.onreadystatechange = function() {
 		if(xhr.readyState == 4 && xhr.status == 200) {
-			var response = xhr.response;
- 			var data = JSON.parse(response);
+ 			var data = JSON.parse(xhr.response);
  			var message = '';
  			
  			if(data.result == 1) {

@@ -18,9 +18,10 @@
                	<div class="cstmContent1" style="width:800px;">
                	
                		<form class="user" name="frontForm">
+               			<input type="hidden" name="cafeId" value="${cafeDTO.cafeId}">
                         <div class="form-group">
                         	<label>카페 대문</label>
-                        	<textarea id="cafeFront" name="cafeFront" class="form-control" placeholder="카페 대문 내용을 입력해주십시오."></textarea>
+                        	<textarea id="cafeFront" name="cafeFront" class="form-control" placeholder="카페 대문 내용을 입력해주십시오.">${cafeDTO.cafeFront}</textarea>
                         </div>
                     </form>
              		
@@ -30,7 +31,15 @@
                                    <i class="fas fa-check"></i>
                               </span>
                               <span class="text">저장하기</span>
-                          </a>
+                        </a>
+                        <c:if test="${cafeDTO.cafeFront ne null && cafeDTO.cafeFront.length() > 0}">
+						<a href="javascript:deleteFront()" class="btn btn-danger btn-icon-split">
+                              <span class="icon text-white-50">
+                                   <i class="fas fa-trash"></i>
+                              </span>
+                              <span class="text">대문삭제</span>
+                        </a>
+						</c:if>
              		</div>
                	</div>
 				<!-- End of cstmContent1 -->	
@@ -41,23 +50,51 @@
 <script type="text/javascript" src="${contextPath}/resources/plugin/smart_editor2/js/HuskyEZCreator.js" charset="utf-8"></script>  
 <script type="text/javascript" src="${contextPath}/resources/js/smarteditor_custom.js" charset="utf-8"></script>     
 <script type="text/javascript">
+	var contentAreaId = 'cafeFront';
 	var oEditors = [];
 	
 	nhn.husky.EZCreator.createInIFrame({
 		oAppRef: oEditors,
-		elPlaceHolder: "cafeFront",
+		elPlaceHolder: contentAreaId,
 		sSkinURI: "${contextPath}/resources/plugin/smart_editor2/SmartEditor2Skin.html",
 		fCreator: "createSEditor2"
 	});
 	
 	// textArea에 이미지 첨부
-	function pasteHTML_custom(src, index){
-		var tempClass = '__temp__00000';
-		sHTML = '<img src="'+ src + '" class="' + tempClass + '" data-index="' + index + '">';
-		oEditors.getById["cafeFront"].exec("PASTE_HTML", [sHTML]);
+	function pasteHTML_custom(sHTML){
+		oEditors.getById[contentAreaId].exec("PASTE_HTML", [sHTML]);
 	}
 	
+	// 카페 대문 저장
 	function saveFront() {
-		updateEditorContent('cafeFront', '${contextPath}', 'front');
+		var frontForm = document.frontForm;
+		var xhr = new XMLHttpRequest();
+		var data = {cafeId : frontForm.cafeId.value, cafeFront : frontForm.cafeFront.value};
+		
+		updateEditorContent(contentAreaId, '${contextPath}', 'front');
+		
+		xhr.open('post', '${contextPath}/admin/deco/saveFront', true);
+		xhr.setRequestHeader('Content-Type', 'application/json');
+		
+		xhr.onreadystatechange = function() {
+			if(xhr.readyState == 4 && xhr.status == 200) {
+	 			var data = JSON.parse(xhr.response);
+	 			var message = '';
+	 			
+	 			if(data.result == 1) {
+	 				message = '저장되었습니다.';
+	 			} else {
+	 				message = '저장에 실패했습니다.';
+	 			}
+	 			
+	 			alert(message);
+			}
+		}
+		
+		xhr.send(JSON.stringify(data));
+	}
+	
+	function deleteFront() {
+		
 	}
 </script>

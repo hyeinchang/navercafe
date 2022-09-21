@@ -1,16 +1,22 @@
 /**
- * smarteditor 공통 js 파일
+ * smarteditor custom js 파일
  */
  
- // smart editor 이미지 업로드, 경로 수정
- function updateEditorContent(contentId, contextPath, editorDirectory) {
+ // editor image 임시저장을 위한 img class명 전역변수
+ var tempEditorImageClass = '__temp__00000';
+ 
+ /* method  > updateEditorContent : smarteditor 이미지 업로드, 경로 수정
+ * prameter > contentAreaId : editor 적용하는 textarea id(name)
+ * prameter > contextPath : contextPath
+ * prameter > editorDirectory : smarteditor directory 하위 폴더
+ */
+ function updateEditorContent(contentAreaId, contextPath, editorDirectory) {
 	var editorFileForm = document.getElementById('editorFileForm');
-	var tempClass = '__temp__00000';
 	var chtml = document.createElement('html');
 	var tempImageList = null;
 	
 	chtml.innerHTML = oEditors[0].getContents();
-	tempImageList = chtml.getElementsByClassName(tempClass);
+	tempImageList = chtml.getElementsByClassName(tempEditorImageClass);
 	
 	if(editorFileForm && tempImageList && tempImageList != null) {
 		var uploadUrl = '/file/upload/smarteditor';
@@ -68,10 +74,10 @@
 						
 						target.removeAttribute('data-index');
 						
-						if(target.className == tempClass) {
+						if(target.className == tempEditorImageClass) {
 							target.removeAttribute('class');
 						} else {
-							target.className.replace(tempClass, '');
+							target.className.replace(tempEditorImageClass, '');
 						}
 					}
 				}
@@ -81,5 +87,5 @@
 	}
 	
 	oEditors[0].setContents(chtml.innerHTML);
-	oEditors.getById[contentId].exec("UPDATE_CONTENTS_FIELD", [ ]);
+	oEditors.getById[contentAreaId].exec("UPDATE_CONTENTS_FIELD", [ ]);
 }
