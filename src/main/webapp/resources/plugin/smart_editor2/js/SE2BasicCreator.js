@@ -22,18 +22,19 @@ function createSEditor2(elIRField, htParams, elSeAppContainer){
 	var oEditor = new nhn.husky.HuskyCore(htParams);
 	oEditor.registerPlugin(new nhn.husky.CorePlugin(htParams?htParams.fOnAppLoad:null));	
 	oEditor.registerPlugin(new nhn.husky.StringConverterManager());
-
+	
 	var htDimension = {
-		nMinHeight:205,
-		nMinWidth:parseInt(elIRField.style.minWidth, 10)||610,
-		nHeight:elIRField.style.height||elIRField.offsetHeight,
-		nWidth:elIRField.style.width||elIRField.offsetWidth
+		nMinHeight:300,
+		nMinWidth:elIRField.parentElement.offsetWidth-2||610, //2022-09-22 chi9148 넓이 textarea의 부모 요소 넓이 만큼 확장
+		nHeight:elIRField.style.height||elIRField.parentElement.offsetHeight-32, //2022-09-22 chi9148 높이 textarea의 부모 요소 높이 만큼
+		nWidth:elIRField.style.width||elIRField.parentElement.offsetWidth
 	};
 	
 	var htConversionMode = {
 		bUseVerticalResizer : htParams.bUseVerticalResizer,
 		bUseModeChanger : htParams.bUseModeChanger
 	};
+
 	
 	//chi9148 오른쪽 css 짤리는 부분 수정
 	htDimension.nWidth -= 2;

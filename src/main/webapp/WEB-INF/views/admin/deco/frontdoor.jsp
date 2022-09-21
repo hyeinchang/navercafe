@@ -15,12 +15,14 @@
                	<h1 class="h3 text-gray-800 cstmTitle">카페 대문</h1>
                	
                	<!-- cstmContent1 -->
-               	<div class="cstmContent1" style="width:650px;">
+               	<div class="cstmContent1" style="width:800px;">
                	
                		<form class="user" name="frontForm">
                         <div class="form-group">
                         	<label>카페 대문</label>
-                            <textarea id="cafeFront" name="cafeFront" class="form-control" placeholder="카페 대문 내용을 입력해주십시오."></textarea>
+                        	<div style="height:500px">
+                        		  <textarea id="cafeFront" name="cafeFront" class="form-control" placeholder="카페 대문 내용을 입력해주십시오."></textarea>
+                        	</div>
                         </div>
                     </form>
              		
