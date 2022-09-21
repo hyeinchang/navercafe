@@ -12,44 +12,50 @@
 		
 	$(document).ready(function () {
 		
-		console.log(${regiInfo.join_question})
+		var jq = ${regiInfo.join_question}; //질문 사용 여부
+		var qQty = ${regiInfo.questionQty}; //저장된 질문 개수
 		
-		if( ${regiInfo.join_question} == true) {
-			$('#join_qt02').attr('checked', 'checked')
+		if (jq == true) {
+			$('#join_qt02').attr('checked', 'checked');
 			
-			//isquestionnull 해결해야댐
-			//console.log('${regiInfo.isQuestionNull}')
-			
-			if (${regiInfo.isQuestionNull} == true) {
-				console.log('트루')
+			for(i = 1; i <= qQty; i++) {
+				addQuestionBlock(); //저장된 질문 개수따라 질문 블럭 생성
 			}
 			
+			// 질문 블럭 내용채우기
+			if(qQty == 3) {
+				$('#q1content').val('${regiInfo.q1Content}')
+				$('#q2content').val('${regiInfo.q2Content}')
+				$('#q3content').val('${regiInfo.q3Content}')
+			} else if (qQty == 2) {
+				$('#q1content').val('${regiInfo.q1Content}')
+				$('#q2content').val('${regiInfo.q2Content}')				
+			} else if (qQty == 1) {
+				$('#q1content').val('${regiInfo.q1Content}')
+			}			
+			
 		} else {
-			$('#join_qt01').attr('checked', 'checked')
+			$('#join_qt01').attr('checked', 'checked');
 		}
 		
 		$(".checkC").change(function() {
-			if( $("#join_qt01").is(':checked') ) {
+			if ( $("#join_qt01").is(':checked') ) {
 				$('#question_option').hide();
-				console.log('1번체크됨?')
 			} else {
 				$('#question_option').show();				
-				console.log('2번체크됨?')
 			}
 			
-			if( $('#question_ul').children().length == 3) {
+			if ( $('#question_ul').children().length == 3) {
 				$('#addQuestionBtn').hide();
 			} else {
 				$('#addQuestionBtn').show();
 			}
 		})
-		
-		
+	
 	})
 	
-	
 	var blockcount = $('#question_ul').children().length
-	function addQuestionBlock() {
+	function addQuestionBlock() { //질문 추가 버튼 
 		$('#question_ul').append('<li id="q'+(blockcount+1)+'li"> <div> <span id="q'+(blockcount+1)+'sp">스팬</span> <input type="text" id="q'+(blockcount+1)+'content" placeholder="질문을 입력해 주세요" size="100" name="q'+(blockcount+1)+'Content"> <input id="q'+(blockcount+1)+'btn" type="button" value="삭제" onclick="deleteBtn(q'+(blockcount+1)+'li)"> </div> </li>');
 		$('#q'+(blockcount+1)+'sp').text('질문 '+(blockcount+1)+'.')
 		blockcount = $('#question_ul').children().length
@@ -58,8 +64,6 @@
 			$('#addQuestionBtn').hide();
 		}
 	}
-	
-	
 	
 	function deleteBtn(obj) {
 		var removedLiNum = parseInt(obj.id[1]);
@@ -178,7 +182,6 @@
                           </a>
              		</div>
                	</div>
-               </div>
 				<!-- End of cstmContent1 -->	
 					
             </div>

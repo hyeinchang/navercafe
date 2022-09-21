@@ -2,17 +2,15 @@ package com.itbank.navercafe.admin.registergrade.dto;
 
 public class RegisterInfoDTO {
 	private String explanation, q1Content, q2Content, q3Content;
-	private boolean join_question, isQuestionNull;
+	private int questionQty;
+	private boolean join_question;
 	
-	public boolean isQuestionNull() {
-		return isQuestionNull;
+	public int getQuestionQty() {
+		return questionQty;
 	}
-	public void setQuestionNull(boolean isQuestionNull) {
-		if(q1Content.isEmpty()) {
-			this.isQuestionNull = true;
-		}
+	public void setQuestionQty(int questionQty) {
+		this.questionQty = questionQty;
 	}
-	
 	public String getExplanation() {
 		return explanation;
 	}
