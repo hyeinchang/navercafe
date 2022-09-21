@@ -5,11 +5,12 @@
  // smart editor 이미지 업로드, 경로 수정
  function updateEditorContent(contentId, contextPath, editorDirectory) {
 	var editorFileForm = document.getElementById('editorFileForm');
+	var tempClass = '__temp__00000';
 	var chtml = document.createElement('html');
 	var tempImageList = null;
 	
 	chtml.innerHTML = oEditors[0].getContents();
-	tempImageList = chtml.getElementsByClassName('tempImage');
+	tempImageList = chtml.getElementsByClassName(tempClass);
 	
 	if(editorFileForm && tempImageList && tempImageList != null) {
 		var uploadUrl = '/file/upload/smarteditor';
@@ -43,6 +44,7 @@
 				if(Number(result.state) == 1) {
 					var fileDTOList = result.fileDTOList;			
 					
+					// src 변경
 					for(var i=0;i<tempImageList.length;i++) {
 						var tempImage = tempImageList[i];
 						var fileDTO = fileDTOList[i];
@@ -57,6 +59,20 @@
 						});
 						
 						tempImage.src = downloadUrl + '?' + params;
+					}
+					
+					// class 삭제
+					
+					while(tempImageList.length > 0) {
+						var target = tempImageList[tempImageList.length-1];
+						
+						target.removeAttribute('data-index');
+						
+						if(target.className == tempClass) {
+							target.removeAttribute('class');
+						} else {
+							target.className.replace(tempClass, '');
+						}
 					}
 				}
 			} 

@@ -52,7 +52,8 @@
 	
 	// textArea에 이미지 첨부
 	function pasteHTML_custom(src, index){
-		sHTML = '<img src="'+ src + '" class="tempImage" data-index="' + index + '">';
+		var tempClass = '__temp__00000';
+		sHTML = '<img src="'+ src + '" class="' + tempClass + '" data-index="' + index + '">';
 		oEditors.getById["cafeFront"].exec("PASTE_HTML", [sHTML]);
 	}
 	
