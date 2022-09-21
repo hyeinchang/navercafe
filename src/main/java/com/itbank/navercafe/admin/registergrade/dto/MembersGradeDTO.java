@@ -1,5 +1,7 @@
 package com.itbank.navercafe.admin.registergrade.dto;
 
+import java.util.ArrayList;
+
 public class MembersGradeDTO {
 	private String cutRemoved, // 삭제되었는지  
 	cafeUserGrade,  // 등급레벨 
@@ -11,6 +13,14 @@ public class MembersGradeDTO {
 	cutVisit, // 방문수 제한
 	cutType; // 등업방식
 	
+	ArrayList<MembersGradeDTO> list = new ArrayList<>();
+	
+	public ArrayList<MembersGradeDTO> getList() {
+		return list;
+	}
+	public void setList(ArrayList<MembersGradeDTO> list) {
+		this.list = list;
+	}
 	public String getCutName() {
 		return cutName;
 	}

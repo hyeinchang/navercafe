@@ -170,7 +170,7 @@
 								<tbody id="tbody">
 									<tr>
 										<td> <img id="iconImg1" src="https://cafe.pstatic.net/levelicon/1/1_1.gif" width="11px" height="11px"> </td>
-										<td><input id="conditionName1" type="text" name="cafeUserGrade" value="새싹멤버"  maxlength="10" ></td>
+										<td><input id="conditionName1" type="text" name="cutName" value="새싹멤버"  maxlength="10" ></td>
 										<td><input class="cutdesc" id="conditionDesc1" type="text" name="cutDesc" value="가입 후 막 활동을 시작하는 멤버" maxlength="50">
 										</td>
 											<input type="hidden" name="cafeUserGrade" value="1" > 
@@ -234,7 +234,7 @@
                         </div>
                         
              		<div class="btnArea">
-             			<a href="#" class="btn btn-primary btn-icon-split" onclick="submitf()">
+             			<a href="#" class="btn btn-primary btn-icon-split" onclick="submitform()">
                               <span class="icon text-white-50">
                                    <i class="fas fa-check"></i>
                               </span>
@@ -245,7 +245,8 @@
                      </form>
                      
                      <script>
-                 	
+                 		
+                     	/*
 	                 	var dataList = new Array();
 	                 	var inputList = document.f1;
 	                 	
@@ -262,13 +263,50 @@
 	                 		}
 	                 		dataList.push(obj);
 	                 	}
+	                 	*/
 	                 	
-	                 	
+	                 	/*
 	                 	var testList = $('#f1').serializeArray();
-	                 	console.log(testList);
-	                 	
-	                 	//console.log(dataList[0].value);
-	                 	
+						var databundle = JSON.stringify(testList);
+						
+						console.log(databundle);
+						*/
+						
+						var dataList = new Array();
+						var inputList = $('#f1').serializeArray();
+						
+						for(i = 0; i < inputList.length; i++ ){
+
+							if(i % 8 == 0) {
+								var	tempList = new Array();
+							}
+							var obj = new Object()
+							obj.name = inputList[i].name
+							obj.value = inputList[i].value
+							tempList.push(obj);
+							
+							if(i % 8 == 0) {
+								dataList.push(tempList);
+							}
+						}
+						
+						var stringed = JSON.stringify(dataList)
+	                 	var dude = "응애"
+						function submitform() {
+							$.ajax({
+								type : 'post',
+								contentType : 'application/json; charset=utf-8',
+								url : '${contextPath}/navercafe/admin/siba',
+								dataType : 'JSON',
+								data : JSON.stringify(dude),
+								success : function(msg) {
+									alert(msg)
+								},
+								error : function() {
+									alert('에러발생;')
+								}
+							})
+						}
                      </script>
                	</div>
 				<!-- End of cstmContent1 -->	

@@ -13,7 +13,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.itbank.navercafe.admin.cafemember.dto.AdminCafeMemberDTO;
 import com.itbank.navercafe.admin.registergrade.dto.MembersGradeDTO;
@@ -131,6 +134,15 @@ public class AdminRegisterGradeController {
 		resp.setContentType("text/html; charset=utf-8");
 		PrintWriter out = resp.getWriter();
 		//out.print(msg);
+	}
+	
+	@ResponseBody
+	@PostMapping(value="siba", produces="application/json; charset=utf-8")
+	public String ajaxtest(@RequestBody MembersGradeDTO dto, String dude) {
+		ArrayList<MembersGradeDTO> list = dto.getList();
+		System.out.println(list);
+		System.out.println(dude);
+		return "메시지띠";
 	}
 	
 	
