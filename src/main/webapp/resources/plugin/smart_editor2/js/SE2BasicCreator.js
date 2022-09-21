@@ -26,7 +26,7 @@ function createSEditor2(elIRField, htParams, elSeAppContainer){
 	var htDimension = {
 		nMinHeight:300,
 		nMinWidth:elIRField.parentElement.offsetWidth-2||610, //2022-09-22 chi9148 넓이 textarea의 부모 요소 넓이 만큼 확장
-		nHeight:elIRField.style.height||elIRField.parentElement.offsetHeight-32, //2022-09-22 chi9148 높이 textarea의 부모 요소 높이 만큼
+		nHeight:elIRField.style.height||elIRField.offsetHeight,
 		nWidth:elIRField.style.width||elIRField.parentElement.offsetWidth
 	};
 	

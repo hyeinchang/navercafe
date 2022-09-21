@@ -20,9 +20,7 @@
                		<form class="user" name="frontForm">
                         <div class="form-group">
                         	<label>카페 대문</label>
-                        	<div style="height:500px">
-                        		  <textarea id="cafeFront" name="cafeFront" class="form-control" placeholder="카페 대문 내용을 입력해주십시오."></textarea>
-                        	</div>
+                        	<textarea id="cafeFront" name="cafeFront" class="form-control" placeholder="카페 대문 내용을 입력해주십시오."></textarea>
                         </div>
                     </form>
              		
