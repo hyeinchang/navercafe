@@ -62,7 +62,7 @@
                               <span class="icon text-white-50">
                                    <i class="fas fa-trash"></i>
                               </span>
-                              <span class="text">대문삭제</span>
+                              <span class="text">타이틀삭제</span>
                         </a>
 						</c:if>
              		</div>
