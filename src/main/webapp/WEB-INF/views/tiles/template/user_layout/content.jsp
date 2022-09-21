@@ -47,10 +47,10 @@
           <div class="dmbox" style="padding:18px;">
             <div class="service-icon">
               <div class="dm-icon-effect-1 effect-slide-bottom in" data-effect="slide-bottom" style="transition: all 0.7s ease-in-out 0s;">
-                <a href="${contextPath}/user/main?cafeId=${ranking.cafeId}"><img src="${ranking.cafeTitle}" alt="${ranking.cafeName}" style="width:300px;height:300px;"></a>
+                <a href="${contextPath}/user/main?cafeId=${ranking.cafeId}"><img src="$${contextPath}/file/download?titleNum=${ranking.titleNum}" alt="${ranking.cafeName}" style="width:300px;height:300px;"></a>
               </div>
             </div>
-            <h4><a href="location.href='${contextPath}/user/main?cafeId=${ranking.cafeId}'">${ranking.cafeName}</a></h4>
+            <h4><a href="${contextPath}/user/main?cafeId=${ranking.cafeId}'">${ranking.cafeName}</a></h4>
             <p>${ranking.cafeIntroduce}</p>
           </div>
         </div>

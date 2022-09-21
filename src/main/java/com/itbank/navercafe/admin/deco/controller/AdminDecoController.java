@@ -2,8 +2,6 @@ package com.itbank.navercafe.admin.deco.controller;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -14,13 +12,10 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.fasterxml.jackson.core.type.TypeReference;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import com.itbank.navercafe.admin.deco.service.AdminDecoService;
 import com.itbank.navercafe.comon.file.FileUtils;
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
@@ -98,7 +93,7 @@ public class AdminDecoController {
 		return "admin/deco/title";
 	}
 	
-	@PostMapping(value="saveTitle", produces="application/json; charset=utf8")
+	@RequestMapping(value="saveTitle", produces="application/json; charset=utf8")
 	@ResponseBody
 	public HashMap<Object, Object> saveTitle(MultipartHttpServletRequest multiRequest) {
 		HashMap<Object, Object> map = new HashMap<>();
