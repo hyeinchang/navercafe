@@ -62,7 +62,7 @@
                               <span class="icon text-white-50">
                                    <i class="fas fa-trash"></i>
                               </span>
-                              <span class="text">대문삭제</span>
+                              <span class="text">타이틀삭제</span>
                         </a>
 						</c:if>
              		</div>
@@ -71,79 +71,9 @@
 					
             </div>
             <!-- End of Main Content -->
-		
-      		<ul id="testUl">
-      			
-      			<li>
-      				<form name="testForm" id="testForm1">
-      				<input type="text" name="hello" value="hello1">
-      				<input type="text" name="bye" value="bye1">
-      				</form>
-      			</li>
-      			
-      			
-      			<li>
-      				<form name="testForm" id="testForm2">
-      				<input type="text" name="hello" value="hello2">
-      				<input type="text" name="bye" value="bye2">
-      				</form>
-      			</li>
-      			
-      		
-      			<li>
-      				<form name="testForm" id="testForm3">
-      				<input type="text" name="hello" value="hello3">
-      				<input type="text" name="bye" value="bye3">
-      				</form>
-      			</li>
-      			<li>
-      				<form name="testForm" id="testForm4">
-      				<input type="text" name="hello" value="hello4">
-      				<input type="text" name="bye" value="bye4">
-      				</form>
-      			</li>
-      		</ul>
       		
 <script type="text/javascript">
 document.body.onload = setFileAreaEvent;
-
-var testList = new Array();
-var testFormList = document.testForm;
-
-for(var i=0; i<testFormList.length; i++) {
-	var testForm = testFormList[i];
-	var obj = new Object();
-	
-	for(var j=0; j<testForm.length; j++) {
-		var element = testForm[j];
-		
-		if(element.name) {
-			obj[element.name] = element.value;
-			
-		}
-		
-	}
-	testList.push(obj);
-}
-
-
-var data = JSON.stringify(testList);
-var params = {};
-
-console.log("testList : " + testList)
-console.log("data : " + data);
-$.ajax({
-	type : 'post'
-	, contentType : 'application/json'
-	, url : '${contextPath}/admin/deco/test'
-	, traditional : true
-	, dataType : 'json'
-	//, data : {data : JSON.stringify(params)}
-	, data : data
-	, success : function(testList) {
-		console.log(data);
-	}
-});
 
 // 카페 타이틀 저장
 function saveTitle() {
@@ -160,8 +90,7 @@ function saveTitle() {
 	
 	xhr.onreadystatechange = function() {
 		if(xhr.readyState == 4 && xhr.status == 200) {
-			var response = xhr.response;
- 			var data = JSON.parse(response);
+ 			var data = JSON.parse(xhr.response);
  			var message = '';
  			
  			if(data.result == 1) {

@@ -3,7 +3,12 @@ package com.itbank.navercafe.comon.file;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
 
@@ -85,6 +90,9 @@ public class FileUtils {
 			
 			if(checkDirectory(uploadPath)) {
 				Iterator<String> fileNames =  multiRequest.getFileNames();
+				ArrayList<FileDTO> fileDTOList = new ArrayList<>();
+				int uploadCount = 0;
+				int fileCount = 0;
 				
 				while(fileNames.hasNext()) {
 					String fileName = fileNames.next();
@@ -93,11 +101,22 @@ public class FileUtils {
 					
 					if(uploadResult.getState() == fileResult.SUCCESS) {
 						FileDTO fileDTO = uploadResult.getFileDTO();
-						fileResult.getFileDTOList().add(fileDTO);
+						
+						fileResult.setFileDTO(fileDTO);
+						fileDTOList.add(fileDTO);
+						uploadCount++;
 					}
+					fileCount++;
 				}
 				
-				fileResult.setState(fileResult.SUCCESS);
+				fileResult.setFileDTOList(fileDTOList);
+				
+				// 가져온 파일의 개수와 업로드한 파일의 개수 비교
+				if(uploadCount == fileCount) {
+					fileResult.setState(fileResult.SUCCESS);
+				} else {
+					fileResult.setState(fileResult.FAIL);
+				}
 			} else {
 				fileResult.setState(fileResult.FAIL);
 			}
@@ -208,7 +227,28 @@ public class FileUtils {
 	}
 	
 	
-	// DB에 저장된 파일 다운로드
+	// DB에서 FileDTO로 파일정보를 찾아 다운로드
+	public void download(HttpServletResponse response, FileDTO pfileDTO, boolean onlyFile) throws IOException {		
+		try {
+			FileDTO fileDTO = pfileDTO;
+			
+			if(!onlyFile) {
+				fileDTO = fileService.selectAttachFile(pfileDTO);
+			}
+			
+			if(fileDTO != null) {
+				String orgFileName = fileDTO.getFileOrgName();
+				String storedFileName = fileDTO.getFileStoredName();
+				String directory = fileDTO.getFileDirectory();
+				
+				download(response, directory, storedFileName, orgFileName);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		} 
+	}
+	
+	// 파일 다운로드
 	public void download(HttpServletResponse response, String directory, String storedFileName, String orgFileName) throws IllegalStateException, IOException {
 		FileInputStream fis = null;
 		
@@ -223,9 +263,7 @@ public class FileUtils {
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
-		} finally {
-			fis.close();
-		}	
+		}
 	}
 	
 	// 파일 명으로 해당 디렉토리의 파일 다운로드
@@ -246,6 +284,20 @@ public class FileUtils {
 		} finally {
 			fis.close();
 		}	
+	}
+	
+	// 파일 옮기기
+	public void moveFile(String afterDirectory, String beforeDirectory, String fileName) throws IllegalStateException, IOException {
+		try {
+			if(checkDirectory(beforeDirectory) && checkDirectory(afterDirectory)) {
+				Path beforePath = Paths.get(getUploadPath(beforeDirectory) + PATH_DELIMITER + fileName);
+				Path afterPath = Paths.get(getUploadPath(afterDirectory) + PATH_DELIMITER + fileName);
+				
+				Files.move(beforePath, afterPath, StandardCopyOption.REPLACE_EXISTING);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	// 경로의 / 중복 삭제
@@ -322,13 +374,6 @@ public class FileUtils {
 		}
 		
 		return result;
-	}
-	
-	public static void main(String[] args) {
-		String result = "result.re.jsp".substring("result.re.jsp".lastIndexOf("."));
-		String result2 = "result.re.jsp".substring(0, "result.re.jsp".lastIndexOf("."));
-		System.out.println(result);
-		System.out.println(result2);
 	}
 	
 

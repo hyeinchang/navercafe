@@ -33,9 +33,6 @@ public class FileResult {
 		return NO_FILE;
 	}
 	public ArrayList<FileDTO> getFileDTOList() {
-		if(fileDTOList == null) {
-			fileDTOList = new ArrayList<>();
-		}
 		return fileDTOList;
 	}
 	public void setFileDTOList(ArrayList<FileDTO> fileDTOList) {
