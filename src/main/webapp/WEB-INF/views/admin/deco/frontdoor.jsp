@@ -21,7 +21,9 @@
                			<input type="hidden" name="cafeId" value="${cafeDTO.cafeId}">
                         <div class="form-group">
                         	<label>카페 대문</label>
-                        	<textarea id="cafeFront" name="cafeFront" class="form-control" placeholder="카페 대문 내용을 입력해주십시오.">${cafeDTO.cafeFront}</textarea>
+                        	<div style="min-height:500px;"> <!-- smarteditor 최소 높이 설정을 위해 해당 textarea 부모 노드에 min-height 스타일 부여 -->
+                        		<textarea id="cafeFront" name="cafeFront" class="form-control" placeholder="카페 대문 내용을 입력해주십시오.">${cafeDTO.cafeFront}</textarea>
+                        	</div>
                         </div>
                     </form>
              		
