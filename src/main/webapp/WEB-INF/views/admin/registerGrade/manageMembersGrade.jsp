@@ -18,6 +18,10 @@
 	td p {
 		margin-bottom : 5px; 
 	}
+	
+	.makethemgrey {
+		background-color: #868e96;
+	}
 
 </style>
 
@@ -63,15 +67,18 @@
 		$('#'+remove).val('true') //삭제여부 값 true
 		
 		// 전체 input disable 및 select disable 
-		$('#'+trB).children('td').children('input').prop('disabled', true)
+		$('#'+trB).children('td').children('input').prop('readonly', true)
+		$('#'+trB).children('td').children('input').addClass('makethemgrey');
 		$('#'+trB).children('td').children('select').prop('disabled', true)
 		
 		
 		// 히든값  두개 및 추가버튼 able 
 		let inleng = $('#'+trB).children('input').length
+		/*
 		$('#'+trB).children('td').children('input').eq(inleng-1).prop('disabled', false)
 		$('#'+trB).children('td').children('input').eq(inleng-2).prop('disabled', false)
 		$('#'+trB).children('td').children('input').eq(inleng-3).prop('disabled', false)
+		*/
 		
 	}
 	
@@ -93,8 +100,9 @@
 		$('#'+remove).val('false') 
 		
 		// input 및  셀렉트 전부 활성화
-		$('#'+trB).children('td').children('input').prop('disabled', false)
-		$('#'+trB).children('td').children('select').prop('disabled', false)	
+		$('#'+trB).children('td').children('input').prop('readonly', false)
+		$('#'+trB).children('td').children('select').prop('disabled', false)
+		$('#'+trB).children('td').children('input').removeClass('makethemgrey');
 		
 	}
 	
@@ -110,8 +118,8 @@
 		
 	}
 	
-	
 	let types = [];
+
 </script>
 
   	<!-- Page Wrapper -->
@@ -129,7 +137,7 @@
                	<!-- cstmContent1 -->
                	<div class="cstmContent1">
                	
-               		<form id="f1" method="post" action="modifyRegisterInfo">
+               		<form name="f1" id="f1" method="post" action="modifyRegisterInfo">
                     	<div class="form-group">
                     		 <ul>
                     		 	<li> 카페 멤버별 등급 조건을 관리합니다. 멤버의 등업 방식으로 자동등업이나 등업 게시판을 설정할 수 있습니다. </li>
@@ -162,30 +170,35 @@
 								<tbody id="tbody">
 									<tr>
 										<td> <img id="iconImg1" src="https://cafe.pstatic.net/levelicon/1/1_1.gif" width="11px" height="11px"> </td>
-										<td><input id="conditionName1" type="text" name="cafeUserGrade1" value="새싹멤버"  maxlength="10" ></td>
-										<td><input class="cutdesc" id="conditionDesc1" type="text" name="cutDesc1" value="가입 후 막 활동을 시작하는 멤버" maxlength="50">
+										<td><input id="conditionName1" type="text" name="cafeUserGrade" value="새싹멤버"  maxlength="10" ></td>
+										<td><input class="cutdesc" id="conditionDesc1" type="text" name="cutDesc" value="가입 후 막 활동을 시작하는 멤버" maxlength="50">
 										</td>
-											<input type="hidden" name="cafeUserGrade1" value="1"> 
+											<input type="hidden" name="cafeUserGrade" value="1" > 
+											<input type="hidden" name="cutBoard" value="0" > 
+											<input type="hidden" name="cutReply" value="0" > 
+											<input type="hidden" name="cutVisit" value="0" > 
+											<input type="hidden" name="cutRemoved" value="0" >
+											<input type="hidden" name="cutType" value="1">
 									</tr>
 									
 									<c:forEach var="dto" items="${list }" varStatus="loop">
 										<tr id="trBlock${loop.count+1}">
 											<td><img id="iconImg${loop.count+1}" src="https://cafe.pstatic.net/levelicon/1/1_1${loop.count}0.gif" width="11" height="11"> </td>
-											<td><input id="conditionName${loop.count+1 }" type="text" name="cutName${loop.count+1}" value="${dto.cafeUserGrade }"  maxlength="10" ></td>
-											<td><input class="cutdesc" id="conditionDesc${loop.count+1}" type="text" name="cutDesc${loop.count+1}" value="${dto.cutDesc }" maxlength="50" class="text2">
+											<td><input id="conditionName${loop.count+1 }" type="text" name="cutName" value="${dto.cafeUserGrade }"  maxlength="10" ></td>
+											<td><input class="cutdesc" id="conditionDesc${loop.count+1}" type="text" name="cutDesc" value="${dto.cutDesc }" maxlength="50" class="text2">
 												<p id="condition${loop.count+1}" class="detail" style="">                    
 													<label for="sum_write">게시글</label>
-													<input type="text" name="cutBoard${loop.count+1}" id="cutBoard${loop.count+1}" class="text4" value="${dto.cutBoard }" maxlength="5"> 개,&nbsp;&nbsp;
+													<input type="text" name="cutBoard" id="cutBoard${loop.count+1}" class="text4" value="${dto.cutBoard }" maxlength="5"> 개,&nbsp;&nbsp;
 													<label for="sum_reply">댓글</label>
-													<input type="text" name="cutReply${loop.count+1}" id="cutReply${loop.count+1}" class="text4" value="${dto.cutReply }" maxlength="5"> 개,&nbsp;&nbsp;
+													<input type="text" name="cutReply" id="cutReply${loop.count+1}" class="text4" value="${dto.cutReply }" maxlength="5"> 개,&nbsp;&nbsp;
 													<label for="sum_visit">방문</label>
-													<input type="text" name="cutVisit${loop.count+1}" id="cutVisit${loop.count+1}" class="text4" value="${dto.cutVisit }" maxlength="5"> 회&nbsp;&nbsp;
+													<input type="text" name="cutVisit" id="cutVisit${loop.count+1}" class="text4" value="${dto.cutVisit }" maxlength="5"> 회&nbsp;&nbsp;
 													<span id="conditionMessage${loop.count+1}"> 후 만족 시 자동등업 </span>
 												</p>
 												<p id="deletedMessage${loop.count+1}" style="display:none;" align="center">해당등급이 삭제 되었습니다.</p>
 											</td>
 											<td>
-												<select id="levelUpMethod${loop.count+1}" name="cutType${loop.count+1}" class="">
+												<select id="levelUpMethod${loop.count+1}" name="cutType" class="">
 													<option value="1">설정안함</option>
 													<option value="2">자동등업</option>
 													<option value="3">등업게시판</option>
@@ -196,8 +209,8 @@
 											</td>
 											<td id="addbtn${loop.count+1}" style="display:none"> 
 												<input type="button" id="" class="btn btn-secondary btn-sm" value="+ 추가" onclick="changetoDel(this)"> 
-												<input type="hidden" name="cutRemoved${loop.count+1 }" value="${dto.cutRemoved }" id="cutRemoved${loop.count+1}">
-												<input type="hidden" name="cafeUserGrade${loop.count+1 }" value="${loop.count+1}">
+												<input type="hidden" name="cutRemoved" value="${dto.cutRemoved }" id="cutRemoved${loop.count+1}">
+												<input type="hidden" name="cafeUserGrade" value="${loop.count+1}">
 											</td>
 										</tr>
 										
@@ -230,6 +243,33 @@
              		</div>
                         
                      </form>
+                     
+                     <script>
+                 	
+	                 	var dataList = new Array();
+	                 	var inputList = document.f1;
+	                 	
+	                 	for(i = 0; i < inputList.length; i++) {
+	                 		var inputs = inputList[i];
+	                 		var obj = new Object();
+	                 		
+	                 		for(j = 0; j < inputs.length; j++) {
+	                 			var elem = inputs[j];
+	                 			
+	                 			if(elem.name) {
+	                 				obj[elem.name] = elem.value;
+	                 			}
+	                 		}
+	                 		dataList.push(obj);
+	                 	}
+	                 	
+	                 	
+	                 	var testList = $('#f1').serializeArray();
+	                 	console.log(testList);
+	                 	
+	                 	//console.log(dataList[0].value);
+	                 	
+                     </script>
                	</div>
 				<!-- End of cstmContent1 -->	
 					
