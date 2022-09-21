@@ -59,9 +59,10 @@ for(var i=0; i<testFormList.length; i++) {
 
 var data = JSON.stringify(testList);
 
-console.log("testList : " + testList)
+console.log("testList : " + testList);
 console.log("data : " + data);
 
+// controller에서 jsonsimple, gson 라이브러리 사용
 $.ajax({
 	type : 'post'
 	, contentType : 'application/json'
@@ -70,6 +71,36 @@ $.ajax({
 	, dataType : 'json'
 	, data : data
 	, success : function(data) {
+		console.log('act1');
+		console.log(data);
+	}
+});
+
+
+// DTO에 List<DTO> 형식의 변수 생성하여 controller에서 list를 변수로 받는 형식
+$.ajax({
+	type : 'post'
+	, contentType : 'application/json'
+	, url : '${contextPath}/admin/test/jsonArrayAjax/act2'
+	//, traditional : true
+	, dataType : 'json'
+	, data : JSON.stringify({testDTOList : testList})
+	, success : function(data) {
+		console.log('act2');
+		console.log(data);
+	}
+});
+
+// controller에서 Map<String, List<DTO>> 형식으로 파라미터를 받는 방식
+$.ajax({
+	type : 'post'
+	, contentType : 'application/json'
+	, url : '${contextPath}/admin/test/jsonArrayAjax/act3'
+	//, traditional : true
+	, dataType : 'json'
+	, data : JSON.stringify({data : testList})
+	, success : function(data) {
+		console.log('act3');
 		console.log(data);
 	}
 });
