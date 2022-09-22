@@ -96,7 +96,7 @@ ${cafeId}
                 </a>
                 <div id="menu" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/menu')">메뉴 관리</a>
+                        <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/menu/boardMenu')">메뉴 관리</a>
                     </div>
                 </div>
             </li>

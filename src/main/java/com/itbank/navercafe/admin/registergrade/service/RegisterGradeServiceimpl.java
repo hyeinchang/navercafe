@@ -1,12 +1,16 @@
 package com.itbank.navercafe.admin.registergrade.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
+import com.itbank.navercafe.admin.registergrade.dto.MembersGradeDTO;
+import com.itbank.navercafe.admin.registergrade.dto.RegisterInfoDTO;
 import com.itbank.navercafe.mybatis.board.AdminBoardMapper;
 
 @Service
@@ -98,7 +102,32 @@ public class RegisterGradeServiceimpl implements RegisterGradeService {
 		*/
 		
 	}
-	
-	
+
+	@Override
+	public String modifyRegisterInfo(List<MembersGradeDTO> update) {
+		//삭제 여부에 따라 cafeUserGrade 를 제외한 모든 값초기화
+		for(int i = 0; i<update.size(); i++) {
+			if(update.get(i).getCutRemoved().equals("true")) {
+				update.get(i).setCutBoard(0);
+				update.get(i).setCutDesc("");
+				update.get(i).setCutName("");
+				update.get(i).setCutReply(0);
+				update.get(i).setCutType(1)	;
+				update.get(i).setCutVisit(0);
+			}
+		}
+		
+		int result = 0;
+		for(int i = 0; i<update.size(); i++) {
+			//count += mapper.modifyRegisterInfo(result.get(i));
+			result++;
+		}
+		if (result == update.size()) {
+			return "성공인듯";
+		} else {
+			return "업데이트 문제생김;;";
+		}
+		
+	}
 
 }
