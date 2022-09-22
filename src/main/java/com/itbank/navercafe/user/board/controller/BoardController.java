@@ -36,7 +36,7 @@ public class BoardController {
 		return "user/board/boardList";
 	}
 
-	@GetMapping("goBoardInside")
+	@GetMapping("/goBoardInside")
 	public String goBoardInside(int boardNum, Model model,HttpSession session,
 			@RequestParam(value="num",required=false,defaultValue="0")int num) {
 		//댓글 갯수 세오기
@@ -64,11 +64,11 @@ public class BoardController {
 		
 		//인기글 리스트
 		ser.topList(model);
-		return "board/boardInside";
+		return "user/board/boardInside";
 	}
 
 	
-	//			댓글, 답글 groupNum으로 식별하기
+	//			댓글, 답글 step으로 식별하기
 	@PostMapping("saveReply")
 	public String saveReply(MultipartHttpServletRequest mul,
 			@RequestParam(value="step",required=false,defaultValue="0")int step) {

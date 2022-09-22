@@ -23,6 +23,12 @@ public class CafeMemberDTO {
 	public String getUserId() {
 		return userId;
 	}
+	public String getCafeUserImage() {
+		return cafeUserImage;
+	}
+	public void setCafeUserImage(String cafeUserImage) {
+		this.cafeUserImage = cafeUserImage;
+	}
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
@@ -32,12 +38,9 @@ public class CafeMemberDTO {
 	public void setCafeUserNickname(String cafeUserNickname) {
 		this.cafeUserNickname = cafeUserNickname;
 	}
-	public String getCafeUserImage() {
-		return cafeUserImage;
-	}
-	public void setCafeUserImage(String cafeUserImage) {
-		this.cafeUserImage = cafeUserImage;
-	}
+
+
+	
 	public int getCafeUserGrade() {
 		return cafeUserGrade;
 	}

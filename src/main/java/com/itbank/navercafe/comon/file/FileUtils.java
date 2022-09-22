@@ -13,7 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 @Component
 public class FileUtils {
-	//@Value("${navercafe.file.upload_path}")
+	@Value("${navercafe.file.upload_path}")
 	private String upload_path;
 	
 	public void test(MultipartFile multipartFile) throws IllegalStateException, IOException {

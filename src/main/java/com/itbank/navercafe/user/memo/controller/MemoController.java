@@ -27,7 +27,12 @@ public class MemoController {
 	
 	@GetMapping("/goMemoBoardList")
 	public String goMemoBoardList(Model model){
+		//메모 게시글들
 		model.addAttribute("mapList",memoSer.getMemoList());
+		System.out.println("메모 게시물들 키 :"+memoSer.getMemoList());
+		//메모 댓글들
+		model.addAttribute("memoReplyList",memoSer.getReplyList());
+		System.out.println("메모 댓글 키 :"+memoSer.getReplyList());
 		return "user/board/memoBoardList";
 	}
 	

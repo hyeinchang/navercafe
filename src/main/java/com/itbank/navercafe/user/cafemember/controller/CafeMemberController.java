@@ -31,14 +31,15 @@ public class CafeMemberController {
 		model.addAttribute("cafeMemberList",cafeSer.getCafeMemberList());
 		return "user/board/cafeMemberList";
 	}
-	@GetMapping("goRegCafeMember")
+	@GetMapping("/goRegCafeMember")
 	public String goRegCafeMember() {
-		return "cafeMember/regCafeMember";
+		return "user/board/regCafeMember";
 	}
 	
 	@PostMapping("saveData")
 	public String saveData(MultipartHttpServletRequest mul,
 							HttpServletRequest request){
+		System.out.println(mul.getParameter("cafeUserImage"));
 		cafeSer.writeSave(mul,request);
 		return "redirect:goCafeMemberList";
 	}
@@ -58,10 +59,10 @@ public class CafeMemberController {
 		return "cafeMember/cafeMemberList";
 	}
 	
-	@GetMapping("userViewList")
+	@GetMapping("/userViewList")
 	public String userViewList(String userId,Model model) {
 		cafeSer.getUserViewList(userId,model);
-		return "board/userViewList";
+		return "user/board/userViewList";
 	}
 
 

@@ -1,6 +1,9 @@
 package com.itbank.navercafe.user.cafemember.service;
 
+import java.io.File;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Calendar;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -10,7 +13,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-//import com.itbank.navercafe.comon.file.FileService;
+import com.itbank.navercafe.comon.file.FileService;
 import com.itbank.navercafe.mybatis.cafemember.CafeMemberMapper;
 import com.itbank.navercafe.user.cafemember.dto.CafeMemberDTO;
 
@@ -19,8 +22,9 @@ import com.itbank.navercafe.user.cafemember.dto.CafeMemberDTO;
 @Service
 public class CafeMemberServiceImpl implements CafeMemberService{
 	@Autowired CafeMemberMapper cafeMap;
-	//@Autowired FileService fs;
+	@Autowired FileService fs;
 	
+
 	
 	@Override
 	public ArrayList<CafeMemberDTO> getCafeMemberList() {
@@ -34,7 +38,7 @@ public class CafeMemberServiceImpl implements CafeMemberService{
 		dto.setCafeUserNickname(mul.getParameter("cafeUserNickname"));
 		MultipartFile file=mul.getFile("cafeUserImage");
 		if(file.getSize()!=0) {
-			//dto.setCafeUserImage(fs.saveFile(file));
+			dto.setCafeUserImage(fs.saveFile(file));
 		}else {
 			dto.setCafeUserImage("nan");
 		}

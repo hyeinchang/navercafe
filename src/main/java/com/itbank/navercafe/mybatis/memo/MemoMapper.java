@@ -7,5 +7,5 @@ import java.util.List;
 public interface MemoMapper {
 	
 	public List<HashMap<String, Object>> getMemoList();
-	
+	public List<HashMap<String, Object>> getReplyList();
 }

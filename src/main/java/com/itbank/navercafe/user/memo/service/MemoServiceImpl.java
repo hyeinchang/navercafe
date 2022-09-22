@@ -29,6 +29,11 @@ public class MemoServiceImpl implements MemoService{
 		List<HashMap<String, Object>>map=memoMap.getMemoList();
 		return map;
 	}
+
+	@Override
+	public List<HashMap<String, Object>> getReplyList() {
+		return memoMap.getReplyList();
+	}
 	
 	
 
