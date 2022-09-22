@@ -31,7 +31,7 @@
   <link href="${contextPath}/resources/MaxiBiz/css/style.css" rel="stylesheet">
   <c:choose>
   <c:when test="${cafeDTO eq null || cafeDTO.cafeSkin eq null}">
-   <link rel="stylesheet" href="${contextPath}/resources/MaxiBiz/css/colors/default.css">	
+   <link rel="stylesheet" href="${contextPath}/resources/MaxiBiz/css/colors/default.css">
   </c:when>
   <c:otherwise>
    <link rel="stylesheet" href="${contextPath}/resources/MaxiBiz/css/colors/${cafeDTO.cafeSkin}.css">	
