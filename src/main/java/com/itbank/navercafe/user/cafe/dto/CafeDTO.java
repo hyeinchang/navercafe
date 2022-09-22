@@ -4,7 +4,7 @@ public class CafeDTO {
 	private String cafeId;
 	private String cafeName;
 	private String cafeSkin;
-	private String cafeTitle;
+	private int titleNum;
 	private String cafeIntroduce;
 	private String cafeFront;
 	private int cafeLayout;
@@ -38,11 +38,11 @@ public class CafeDTO {
 	public void setCafeSkin(String cafeSkin) {
 		this.cafeSkin = cafeSkin;
 	}
-	public String getCafeTitle() {
-		return cafeTitle;
+	public int getTitleNum() {
+		return titleNum;
 	}
-	public void setCafeTitle(String cafeTitle) {
-		this.cafeTitle = cafeTitle;
+	public void setTitleNum(int titleNum) {
+		this.titleNum = titleNum;
 	}
 	public String getCafeIntroduce() {
 		return cafeIntroduce;

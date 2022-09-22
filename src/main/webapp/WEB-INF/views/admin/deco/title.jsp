@@ -1,10 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<c:set var="skinLocation" value="${contextPath}/resources/img/sample/skin"/>
-<style>
-
-</style>
 
   	<!-- Page Wrapper -->
     <div id="wrapper">
@@ -23,6 +19,7 @@
                	
                		<form name="titleForm">
                			<input type="hidden" name="cafeId" value="${cafeDTO.cafeId}">
+               			<input type="hidden" name="titleNum" value="${cafeDTO.titleNum}">
                			<div class="card mb-4">
 							<div class="card-header">
 								<b>카페 타이틀 이미지 업로드</b>
@@ -39,8 +36,8 @@
 			               				
 			               				<div class="preview">
 			               					<c:choose>
-			               						<c:when test="${cafeDTO.cafeTitle ne null && cafeDTO.cafeTitle.length() != 0}">
-										    	<img src="${cafeDTO.cafeTitle}" id="previewImg">
+			               						<c:when test="${cafeDTO.titleNum ne null && cafeDTO.titleNum > 0}">
+										    	<img src="${contextPath}/file/download?titleNum=${cafeDTO.titleNum}" id="previewImg">
 				               					</c:when>
 				               					<c:otherwise>
 				               					<img src="" id="previewImg" style="display:none;">
@@ -59,14 +56,22 @@
                                    <i class="fas fa-check"></i>
                               </span>
                               <span class="text">저장하기</span>
-                          </a>
+                         </a>
+						<c:if test="${cafeDTO.titleNum ne null && cafeDTO.titleNum > 0}">
+						<a href="javascript:deleteTitle()" class="btn btn-danger btn-icon-split">
+                              <span class="icon text-white-50">
+                                   <i class="fas fa-trash"></i>
+                              </span>
+                              <span class="text">타이틀삭제</span>
+                        </a>
+						</c:if>
              		</div>
                	</div>
 				<!-- End of cstmContent1 -->	
 					
             </div>
             <!-- End of Main Content -->
-         
+      		
 <script type="text/javascript">
 document.body.onload = setFileAreaEvent;
 
@@ -85,8 +90,7 @@ function saveTitle() {
 	
 	xhr.onreadystatechange = function() {
 		if(xhr.readyState == 4 && xhr.status == 200) {
-			var response = xhr.response;
- 			var data = JSON.parse(response);
+ 			var data = JSON.parse(xhr.response);
  			var message = '';
  			
  			if(data.result == 1) {
@@ -100,6 +104,15 @@ function saveTitle() {
 	}
 	
 	xhr.send(new FormData(titleForm));
+}
+
+//카페 타이틀 삭제
+function deletTitle() {
+	var titleForm = document.titleForm;
+	
+	titleForm.action = '${contextPath}/deco/deleteTitle';
+	titleForm.method = 'post';
+	titleForm.submit();
 }
 
 //드래그 파일 영역에 이벤트 설정

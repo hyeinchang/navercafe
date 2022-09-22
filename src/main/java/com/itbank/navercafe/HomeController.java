@@ -53,14 +53,14 @@ public class HomeController {
 			cafe.setCafeId("cafeId" + order);
 			cafe.setCafeName("테스트 카페" + order);
 			cafe.setCafeIntroduce("테스트 카페"+ order +"(cafeId: cafeId"+ order +")에 대한 소개입니다.");
-			cafe.setCafeTitle(contextPath + "/resources/upload/free-icon-joy-7021182.png");
+		
 			
 			switch(order) {
 			case 1 : skin = "asphalt";
-				cafe.setCafeTitle(request.getContextPath() + "/resources/upload/demo_01.jpg");
+			
 				break;
 			case 2 : skin = "blue";
-				cafe.setCafeTitle(request.getContextPath() + "/resources/upload/1794220617_XSpkAiBo_pexels-eberhard-grossgasteiger-1287142.jpg");
+			
 				break;
 			case 3 : skin = "brown";
 				break;
