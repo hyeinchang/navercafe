@@ -8,6 +8,7 @@ import java.util.Map;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -15,8 +16,10 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.google.gson.Gson;
 import com.itbank.navercafe.admin.test.dto.TestDTO;
+import com.itbank.navercafe.user.cafe.dto.CafeDTO;
 
-@RequestMapping(value="/test")
+@Controller
+@RequestMapping(value="/admin/test")
 public class AdminTestController {
 	@RequestMapping(value="/jsonArrayAjax")
 	public String testJasonArrayAjax() {
@@ -100,21 +103,50 @@ public class AdminTestController {
 	}
 	
 	@RequestMapping(value="/smarteditor")
-	public String testSmarteditor(Model model) {
+	public String testSmarteditor(CafeDTO cafeDTO, Model model) {
+		cafeDTO.setCafeId("testCagfeId_20220922");
+		cafeDTO.setCafeFront("<h2>Index</h2>\r\n" + 
+				"            <div>\r\n" + 
+				"                index 페이지입니다.\r\n" + 
+				"            </div>\r\n" + 
+				"            <iframe width=\"720\" height=\"405\" src=\"https://www.youtube.com/embed/0NwCKCmf0Qg\" title=\"아는 사람만 찾아먹는다는 자연산 잡어회(입질의 해산로드 #16, 마산 어시장편)\" \r\n" + 
+				"            frameborder=\"0\" allow=\"accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture\" allowfullscreen></iframe>");
+
+		System.out.println("cafeId : " + cafeDTO.getCafeId());
+
+		
+		model.addAttribute("cafeDTO", cafeDTO);
+
 		return "admin/test/smarteditor";
 	}
 
 	@RequestMapping(value="/smarteditor/save")
-	public String testSmarteditorSave(TestDTO testDTO) {
-		return "admin/test/smarteditor";
+	public String testSmarteditorSave(CafeDTO cafeDTO, TestDTO testDTO) {
+		String cafeId = "";
+		try {
+			cafeId = testDTO.getCafeId();
+			System.out.println("==== submit으로 전송 했을 경우 ====");
+			System.out.println("testDTO > cafeId : " + testDTO.getCafeId());
+			System.out.println("testDTO > Content : " + testDTO.getContent());
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return "redirect:/admin/test/smarteditor?cafeId=" + cafeId;
 	}
 	
 	@RequestMapping(value="/smarteditor/saveAjax", produces="application/json")
 	@ResponseBody
-	public int testSmarteditorSaveAjax() {
+	public int testSmarteditorSaveAjax(@RequestBody TestDTO testDTO) {
 		int result = 0;
 		
-		result = 1;
+		try {
+			result = 1;
+			System.out.println("==== 비동기로 전송 했을 경우 ====");
+			System.out.println("testDTO > cafeId : " + testDTO.getCafeId());
+			System.out.println("testDTO > Content : " + testDTO.getContent());
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 		
 		return result;
 	}
