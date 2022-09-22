@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <script src="https://code.jquery.com/jquery-3.5.1.js"> </script>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <style>
 	.cutdesc {
@@ -105,20 +106,9 @@
 		$('#'+trB).children('td').children('input').removeClass('makethemgrey');
 		
 	}
-	
-	function submitf() {
-		/*
-		var databundle = $('#f1').serializeArray();
-		console.log(databundle); 
-		console.log(databundle[0])
-		console.log(databundle[0].name)
-		console.log(databundle[0].value)
-		*/
-		$('#f1').submit()
-		
-	}
-	
+
 	let types = [];
+
 
 </script>
 
@@ -209,14 +199,15 @@
 											</td>
 											<td id="addbtn${loop.count+1}" style="display:none"> 
 												<input type="button" id="" class="btn btn-secondary btn-sm" value="+ 추가" onclick="changetoDel(this)"> 
+											</td>
 												<input type="hidden" name="cutRemoved" value="${dto.cutRemoved }" id="cutRemoved${loop.count+1}">
 												<input type="hidden" name="cafeUserGrade" value="${loop.count+1}">
-											</td>
 										</tr>
 										
 										<script>
 											// types 배열에 cutType 저장
-											types.push(${dto.cutType});
+											var tempcutType = ${dto.cutType};
+											types.push(tempcutType);
 										</script>
 										
                         			</c:forEach>
@@ -226,9 +217,7 @@
 							
 							<script>
 								//levelUpMethod 셀렉트 밸류값에 따라 선택지정
-								for(i = 0; i < 5; i++) {
-									$('#levelUpMethod'+(i+2)).val(types[i]);
-								}
+								for(i = 0; i < 5; i++) { $('#levelUpMethod'+(i+2)).val(types[i]); }
 							</script>	
 							
                         </div>
@@ -244,70 +233,48 @@
                         
                      </form>
                      
-                     <script>
-                 		
-                     	/*
-	                 	var dataList = new Array();
-	                 	var inputList = document.f1;
-	                 	
-	                 	for(i = 0; i < inputList.length; i++) {
-	                 		var inputs = inputList[i];
-	                 		var obj = new Object();
+                    <script>
+                  	
+	                 	function submitform() {
+	                 		var dataList = new Array();
+	                     	var inputList = $('#f1').serializeArray();
+	                     	
+	                     	for(i = 0; i < inputList.length; i++ ){
+	
+	                     		if(i % 8 == 0) {
+	                     			var obj = new Object()
+	                     		}
+	                     		
+	                     		obj[inputList[i].name] = inputList[i].value
+	                     		
+	                     		if(i % 8 == 0) {
+	                     			dataList.push(obj);
+	                     		}
+	                     		
+	                     	}
+	                     	
+	                     	var stringified = JSON.stringify(dataList)
+	                 		console.log(stringified);
+	                 		console.log(dataList);
 	                 		
-	                 		for(j = 0; j < inputs.length; j++) {
-	                 			var elem = inputs[j];
-	                 			
-	                 			if(elem.name) {
-	                 				obj[elem.name] = elem.value;
+	                 		$.ajax({
+	                 			type : 'post',
+	                 			contentType : 'application/json; charset=utf-8',
+	                 			url : '${contextPath}/admin/modifyRegisterInfo',
+	                 			dataType : 'text',
+	                 			data : JSON.stringify({data : dataList}),
+	                 			success : function(data) {
+	                 				console.log(data);
+	                 			},
+	                 			error : function(request,status,error) {
+	                 				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
 	                 			}
-	                 		}
-	                 		dataList.push(obj);
+	                 		});
 	                 	}
-	                 	*/
-	                 	
-	                 	/*
-	                 	var testList = $('#f1').serializeArray();
-						var databundle = JSON.stringify(testList);
-						
-						console.log(databundle);
-						*/
-						
-						var dataList = new Array();
-						var inputList = $('#f1').serializeArray();
-						
-						for(i = 0; i < inputList.length; i++ ){
-
-							if(i % 8 == 0) {
-								var	tempList = new Array();
-							}
-							var obj = new Object()
-							obj.name = inputList[i].name
-							obj.value = inputList[i].value
-							tempList.push(obj);
-							
-							if(i % 8 == 0) {
-								dataList.push(tempList);
-							}
-						}
-						
-						var stringed = JSON.stringify(dataList)
-	                 	var dude = "응애"
-						function submitform() {
-							$.ajax({
-								type : 'post',
-								contentType : 'application/json; charset=utf-8',
-								url : '${contextPath}/navercafe/admin/siba',
-								dataType : 'JSON',
-								data : JSON.stringify(dude),
-								success : function(msg) {
-									alert(msg)
-								},
-								error : function() {
-									alert('에러발생;')
-								}
-							})
-						}
                      </script>
+                     
+                     
+                     
                	</div>
 				<!-- End of cstmContent1 -->	
 					

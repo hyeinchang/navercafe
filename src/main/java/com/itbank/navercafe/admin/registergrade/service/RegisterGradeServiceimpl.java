@@ -1,6 +1,7 @@
 package com.itbank.navercafe.admin.registergrade.service;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -103,53 +104,30 @@ public class RegisterGradeServiceimpl implements RegisterGradeService {
 	}
 
 	@Override
-	public void modifyRegisterInfo(HttpServletRequest req, Model model) {
-		
-		ArrayList<MembersGradeDTO> list = new ArrayList<>();
-		for(int i = 0; i<6; i++) {
-			MembersGradeDTO dto = new MembersGradeDTO();
-			
-			if(i == 0) {
-				dto.setCafeUserGrade(req.getParameter("cafeUserGrade"+(i+1)));
-				dto.setCutName(req.getParameter("cutName"+(i+1)));
-				dto.setCutDesc(req.getParameter("cutDesc"+(i+1)));
-				continue;
+	public String modifyRegisterInfo(List<MembersGradeDTO> update) {
+		//삭제 여부에 따라 cafeUserGrade 를 제외한 모든 값초기화
+		for(int i = 0; i<update.size(); i++) {
+			if(update.get(i).getCutRemoved().equals("true")) {
+				update.get(i).setCutBoard(0);
+				update.get(i).setCutDesc("");
+				update.get(i).setCutName("");
+				update.get(i).setCutReply(0);
+				update.get(i).setCutType(1)	;
+				update.get(i).setCutVisit(0);
 			}
-			
-			// disabled 처리한거 null 값 어떻게 default 세팅 할건지 ?
-			
-			dto.setCafeUserGrade(req.getParameter("cafeUserGrade"+(i+1)));
-			dto.setCutDesc(req.getParameter("cutDesc"+(i+1)));
-			dto.setCutName(req.getParameter("cutName"+(i+1)));
-			dto.setCutRemoved(req.getParameter("cutRemoved"+(i+1)));
-			
-			if(req.getParameter("cutRemoved"+(i+1)).equals("true")) {
-				dto.setCutBoard(0);
-				dto.setCutReply(0);
-				dto.setCutVisit(0);
-				dto.setCutType(1);
-			} else {
-				dto.setCutBoard(Integer.parseInt( req.getParameter("cutBoard"+(i+1)) ));
-				dto.setCutReply(Integer.parseInt( req.getParameter("cutReply"+(i+1)) ));
-				dto.setCutVisit(Integer.parseInt( req.getParameter("cutVisit"+(i+1)) ));
-				dto.setCutType(Integer.parseInt( req.getParameter("cutType"+(i+1)) ));
-			}
-			
-			list.add(dto);
 		}
 		
-		for(int i = 0; i<list.size(); i++) {
-			System.out.println(list.get(i).getCafeUserGrade());
-			System.out.println(list.get(i).getCutBoard());
-			System.out.println(list.get(i).getCutDesc());
-			System.out.println(list.get(i).getCutName());
-			System.out.println(list.get(i).getCutRemoved());
-			System.out.println(list.get(i).getCutReply());
-			System.out.println(list.get(i).getCutType());
-			System.out.println(list.get(i).getCutVisit());
+		int result = 0;
+		for(int i = 0; i<update.size(); i++) {
+			//count += mapper.modifyRegisterInfo(result.get(i));
+			result++;
 		}
+		if (result == update.size()) {
+			return "성공인듯";
+		} else {
+			return "업데이트 문제생김;;";
+		}
+		
 	}
-	
-	
 
 }

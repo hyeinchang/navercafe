@@ -1,9 +1,9 @@
 	package com.itbank.navercafe.admin.registergrade.controller;
 
-import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
-import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -13,7 +13,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -41,14 +40,15 @@ public class AdminRegisterGradeController {
 			
 			if (i < 3) {
 				dto.setCutType(2);
-				dto.setCutRemoved("true");
+				dto.setCutRemoved("");
 			} else {
 				dto.setCutType(3);
-				dto.setCutRemoved("false");
+				dto.setCutRemoved("");
 			}
 			
 			list.add(dto);
 		}
+		
 		model.addAttribute("list", list);
 		return "admin/registerGrade/manageMembersGrade";
 	}
@@ -115,7 +115,6 @@ public class AdminRegisterGradeController {
 		resp.setContentType("text/html; charset=utf-8");
 		PrintWriter out = resp.getWriter();
 		out.print(msg);
-
 	}
 	
 	@PostMapping("rejectMembers")
@@ -127,6 +126,7 @@ public class AdminRegisterGradeController {
 		out.print(msg);
 	}
 	
+	/* 
 	@PostMapping("modifyRegisterInfo")
 	public void modifyRegisterInfo(Model model, HttpServletRequest req, HttpServletResponse resp, MembersGradeDTO dto) throws Exception {
 		//String msg = rgs.modifyRegisterInfo();
@@ -135,16 +135,13 @@ public class AdminRegisterGradeController {
 		PrintWriter out = resp.getWriter();
 		//out.print(msg);
 	}
+	*/
 	
+	@PostMapping(value="modifyRegisterInfo", produces="application/json; charset=utf-8")
 	@ResponseBody
-	@PostMapping(value="siba", produces="application/json; charset=utf-8")
-	public String ajaxtest(@RequestBody MembersGradeDTO dto, String dude) {
-		ArrayList<MembersGradeDTO> list = dto.getList();
-		System.out.println(list);
-		System.out.println(dude);
-		return "메시지띠";
+	public String modifyRegisterInfo(@RequestBody Map<String, List<MembersGradeDTO>> dataList) {
+		List<MembersGradeDTO> update = dataList.get("data");
+		return rgs.modifyRegisterInfo(update);
 	}
-	
-	
 	
 }
