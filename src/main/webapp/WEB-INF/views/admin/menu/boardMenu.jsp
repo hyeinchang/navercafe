@@ -89,6 +89,32 @@
 						<div class="rightBox">
 							<div class="rightMenu">
 								<ul id="rightUl">
+								<c:forEach var="menu" items="${menuList}">
+		                    		<c:set var="typeClass"/>
+		                    		<c:choose>
+		                    			<c:when test="${menu.boardMenuType eq 1}">
+		                    				<c:set var="typeClass" value="ge_v1"/>
+		                    			</c:when>
+		                    			<c:when test="${menu.boardMenuType eq 2}">
+		                    				<c:set var="typeClass" value="ge_v13"/>
+		                    			</c:when>
+		                    			<c:when test="${menu.boardMenuType eq 3}">
+		                    				<c:set var="typeClass" value="ge_v6"/>
+		                    			</c:when>
+		                    			<c:when test="${menu.boardMenuType eq 4}">
+		                    				<c:set var="typeClass" value="ge_v7"/>
+		                    			</c:when>
+		                    			<c:when test="${menu.boardMenuType eq 5}">
+		                    				<c:set var="typeClass" value="ge_v8"/>
+		                    			</c:when>
+		                    			<c:when test="${menu.boardMenuType eq 6}">
+		                    				<c:set var="typeClass" value="ge_v9"/>
+		                    			</c:when>
+		                    		</c:choose>
+		                    		<li class="${typeClass}" onclick="alert('준비중')" draggable="true" ondragover="defaultPrevent()" ondragstart="saveMoveManu()" ondrop="changeMenuOder()">
+		                    			<input value="${menu.boardMenuName}">
+		                    		</li>
+		                    	</c:forEach>
 								</ul>
 							</div>
 							<div class="typeInfoArea">
@@ -157,17 +183,9 @@
             <!-- End of Main Content -->
       		
 <script type="text/javascript">
-
-function addClass(element, className) {
-	
+function defaultPrevent() {
+	event.preventDefault();
 }
-
-function removeClass(element, className) {
-	if(element && className) {
-		
-	}
-}
-
 // 같은 클래스 요소 중 특정 id의 요소에만 active class 추가
 function addActiveClass(targetId, className) {
 	var target = document.getElementById(targetId);
@@ -205,14 +223,9 @@ function addActiveClass(targetId, className) {
 	}
 }
 
-
-
-var rightUl = document.getElementById('rightUl');
-var moveMenu = null;
-
-// 드래그 이벤트가 들어왔을 때 기본 기능 초기화
-rightUl.ondragover = function(e) {
-    e.preventDefault();
+//드래그 이벤트 시작시 moveMenu(전역변수)에 드래그되는 메뉴 대입
+function saveMoveManu() {
+    moveMenu = event.target;
 }
 
 // 오른쪽 메뉴 추가
@@ -229,6 +242,10 @@ function addRight(type) {
 	
 	newLi = target.cloneNode(true);
 	newLi.onclick = null;
+	newLi.ondragstart = saveMoveManu;
+	newLi.ondragover = defaultPrevent;
+	newLi.ondrop = changeMenuOder;
+	newLi.draggable = true;
 	
 	typeName = newLi.innerText.replace(/\s/gi, '');
 
@@ -248,13 +265,25 @@ function addRight(type) {
 
 // 드래그 이벤트 시작시 moveMenu(전역변수)에 드래그되는 메뉴 대입
 function saveMoveManu() {
-    moveMenu = event.target;
+	var target = event.target;
+	
+	while(target.nodeName != 'LI') {
+		target = target.parentElement;
+	}
+	
+    moveMenu = target;
 }
 
 // 메뉴 순서 변경
 function changeMenuOder() {
     var rightMenuList = document.getElementsByClassName('rightMenu');
     var targetMenu = event.target;
+    
+
+	while(targetMenu.nodeName != 'LI') {
+		targetMenu = targetMenu.parentElement;
+	}
+    
     var targetIndex = Number(targetMenu.dataset.index);
     var moveIndex = Number(moveMenu.dataset.index);
     var lastIndex = rightMenuList.length - 1;
