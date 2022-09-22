@@ -5,19 +5,29 @@
 .menuForm .menuChoice ul {margin:0; padding:0;}
 .menuForm .menuChoice {display: inline-block;vertical-align:top;width:300px;}
 .menuForm .menuChoice li.ge_v1 {background-position: 12px -303px;}
+
 .menuForm .menuChoice li.ge_v13 {background-position: 12px -1284px;}
 .menuForm .menuChoice li.ge_v3 {background-position: 12px -425px;}
 .menuForm .menuChoice li.ge_v6 {background-position: 12px -608px;}
 .menuForm .menuChoice li.ge_v7 {background-position: 12px -669px;}
 .menuForm .menuChoice li.ge_v8 {background-position: 12px -730px;}
 .menuForm .menuChoice li.ge_v9 {background-position: 12px -791px;}
-.menuForm .menuChoice li {list-style:none; margin-bottom:10px; display: block; padding: 0 0 0 30px; background: url(${contextPath}/resources/img/sp_ico_menu5.png) no-repeat 10px 0; color: #333;}
+
+#rightUl > li.ge_v1 {background-position: 12px -300px;}
+#rightUl > li.ge_v13 {background-position: 12px -1281px;}
+#rightUl > li.ge_v3 {background-position: 12px -422px;}
+#rightUl > li.ge_v6 {background-position: 12px -605px;}
+#rightUl > li.ge_v7 {background-position: 12px -666px;}
+#rightUl > li.ge_v8 {background-position: 12px -727px;}
+#rightUl > li.ge_v9 {background-position: 12px -788px;}
+
+.menuForm .menuChoice li , #rightUl > li{list-style:none; margin-bottom:10px; display: block; padding: 0 0 0 30px; background: url(${contextPath}/resources/img/sp_ico_menu5.png) no-repeat 10px 0; color: #333;}
 .menuForm .menuChoice li:hover {cursor:pointer;color:#4e73df;}    
-.menuForm .rightBox {display: inline-block;border: 1px solid #e3e6f0;height: 500px;background:#fff;vertical-align:top;}
+.menuForm .rightBox {display: inline-block;border: 1px solid #e3e6f0;height: 500px;background:#fff;vertical-align:top;overflow:auto;}
 .menuForm .rightBox ul {margin:0; padding:0;}
 .menuForm .rightBox .rightMenu {display:inline-block;width:300px;height: 100%;}
-.menuForm .rightBox > div {vertical-align:top;}
-.menuForm .typeInfoArea {display:inline-block; border-left: 1px solid #e3e6f0;  width:500px;height: 100%;padding:10px;}
+.menuForm .rightBox > div {vertical-align:top;padding:10px;}
+.menuForm .typeInfoArea {display:inline-block; border-left: 1px solid #e3e6f0;  width:500px;height: 100%;}
 .menuForm .typeInfo {display:none;}
 .menuForm .typeInfo.active {display:block;}
 .menuForm .set_box .set_tit {font-size: 1rem;font-weight: bold;}
@@ -206,8 +216,32 @@ rightUl.ondragover = function(e) {
 }
 
 // 오른쪽 메뉴 추가
-function addRight(menuType) {
-	addActiveClass('typeInfo_' + menuType, 'typeInfo');
+function addRight(type) {
+	var rightUrl = document.getElementById('rightUl');
+	var newLi = null;
+	var input = document.createElement('input');
+	var typeName = '';
+	var target = event.target;
+	
+	while(target.nodeName != 'LI') {
+		target = target.parentElement;
+	}
+	
+	newLi = target.cloneNode(true);
+	newLi.onclick = null;
+	
+	typeName = newLi.innerText.replace(/\s/gi, '');
+
+	input.value = '새로운 ' + typeName;
+
+	newLi.innerHTML = null;
+	newLi.appendChild(input);
+	
+	rightUrl.appendChild(newLi);
+	
+	
+	addActiveClass('typeInfo_' + type, 'typeInfo');
+	console.log(rightUrl);
 }
 
 
