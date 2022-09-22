@@ -136,8 +136,8 @@ public class CafeController {
 		String url = "/";
 		String referer = request.getHeader("referer");
 		
-		if(memberDTO != null && memberDTO.getId().equals("chi9148") && memberDTO.getPassword().equals("1234")) {
-			session.setAttribute("loginId",  memberDTO.getId());
+		if(memberDTO != null && memberDTO.getUserId().equals("chi9148") && memberDTO.getUserPw().equals("1234")) {
+			session.setAttribute("loginId",  memberDTO.getUserId());
 			session.setAttribute("loginName",  "장혜인");
 		}
 		

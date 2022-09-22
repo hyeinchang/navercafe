@@ -29,6 +29,7 @@ import com.itbank.navercafe.comon.file.service.FileService;
 public class FileUtils {
 	@Autowired FileService fileService;
 	@Value("${navercafe.file.upload_path}")
+	
 	private String upload_path;
 	private final String PATH_DELIMITER = "/";
 	
