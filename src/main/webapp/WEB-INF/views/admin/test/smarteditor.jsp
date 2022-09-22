@@ -84,7 +84,7 @@
 		# file upload path
 		navercafe.file.upload_path=D:/navercafe/upload
 		*/
-		// 에디터 이미지 저장 경로 D:/navercafe/upload/{test}/{cafeId}/{오늘 날짜(yyyymmdd)}/이미지명_yyyymmddhhmmss.확장자
+		// 에디터 이미지 저장 경로 D:/navercafe/upload/smarteditor/{test}/{cafeId}/{오늘 날짜(yyyymmdd)}/이미지명_yyyymmddhhmmss.확장자
 		if(cafeId && cafeId.length > 0) {
 			editorDirectory += '/' + cafeId;
 		}
@@ -165,7 +165,7 @@
 		# file upload path
 		navercafe.file.upload_path=D:/navercafe/upload
 		*/
-		// 에디터 이미지 저장 경로 D:/navercafe/upload/{test}/{cafeId}/{오늘 날짜(yyyymmdd)}/이미지명_yyyymmddhhmmss.확장자
+		// 에디터 이미지 저장 경로 D:/navercafe/upload/smarteditor/{test}/{cafeId}/{오늘 날짜(yyyymmdd)}/이미지명_yyyymmddhhmmss.확장자
 		if(cafeId && cafeId.length > 0) {
 			editorDirectory += '/' + cafeId;
 		}
