@@ -5,6 +5,7 @@ public class BoardMenuDTO {
 	private String cafeId;
 	private String boardMenuName;
 	private String boardMenuDesc;
+	private int boardMenuType;
 	private int boardWriteAuth;
 	private int boardReplyAuth;
 	private int boardReadAuth;
@@ -33,6 +34,12 @@ public class BoardMenuDTO {
 	}
 	public void setBoardMenuDesc(String boardMenuDesc) {
 		this.boardMenuDesc = boardMenuDesc;
+	}
+	public int getBoardMenuType() {
+		return boardMenuType;
+	}
+	public void setBoardMenuType(int boardMenuType) {
+		this.boardMenuType = boardMenuType;
 	}
 	public int getBoardWriteAuth() {
 		return boardWriteAuth;

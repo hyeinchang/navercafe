@@ -3,7 +3,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <style>
 .menuForm .menuChoice ul {margin:0; padding:0;}
-.menuForm .menuChoice {display: inline-block;vertical-align:top;}
+.menuForm .menuChoice {display: inline-block;vertical-align:top;width:300px;}
 .menuForm .menuChoice li.ge_v1 {background-position: 12px -303px;}
 .menuForm .menuChoice li.ge_v13 {background-position: 12px -1284px;}
 .menuForm .menuChoice li.ge_v3 {background-position: 12px -425px;}
@@ -17,7 +17,9 @@
 .menuForm .rightBox ul {margin:0; padding:0;}
 .menuForm .rightBox .rightMenu {display:inline-block;width:300px;height: 100%;}
 .menuForm .rightBox > div {vertical-align:top;}
-.menuForm .menuInfoArea {display:inline-block; border-left: 1px solid #e3e6f0;  width:500px;height: 100%;padding:10px;}
+.menuForm .typeInfoArea {display:inline-block; border-left: 1px solid #e3e6f0;  width:500px;height: 100%;padding:10px;}
+.menuForm .typeInfo {display:none;}
+.menuForm .typeInfo.active {display:block;}
 .menuForm .set_box .set_tit {font-size: 1rem;font-weight: bold;}
 .menuForm .set_box .set_lst_type, .menuForm .set_box .set_p_type{font-size: 0.9rem;padding-left: 1.4rem;}
 </style>
@@ -44,27 +46,32 @@
 							</div>
 							<div class="card-body">
 		                    	<ul id="leftUl">
-		                    		<li class="ge_v1" onclick="addRight(0)">
-		                    			<span>통합게시판</span>
+		                    	<c:forEach var="menuType" items="${menuTypeList}">
+		                    		<c:set var="typeClass"/>
+		                    		<c:choose>
+		                    			<c:when test="${menuType.boardMenuType eq 1}">
+		                    				<c:set var="typeClass" value="ge_v1"/>
+		                    			</c:when>
+		                    			<c:when test="${menuType.boardMenuType eq 2}">
+		                    				<c:set var="typeClass" value="ge_v13"/>
+		                    			</c:when>
+		                    			<c:when test="${menuType.boardMenuType eq 3}">
+		                    				<c:set var="typeClass" value="ge_v6"/>
+		                    			</c:when>
+		                    			<c:when test="${menuType.boardMenuType eq 4}">
+		                    				<c:set var="typeClass" value="ge_v7"/>
+		                    			</c:when>
+		                    			<c:when test="${menuType.boardMenuType eq 5}">
+		                    				<c:set var="typeClass" value="ge_v8"/>
+		                    			</c:when>
+		                    			<c:when test="${menuType.boardMenuType eq 6}">
+		                    				<c:set var="typeClass" value="ge_v9"/>
+		                    			</c:when>
+		                    		</c:choose>
+		                    		<li class="${typeClass}" onclick="addRight(${menuType.boardMenuType})">
+		                    			<span>${menuType.boardMenuName}</span>
 		                    		</li>
-		                    		<li class="ge_v13" onclick="addRight(1)">
-		                    			<span>간편게시판</span>
-		                    		</li>
-		                    		<!-- <li class="ge_v3" onclick="addRight()">
-		                    			<span>상품등록게시판</span>
-		                    		</li> -->
-		                    		<li class="ge_v6" onclick="addRight(2)">
-		                    			<span>스탭게시판</span>
-		                    		</li>
-		                    		<li class="ge_v7" onclick="addRight(3)">
-		                    			<span>등업게시판</span>
-		                    		</li>
-		                    		<li class="ge_v8" onclick="addRight(4)">
-		                    			<span>메모게시판</span>
-		                    		</li>
-		                    		<li class="ge_v9" onclick="addRight(5)">
-		                    			<span>출석부</span>
-									</li>
+		                    	</c:forEach>
 		                    	</ul>	
 							</div>
 						</div>
@@ -74,37 +81,37 @@
 								<ul id="rightUl">
 								</ul>
 							</div>
-							<div class="menuInfoArea">
-								<div class="set_box">
+							<div class="typeInfoArea">
+								<div class="set_box typeInfo" id="typeInfo_1">
 									<h3 class="set_tit">통합게시판</h3>
    									<ul class="set_lst_type">
    										<li>용도에 따라 다양한 형태로 사용 가능한 일반 게시판입니다.</li>
    										<li>공지게시판으로 사용하려면 글쓰기 권한을 스탭 이상으로 설정하세요.</li>
    									</ul>
     							</div>
-    							<div class="set_box">
+    							<div class="set_box typeInfo" id="typeInfo_2">
     								<h3 class="set_tit">간편게시판</h3>
     								<ul class="set_lst_type">
     									<li>간편하고 빠르게 게시글을 작성할 수 있는 게시판입니다.</li>
     									<li>제목 입력이 필요없는 게시판으로 본문 일부가 제목이 됩니다.</li>
     								</ul>
     							</div>
-    							<div class="set_box">
+    							<div class="set_box typeInfo" id="typeInfo_3">
     								<h3 class="set_tit">스탭게시판</h3>
     								<p class="set_p_type">매니저와 스탭만 읽고 쓸 수 있는 게시판입니다.</p>
     							</div>
-    							<div class="set_box">
+    							<div class="set_box typeInfo" id="typeInfo_4">
     								<h3 class="set_tit">등업게시판</h3>
     								<p class="set_p_type">멤버들의 등업신청을 한눈에 보고 관리(수락/거절)할 수 있는 게시판입니다.</p>
     							</div>
-    							<div class="set_box">
+    							<div class="set_box typeInfo" id="typeInfo_5">
     								<h3 class="set_tit">메모게시판</h3>
     								<ul class="set_lst_type">
     									<li>카페 가입인사나 짧은 메모를 남기는데 가장 적합한 형태입니다.</li>
     									<li>멤버에게만 공개를 체크하시면 가입멤버에게만 보입니다.</li>
     								</ul>
     							</div>
-    							<div class="set_box">
+    							<div class="set_box typeInfo" id="typeInfo_6">
     								<h3 class="set_tit">출석부</h3>
     								<ul class="set_lst_type">
     									<li>날짜별로 출석체크를 할 수 있는 게시판입니다.</li>
@@ -140,38 +147,55 @@
             <!-- End of Main Content -->
       		
 <script type="text/javascript">
-document.body.onload = setFileAreaEvent;
 
-// 카페 타이틀 저장
-function saveTitle() {
-	var titleForm = document.titleForm;
-	var titleImage = document.getElementById('titleImage');
-	var xhr = new XMLHttpRequest();
+function addClass(element, className) {
 	
-	if(titleImage.files.length == 0) {
-		alert('타이틀 이미지 파일을 등록해주십시오.');
+}
+
+function removeClass(element, className) {
+	if(element && className) {
+		
+	}
+}
+
+// 같은 클래스 요소 중 특정 id의 요소에만 active class 추가
+function addActiveClass(targetId, className) {
+	var target = document.getElementById(targetId);
+	var classElementList = document.getElementsByClassName(className);
+	var addClassName = 'active';
+	
+	if(!target) {
 		return;
 	}
 	
-	xhr.open('post', '${contextPath}/admin/deco/saveTitle', true);
-	
-	xhr.onreadystatechange = function() {
-		if(xhr.readyState == 4 && xhr.status == 200) {
- 			var data = JSON.parse(xhr.response);
- 			var message = '';
- 			
- 			if(data.result == 1) {
- 				message = '저장되었습니다.';
- 			} else {
- 				message = '저장에 실패했습니다.';
- 			}
- 			
- 			alert(message);
+	for(var i=0;i<classElementList.length;i++) {
+		var element = classElementList[i];
+		var classNameList = element.className.split(/\s/gi);
+		var resultClassName = '';
+		
+		for(var j=0;j<classNameList.length;j++) {
+			var className = classNameList[j];
+			
+			if(className == addClassName) {
+				continue;
+			}
+		
+			if(className.length > 0) {
+				resultClassName += resultClassName.length > 0 ? ' ' : '';
+				resultClassName += className;
+			}
 		}
+		
+		if(element.id == targetId) {
+			resultClassName += resultClassName.length > 0 ? ' ' : '';
+			resultClassName += addClassName;
+		} 
+		
+		element.className = resultClassName;
 	}
-	
-	xhr.send(new FormData(titleForm));
 }
+
+
 
 var rightUl = document.getElementById('rightUl');
 var moveMenu = null;
@@ -182,15 +206,11 @@ rightUl.ondragover = function(e) {
 }
 
 // 오른쪽 메뉴 추가
-function addRight(menyType) {
-	var leftUl = document.getElementById('leftUl');
-    var rightUl = document.getElementById('rightUl');
-    var rightMenuList = document.getElementsByClassName('rightMenu');
-  	var xhr = new XMLHttpRequest();
-    cloneLi.appendChild(deletA);
-    rightUl.appendChild(cloneLi);
- 
+function addRight(menuType) {
+	addActiveClass('typeInfo_' + menuType, 'typeInfo');
 }
+
+
 
 // 드래그 이벤트 시작시 moveMenu(전역변수)에 드래그되는 메뉴 대입
 function saveMoveManu() {
