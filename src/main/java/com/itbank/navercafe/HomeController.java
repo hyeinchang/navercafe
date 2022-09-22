@@ -52,7 +52,7 @@ public class HomeController {
 			String skin = "";
 			cafe.setCafeId("cafeId" + order);
 			cafe.setCafeName("테스트 카페" + order);
-			cafe.setCafeIntroduce("테스트 카페"+ order +"(cafeId: cafeId"+ order +")에 대한 소개입니다.");
+			cafe.setCafeIntroduce("테스트 카페"+ order +"(cafeId: cafeId" + order + ")에 대한 소개입니다.");
 		
 			
 			switch(order) {

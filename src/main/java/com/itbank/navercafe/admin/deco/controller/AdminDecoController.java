@@ -18,6 +18,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.itbank.navercafe.admin.deco.service.AdminDecoService;
 import com.itbank.navercafe.comon.file.FileUtils;
+import com.itbank.navercafe.comon.file.dto.FileDTO;
+import com.itbank.navercafe.comon.file.dto.FileResult;
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
 
 @Controller
@@ -155,7 +157,10 @@ public class AdminDecoController {
 				directory += "/" + cafeId;
 			}
 			
-			fileUtils.uploadFile(multipartFile, directory);
+		
+			FileResult fileResult = fileUtils.uploadFile(multipartFile, directory);
+			FileDTO fileDTO = fileResult.getFileDTO();
+
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
