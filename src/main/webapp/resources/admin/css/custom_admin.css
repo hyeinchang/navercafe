@@ -21,6 +21,7 @@ form[name="titleForm"] .previewArea > div > div {/*min-height: 300px; border: 1p
 form[name="titleForm"] .previewArea > div > div p {font-size: 30px; width: 100%; text-align: center; font-weight: bold; margin:20px 0;}
 form[name="titleForm"] .previewArea > div > div span.fileAdd{border: 1px solid;width: 50px; margin: 150px auto;border-radius: 5px;display:inline-block; font-weight: bold;font-size: 30px; }
 
+/* 메뉴 > 메뉴관리 페이지 */
 .menuFormArea .menuChoice ul {margin:0; padding:0;}
 .menuFormArea .menuChoice {display: inline-block;vertical-align:top;width:300px;}
 
@@ -40,8 +41,8 @@ form[name="titleForm"] .previewArea > div > div span.fileAdd{border: 1px solid;w
 #rightMenuUl > li.ge_v8 {background-position: 12px -727px;}
 #rightMenuUl > li.ge_v9 {background-position: 12px -788px;} */
 
-/* 메뉴 > 메뉴관리 페이지 */
 .menuFormArea #leftMenuUl > li , #rightMenuUl > li{list-style:none; margin-bottom:10px; display: block; padding: 0 0 0 30px; background: url(../../img/sp_ico_menu5.png) no-repeat 10px 0; color: #333;}
+.menuFormArea #leftMenuUl > li > span:first-child > a:first-child {display:inline-block;white-space:nowrap;width:150px;overflow-x: hidden; text-overflow: ellipsis;}
 #rightMenuUl > li > span:first-child {display:inline-block;white-space:nowrap;width:200px;overflow-x: hidden; text-overflow: ellipsis;}
 .menuFormArea .menuChoice li:hover {cursor:pointer;color:#4e73df;}    
 .menuFormArea .rightBox {display: inline-block;border: 1px solid #e3e6f0;height: 700px;background:#fff;vertical-align:top;}

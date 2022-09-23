@@ -7,10 +7,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.itbank.navercafe.admin.email.dto.AdminEmailDTO;
 import com.itbank.navercafe.admin.email.service.AdminEmailService;
 
 @Controller
@@ -19,7 +21,9 @@ public class AdminEmailController {
 	@Autowired AdminEmailService ams;
 	
 	@GetMapping("email")
-	public String email() {
+	public String email(AdminEmailDTO emailDTO, Model model) {
+		emailDTO.setCafeName("테스트 카페");
+		model.addAttribute("emailDTO", emailDTO);
 		return "admin/email/email";
 	}
 	

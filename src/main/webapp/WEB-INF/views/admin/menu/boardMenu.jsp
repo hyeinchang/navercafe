@@ -15,9 +15,11 @@
                	<!-- cstmContent1 -->
                	<div class="cstmContent1" style="">
                	
+               		<!-- menuFormArea -->
                		<div class="menuFormArea">
                			<input type="hidden" name="cafeId" value="${cafeDTO.cafeId}">
-         
+         				
+         				<!-- menuFormArea > menuChoice  -->
                			<div class="card mb-4 menuChoice">
 							<div class="card-header">
 								<b>메뉴 선택</b>
@@ -53,7 +55,7 @@
                                 			<span class="icon text-white-50">
                                     			<i class="fas">+</i>
                                 			</span>
-                                			<span class="text">메뉴 추가</span>
+                                			<span class="text">추가</span>
                          				</a>
 		                    			</span>
 		                    			<input type="hidden" name="boardMenuName" value="${menuType.boardMenuName}">
@@ -70,11 +72,16 @@
 		                    	</ul>	
 							</div>
 						</div>
+						<!-- end menuFormArea > menuChoice  -->
 						
+						<!-- menuFormArea > rightBox  -->
 						<div class="rightBox">
+							<!-- rightBox > rightMenu -->
 							<div class="rightMenu">
+							
+								<!--  menuForm -->
 								<form name="menuForm">
-								<ul id="rightMenuUl">
+									<ul id="rightMenuUl">
 									<c:forEach var="menu" items="${menuList}" varStatus="status">
 			                    		<c:set var="typeClass"/>
 			                    		<c:set var="order" value="${status.index+1}"/>
@@ -120,7 +127,12 @@
 			                    	</c:forEach>
 									</ul>
 								</form>
+								<!-- end menuForm -->
+								
 							</div>
+							<!-- end rightBox > rightBox -->
+							
+							<!-- rightBox > typeInfoArea -->
 							<div class="typeInfoArea">
 								<div class="set_box typeInfo active">
 									<h3 class="set_tit">메뉴 설정 안내</h3>
@@ -173,9 +185,13 @@
     								<div class="detail_area" id="typeInput_6"></div>
     							</div>
 							</div>
+							<!-- end rightBox > typeInfoArea -->
+							
 						</div>
+						<!-- end menuFormArea > rightBox  -->
 						
        				</div>
+       				<!-- end menuFormArea -->
        				
        				<div class="btnArea">
              			<a href="javascript:saveTitle()" class="btn btn-primary btn-icon-split">
@@ -184,15 +200,8 @@
                               </span>
                               <span class="text">저장하기</span>
                          </a>
-						<c:if test="${cafeDTO.titleNum ne null && cafeDTO.titleNum > 0}">
-						<a href="javascript:deleteTitle()" class="btn btn-danger btn-icon-split">
-                              <span class="icon text-white-50">
-                                   <i class="fas fa-trash"></i>
-                              </span>
-                              <span class="text">타이틀삭제</span>
-                        </a>
-						</c:if>
              		</div>
+             		
                	</div>
 				<!-- End of cstmContent1 -->	
 					
@@ -200,10 +209,7 @@
             <!-- End of Main Content -->
       		
 <script type="text/javascript">
-window.ondragover = function() {
-	event.preventDefault();
-}
-
+// 메뉴 삭제 버튼 생성
 function createMenuDelBtn(order) {
 	var a = document.createElement('a');
 	var iconSpan = document.createElement('span');
@@ -311,6 +317,7 @@ function addRight(type) {
 	rightMenuUl.appendChild(newLi);
 }
 
+// 이동 타겟 메뉴에 드래그 이벤트가 들어왔을 경우
 function dragoverMenu() {
 	event.preventDefault();
 	var target = event.target;
@@ -324,6 +331,7 @@ function dragoverMenu() {
 }
 
 
+// 이동 타겟 메뉴에 드래그 이벤트가 나갔을 경우
 function dragleaveMenu() {
 	event.preventDefault();
 	var target = event.target;

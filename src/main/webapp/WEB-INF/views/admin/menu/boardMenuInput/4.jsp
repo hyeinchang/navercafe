@@ -2,7 +2,7 @@
 <form name="menuInfoForm" id="menuInfoForm_${menuDTO.boardOrder}">
 <table border="1" cellspacing="0" width="100%">
 	<caption>
-		<span class="blind">메뉴관리 설정 정보</span>
+		<span class="blind" style="display: none;">메뉴관리 설정 정보</span>
 	</caption>
 	<colgroup>
 		<col width="130">
