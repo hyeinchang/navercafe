@@ -319,7 +319,7 @@ function dragoverMenu() {
 		target = target.parentElement;
 	}
 	
-	target.style.background = '#5af';
+	target.style.borderBottom = '1px dashed #ccc';
 	target.style.opacity = '0.7';
 }
 
@@ -332,7 +332,7 @@ function dragleaveMenu() {
 		target = target.parentElement;
 	}
 	
-	target.style.background = '';
+	target.style.borderBottom = '';
 	target.style.opacity = '';
 }
 
@@ -378,7 +378,7 @@ function changeMenuOder() {
         parent.insertBefore(moveMenu, parent.children[targetOrder-1]);
     }
     
-    targetMenu.style.background = '';
+    targetMenu.style.borderBottom = '';
     targetMenu.style.opacity = '';
 
     sortRightMenuIndex();
@@ -399,18 +399,22 @@ function sortRightMenuIndex() {
     	var rightMenu = rightMenuList[i];
     	var presentOrder = rightMenu.children.boardOrder.value;
     	var menuInfoForm = document.getElementById('menuInfoForm_'+presentOrder);
-        var delBtn = rightMenu.children[0];
+        var delBtn = null;
         var order = i+1;
  
         rightMenu.children.boardOrder.value = order;
         
-        while(delBtn.id.indexOf('delMenuBtn_') < 0) {
-        	delBtn = delBtn.nextElementSibling;
-        }
-        
-        if(delBtn) {
-        	delBtn.href = 'javascript:deleteRightMenu(' + order + ')';
-        	delBtn.id = 'delMenuBtn_' + order;
+        if(rightMenu.children[0]) {
+        	delBtn = rightMenu.children[0];
+        	
+        	 while(delBtn && (!delBtn.id || delBtn.id.indexOf('delMenuBtn_') < 0)) {
+             	delBtn = delBtn.nextElementSibling;
+             }
+             
+             if(delBtn) {
+             	delBtn.href = 'javascript:deleteRightMenu(' + order + ')';
+             	delBtn.id = 'delMenuBtn_' + order;
+             }
         }
         
         if(menuInfoForm) {
@@ -516,6 +520,7 @@ function getMenuObject(li) {
 	return obj;
 }
 
+// 사용자가 입력한 값을 menuForm에 복사
 function changeMenuValue() {
 	var rightMenuUl = document.getElementById('rightMenuUl');
 	var thisElement = event.target;
