@@ -31,7 +31,8 @@
 .menuForm .typeInfo {display:none;}
 .menuForm .typeInfo.active {display:block;}
 .menuForm .set_box .set_tit {font-size: 1rem;font-weight: bold;}
-.menuForm .set_box .set_lst_type, .menuForm .set_box .set_p_type{font-size: 0.9rem;padding-left: 1.4rem;}
+.menuForm .set_box .set_lst_type {font-size: 0.9rem;padding-left: 1.4rem;}
+.menuForm .set_box .set_p_type{font-size: 0.9rem;}
 .menuForm .set_box .detail_area {display:none;font-size: 0.9rem}
 .menuForm .set_box .detail_area.active {display:block;}
 .menuForm #rightMenuUl li:hover{cursor: grab;}
