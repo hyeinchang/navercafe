@@ -21,15 +21,17 @@
                	<!-- cstmContent1 -->
 				<div class="cstmContent1" style="width:800px;">
 					<div id="message"></div>
-		          	<form class="contact-form" role="form" action="sendAllMail" method="POST">
-		
+		          	<form class="contact-form" role="form" name="emailForm" action="sendAllMail" method="POST">
+						<input type="hidden" name="cafeId" value="${emailDTO.cafeId}">
+						<input type="hidden" name="cafeName" value="${emailDTO.cafeName}">
+						
 			          	<div class="form-group">
-			              	<input type="text" name="subject" class="form-control" id="contact-subject" placeholder="메일 제목을 입력해주십시오." data-rule="minlen:4" data-msg="제목을 적어주세요">
+			              	<input type="text" class="form-control" name="subject" placeholder="메일 제목을 입력해주십시오." data-rule="minlen:4">
 			              	<div class="validate"></div>
 			            </div>
 			
 			            <div class="form-group">
-			              	<textarea class="form-control" name="content" placeholder="메일 내용을 입력해주십시오." rows="12" cols="100" data-rule="required" data-msg="내용을 작성해주세요"></textarea>
+			              	<textarea class="form-control" name="content" placeholder="메일 내용을 입력해주십시오." rows="12" cols="100" data-rule="required"></textarea>
 			              	<div class="validate"></div>
 			            </div>
 		
@@ -50,7 +52,7 @@
 		          	</form>
 		          
 			       	<div class="btnArea">
-	           			<a href="javascript:saveFront()" class="btn btn-primary btn-icon-split">
+	           			<a href="javascript:sendEmail()" class="btn btn-primary btn-icon-split">
 	                    	<span class="icon text-white-50">
 	                        	<i class="fas fa-check"></i>
 	                        </span>
@@ -63,3 +65,21 @@
 			
 			</div>
 			<!-- End of Main Content -->
+			
+<script type="text/javascript">
+	function sendEmail() {
+		var emailForm = document.emailForm;
+		
+		for(var i=0;i<emailForm.length;i++) {
+			var element = emailForm[i];
+			
+			if(element.name && element.placeholder && element.value == '') {
+				alert(element.placeholder);
+				element.focus();
+				return;
+			}
+		}
+		
+		emailForm.submit();
+	}
+</script>			
