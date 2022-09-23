@@ -3,7 +3,6 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <c:set var="adminPath" value="${contextPath}/resources/admin"/>
 <c:set var="adminViewPath" value="${contextPath }/admin" />
-${cafeId}
   <!-- Page Wrapper -->
     <div id="wrapper">
     
