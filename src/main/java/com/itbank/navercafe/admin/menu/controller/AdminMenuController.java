@@ -38,6 +38,8 @@ public class AdminMenuController {
 					
 					tempDTO.setBoardMenuName("임시 게시판" + boardTypeNumber);
 					tempDTO.setBoardMenuType(boardTypeNumber);
+					tempDTO.setBoardOrder(i+1);
+					
 					boardMenuList.add(tempDTO);
 				}
 			}

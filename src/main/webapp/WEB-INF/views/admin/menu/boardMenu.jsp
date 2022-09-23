@@ -13,25 +13,31 @@
 .menuForm .menuChoice li.ge_v8 {background-position: 12px -730px;}
 .menuForm .menuChoice li.ge_v9 {background-position: 12px -791px;}
 
-#rightUl > li.ge_v1 {background-position: 12px -300px;}
-#rightUl > li.ge_v13 {background-position: 12px -1281px;}
-#rightUl > li.ge_v3 {background-position: 12px -422px;}
-#rightUl > li.ge_v6 {background-position: 12px -605px;}
-#rightUl > li.ge_v7 {background-position: 12px -666px;}
-#rightUl > li.ge_v8 {background-position: 12px -727px;}
-#rightUl > li.ge_v9 {background-position: 12px -788px;}
+#rightMenuUl > li.ge_v1 {background-position: 12px -300px;}
+#rightMenuUl > li.ge_v13 {background-position: 12px -1281px;}
+#rightMenuUl > li.ge_v3 {background-position: 12px -422px;}
+#rightMenuUl > li.ge_v6 {background-position: 12px -605px;}
+#rightMenuUl > li.ge_v7 {background-position: 12px -666px;}
+#rightMenuUl > li.ge_v8 {background-position: 12px -727px;}
+#rightMenuUl > li.ge_v9 {background-position: 12px -788px;}
 
-.menuForm .menuChoice li , #rightUl > li{list-style:none; margin-bottom:10px; display: block; padding: 0 0 0 30px; background: url(${contextPath}/resources/img/sp_ico_menu5.png) no-repeat 10px 0; color: #333;}
+.menuForm .menuChoice li , #rightMenuUl > li{list-style:none; margin-bottom:10px; display: block; padding: 0 0 0 30px; background: url(${contextPath}/resources/img/sp_ico_menu5.png) no-repeat 10px 0; color: #333;}
 .menuForm .menuChoice li:hover {cursor:pointer;color:#4e73df;}    
 .menuForm .rightBox {display: inline-block;border: 1px solid #e3e6f0;height: 500px;background:#fff;vertical-align:top;overflow:auto;}
 .menuForm .rightBox ul {margin:0; padding:0;}
-.menuForm .rightBox .rightMenu {display:inline-block;width:300px;height: 100%;}
-.menuForm .rightBox > div {vertical-align:top;padding:10px;}
+.menuForm .rightBox .rightMenu {display:inline-block;width:340px;height: 100%;}
+.menuForm .rightBox > div {vertical-align:top;padding:1.25rem;}
 .menuForm .typeInfoArea {display:inline-block; border-left: 1px solid #e3e6f0;  width:500px;height: 100%;}
 .menuForm .typeInfo {display:none;}
 .menuForm .typeInfo.active {display:block;}
 .menuForm .set_box .set_tit {font-size: 1rem;font-weight: bold;}
 .menuForm .set_box .set_lst_type, .menuForm .set_box .set_p_type{font-size: 0.9rem;padding-left: 1.4rem;}
+.menuForm #rightMenuUl li:hover{cursor: grab;}
+.menuForm #rightMenuUl li input:hover{cursor: grab;}
+.menuForm li .btn {line-height: 15px;font-size: 0.7rem;}
+.menuForm li .btn:not(:first-child) {margin-left:5px;}
+.menuForm li .btn span.icon {padding:5px 7px;}
+.menuForm li .btn span.text {padding:5px;}
 </style>
   	<!-- Page Wrapper -->
     <div id="wrapper">
@@ -55,7 +61,7 @@
 								<b>메뉴 선택</b>
 							</div>
 							<div class="card-body">
-		                    	<ul id="leftUl">
+		                    	<ul id="leftMenuUl">
 		                    	<c:forEach var="menuType" items="${menuTypeList}">
 		                    		<c:set var="typeClass"/>
 		                    		<c:choose>
@@ -78,8 +84,25 @@
 		                    				<c:set var="typeClass" value="ge_v9"/>
 		                    			</c:when>
 		                    		</c:choose>
-		                    		<li class="${typeClass}" onclick="addRight(${menuType.boardMenuType})">
-		                    			<span>${menuType.boardMenuName}</span>
+		                    		<li class="${typeClass}">
+		                    			<span>
+		                    			<a href="javascript:showMenuInfo(${menuType.boardMenuType})" title="메뉴 설명 보기">${menuType.boardMenuName}</a>
+		                    			<a href="javascript:addRight(${menuType.boardMenuType})" class="btn btn-success btn-icon-split">
+                                			<span class="icon text-white-50">
+                                    			<i class="fas">+</i>
+                                			</span>
+                                			<span class="text">메뉴 추가</span>
+                         				</a>
+		                    			</span>
+		                    			<input type="hidden" name="boardMenuName" value="${menuType.boardMenuName}">
+		                    			<input type="hidden" name="boardMenuNum" value="">
+		                    			<input type="hidden" name="boardMenuDesc" value="${menuType.boardMenuDesc}">
+		                    			<input type="hidden" name="boardMenuType" value="${menuType.boardMenuType}">
+		                    			<input type="hidden" name="boardWriteAuth" value="${menuType.boardWriteAuth}">
+		                    			<input type="hidden" name="boardReplyAuth" value="${menuType.boardReplyAuth}">
+		                    			<input type="hidden" name="boardReadAuth" value="${menuType.boardReadAuth}">
+		                    			<input type="hidden" name="boardOrder" value="">
+		                    			<input type="hidden" name="delFlag" value="N">
 		                    		</li>
 		                    	</c:forEach>
 		                    	</ul>	
@@ -88,9 +111,10 @@
 						
 						<div class="rightBox">
 							<div class="rightMenu">
-								<ul id="rightUl">
-								<c:forEach var="menu" items="${menuList}">
+								<ul id="rightMenuUl">
+								<c:forEach var="menu" items="${menuList}" varStatus="status">
 		                    		<c:set var="typeClass"/>
+		                    		<c:set var="order" value="${status.index+1}"/>
 		                    		<c:choose>
 		                    			<c:when test="${menu.boardMenuType eq 1}">
 		                    				<c:set var="typeClass" value="ge_v1"/>
@@ -111,8 +135,23 @@
 		                    				<c:set var="typeClass" value="ge_v9"/>
 		                    			</c:when>
 		                    		</c:choose>
-		                    		<li class="${typeClass}" onclick="alert('준비중')" draggable="true" ondragover="defaultPrevent()" ondragstart="saveMoveManu()" ondrop="changeMenuOder()">
-		                    			<input value="${menu.boardMenuName}">
+		                    		<li class="${typeClass}" title="드래그하여 메뉴 순서 변경 가능"
+		                    			draggable="true" ondragover="defaultPrevent()" ondragstart="saveMoveManu()" ondrop="changeMenuOder()">
+		                    			<input type="text" name="boardMenuName" value="${menu.boardMenuName}">
+			                    			<a href="javascript:deleteRightMenu(${order})" id="delMenuBtn_${order}"  class="btn btn-danger btn-icon-split">
+		                                        <span class="icon text-white-50">
+		                                            <i class="fas fa-trash"></i>
+		                                        </span>
+	                                        <span class="text">삭제</span>
+	                                    </a>
+		                    			<input type="hidden" name="boardMenuNum" value="${menu.boardMenuNum}">
+		                    			<input type="hidden" name="boardMenuDesc" value="${menu.boardMenuDesc}">
+		                    			<input type="hidden" name="boardMenuType" value="${menu.boardMenuType}">
+		                    			<input type="hidden" name="boardWriteAuth" value="${menu.boardWriteAuth}">
+		                    			<input type="hidden" name="boardReplyAuth" value="${menu.boardReplyAuth}">
+		                    			<input type="hidden" name="boardReadAuth" value="${menu.boardReadAuth}">
+		                    			<input type="hidden" name="boardOrder" value="${order}">
+		                    			<input type="hidden" name="delFlag" value="N">
 		                    		</li>
 		                    	</c:forEach>
 								</ul>
@@ -183,6 +222,28 @@
             <!-- End of Main Content -->
       		
 <script type="text/javascript">
+function createMenuDelBtn(order) {
+	var a = document.createElement('a');
+	var iconSpan = document.createElement('span');
+	var i =  document.createElement('i');
+	var textSpan = document.createElement('span');
+	
+	a.href = 'javascript:deleteRightMenu(' + order + ')';
+	a.id = 'delMenuBtn_' + order;
+	a.className = 'btn btn-danger btn-icon-split';
+	iconSpan.className = 'icon text-white-50';
+	i.className = 'fas fa-trash';
+	textSpan.className = 'text';
+	textSpan.innerText = '삭제';
+	
+	iconSpan.appendChild(i);
+	a.appendChild(iconSpan);
+	a.appendChild(textSpan);
+	
+	return a;
+}
+
+// 이벤트의 default event 막음
 function defaultPrevent() {
 	event.preventDefault();
 }
@@ -223,83 +284,95 @@ function addActiveClass(targetId, className) {
 	}
 }
 
-//드래그 이벤트 시작시 moveMenu(전역변수)에 드래그되는 메뉴 대입
-function saveMoveManu() {
-    moveMenu = event.target;
+// 메뉴 설명 보기
+function showMenuInfo(type) {
+	addActiveClass('typeInfo_' + type, 'typeInfo');
 }
 
 // 오른쪽 메뉴 추가
 function addRight(type) {
-	var rightUrl = document.getElementById('rightUl');
+	var rightMenuUl = document.getElementById('rightMenuUl');
+	var leftMenuUl = document.getElementById('leftMenuUl');
+	var order = rightMenuUl.children.length+1;
+	var target = null;
 	var newLi = null;
-	var input = document.createElement('input');
-	var typeName = '';
-	var target = event.target;
+	var nameInput = null;
+	var delBtn = null;
 	
-	while(target.nodeName != 'LI') {
-		target = target.parentElement;
+	for(var i=0;i<leftMenuUl.children.length;i++) {
+		var leftMenu = leftMenuUl.children[i];
+		
+		if(Number(leftMenu.children.boardMenuType.value) == Number(type)) {
+			target = leftMenu;
+			break;
+		}
+	}
+	
+	if(!target) {
+		return;
 	}
 	
 	newLi = target.cloneNode(true);
-	newLi.onclick = null;
+	newLi.title="드래그하여 메뉴 순서 변경 가능"
 	newLi.ondragstart = saveMoveManu;
 	newLi.ondragover = defaultPrevent;
 	newLi.ondrop = changeMenuOder;
 	newLi.draggable = true;
 	
-	typeName = newLi.innerText.replace(/\s/gi, '');
-
-	input.value = '새로운 ' + typeName;
-
-	newLi.innerHTML = null;
-	newLi.appendChild(input);
+	nameInput = newLi.children.boardMenuName;
+	nameInput.type = 'text';
+	nameInput.value = '새로운 ' + nameInput.value;
 	
-	rightUrl.appendChild(newLi);
+	delBtn = createMenuDelBtn(order);
 	
+	newLi.children.boardOrder.value = order;
+	newLi.removeChild(newLi.children[0]);
+	newLi.appendChild(delBtn);
 	
-	addActiveClass('typeInfo_' + type, 'typeInfo');
-	console.log(rightUrl);
+	rightMenuUl.appendChild(newLi);
 }
 
 
-
-// 드래그 이벤트 시작시 moveMenu(전역변수)에 드래그되는 메뉴 대입
+// 드래그 이벤트 시작시 해당 li에 특정 클래스 부여
 function saveMoveManu() {
+	var targetId = 'moving_li';
 	var target = event.target;
 	
 	while(target.nodeName != 'LI') {
 		target = target.parentElement;
 	}
 	
-    moveMenu = target;
+	target.id = targetId;
 }
 
 // 메뉴 순서 변경
 function changeMenuOder() {
-    var rightMenuList = document.getElementsByClassName('rightMenu');
+	var targetId = 'moving_li';
+    var rightMenuUl = document.getElementById('rightMenuUl');
     var targetMenu = event.target;
+    var moveMenu = document.getElementById(targetId);
+	
+    moveMenu.removeAttribute('id');
     
-
 	while(targetMenu.nodeName != 'LI') {
 		targetMenu = targetMenu.parentElement;
 	}
     
-    var targetIndex = Number(targetMenu.dataset.index);
-    var moveIndex = Number(moveMenu.dataset.index);
-    var lastIndex = rightMenuList.length - 1;
+    var targetOrder = Number(targetMenu.children.boardOrder.value);
+    var moveOrder = Number(moveMenu.children.boardOrder.value);
+    var lastOrder = rightMenuUl.children.length;
     var parent = targetMenu.parentElement;
 
     // 드롭 대상이 되는 메뉴가 아래 있을 경우
-    if(targetIndex > moveIndex) {
-        targetIndex++;
-        if(targetIndex <= lastIndex) {
-            parent.insertBefore(moveMenu, parent.children[targetIndex]);
+    if(targetOrder > moveOrder) {
+        if(targetOrder <= lastOrder) {
+            parent.insertBefore(moveMenu, parent.children[targetOrder]);
         } else {
             parent.appendChild(moveMenu);
         }
     // 드롭 대상이 되는 메뉴가 위 있을 경우    
     } else {
-        parent.insertBefore(moveMenu, parent.children[targetIndex]);
+        parent.insertBefore(moveMenu, parent.children[targetOrder-1]);
     }
 
     sortRightMenuIndex();
@@ -307,23 +380,63 @@ function changeMenuOder() {
 
 // 오른쪽 메뉴 인덱스 정렬
 function sortRightMenuIndex() {
-    var rightMenuList = document.getElementsByClassName('rightMenu');
-
+	var rightMenuUl = document.getElementById('rightMenuUl');
+	var rightMenuList = null;
+	
+	if(!rightMenuUl) {
+		return;
+	}
+	
+	rightMenuList = rightMenuUl.children;
+	
     for(var i=0;i<rightMenuList.length;i++) {
         var rightMenu = rightMenuList[i];
-        var deletA = rightMenu.children[0];
-
-        rightMenu.dataset.index = i;
-        deletA.href = 'javascript:deleteRightMenu(' + i + ')';
+        var delBtn = rightMenu.children[0];
+        var order = i+1;
+ 
+        rightMenu.children.boardOrder.value = order;
+        
+        while(delBtn.id.indexOf('delMenuBtn_') < 0) {
+        	delBtn = delBtn.nextElementSibling;
+        }
+        
+        if(delBtn) {
+        	delBtn.href = 'javascript:deleteRightMenu(' + order + ')';
+        	delBtn.id = 'delMenuBtn_' + order;
+        	console.log(delBtn.id);
+        }
     }
-
-    return rightMenuList.length;
 }
 
 // 오른쪽 메뉴 삭제
-function deleteRightMenu(index) {
-    var rightMenuList = document.getElementsByClassName('rightMenu');
-    rightMenuList[index].parentElement.removeChild(rightMenuList[index]);
-    sortRightMenuIndex();
+function deleteRightMenu(order) {
+	if(confirm('메뉴를 삭제하시겠습니까?')) {
+		var rightMenuUl = document.getElementById('rightMenuUl');
+		var target = null;
+		
+		for(var i=0;i<rightMenuUl.children.length;i++) {
+			var rightMenu = rightMenuUl.children[i];
+			
+			if(Number(rightMenu.children.boardOrder.value) == Number(order)) {
+				target = rightMenu;
+				break;
+			}
+		}
+		
+		if(target) {
+			var delBtn = document.getElementById('delMenuBtn_'+order);
+			
+			target.children.boardMenuName.disabled = true;
+			target.children.delFlag.value= 'Y';
+			
+			if(delBtn) {
+				target.removeChild(delBtn);
+			}
+		}
+	}
+}
+
+function showMenuForm() {
+	
 }
 </script>           
