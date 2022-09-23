@@ -23,8 +23,16 @@
 	.makethemgrey {
 		background-color: #868e96;
 	}
+	
+	.nav-pills .nav-item .active {
+		font-weight: bold;
+	}
+	
+
 
 </style>
+
+
 
 <script>
 	$(function () {
@@ -123,9 +131,18 @@
             	<!-- Page Heading -->
                	<h1 class="h3 text-gray-800 cstmTitle">멤버 등급 관리</h1>
                	<hr>
-               	
-               	<!-- cstmContent1 -->
-               	<div class="cstmContent1">
+				<div class="card mb-4 py-0 border-bottom-dark col-md-6" >
+					<div class="card-body">
+						<ul class="nav nav-pills nav-fill">
+							<li class="nav-item"> 
+								<a class="nav-link active" aria-current="page" href="${contextPath }/admin/manageMembersGrade">등급 조건 관리</a> 
+							</li>
+							<li class="nav-item"> 
+								<a class="nav-link" href="${contextPath }/admin/manageGradeUpApplies">등급 신청 관리</a> 
+							</li>
+						</ul>
+					</div>
+				</div>
                	
                		<form name="f1" id="f1" method="post" action="modifyRegisterInfo">
                     	<div class="form-group">
@@ -273,11 +290,6 @@
 	                 	}
                      </script>
                      
-                     
-                     
-               	</div>
-				<!-- End of cstmContent1 -->	
-					
             </div>
             <!-- End of Main Content -->
          
