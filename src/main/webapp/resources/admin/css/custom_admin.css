@@ -81,3 +81,8 @@ form[name="titleForm"] .previewArea > div > div span.fileAdd{border: 1px solid;w
 .menuFormArea li .btn:not(:first-child) {margin-left:5px;}
 .menuFormArea li .btn span.icon {padding:5px 7px;}
 .menuFormArea li .btn span.text {padding:5px;}
+
+/* 메일 > 메일 보내기 페이지 */
+.mailInfoMessage .mailInfoContent {font-size:0.9rem;}
+.emailSendFormArea .form-group > input[type="text"] ,
+.emailSendFormArea .form-group > textarea {width:100%;}

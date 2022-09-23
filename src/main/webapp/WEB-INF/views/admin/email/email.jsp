@@ -1,12 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
-<style>
-.mailInfoMessage .mailInfoContent {font-size:0.9rem;}
-.contact-form .form-group > input[type="text"] ,
-.contact-form .form-group > textarea {width:100%;}
-</style>
-
   	<!-- Page Wrapper -->
     <div id="wrapper">
 		<!-- Content Wrapper -->
@@ -19,7 +13,7 @@
                	<h1 class="h3 text-gray-800 cstmTitle">전체 멤버에게 메일 보내기</h1>
                	
                	<!-- cstmContent1 -->
-				<div class="cstmContent1" style="width:800px;">
+				<div class="cstmContent1 emailSendFormArea" style="width:800px;">
 					<div id="message"></div>
 		          	<form class="contact-form" role="form" name="emailForm" action="sendAllMail" method="POST">
 						<input type="hidden" name="cafeId" value="${emailDTO.cafeId}">
