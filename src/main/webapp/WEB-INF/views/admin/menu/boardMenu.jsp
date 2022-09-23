@@ -139,7 +139,7 @@
 		                    			</c:when>
 		                    		</c:choose>
 		                    		<li class="${typeClass}" title="드래그하여 메뉴 순서 변경 가능" onclick="showMenuForm()"
-		                    			draggable="true" ondragover="defaultPrevent()" ondragstart="saveMoveManu()" ondrop="changeMenuOder()">
+		                    			draggable="true" ondragover="dragoverMenu()" ondragleave="dragleaveMenu()" ondragstart="saveMoveManu()" ondrop="changeMenuOder()">
 		                    			<span>${menu.boardMenuName}</span>
 			                    		<a href="javascript:deleteRightMenu(${order})" id="delMenuBtn_${order}"  class="btn btn-danger btn-icon-split">
 	                                        <span class="icon text-white-50">
@@ -253,9 +253,16 @@ function createMenuDelBtn(order) {
 	return a;
 }
 
-// 이벤트의 default event 막음
-function defaultPrevent() {
+
+function dragoverMenu() {
 	event.preventDefault();
+	event.target.style.background = '#5af';
+}
+
+
+function dragleaveMenu() {
+	event.preventDefault();
+	event.target.style.background = '';
 }
 
 // 같은 클래스 요소 중 특정 id의 요소에만 active class 추가
@@ -324,7 +331,8 @@ function addRight(type) {
 	newLi.title= "드래그하여 메뉴 순서 변경 가능"
 	newLi.onclick = showMenuForm;
 	newLi.ondragstart = saveMoveManu;
-	newLi.ondragover = defaultPrevent;
+	newLi.ondragleave= dragleaveMenu;
+	newLi.ondragover = dragoverMenu;
 	newLi.ondrop = changeMenuOder;
 	newLi.draggable = true;
 	
@@ -437,7 +445,7 @@ function deleteRightMenu(order) {
 		if(target) {
 			var delBtn = document.getElementById('delMenuBtn_'+order);
 			
-			target.children.boardMenuName.disabled = true;
+			target.children[0].style.textDecoration = 'line-through';
 			target.children.boardMenuName.onclick = null;
 			target.children.delFlag.value= 'Y';
 			
