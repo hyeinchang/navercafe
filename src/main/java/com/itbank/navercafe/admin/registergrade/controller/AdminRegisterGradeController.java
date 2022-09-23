@@ -53,6 +53,11 @@ public class AdminRegisterGradeController {
 		return "admin/registerGrade/manageMembersGrade";
 	}
 	
+	@GetMapping("manageGradeUpApplies")
+	public String manageGradeUpApplies() {
+		return "admin/registerGrade/manageGradeUpApplies";
+	}
+	
 	@GetMapping("manageRegisterBan")
 	public String manageRegisterBan(Model model) {
 		
@@ -126,16 +131,15 @@ public class AdminRegisterGradeController {
 		out.print(msg);
 	}
 	
-	/* 
-	@PostMapping("modifyRegisterInfo")
-	public void modifyRegisterInfo(Model model, HttpServletRequest req, HttpServletResponse resp, MembersGradeDTO dto) throws Exception {
-		//String msg = rgs.modifyRegisterInfo();
-		rgs.modifyRegisterInfo(req, model);
-		resp.setContentType("text/html; charset=utf-8");
-		PrintWriter out = resp.getWriter();
-		//out.print(msg);
+	@PostMapping("gradeUpMembers")
+	public void gradeUpMembers() {
+		
 	}
-	*/
+	
+	@PostMapping("gradeRejectMembers")
+	public void gradeRejectMembers() {
+		
+	}
 	
 	@PostMapping(value="modifyRegisterInfo", produces="application/json; charset=utf-8")
 	@ResponseBody
