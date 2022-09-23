@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<form name="menuInfoForm" id="menuInfoForm_${menuDTO.boardOrder}">
 <table border="1" cellspacing="0" width="100%" summary="메뉴관리 설정">
 	<caption style="display: none;">메뉴관리 설정 정보</caption>
 	<colgroup>
@@ -9,13 +10,13 @@
 		<tr>
 			<th>메뉴명</th>
 			<td>
-				<input type="text" class="ipt_type" name="boardMenuName" value="${menuDTO.boardMenuName}">
+				<input type="text" class="ipt_type" name="boardMenuName" value="${menuDTO.boardMenuName}" onkeyup="changeMenuValue()">
 			</td>
 		</tr>
 		<tr>
 			<th style="padding: 4px 0px 0px;">메뉴 설명</th>
 			<td style="padding: 0px 0px 14px;">
-				<input type="text" class="ipt_type2" name="boardMenuDesc" value="${menuDTO.boardMenuDesc}"></td>
+				<input type="text" class="ipt_type2" name="boardMenuDesc" value="${menuDTO.boardMenuDesc}" onkeyup="changeMenuValue()"></td>
 		</tr>
 		<tr>
 			<th scope="row" colspan="2" class="line"></th>
@@ -26,7 +27,7 @@
 				<div class="type_box">
 					<p class="">
 						<strong>글쓰기</strong>
-						<select style="width: 145px;">
+						<select style="width: 145px;" name="boardWriteAuth" onchange="changeMenuValue()">
 							<option	value="1">새싹멤버</option>
 							<option value="110">일반멤버</option>
 							<option value="120">성실멤버</option>
@@ -39,7 +40,7 @@
 					</p>
 					<p>
 						<strong>댓글쓰기</strong>
-						<select style="width: 145px;">
+						<select style="width: 145px;" name="boardReplyAuth" onchange="changeMenuValue()">
 							<option value="1">새싹멤버</option>
 							<option value="110">일반멤버</option>
 							<option value="120">성실멤버</option>
@@ -51,7 +52,7 @@
 					</p>
 					<p class="p_last">
 						<strong>읽기</strong>
-						<select style="width: 145px;">
+						<select style="width: 145px;" name="boardReadAuth" onchange="changeMenuValue()">
 							<option value="0">전체공개</option>
 							<option value="1">새싹멤버</option>
 							<option value="110">일반멤버</option>
@@ -135,7 +136,7 @@
 							<option value="2">상위 2개</option>
 							<option value="3">상위 3개</option>
 							<option value="4">상위 4개</option>
-							<option value="5">상위 5개</option></select> 가 게시판 상단에 올라가도록<br> 설정합니다.
+							<option value="5">상위 5개</option></select> 가 게시판 상단에 올라가도록 설정합니다.
 					</div>
 				</div></td>
 		</tr>
@@ -175,3 +176,4 @@
 		</tr>
 	</tbody>
 </table>
+</form>

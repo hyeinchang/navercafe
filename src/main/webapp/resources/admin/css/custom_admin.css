@@ -20,3 +20,63 @@ form[name="titleForm"] .previewArea img {width:550px;}
 form[name="titleForm"] .previewArea > div > div {/*min-height: 300px; border: 1px solid #e3e6f0; background: #fff;*/ margin: 0 auto; border-radius: 10px;color: #ddd;text-align:center;}
 form[name="titleForm"] .previewArea > div > div p {font-size: 30px; width: 100%; text-align: center; font-weight: bold; margin:20px 0;}
 form[name="titleForm"] .previewArea > div > div span.fileAdd{border: 1px solid;width: 50px; margin: 150px auto;border-radius: 5px;display:inline-block; font-weight: bold;font-size: 30px; }
+
+.menuFormArea .menuChoice ul {margin:0; padding:0;}
+.menuFormArea .menuChoice {display: inline-block;vertical-align:top;width:300px;}
+
+.menuFormArea #leftMenuUl > li.ge_v1, #rightMenuUl > li.ge_v1 {background-position: 12px -303px;}
+.menuFormArea #leftMenuUl > li.ge_v13, #rightMenuUl > li.ge_v13 {background-position: 12px -1284px;}
+.menuFormArea #leftMenuUl > li.ge_v3, #rightMenuUl > li.ge_v3 {background-position: 12px -425px;}
+.menuFormArea #leftMenuUl > li.ge_v6, #rightMenuUl > li.ge_v6 {background-position: 12px -608px;}
+.menuFormArea #leftMenuUl > li.ge_v7, #rightMenuUl > li.ge_v7 {background-position: 12px -669px;}
+.menuFormArea #leftMenuUl > li.ge_v8, #rightMenuUl > li.ge_v8 {background-position: 12px -730px;}
+.menuFormArea #leftMenuUl > li.ge_v9, #rightMenuUl > li.ge_v9 {background-position: 12px -791px;}
+
+/* #rightMenuUl > li.ge_v1 {background-position: 12px -300px;}
+#rightMenuUl > li.ge_v13 {background-position: 12px -1281px;}
+#rightMenuUl > li.ge_v3 {background-position: 12px -422px;}
+#rightMenuUl > li.ge_v6 {background-position: 12px -605px;}
+#rightMenuUl > li.ge_v7 {background-position: 12px -666px;}
+#rightMenuUl > li.ge_v8 {background-position: 12px -727px;}
+#rightMenuUl > li.ge_v9 {background-position: 12px -788px;} */
+
+/* 메뉴 > 메뉴관리 페이지 */
+.menuFormArea #leftMenuUl > li , #rightMenuUl > li{list-style:none; margin-bottom:10px; display: block; padding: 0 0 0 30px; background: url(../../img/sp_ico_menu5.png) no-repeat 10px 0; color: #333;}
+#rightMenuUl > li > span:first-child {display:inline-block;white-space:nowrap;width:200px;overflow-x: hidden; text-overflow: ellipsis;}
+.menuFormArea .menuChoice li:hover {cursor:pointer;color:#4e73df;}    
+.menuFormArea .rightBox {display: inline-block;border: 1px solid #e3e6f0;height: 700px;background:#fff;vertical-align:top;}
+.menuFormArea .rightBox ul {margin:0; padding:0;}
+.menuFormArea .rightBox .rightMenu {display:inline-block;width:340px;height: 100%;padding:1.25rem;}
+.menuFormArea .rightBox > div {vertical-align:top;}
+.menuFormArea .typeInfoArea {display:inline-block; border-left: 1px solid #e3e6f0;  width:700px;height: 700px;}
+.menuFormArea .typeInfo {display:none;}
+.menuFormArea .typeInfo.active {display:block;}
+.menuFormArea .set_box {width:100%;height: 700px;padding:1.25rem;overflow-y:scroll;}
+.menuFormArea .set_box .set_tit {font-size: 1rem;font-weight: bold;}
+.menuFormArea .set_box .set_lst_type {font-size: 0.9rem;padding-left: 1.4rem;}
+.menuFormArea .set_box .set_p_type{font-size: 0.9rem;}
+.menuFormArea .set_box .detail_area {display:none;font-size: 0.9rem}
+.menuFormArea .set_box .detail_area.active {display:block;}
+.menuFormArea .set_box .detail_area {margin: 15px 0 19px;padding: 4px 0 35px; border-top: 1px solid #565b62;}
+.menuFormArea .set_box .detail_area table,
+.menuFormArea .set_box .detail_area table td,
+.menuFormArea .set_box .detail_area table th {border:0 none;font-size:12px;}
+.menuFormArea .set_box .detail_area th {padding: 14px 0 0;color: #272727;font-weight: 400;text-align: left; vertical-align: top;}
+.menuFormArea .set_box .detail_area td {padding: 12px 0 0;color: #404040; vertical-align: top;}
+.menuFormArea .set_box .detail_area .line {overflow: hidden; height: 2px;padding: 0;border-top: 1px solid #e9e9e9;*background: #e9e9e9;}
+.menuFormArea .set_box .detail_area .ipt_type {width: 300px;padding-left: 4px;margin: 0 0 6px;border: 1px solid #c5c5c5;color: #404040;font-size: 14px;font-weight: 700;letter-spacing: -1px; line-height: 29px;}
+.menuFormArea .set_box .detail_area .ipt_type2 { width: 300px;padding-left: 4px;border: 1px solid #c5c5c5;color: #404040;font-size: 12px;line-height: 19px;}
+.menuFormArea .set_box .detail_area .type_box p strong {display: inline-block;width: 58px;color: #404040; font-weight: 400;line-height: 16px;}
+.menuFormArea .set_box .detail_area p {margin: 0;padding: 0 0 6px;}
+.menuFormArea .set_box .detail_area td .check,
+.menuFormArea .set_box .detail_area th .check,
+.menuFormArea .set_box .kin_connect_set .set_tit .check {display: inline-block;width: 15px;height: 15px; margin-top: -3px;}
+.menuFormArea .set_box .detail_area .type_box .p_last { padding: 0 0 16px;}
+.menuFormArea .set_box .detail_area .in_ra {display: inline-block; padding: 2px 0;margin-right: 15px;}
+.menuFormArea .set_box .detail_area label {vertical-align:middle; margin-left:5px;}
+.menuFormArea #rightMenuUl li:hover{cursor: grab;}
+.menuFormArea #rightMenuUl li input:hover{cursor: grab;}
+.menuFormArea li .btn {line-height: 15px;font-size: 0.7rem;vertical-align:top;}
+.menuFormArea li .btn:not(:first-child) {margin-left:5px;}
+.menuFormArea li .btn span.icon {padding:5px 7px;}
+.menuFormArea li .btn span.text {padding:5px;}
