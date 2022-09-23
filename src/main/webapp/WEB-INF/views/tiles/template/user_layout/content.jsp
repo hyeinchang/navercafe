@@ -50,7 +50,7 @@
                 <a href="${contextPath}/user/main?cafeId=${ranking.cafeId}"><img src="$${contextPath}/file/download?titleNum=${ranking.titleNum}" alt="${ranking.cafeName}" style="width:300px;height:300px;"></a>
               </div>
             </div>
-            <h4><a href="${contextPath}/user/main?cafeId=${ranking.cafeId}'">${ranking.cafeName}</a></h4>
+            <h4><a href="${contextPath}/user/main?cafeId=${ranking.cafeId}">${ranking.cafeName}</a></h4>
             <p>${ranking.cafeIntroduce}</p>
           </div>
         </div>
