@@ -13,7 +13,37 @@ public class CafeMemberDTO {
 	private int cafeUserReply;
 	private int cafeUserVisitCheck;
 	private Timestamp cafeUserRegdate;
+	private Timestamp cafeUserApplyDate;
+	private String cafeUserStatus;
+	private String cafeUserEmailReceieve;
+	private String cafeUserGenderReveal;
 	
+	
+	
+	public String getCafeUserGenderReveal() {
+		return cafeUserGenderReveal;
+	}
+	public void setCafeUserGenderReveal(String cafeUserGenderReveal) {
+		this.cafeUserGenderReveal = cafeUserGenderReveal;
+	}
+	public String getCafeUserEmailReceieve() {
+		return cafeUserEmailReceieve;
+	}
+	public void setCafeUserEmailReceieve(String cafeUserEmailReceieve) {
+		this.cafeUserEmailReceieve = cafeUserEmailReceieve;
+	}
+	public Timestamp getCafeUserApplyDate() {
+		return cafeUserApplyDate;
+	}
+	public void setCafeUserApplyDate(Timestamp cafeUserApplyDate) {
+		this.cafeUserApplyDate = cafeUserApplyDate;
+	}
+	public String getCafeUserStatus() {
+		return cafeUserStatus;
+	}
+	public void setCafeUserStatus(String cafeUserStatus) {
+		this.cafeUserStatus = cafeUserStatus;
+	}
 	public String getCafeId() {
 		return cafeId;
 	}

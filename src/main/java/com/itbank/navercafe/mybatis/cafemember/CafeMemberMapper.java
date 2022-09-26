@@ -2,22 +2,26 @@ package com.itbank.navercafe.mybatis.cafemember;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.annotations.Param;
+
+import com.itbank.navercafe.user.cafejoin.dto.CafeJoinDTO;
 import com.itbank.navercafe.user.cafemember.dto.CafeMemberDTO;
 
 
 
 public interface CafeMemberMapper {
-	public ArrayList<CafeMemberDTO> getCafeMemberList();
-	public int saveData(CafeMemberDTO dto);
-	public CafeMemberDTO getCafeUserInfo(String userId);
 	
-	//댓글 작성시 세션값 넘겨주기
-	public CafeMemberDTO getSessionUserInfo(String sessionId);
+	public int signup(CafeMemberDTO dto);
 	
-	//게시글 더보기 용도
-	public CafeMemberDTO getUserViewList(String userId);
-	
-	//댓글 작성시 세션아이디를 userId 라는 이름으로 넘겨줌
-	public void replyUp(String userId);
+	public int cafeMembers();
 
+	public Integer cafeMembers(@Param("cafeId")String cafeId, @Param("userId")String userId);
+
+	public CafeMemberDTO getCafeMember(@Param("cafeId")String cafeId, @Param("userId")String userId);
+
+	public int cafeMemberUpdate(CafeMemberDTO dto);
+
+	public Integer idOverlap(@Param("cafeUserNickname")String cafeUserNickname, @Param("cafeId")String cafeId);
+
+	public String iddd(String cafeUserNickname, String cafeId);
 }

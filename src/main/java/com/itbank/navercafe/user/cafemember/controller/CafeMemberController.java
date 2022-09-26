@@ -19,29 +19,16 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.itbank.navercafe.user.cafemember.service.CafeMemberService;
 
 
-
-
 @Controller
 @RequestMapping("/user/board")
 public class CafeMemberController {
 	@Autowired CafeMemberService cafeSer;
 	
-	@GetMapping("/goCafeMemberList")
-	public String goCafeMemberList(Model model) {
-		model.addAttribute("cafeMemberList",cafeSer.getCafeMemberList());
-		return "user/board/cafeMemberList";
-	}
 	@GetMapping("goRegCafeMember")
 	public String goRegCafeMember() {
 		return "cafeMember/regCafeMember";
 	}
 	
-	@PostMapping("saveData")
-	public String saveData(MultipartHttpServletRequest mul,
-							HttpServletRequest request){
-		cafeSer.writeSave(mul,request);
-		return "redirect:goCafeMemberList";
-	}
 	
 	@PostMapping("logChk")
 	public String logChk(String userId,HttpSession session) {
@@ -58,11 +45,6 @@ public class CafeMemberController {
 		return "cafeMember/cafeMemberList";
 	}
 	
-	@GetMapping("userViewList")
-	public String userViewList(String userId,Model model) {
-		cafeSer.getUserViewList(userId,model);
-		return "board/userViewList";
-	}
 
 
 	
