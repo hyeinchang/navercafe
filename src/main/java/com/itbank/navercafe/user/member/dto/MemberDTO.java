@@ -1,90 +1,63 @@
 package com.itbank.navercafe.user.member.dto;
 
-import java.sql.Timestamp;
-
 public class MemberDTO {
-	private String userId;
-	private String userPw;
-	private String userName;
-	private String userPhone;
-	private String userEmail;
-	private String postalCode;
-	private String roadAddr;
-	private String jibunAddr;
-	private String certAddr;
-	private Timestamp regDate;
-	private int userPoint;
-	private int userLevel;
-	public String getUserId() {
-		return userId;
+	private String id;
+	private String password;
+	private String name;
+	private String phone;
+	private String mail;
+	
+	private String addr1;
+	private String addr2;
+	private String addr3;
+	
+	public String getAddr1() {
+		return addr1;
 	}
-	public void setUserId(String userId) {
-		this.userId = userId;
+	public void setAddr1(String addr1) {
+		this.addr1 = addr1;
 	}
-	public String getUserPw() {
-		return userPw;
+	public String getAddr2() {
+		return addr2;
 	}
-	public void setUserPw(String userPw) {
-		this.userPw = userPw;
+	public void setAddr2(String addr2) {
+		this.addr2 = addr2;
 	}
-	public String getUserName() {
-		return userName;
+	public String getAddr3() {
+		return addr3;
 	}
-	public void setUserName(String userName) {
-		this.userName = userName;
+	public void setAddr3(String addr3) {
+		this.addr3 = addr3;
 	}
-	public String getUserPhone() {
-		return userPhone;
+	
+	public String getId() {
+		return id;
 	}
-	public void setUserPhone(String userPhone) {
-		this.userPhone = userPhone;
+	public void setId(String id) {
+		this.id = id;
 	}
-	public String getUserEmail() {
-		return userEmail;
+	public String getPassword() {
+		return password;
 	}
-	public void setUserEmail(String userEmail) {
-		this.userEmail = userEmail;
+	public void setPassword(String password) {
+		this.password = password;
 	}
-	public String getPostalCode() {
-		return postalCode;
+	public String getName() {
+		return name;
 	}
-	public void setPostalCode(String postalCode) {
-		this.postalCode = postalCode;
+	public void setName(String name) {
+		this.name = name;
 	}
-	public String getRoadAddr() {
-		return roadAddr;
+	public String getPhone() {
+		return phone;
 	}
-	public void setRoadAddr(String roadAddr) {
-		this.roadAddr = roadAddr;
+	public void setPhone(String phone) {
+		this.phone = phone;
 	}
-	public String getJibunAddr() {
-		return jibunAddr;
+	public String getMail() {
+		return mail;
 	}
-	public void setJibunAddr(String jibunAddr) {
-		this.jibunAddr = jibunAddr;
-	}
-	public String getCertAddr() {
-		return certAddr;
-	}
-	public void setCertAddr(String certAddr) {
-		this.certAddr = certAddr;
-	}
-	public Timestamp getRegDate() {
-		return regDate;
-	}
-	public void setRegDate(Timestamp regDate) {
-		this.regDate = regDate;
-	}
-	public int getUserPoint() {
-		return userPoint;
-	}
-	public void setUserPoint(int userPoint) {
-		this.userPoint = userPoint;
-	}
-	public int getUserLevel() {
-		return userLevel;
-	}
-	public void setUserLevel(int userLevel) {
-		this.userLevel = userLevel;
+	public void setMail(String mail) {
+		this.mail = mail;
 	}
 }

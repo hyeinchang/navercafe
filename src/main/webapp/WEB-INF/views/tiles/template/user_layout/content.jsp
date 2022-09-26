@@ -50,7 +50,7 @@
                 <a href="${contextPath}/user/main?cafeId=${ranking.cafeId}"><img src="$${contextPath}/file/download?titleNum=${ranking.titleNum}" alt="${ranking.cafeName}" style="width:300px;height:300px;"></a>
               </div>
             </div>
-            <h4><a href="${contextPath}/user/main?cafeId=${ranking.cafeId}'">${ranking.cafeName}</a></h4>
+            <h4><a href="${contextPath}/user/main?cafeId=${ranking.cafeId}">${ranking.cafeName}</a></h4>
             <p>${ranking.cafeIntroduce}</p>
           </div>
         </div>
@@ -135,13 +135,13 @@
           <div class="form-group">
             <div class="input-group">
               <span class="input-group-addon"><i class="fa fa-user"></i></span>
-              <input type="text" class="form-control" name="id" placeholder="아이디를 입력해주십시오." value="chi9148">
+              <input type="text" class="form-control" name="id" placeholder="아이디를 입력해주십시오." >
             </div>
           </div>
           <div class="form-group">
             <div class="input-group">
               <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-              <input type="password" class="form-control" name="password" placeholder="비밀번호를 입력해주십시오." value="1234">
+              <input type="password" class="form-control" name="password" placeholder="비밀번호를 입력해주십시오." >
             </div>
           </div>
           <div class="form-group">
@@ -153,7 +153,7 @@
           </div>
           <div class="form-group">
             <button type="button" class="button" onclick="checkLoginForm()">로그인</button>
-            <button type="button" class="button">회원가입</button>
+            <button type="button" class="button" onclick="location.href='signup'">회원가입</button>
           </div>
         </form>
 	  </c:when>
@@ -169,7 +169,7 @@
 		      <b><span class="text-primary">${loginName}</span>님</b>
 		      <div>${loginId}</div>
 		      <div class="cafeSetting">
-		        <a href="javascript:alert('카페관리로 이동')" class="info-cafe">
+		        <a href="userInfo?id=${loginId}" class="info-cafe">
 			      <span class="ico_aside ico_setting"></span>회원정보수정
 			    </a>
 			    <a href="javascript:logout();" class="info-cafe">

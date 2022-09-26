@@ -16,7 +16,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.itbank.navercafe.comon.file.TestFileService;
 import com.itbank.navercafe.comon.file.dto.FileDTO;
 //import com.itbank.navercafe.comon.file.FileService;
+
 import com.itbank.navercafe.mybatis.cafemember.CafeMemberMapper;
+import com.itbank.navercafe.user.cafejoin.dto.CafeJoinDTO;
 import com.itbank.navercafe.user.cafemember.dto.CafeMemberDTO;
 import com.itbank.navercafe.user.cafemember.dto.TestFileDTO;
 
@@ -24,60 +26,79 @@ import com.itbank.navercafe.user.cafemember.dto.TestFileDTO;
 
 @Service
 public class CafeMemberServiceImpl implements CafeMemberService{
+
 	@Autowired CafeMemberMapper cafeMap;
 	@Autowired TestFileService fs;
-	
 
-	
-	@Override
-	public ArrayList<CafeMemberDTO> getCafeMemberList() {
-		return cafeMap.getCafeMemberList();
-	}
-	
+	@Autowired CafeMemberMapper mapper;
 
-	@Override
-	public CafeMemberDTO getCafeUserInfo(String userId) {
-		return cafeMap.getCafeUserInfo(userId);
-	}
 
-	@Override
-	public int logChk(String userId) {
-		ArrayList<CafeMemberDTO> list=cafeMap.getCafeMemberList();
-		for(int i=0;i<list.size();i++) {
-			if(userId.equals(list.get(i).getUserId())) {
-				return 1;
-			}
+	public int signup(CafeMemberDTO dto) {
+		
+		try {
+			return mapper.signup(dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+
 		}
 		return 0;
 	}
-
+	
 	@Override
-	public CafeMemberDTO getSessionUserInfo(String sessionId) {
-		return cafeMap.getSessionUserInfo(sessionId);
+	public Integer cafeMembers(String cafeId, String userId) {
+		try {
+			return  mapper.cafeMembers(cafeId,userId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return 0;
 	}
+	
 
+
+	public CafeMemberDTO getCafeMember(String cafeId, String userId) {
+		CafeMemberDTO dto = mapper.getCafeMember(cafeId, userId);
+		return dto;
+	}
+	
+	@Override
+	public int cafeMemberUpdate(CafeMemberDTO dto) {
+		try {
+			return mapper.cafeMemberUpdate(dto);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return 0;
+	}
+	
+	@Override
+	public String idOverlap(String cafeUserNickname, String cafeId, String oldNick) {
+		String result = null;
+		int idCheck = mapper.idOverlap(cafeUserNickname,cafeId);
+		if(oldNick.equals(cafeUserNickname)) {
+			idCheck=0;
+		}
+		
+		if(idCheck!=1) {
+			result = "OK"; // 중복X
+		}else {
+			result = "NO";
+		}
+		return result;
+
+	}
+	
+	
+	
+	//게시글 더 보러가기
 	@Override
 	public void getUserViewList(String userId,Model model) {
 		model.addAttribute("getUserViewList",cafeMap.getUserViewList(userId));
 	}
-
-	@Override
-	public int getSequence() {
-		return cafeMap.getSequence();
-	}
-
-	@Override
-	public void insert(CafeMemberDTO dto) {
-		cafeMap.insert(dto);
-	}
-
-	@Override
-	public void insertFile(FileDTO dto) {
-		cafeMap.insertFile(dto);
-	}
-
 	
 	
+	//수정 할때 변경해서 임시로 사용
 	public void writeSave(MultipartHttpServletRequest mul,HttpServletRequest request) {
 		TestFileDTO tfd=new TestFileDTO();
 		
@@ -92,6 +113,7 @@ public class CafeMemberServiceImpl implements CafeMemberService{
 		MultipartFile file=mul.getFile("cafeUserImage");
 		//System.out.println("누구?:"+file);
 		if(file.getSize()!=0) {
+			//시퀀스값 빼오는애
 			int seq=cafeMap.getSequence();
 			System.out.println("가져온 seq:"+seq);
 			dto.setCafeUserImage(seq);//seq 가져와서 넣어주고
@@ -107,13 +129,5 @@ public class CafeMemberServiceImpl implements CafeMemberService{
 	}
 
 
-	@Override
-	public ArrayList<TestFileDTO> getFileNameList() {
-		return cafeMap.getFileNameList();
-	}	
-	
-	
-
-	
 	
 }

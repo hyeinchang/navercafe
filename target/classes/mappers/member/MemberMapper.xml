@@ -5,19 +5,32 @@
 <mapper namespace="com.itbank.navercafe.mybatis.member.MemberMapper">
 
 	<resultMap type="com.itbank.navercafe.user.member.dto.MemberDTO" id="project_members">
-		<id property="userId" column="user_id"/>
-		<result property="userPw" column="user_pw"/>
-		<result property="userName" column="user_name"/>
-		<result property="userPhone" column="user_phone"/>
-		<result property="userEmail" column="user_email"/>
-		<result property="postalCode" column="postalCode"/>
-		<result property="roadAddr" column="roadAddr"/>
-		<result property="jibunAddr" column="jibunAddr"/>
-		<result property="certAddr" column="certAddr"/>
-		<result property="regDate" column="regDate"/>
-		<result property="userPoint" column="user_point"/>
-		<result property="userLevel" column="user_level"/>
+		<id property="id" column="user_id"/>
+		<result property="password" column="user_pw"/>
+		<result property="name" column="user_name"/>
+		<result property="phone" column="user_phone"/>
+		<result property="mail" column="user_email"/>
+		<result property="addr1" column="user_postalcode"/>
+		<result property="addr2" column="user_addr"/>
+		<result property="addr3" column="user_detail_addr"/>
 	</resultMap>
+	
+	<insert id="signup">
+		insert into project_members(user_id, user_pw, user_name, user_phone, user_email, user_postalcode, user_addr, user_detail_addr) 
+		values(#{id}, #{password}, #{name}, #{phone}, #{mail}, #{addr1}, #{addr2}, #{addr3})
+	</insert>
+	
+	<select id="getUser" resultMap="project_members">
+		select * from project_members where user_id = #{id}
+	</select>
+	
+	<update id="update">
+		update project_members set user_id = #{id}, user_pw = #{password}, user_name = #{name} where user_id = #{id}
+	</update>
+	
+	<delete id="delete">
+		delete project_members where user_id = #{id}
+	</delete>
 	
 	<select id="getMemberList" resultMap="project_members">
 		select * from project_members
