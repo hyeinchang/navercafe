@@ -91,6 +91,16 @@ public class CafeMemberServiceImpl implements CafeMemberService{
 	
 	
 	
+	@Override
+	public CafeMemberDTO getCafeUserInfo(String userId) {
+		return cafeMap.getCafeUserInfo(userId);
+	}
+	@Override
+	public CafeMemberDTO getSessionUserInfo(String sessionId) {
+		return cafeMap.getSessionUserInfo(sessionId);
+	}
+	
+	
 	//게시글 더 보러가기
 	@Override
 	public void getUserViewList(String userId,Model model) {

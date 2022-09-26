@@ -27,6 +27,10 @@ public interface CafeMemberMapper {
 	public void replyUp(String userId);
 	//시퀀스 값 가져오는애
 	public int getSequence();
+	//게시글안에서 닉네임 따로 처리해주려고 가져오는 애
+	public CafeMemberDTO getCafeUserInfo(String userId);
+	//댓글 작성시 세션값 넘겨주기
+	public CafeMemberDTO getSessionUserInfo(String sessionId);
 	
 
 	public int signup(CafeMemberDTO dto);
