@@ -8,7 +8,7 @@ public class ReplyDTO {
 	private String replyContent;
 	private Timestamp replySaveDate;
 	private String userId;
-	private String replyImgName;
+	private int replyImgName;
 	private int replyGroup;
 	private int replyStep;
 	
@@ -56,11 +56,12 @@ public class ReplyDTO {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public String getReplyImgName() {
+	public int getReplyImgName() {
 		return replyImgName;
 	}
-	public void setReplyImgName(String replyImgName) {
+	public void setReplyImgName(int replyImgName) {
 		this.replyImgName = replyImgName;
 	}
+	
 	
 }

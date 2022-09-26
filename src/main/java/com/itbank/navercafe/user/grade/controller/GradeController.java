@@ -17,7 +17,7 @@ public class GradeController {
 	
 	@GetMapping("/goGradeBoardList")
 	public String goGradeBoardList(Model model) {
-		model.addAttribute("getGradeList",upSer.getUpGradeboardList());
+		upSer.getGradeList(model);
 		return "user/board/gradeBoardList";
 	}
 }

@@ -16,8 +16,9 @@
 	</resultMap>
 	
 
-	<select id="getUpGradeboardList" resultMap="project_upgrade_board">
-		select * from project_upgrade_board
+	<select id="getGradeList" resultType="HashMap">
+		select C.cafe_user_nickname,C.cafe_user_image,G.* from project_upgrade_board G inner join 
+		project_cafe_member C on C.user_id = G.user_id
 	</select>
 	
 	

@@ -208,12 +208,12 @@ li.bbp-topic-freshness-test{
 			              
 			              	<div class="div-one">
 			              		<a href="#">
-				              		<c:if test="${ cafeUserInfo.cafeUserImage == 'nan' }">
+				              		<c:if test="${ cafeUserInfo.cafeUserImage == 0 }">
 				              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
 				              			width="40px" class="img-circle alignleft" alt="">
 				              		</c:if>
-									<c:if test="${ cafeUserInfo.cafeUserImage  != 'nan' }">
-										<img src="download?file=${cafeUserInfo.cafeUserImage }" 
+									<c:if test="${ cafeUserInfo.cafeUserImage  != 0 }">
+										<img src="test_download?fileImageNum=${cafeUserInfo.cafeUserImage }" 
 										width="40px" class="img-circle alignleft" alt="">
 									</c:if>
 				              	</a>
@@ -246,12 +246,12 @@ li.bbp-topic-freshness-test{
 		          <div class="more-one">
 		          
 		          	<a href="#">
-	              		<c:if test="${ cafeUserInfo.cafeUserImage == 'nan' }">
+	              		<c:if test="${ cafeUserInfo.cafeUserImage == 0 }">
 	              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
 	              			width="50" class="img-circle alignleft" alt="">
 	              		</c:if>
-						<c:if test="${ cafeUserInfo.cafeUserImage != 'nan' }">
-							<img src="download?file=${cafeUserInfo.cafeUserImage}" 
+						<c:if test="${ cafeUserInfo.cafeUserImage != 0 }">
+							<img src="test_download?fileImageNum=${cafeUserInfo.cafeUserImage}" 
 							width="50" class="img-circle alignleft" alt="">
 						</c:if>
 	              	</a>
@@ -289,19 +289,19 @@ li.bbp-topic-freshness-test{
 		          <ul class="comment-list">
 		          
 		          	<c:forEach var="reply" items="${replyList}">
-		          		<c:if test="${reply.REPLY_STEP == 0}">
+		          		<c:if test="${reply.REPLY_STEP == 0}"><!--댓글 이라면-->
 			            <li>
 			              <article class="comment">
 			              	<a href="#">
-				              		<c:if test="${ reply.CAFE_USER_IMAGE== 'nan'}">
-				              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
-				              			width="40px" class="img-circle alignleft" alt="">
-				              		</c:if>
-									<c:if test="${ reply.CAFE_USER_IMAGE  != 'nan' }">
-										<img src="download?file=${reply.CAFE_USER_IMAGE}" 
-										width="40px" class="img-circle alignleft" alt="">
-									</c:if>
-				              	</a>
+			              		<c:if test="${ reply.CAFE_USER_IMAGE== 0}">
+			              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
+			              			width="40px" class="img-circle alignleft" alt="">
+			              		</c:if>
+								<c:if test="${ reply.CAFE_USER_IMAGE  != 0 }">
+									<img src="test_download?fileImageNum=${reply.CAFE_USER_IMAGE}" 
+									width="40px" class="img-circle alignleft" alt="">
+								</c:if>
+				             </a>
 			               
 			                	
 			                <div class="comment-content">
@@ -310,8 +310,8 @@ li.bbp-topic-freshness-test{
 		                       
 		                  	  </h4>
 		                   		${reply.REPLY_CONTENT}<br>
-		                   		<c:if test="${reply.REPLY_IMG_NAME != 'nan'}">
-		                   			<img src="download?file=${reply.REPLY_IMG_NAME}" 
+		                   		<c:if test="${reply.REPLY_IMG_NAME != 0}">
+		                   			<img src="test_download?fileImageNum=${reply.REPLY_IMG_NAME}" 
 									width="30%">
 		                   		</c:if>
 		                   		
@@ -358,12 +358,12 @@ li.bbp-topic-freshness-test{
 		                      			<li>
 						              <article class="comment" style="color:black;">
 						              	<a href="#">
-							              		<c:if test="${ replyreply.CAFE_USER_IMAGE== 'nan'}">
+							              		<c:if test="${ replyreply.CAFE_USER_IMAGE== 0}">
 							              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
 							              			width="40px" class="img-circle alignleft" alt="">
 							              		</c:if>
-												<c:if test="${ replyreply.CAFE_USER_IMAGE  != 'nan' }">
-													<img src="download?file=${replyreply.CAFE_USER_IMAGE}" 
+												<c:if test="${ replyreply.CAFE_USER_IMAGE  != 0 }">
+													<img src="test_download?fileImageNum=${replyreply.CAFE_USER_IMAGE}" 
 													width="40px" class="img-circle alignleft" alt="">
 												</c:if>
 							              	</a>
@@ -375,8 +375,8 @@ li.bbp-topic-freshness-test{
 					                       
 					                  	  </h4>
 					                   		${replyreply.REPLY_CONTENT}<br>
-					                   		<c:if test="${replyreply.REPLY_IMG_NAME != 'nan'}">
-					                   			<img src="download?file=${replyreply.REPLY_IMG_NAME}" 
+					                   		<c:if test="${replyreply.REPLY_IMG_NAME != 0}">
+					                   			<img src="test_download?fileImageNum=${replyreply.REPLY_IMG_NAME}" 
 												width="30%">
 					                   		</c:if>
 					                   		
@@ -533,71 +533,58 @@ li.bbp-topic-freshness-test{
 	        </div>
 	        
       </div>
-      <!-- end content -->
-		          
+      <!-- 말머리 영역 끝 -->
+	            
 
-		<!--카페 인기글 헤더  -->
-		
+							<!--카페 인기글 헤더  -->
+					<!-- style="background-color:#F5F5F5;" -->
         <div class="content col-lg-12 col-md-12 col-sm-12 clearfix">
-
 	        <div class="general-title text-center">
 	          <h3>이 카페 인기글</h3>
 	          <hr>
 	        </div>
-	
 	        <div class="divider"></div>
-	        
-        
-        
         					<!--카페 인기글 이미지  -->
 
-        <div id="popularitems" class="owl-carousel">
-
-								<!-- 9개만 표현 -->
-		<c:forEach var="top6" items="${topList}" begin="1" end="9" step="1">
-			<div class="col-lg-12">
-            <div class="he-wrap tpl6 market-item">
-			<div class="name-topList">${top6.BOARD_TITLE}</div>
-            	 <c:if test="${ top6.CAFE_USER_IMAGE== 'nan'}">
-		       		  <img class="lazyOwl" style="max-width: 100%; height: 279px"
-		       		  data-src="<%=request.getContextPath()%>/resources/img/프로필.jpg">
-              	  </c:if>
-				  <c:if test="${ top6.CAFE_USER_IMAGE  != 'nan' }">
-					  <img class="lazyOwl"
-					  data-src="download?file=${top6.CAFE_USER_IMAGE}" alt="">
-				  </c:if>
-            	
-            	
-              <div class="he-view">
-                <div class="bg a0" data-animate="fadeIn">
-                  <h3 class="a1" data-animate="fadeInDown">${top6.CAFE_USER_NICKNAME}</h3>
-                  <a href="goBoardInside?boardNum=${top6.BOARD_NUM}&userId=${top6.USER_ID}"
-                  class="dmbutton a2" data-animate="fadeIn">게시글 보러가기</a>
-
-                </div>
-               
-              </div>
-              
-            </div>
-           
-          </div>
-		</c:forEach>
-         
-        </div>
-        <!-- popular items -->
-        
+	        <div id="popularitems" class="owl-carousel">
+									<!-- 9개만 표현 -->
+				<c:forEach var="top6" items="${topList}" begin="1" end="9" step="1">
+					<div class="col-lg-12">
+		            <div class="he-wrap tpl6 market-item">
+					<div class="name-topList">${top6.BOARD_TITLE}</div>
+		            	 <c:if test="${ top6.CAFE_USER_IMAGE== 0}">
+				       		  <img class="lazyOwl" style="height: 280px;"
+				       		  data-src="<%=request.getContextPath()%>/resources/img/프로필.jpg">
+		              	  </c:if>
+						  <c:if test="${ top6.CAFE_USER_IMAGE  != 0 }">
+							  <img class="lazyOwl" style="height: 280px;"
+							  data-src="test_download?fileImageNum=${top6.CAFE_USER_IMAGE}" alt="">
+						  </c:if>
+		            	
+		              <div class="he-view">
+		                <div class="bg a0" data-animate="fadeIn">
+		                  <h3 class="a1" data-animate="fadeInDown">
+		                  	작성자 <br><Br> ${top6.CAFE_USER_NICKNAME}</h3>
+		                  <a href="goBoardInside?boardNum=${top6.BOARD_NUM}&userId=${top6.USER_ID}"
+		                  class="dmbutton a2" data-animate="fadeIn">게시글 보러가기</a>
+		                </div>
+		              </div>
+		            </div>
+		          </div>
+				</c:forEach>
+	        </div>
+        <!-- 리스트 끝 -->
       </div>
-      <!-- end content -->
-          
+      <!-- 카페 인기글 영역 끝 -->
+      
 	 </div>
 <!-- end comments_Form -->
 
-      <div class="divider"></div>
-
+     	 <div class="divider"></div>
         <!-- div comments -->
       </div>
       <!-- end content -->
       <div id="nav" class="right"></div>
-      
+    
 	</section>
 </div>

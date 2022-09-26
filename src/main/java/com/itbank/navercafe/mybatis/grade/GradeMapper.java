@@ -1,10 +1,10 @@
 package com.itbank.navercafe.mybatis.grade;
 
-import java.util.ArrayList;
 
+import java.util.HashMap;
+import java.util.List;
 
-import com.itbank.navercafe.user.grade.dto.GradeDTO;
 
 public interface GradeMapper {
-	public ArrayList<GradeDTO> getUpGradeboardList();
+	public List<HashMap<String,Object>> getGradeList();
 }

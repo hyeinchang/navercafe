@@ -59,7 +59,7 @@
 
 <script>
 function replyClick(obj){
-	document.getElementById(-obj.id).style="display:block";
+	document.getElementById(-obj.id).style="display:block; padding-left: 30px;";
 }
 function back(obj){
 	document.getElementById(-obj.id).style="display:none";
@@ -68,7 +68,7 @@ function back(obj){
 
 
 <div class="content pull-right col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix cstmContent" ${cafeDTO.cafeLayout > 0 ? '' : 'style="float:right;"'}>
-<div class="container clearfix">
+<div class="container clearfix" style="list-style: none;">
 	      <div class="content col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix">
 					<h1>메모 게시판입니다</h1>
 		        <!-- SLIDE POST -->
@@ -76,28 +76,36 @@ function back(obj){
 		        
 				<div class="memo-wrap">
 				
+											<!--  메모 작성 부분-->
 		         <div class="memo-board">
 		            <h4>새로운 메모 게시판</h4>
-		            <form id="comments_form" action="" name="comments_form" class="row" method="post">
+		            <form id="comments_form" action="memoSave" class="row" method="post">
+		            	<input type="hidden" name="userId" value="${sessionId}">
 		              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-		                <textarea class="form-control" name="comments" id="comments" rows="6" placeholder="글을 입력해 주세요."></textarea>
-		                <input type="submit" value="등록" id="submit" class="button small">
+		                <textarea class="form-control" name="memoContent" id="comments" rows="6" placeholder="글을 입력해 주세요."></textarea>
+		                <span style="font-size: 15pt;">
+		               	 	<input type="checkbox" name="checkbox" value="" 
+		               	 	style="zoom: 1.5; cursor:pointer;"> 스탭만 보기
+		                </span>
+	                	<span style="float: right;">
+	                		<input type="submit" value="등록" class="button small">
+	                	</span>
 		              </div>
 		            </form>
 			     </div>  
-		         
+		        					 <!-- 메모 작성글들   -->
 		         <c:forEach var="memoList" items="${mapList}">
 		         	<div class="board-board">
 			          <header class="page-header blog-title">
 			            <div class="post-meta-test">
 			              	<div class="div-one">
 				              	<a href="#">
-				              		<c:if test="${memoList.CAFE_USER_IMAGE == 'nan' }">
+				              		<c:if test="${memoList.CAFE_USER_IMAGE == 0 }">
 				              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
 				              			width="40px;" class="img-circle alignleft">
 				              		</c:if>
-									<c:if test="${memoList.CAFE_USER_IMAGE != 'nan' }">
-										<img src="download?file=${memoList.CAFE_USER_IMAGE}" 
+									<c:if test="${memoList.CAFE_USER_IMAGE != 0 }">
+										<img src="test_download?fileImageNum=${memoList.CAFE_USER_IMAGE}" 
 										width="40px;" class="img-circle alignleft">
 									</c:if>
 				              	</a>
@@ -117,25 +125,25 @@ function back(obj){
 						</p>
 						${memoList.MEMO_NUM}<br>
 						<a onclick="replyClick(this)" id="${memoList.MEMO_NUM}" style="cursor:pointer">
-						∧ 댓글 0 </a><!--memoNum의 아이디 그룹을 갖고있는 수만큼 표시  -->
+						∧ 댓글  ${memoList.REPLY_COUNT }
+						</a><!--memoNum의 아이디 그룹을 갖고있는 수만큼 표시  -->
 			          </div>
 			          
 			          <!-- 댓글 클릭시 생성되는 div  -->
-			          현재 memoList.MEMO_NUM : ${memoList.MEMO_NUM}
-			          <div id="${-memoList.MEMO_NUM}" style="display:none;">
-			          		
-			          		<!--  		근데 메모는 답글들 먼저 보여주고. 답글view		 -->
+			       	 	
+			          <div id="${-memoList.MEMO_NUM}" style="display:none;" >
+			          		<hr><!--  	근데 메모는 답글들 먼저 보여주고. 답글view		 -->
 		                      	<c:forEach var="memoReply" items="${memoReplyList}">
-		                      		<c:if test="${memoList.MEMO_NUM == memoReply.MEMO_REPLY_GROUP && memoReply.MEMO_REPLY_STEP == 0}">
+		                      		<c:if test="${memoList.MEMO_NUM == memoReply.MEMO_REPLY_GROUP && memoReply.MEMO_REPLY_STEP == 1}">
 		                      			<li>
 						              <article class="comment" style="color:black;">
 						              	<a href="#">
-							              		<c:if test="${ memoReply.CAFE_USER_IMAGE== 'nan'}">
+							              		<c:if test="${ memoReply.CAFE_USER_IMAGE== 0}">
 							              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
 							              			width="40px" class="img-circle alignleft" alt="">
 							              		</c:if>
-												<c:if test="${ memoReply.CAFE_USER_IMAGE  != 'nan' }">
-													<img src="download?file=${memoReply.CAFE_USER_IMAGE}" 
+												<c:if test="${ memoReply.CAFE_USER_IMAGE  != 0 }">
+													<img src="test_download?fileImageNum=${memoReply.CAFE_USER_IMAGE}" 
 													width="40px" class="img-circle alignleft" alt="">
 												</c:if>
 							              	</a>
@@ -144,30 +152,28 @@ function back(obj){
 						                <div class="comment-content">
 						                  <h4 class="comment-author">
 					                        ${memoReply.CAFE_USER_NICKNAME} <small class="comment-meta">${memoReply.REPLY_SAVEDATE}</small>
-					                       
 					                  	  </h4>
 					                   		${memoReply.MEMO_REPLY_CONTENT}<br>
-					                   		<c:if test="${memoReply.REPLY_IMG_NAME != 'nan'}">
-					                   			<img src="download?file=${memoReply.REPLY_IMG_NAME}" 
+					                   					<!-- 내용에 이미지가 있다면 보여주고 -->
+					                   		<c:if test="${memoReply.MEMO_REPLY_IMAGE_NAME != 0}">
+					                   			<img src="test_download?fileImageNum=${memoReply.MEMO_REPLY_IMAGE_NAME}" 
 												width="30%">
-					                   		</c:if>
-					                   		
+					                   		</c:if>			                   		
 					                   		
 					                      	<p>
-					                      		<a onclick="replyClick(this)" id="${memoReply.MEMO_NUM}" style="cursor:pointer">
+					                      		<a onclick="replyClick(this)" id="${memoReply.MEMO_REPLY_NUM}" style="cursor:pointer">
 					                      		<b>답글 쓰기</b> 그룹:${memoReply.MEMO_REPLY_GROUP}</a>
 					                      	</p>
 					                      	
 					                      			<!-- 답글 쓰기 클릭시 생성되는 div  -->
-					                      	<div id="${-memoReply.MEMO_NUM}" style="display:none;">
-					                      		<form id="comments_form" action="saveReply?groupNum=${memoReply.MEMO_REPLY_GROUP}&step=1" class="row" 
+					                      	<div id="${-memoReply.MEMO_REPLY_NUM}" style="display:none;">
+					                      		<form id="comments_form" action="saveMemoReply?groupNum=${memoList.MEMO_NUM}&step=1" class="row" 
 												  		method="post" enctype="multipart/form-data">
 												  		<input type="hidden" name="userId" value="${sessionUser.userId}">
-												  		<input type="hidden" name="boardNum" value="${userBoard.boardNum}">
 												    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 												    										
 												      <p><span style="font-weight:1000; font-size: 20pt;">${sessionUser.cafeUserNickname}</span></p>
-												      <textarea class="form-control" name="replyContent" id="comments" 
+												      <textarea class="form-control" name="memoReplyContent" id="comments" 
 												      rows="6" placeholder="답글을 남겨보세요"></textarea>
 												      
 													  <div class="post-meta-test">
@@ -175,7 +181,7 @@ function back(obj){
 															<input type="file" name="replyImgName">
 													  	</div>
 													  	<div class="reply-two"> 
-													  		<input type="button" value="취소" onclick="back(this)" id="${memoReply.MEMO_NUM}" class="button small">
+													  		<input type="button" value="취소" onclick="back(this)" id="${memoReply.MEMO_REPLY_NUM}" class="button small">
 													  		<input type="submit" value="등록" id="submit" class="button small">
 													  	</div>
 													  </div>
@@ -192,14 +198,13 @@ function back(obj){
 			          
 			          
 			          
-                     		<form id="comments_form" action="saveReply?groupNum=${reply.MEMO_REPLY_GROUP}&step=1" class="row" 
+                     		<form id="comments_form" action="saveMemoReply?groupNum=${memoList.MEMO_NUM}&step=1" class="row" 
 						  		method="post" enctype="multipart/form-data">
 						  		<input type="hidden" name="userId" value="${sessionUser.userId}">
-						  		<input type="hidden" name="boardNum" value="${userBoard.boardNum}">
 						    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						    										
 						      <p><span style="font-weight:1000; font-size: 20pt;">${sessionUser.cafeUserNickname}</span></p>
-						      <textarea class="form-control" name="replyContent" id="comments" 
+						      <textarea class="form-control" name="memoReplyContent" id="comments" 
 						      rows="6" placeholder="답글을 남겨보세요"></textarea>
 						      
 							  <div class="post-meta-test">
@@ -218,23 +223,45 @@ function back(obj){
 						      <hr>
 						    </div>
 						  </form>
+						  
                       	</div>		
 	          
 				</div>
 		     </c:forEach>
 				
-			</div>
-		 </article>
-		          
-
-						<!--	페이징  -->
-				  <div class="page-one">
+				
+				<!--	페이징  -->
+				  <div class="paging" align="center">
 					  <ul class="pagination">
 					    <li><a href="#">1</a></li>
 					    <li><a href="#">2</a></li>
 					    <li><a href="#">3</a></li>
 					  </ul>
 				  </div>
+				
+			</div>
+		 </article>
+		          
+
+						
+				  
+				  						<!--	페이징  -->
+	         <%--  <div class="page">
+		          <div class="page-one">
+			          <ul class="pagination">
+			         	<c:forEach var="num" begin="1" end="${repeat}">
+							<li><a href="goBoardInside?boardNum=${userBoard.boardNum}
+							&num=${num}">${num}</a></li>
+						</c:forEach>
+			          </ul>
+		           </div>
+		           
+		          <div class="page-two">
+		          	<a href="goBoardList">전체보기</a>
+		          </div>
+	          </div> --%>
+				  
+				  
 			</div>
 		</div>
 

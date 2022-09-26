@@ -13,16 +13,19 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.itbank.navercafe.comon.file.FileService;
+import com.itbank.navercafe.comon.file.TestFileService;
+import com.itbank.navercafe.comon.file.dto.FileDTO;
+//import com.itbank.navercafe.comon.file.FileService;
 import com.itbank.navercafe.mybatis.cafemember.CafeMemberMapper;
 import com.itbank.navercafe.user.cafemember.dto.CafeMemberDTO;
+import com.itbank.navercafe.user.cafemember.dto.TestFileDTO;
 
 
 
 @Service
 public class CafeMemberServiceImpl implements CafeMemberService{
 	@Autowired CafeMemberMapper cafeMap;
-	@Autowired FileService fs;
+	@Autowired TestFileService fs;
 	
 
 	
@@ -31,19 +34,6 @@ public class CafeMemberServiceImpl implements CafeMemberService{
 		return cafeMap.getCafeMemberList();
 	}
 	
-	public void writeSave(MultipartHttpServletRequest mul,HttpServletRequest request) {
-		CafeMemberDTO dto= new CafeMemberDTO();
-		dto.setCafeId(mul.getParameter("cafeId"));
-		dto.setUserId(mul.getParameter("userId"));
-		dto.setCafeUserNickname(mul.getParameter("cafeUserNickname"));
-		MultipartFile file=mul.getFile("cafeUserImage");
-		if(file.getSize()!=0) {
-			dto.setCafeUserImage(fs.saveFile(file));
-		}else {
-			dto.setCafeUserImage("nan");
-		}
-		cafeMap.saveData(dto);
-	}
 
 	@Override
 	public CafeMemberDTO getCafeUserInfo(String userId) {
@@ -69,9 +59,60 @@ public class CafeMemberServiceImpl implements CafeMemberService{
 	@Override
 	public void getUserViewList(String userId,Model model) {
 		model.addAttribute("getUserViewList",cafeMap.getUserViewList(userId));
-
-		
 	}
+
+	@Override
+	public int getSequence() {
+		return cafeMap.getSequence();
+	}
+
+	@Override
+	public void insert(CafeMemberDTO dto) {
+		cafeMap.insert(dto);
+	}
+
+	@Override
+	public void insertFile(FileDTO dto) {
+		cafeMap.insertFile(dto);
+	}
+
+	
+	
+	public void writeSave(MultipartHttpServletRequest mul,HttpServletRequest request) {
+		TestFileDTO tfd=new TestFileDTO();
+		
+		CafeMemberDTO dto= new CafeMemberDTO();
+		dto.setCafeId(mul.getParameter("cafeId"));
+		dto.setUserId(mul.getParameter("userId"));
+		dto.setCafeUserNickname(mul.getParameter("cafeUserNickname"));
+		//System.out.println("저장될 카페아이디:"+dto.getCafeId());
+		//System.out.println("저장될 유저아이디:"+dto.getUserId());
+		//System.out.println("저장될 닉네임:"+dto.getCafeUserNickname());
+		//System.out.println("저장될 파일 :"+mul.getFile("cafeUserImage"));
+		MultipartFile file=mul.getFile("cafeUserImage");
+		//System.out.println("누구?:"+file);
+		if(file.getSize()!=0) {
+			int seq=cafeMap.getSequence();
+			System.out.println("가져온 seq:"+seq);
+			dto.setCafeUserImage(seq);//seq 가져와서 넣어주고
+			
+			tfd.setFileNum(seq);//번호 부여
+			//tfd.setProfileNum(profileNum);//같은 번호 부여
+			tfd.setFileOrgName(fs.saveFile(file));//파일명
+			//System.out.println("저장될 tfd의 파일의 번호 : "+tfd.getFileNum());
+			//System.out.println("저장될 tfd의 파일 : "+tfd.getFileOrgName());
+			cafeMap.saveFileDTO(tfd);
+		}
+		cafeMap.saveData(dto);
+	}
+
+
+	@Override
+	public ArrayList<TestFileDTO> getFileNameList() {
+		return cafeMap.getFileNameList();
+	}	
+	
+	
 
 	
 	

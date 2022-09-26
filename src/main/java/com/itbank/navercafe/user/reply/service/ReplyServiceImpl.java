@@ -12,9 +12,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.itbank.navercafe.comon.file.TestFileService;
 //import com.itbank.navercafe.comon.file.FileService;
 import com.itbank.navercafe.mybatis.cafemember.CafeMemberMapper;
 import com.itbank.navercafe.mybatis.reply.ReplyMapper;
+import com.itbank.navercafe.user.cafemember.dto.TestFileDTO;
 import com.itbank.navercafe.user.reply.dto.ReplyDTO;
 
 
@@ -23,7 +25,7 @@ import com.itbank.navercafe.user.reply.dto.ReplyDTO;
 public class ReplyServiceImpl implements ReplyService{
 
 	@Autowired ReplyMapper rm;
-	//@Autowired FileService replyFileService;
+	@Autowired TestFileService replyFileService;
 	@Autowired CafeMemberMapper cafeMemberMap;
 	
 	@Override
@@ -41,6 +43,8 @@ public class ReplyServiceImpl implements ReplyService{
 
 	@Override
 	public void saveReply(MultipartHttpServletRequest mul,int step) {
+		TestFileDTO tfd=new TestFileDTO();
+		
 		ReplyDTO dto = new ReplyDTO();
 		dto.setBoardNum(Integer.parseInt(mul.getParameter("boardNum")));
 		dto.setUserId(mul.getParameter("userId"));
@@ -51,19 +55,24 @@ public class ReplyServiceImpl implements ReplyService{
 		
 		MultipartFile file = mul.getFile("replyImgName");
 		
-//		System.out.println("보드번호:"+Integer.parseInt(mul.getParameter("boardNum")));
-//		System.out.println("(세션통해서)유저아이디:"+mul.getParameter("userId"));
-//		System.out.println("내용:"+mul.getParameter("replyContent"));
-//		System.out.println("이미지파일:"+file);
+		System.out.println("보드번호:"+Integer.parseInt(mul.getParameter("boardNum")));
+		System.out.println("(세션통해서)유저아이디:"+mul.getParameter("userId"));
+		System.out.println("내용:"+mul.getParameter("replyContent"));
+		System.out.println("이미지파일:"+file);
+		System.out.println("이미지파일 조건 여부:"+file.getSize());
 		if(file.getSize()!=0) {
-			//dto.setReplyImgName(replyFileService.saveFile(file));
-		}else {
-			dto.setReplyImgName("nan");
+			int seq=cafeMemberMap.getSequence();
+			dto.setReplyImgName(seq);
+			tfd.setFileNum(seq);
+			tfd.setFileOrgName(replyFileService.saveFile(file));
+			System.out.println("얘가 실행 되면 안되는데");
+			cafeMemberMap.saveFileDTO(tfd);
 		}
 		//답글 작성시
 		if(mul.getParameter("groupNum")!=null) {
 			dto.setReplyGroup(Integer.parseInt(mul.getParameter("groupNum")));
 			rm.saveGroupNumReply(dto);
+			cafeMemberMap.replyUp(mul.getParameter("userId"));//세션값 넘겨준거임
 		}else {//댓글 작성시	
 			int result=rm.saveReply(dto);
 			if(result==1) {
