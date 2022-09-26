@@ -35,10 +35,7 @@ public class CafeMemberServiceImpl implements CafeMemberService{
 	}
 	
 
-	@Override
-	public CafeMemberDTO getCafeUserInfo(String userId) {
-		return cafeMap.getCafeUserInfo(userId);
-	}
+	
 
 	@Override
 	public int logChk(String userId) {
@@ -51,6 +48,11 @@ public class CafeMemberServiceImpl implements CafeMemberService{
 		return 0;
 	}
 
+	
+	@Override
+	public CafeMemberDTO getCafeUserInfo(String userId) {
+		return cafeMap.getCafeUserInfo(userId);
+	}
 	@Override
 	public CafeMemberDTO getSessionUserInfo(String sessionId) {
 		return cafeMap.getSessionUserInfo(sessionId);

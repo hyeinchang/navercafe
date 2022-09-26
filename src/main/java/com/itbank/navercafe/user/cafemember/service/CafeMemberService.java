@@ -20,9 +20,10 @@ public interface CafeMemberService {
 	public void writeSave(MultipartHttpServletRequest mul,HttpServletRequest request);
 	
 	public CafeMemberDTO getCafeUserInfo(String userId);
+	public CafeMemberDTO getSessionUserInfo(String sessionId);
 	public int logChk(String userId);
 
-	public CafeMemberDTO getSessionUserInfo(String sessionId);
+	
 	
 	public void getUserViewList(String userId,Model model);
 	
