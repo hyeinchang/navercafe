@@ -452,7 +452,14 @@ li.bbp-topic-freshness-test{
 					      
 						  <div class="post-meta-test">
 						  	<div class="reply-one">
-								<input type="file" name="replyImgName">
+						  	
+						  		<input type="file" name="replyImgName"> 
+						  	
+						  		<%-- <input type="file" name="replyImgName" style="display: none;"> 
+								<img src="<%=request.getContextPath()%>/resources/img/카메라아이콘.png" 
+								border="0" onclick="document.all.replyImgName.click();">  --%>
+
+								
 								<!--사진 아이콘을 누르면 input type file을 누른 효과를 준다?  -->
 								<!-- <img id="preview" src="#" width=100 height=100 alt="선택된 이미지가 없습니다"> -->
 						  		<!-- 여기가 범인 두번 실행됨  -->
