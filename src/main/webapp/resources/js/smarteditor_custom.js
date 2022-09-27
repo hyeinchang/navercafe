@@ -46,7 +46,7 @@
 		xhr.onreadystatechange = function() {
 			if(xhr.readyState == 4 && xhr.status == 200) {
 				var result = JSON.parse(xhr.response);
-				
+				console.log(result);
 				if(Number(result.state) == 1) {
 					var fileDTOList = result.fileDTOList;			
 					

@@ -11,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -57,10 +58,8 @@ public class HomeController {
 			
 			switch(order) {
 			case 1 : skin = "asphalt";
-			
 				break;
 			case 2 : skin = "blue";
-			
 				break;
 			case 3 : skin = "brown";
 				break;
@@ -85,5 +84,10 @@ public class HomeController {
 		model.addAttribute("rankingList" , rankingList);
 		
 		return url;
+	}
+	
+	@GetMapping("/cafe/createCafeForm")
+	public String createCafeForm() {
+		return "cafe/createCafeForm";
 	}
 }
