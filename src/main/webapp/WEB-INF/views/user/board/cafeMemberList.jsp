@@ -59,7 +59,7 @@
 	     			<th>${cafeMemberList.userId }</th>
 	     			<th>${cafeMemberList.cafeUserNickname}</th>
 		     		<th>${cafeMemberList.cafeUserImage}
-		     			<img width="40px;" src="test_download?fileImageNum=${cafeMemberList.cafeUserImage}"></th>
+		     			<img width="40px;" src="download?fileNum=${cafeMemberList.cafeUserImage}"></th>
 		     		<th>${cafeMemberList.cafeUserGrade }</th>
 		     		<th>${cafeMemberList.cafeUserVisit }</th>
 		     		<th>${cafeMemberList.cafeUserWrite }</th>

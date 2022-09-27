@@ -22,7 +22,7 @@
 <body>
 <div align="center">
 	<h1>카페 회원 추가용</h1>
-<form action=saveData method="post" enctype="multipart/form-data">
+<form action="regSave" method="post" enctype="multipart/form-data">
 	카페아이디<input type="text" name="cafeId"><br>
 	유저아이디<input type="text" name="userId"><br>
 	닉네임<input type="text" name="cafeUserNickname"><br>

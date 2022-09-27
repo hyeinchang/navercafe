@@ -28,8 +28,8 @@ public interface CafeMemberService {
 	public void getUserViewList(String userId,Model model);
 	
 	public int getSequence();
+	
 	public void insert(CafeMemberDTO dto);
-	public void insertFile(FileDTO dto);
 	
 	public ArrayList<TestFileDTO> getFileNameList();
 	

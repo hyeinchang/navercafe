@@ -29,7 +29,7 @@ public interface CafeMemberMapper {
 	public int getSequence();
 	
 	public void insert(CafeMemberDTO dto);
-	public void insertFile(FileDTO dto);
+
 	
 	public ArrayList<TestFileDTO> getFileNameList();
 

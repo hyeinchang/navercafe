@@ -23,6 +23,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.itbank.navercafe.comon.file.FileUtils;
 import com.itbank.navercafe.comon.file.TestFileService;
 import com.itbank.navercafe.comon.file.dto.FileDTO;
+import com.itbank.navercafe.comon.file.dto.FileResult;
 import com.itbank.navercafe.user.cafemember.dto.CafeMemberDTO;
 import com.itbank.navercafe.user.cafemember.dto.TestFileDTO;
 import com.itbank.navercafe.user.cafemember.service.CafeMemberService;
@@ -68,58 +69,54 @@ public class CafeMemberController {
 		return "user/board/userViewList";
 	}
 	
-//	@RequestMapping(value="saveTitle", produces="application/json; charset=utf8")
-//	@ResponseBody
-//	public HashMap<Object, Object> saveTitle(MultipartHttpServletRequest multiRequest) {
-//		HashMap<Object, Object> map = new HashMap<>();
-//		MultipartFile multipartFile = multiRequest.getFile("cafeUserImage");
-//		int result = 0;
-//		try {
-//			String directory = "member";
-//			//생성할 디렉토리
-//			String userId =  multiRequest.getParameter("userId");
-//			
-//			System.out.println("userId : " + userId);
-//			System.out.println("cafeUserImage : " + multipartFile.getOriginalFilename());
-//			
-//			if(userId != null && userId.length() > 0) {
-//				directory += "/" + userId;
-//			}
-//			
-//			int seq=cafeSer.getSequence();
-//			System.out.println("넣어줄 seq 값 : "+seq);
-//			multiRequest.getParameter("넘어온 : cafeId"+"cafeId");
-//			multiRequest.getParameter("넘어온 : userId"+"userId");
-//			multiRequest.getParameter("넘어온 : cafeUserNickname"+"cafeUserNickname");
-//			
-//			CafeMemberDTO cmdto=new CafeMemberDTO();
-//			cmdto.setCafeId(multiRequest.getParameter("cafeId"));
-//			cmdto.setUserId(multiRequest.getParameter("userId"));
-//			cmdto.setCafeUserNickname(multiRequest.getParameter("cafeUserNickname"));
-//			cmdto.setCafeUserImage(seq);
-//			cafeSer.insert(cmdto);
-//			
-//			
-//			FileDTO fileDTO = new FileDTO();
-//			fileDTO.setFileNum(seq);
-//			fileDTO.setFileDirectory(directory);
-//			fileDTO.setFileOrgName(multipartFile.getOriginalFilename());
-//			fileDTO.setFileStoredName("띠용");
-//			cafeSer.insertFile(fileDTO);
-//			
-//			
-//			fileUtils.uploadFile(multipartFile, directory);
-//			//fileUtils.uploadFile(multipartFile,uploadPath, directory,orgFileName,storedFileName);
-//		} catch(Exception e) {
-//			e.printStackTrace();
-//		}
-//	
-//		result = 1;
-//		
-//		map.put("result", result);
-//		
-//		return map;
-//	}
+	@RequestMapping(value="regSave", produces="application/json; charset=utf8")
+	@ResponseBody
+	public HashMap<Object, Object> saveTitle(MultipartHttpServletRequest multiRequest) {
+		HashMap<Object, Object> map = new HashMap<>();
+		MultipartFile multipartFile = multiRequest.getFile("cafeUserImage");
+		int result = 0;
+		try {
+			String directory = "member";
+			//생성할 디렉토리
+			String userId =  multiRequest.getParameter("userId");
+			
+			System.out.println("userId : " + userId);
+			System.out.println("cafeUserImage : " + multipartFile.getOriginalFilename());
+			
+			if(userId != null && userId.length() > 0) {
+				directory += "/" + userId;
+			}
+			
+			//seq 땡겨오고
+			int seq=cafeSer.getSequence();
+			System.out.println("넣어줄 seq 값 : "+seq);
+			multiRequest.getParameter("넘어온 : cafeId"+"cafeId");
+			multiRequest.getParameter("넘어온 : userId"+"userId");
+			multiRequest.getParameter("넘어온 : cafeUserNickname"+"cafeUserNickname");
+			
+			CafeMemberDTO cmdto=new CafeMemberDTO();
+			cmdto.setCafeId(multiRequest.getParameter("cafeId"));
+			cmdto.setUserId(multiRequest.getParameter("userId"));
+			cmdto.setCafeUserNickname(multiRequest.getParameter("cafeUserNickname"));
+			cmdto.setCafeUserImage(seq);
+			cafeSer.insert(cmdto);
+			
+			
+			FileDTO fileDTO = null;
+			FileResult fileResult = fileUtils.uploadFile(multipartFile, directory);
+			fileDTO = fileResult.getFileDTO();
+			fileDTO.setProfileNum(seq);
+			//cafeSer.insertFile(fileDTO);//얘는 파일서비스에 누나가 만들어주실거임
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	
+		result = 1;
+		
+		map.put("result", result);
+		
+		return map;
+	}
 	
 	
 	

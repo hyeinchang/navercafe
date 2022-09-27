@@ -17,7 +17,7 @@
 		<result property="cafeUserRegdate" column="cafe_user_regdate"/>
 	</resultMap>
 	
-	<!-- <resultMap type="com.itbank.navercafe.comon.file.dto.FileDTO" id="project_file">
+	<resultMap type="com.itbank.navercafe.comon.file.dto.FileDTO" id="project_file">
 		<id property="fileNum" column="file_num"/>
 		<result property="fileDirectory" column="file_directory"/>
 		<result property="fileOrgName" column="file_org_name"/>
@@ -28,7 +28,7 @@
 		<result property="cafeTitleNum" column="cafe_title_num"/>
 		<result property="memoReplyNum" column="memo_reply_num"/>
 		<result property="profileNum" column="profile_num"/>
-	</resultMap> -->
+	</resultMap>
 	
 	<resultMap type="com.itbank.navercafe.user.cafemember.dto.TestFileDTO" id="project_file_test">
 		<id property="fileNum" column="file_num"/>
@@ -85,15 +85,12 @@
 		select file_num_seq.nextval fileNumSeq from dual
 	</select>
 	
-	<!-- <insert id="insert">
+	<insert id="insert">
 		insert into project_cafe_member(cafe_id,user_id,cafe_user_nickname,cafe_user_image)
 		values(#{cafeId},#{userId},#{cafeUserNickname},#{cafeUserImage})
 	</insert>
 
-	<insert id="insertFile">
-		insert into project_file (file_num,file_directory,file_org_name,file_stored_name,profile_num)
-		values(#{fileNum},#{fileDirectory},#{fileOrgName},#{fileStoredName},file_num_seq.currval)
-	</insert> -->
+
 
 	
 	

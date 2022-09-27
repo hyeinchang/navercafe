@@ -73,10 +73,6 @@ public class CafeMemberServiceImpl implements CafeMemberService{
 		cafeMap.insert(dto);
 	}
 
-	@Override
-	public void insertFile(FileDTO dto) {
-		cafeMap.insertFile(dto);
-	}
 
 	
 	
@@ -107,6 +103,9 @@ public class CafeMemberServiceImpl implements CafeMemberService{
 		}
 		cafeMap.saveData(dto);
 	}
+	
+	
+
 
 
 	@Override

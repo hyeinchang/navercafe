@@ -18,7 +18,9 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.itbank.navercafe.admin.deco.service.AdminDecoService;
 import com.itbank.navercafe.comon.file.FileUtils;
+import com.itbank.navercafe.comon.file.dto.FileDTO;
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
+import com.itbank.navercafe.user.cafemember.dto.CafeMemberDTO;
 
 @Controller
 @RequestMapping("/admin/deco")
