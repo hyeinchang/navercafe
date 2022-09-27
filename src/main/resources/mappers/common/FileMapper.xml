@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itbank.navercafe.comon.file.mapper.FileMapper">
+	<resultMap id="file" type="com.itbank.navercafe.comon.file.dto.FileDTO">
+		<id column="fileNum" property="FILE_NUM"/>
+		<result column="fileDirectory" property="FILE_DIRECTORY"/>
+		<result column="fileOrgName" property="FILE_ORG_NAME"/>
+		<result column="fileStoredName" property="FILE_STORED_NAME"/>
+		<result column="boardNum" property="BOARD_NUM"/>
+		<result column="boardReplyNum" property="REPLY_NUM"/>
+		<result column="profileNum" property="CAFE_USER_IMAGE_NUM"/>
+		<result column="titleNum" property="CAFE_TITLE_NUM"/>
+		<result column="regdate" property="REGDATE"/>
+
+	</resultMap>
+	
+	<insert id="insertAttachFile" >
+		<![CDATA[INSERT INTO PROJECT_FILE(FILE_NUM, FILE_DIRECTORY, FILE_ORG_NAME, FILE_STORED_NAME, 
+			BOARD_NUM, REPLY_NUM, CAFE_USER_IMAGE_NUM, CAFE_TITLE_NUM, REGDATE)
+		VALUES(project_file_seq.nextval, #{fileDirectory}, #{fileOrgName}, #{fileStoredName}, 
+			#{boardNum}, #{boardReplyNum}, #{profileNum}, #{titleNum}, sysdate)]]>
+	</insert>
+</mapper>
+
