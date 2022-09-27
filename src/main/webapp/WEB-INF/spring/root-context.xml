@@ -35,6 +35,7 @@
    	</bean>
    	<!-- 마이바티스 xml파일과 dao빈 연결  -->
    	<mybatis-spring:scan base-package="com.itbank.navercafe.mybatis"/>
+   	<mybatis-spring:scan base-package="com.itbank.navercafe.*.*.mapper"/>
 	
 	<!-- 테스트 시 rollback 사용 가능 -->	
 	<bean name="txMgr" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">

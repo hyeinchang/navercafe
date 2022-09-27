@@ -178,7 +178,7 @@
 		       </div>
 		     </div>
 		 </div>
-		 <input type="button" class="btn btn-primary" value="카페  만들기" onclick="location.href='${contextPath}/cafe/createCafeForm'" style="width:100%;margin-top:20px;">
+		 <input type="button" class="btn btn-primary" value="카페  만들기" onclick="location.href='${contextPath}/admin/createCafeForm'" style="width:100%;margin-top:20px;">
 	  </c:otherwise>
       </c:choose>
       </div>
