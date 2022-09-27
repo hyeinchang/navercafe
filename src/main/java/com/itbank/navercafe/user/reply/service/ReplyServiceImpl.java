@@ -62,7 +62,7 @@ public class ReplyServiceImpl implements ReplyService{
 //		System.out.println("이미지파일 조건 여부:"+file.getSize());
 		if(file.getSize()!=0) {
 			int seq=cafeMemberMap.getSequence();
-			dto.setReplyImgName(seq);
+			//dto.setReplyImgName(seq);
 			tfd.setFileNum(seq);
 			tfd.setFileOrgName(replyFileService.saveFile(file));
 			//System.out.println("얘가 실행 되면 안되는데");
@@ -81,6 +81,9 @@ public class ReplyServiceImpl implements ReplyService{
 		}
 		
 	}
+
+
+
 	
 
 }

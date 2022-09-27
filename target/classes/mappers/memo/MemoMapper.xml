@@ -17,15 +17,17 @@
 		<result property="userId" column="user_id"/>
 		<result property="memoReplyContent" column="memo_reply_content"/>
 		<result property="memoReplySavedate" column="memo_reply_saveDate"/>
-		<result property="memoReplyImageName" column="memo_reply_image_name"/>
 		<result property="memoReplyGroup" column="memo_reply_group"/>
 		<result property="memoReplyStep" column="memo_reply_step"/>
 	</resultMap>
 	
+	
+	
+	
 	<!-- 메모리스트  -->
 	<select id="getMemoList" resultType="HashMap">
 		select M.memo_num,M.user_id,M.memo_content,M.memo_saveDate,
-		n.cafe_user_image,n.cafe_user_nickname from project_memo_board M
+		n.cafe_user_image_num,n.cafe_user_nickname from project_memo_board M
 		inner join project_cafe_member N on M.user_id=N.user_id order by memo_num desc
 	</select>
 	
@@ -58,12 +60,47 @@
 		#{memoReplyGroup},#{memoReplyStep})
 	</insert>
 	
+	
+	
 	<!-- 메모 댓글 갯수 -->
 	<select id="getReplyCount" resultType="int">
 		select count(*) from project_memo_board M inner join project_memo_reply L
 		on M.memo_num = L.memo_reply_group where memo_num=#{memoNum}
 	</select>
 	
+
+<!-- <resultMap type="com.itbank.navercafe.user.memo.dto.MemoReplyDTO" id="project_memo_reply">
+		<id property="memoReplyNum" column="memo_reply_num"/>
+		<result property="userId" column="user_id"/>
+		<result property="memoReplyContent" column="memo_reply_content"/>
+		<result property="memoReplySavedate" column="memo_reply_saveDate"/>
+		<result property="memoReplyImageName" column="memo_reply_image_name"/>
+		<result property="memoReplyGroup" column="memo_reply_group"/>
+		<result property="memoReplyStep" column="memo_reply_step"/>
+	</resultMap> -->
+
+<!-- 
+	<select id="getReplyList" resultType="HashMap">
+		select R.memo_reply_num,R.memo_reply_content,R.memo_reply_saveDate,R.user_id,
+		R.memo_reply_image_name,R.memo_reply_group,R.memo_reply_step,C.cafe_user_nickname,C.cafe_user_image
+		from project_memo_reply R inner join project_cafe_member C on R.user_id=C.user_id
+	</select>
+	
+	
+	<insert id="saveReply">
+		insert into project_memo_reply(memo_reply_num,memo_reply_content,user_id,
+		memo_reply_image_name,memo_reply_group,memo_reply_step) 
+		values(memo_reply_num_seq.nextval,#{memoReplyContent},#{userId},#{memoReplyImageName},
+		memo_reply_num_seq.currval,#{memoReplyStep})
+	</insert>
+	
+	
+	<insert id="saveGroupNumReply">
+		insert into project_memo_reply(memo_reply_num,memo_reply_content,user_id,
+		memo_reply_image_name,memo_reply_group,memo_reply_step) 
+		values(reply_num_seq.nextval,#{memoReplyContent},#{userId},#{memoReplyImageName},
+		#{memoReplyGroup},#{memoReplyStep})
+	</insert> -->
 
 	
 </mapper>

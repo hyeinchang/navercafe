@@ -7,7 +7,6 @@ public class MemoReplyDTO {
 	private String userId;
 	private String memoReplyContent;
 	private Timestamp memoReplySavedate;
-	private int memoReplyImageName;
 	private int memoReplyGroup;
 	private int memoReplyStep;
 	
@@ -48,11 +47,14 @@ public class MemoReplyDTO {
 	public void setMemoReplySavedate(Timestamp memoReplySavedate) {
 		this.memoReplySavedate = memoReplySavedate;
 	}
-	public int getMemoReplyImageName() {
-		return memoReplyImageName;
-	}
-	public void setMemoReplyImageName(int memoReplyImageName) {
-		this.memoReplyImageName = memoReplyImageName;
-	}
+	
+//	private int memoReplyImageNum;
+//	public int getMemoReplyImageNum() {
+//		return memoReplyImageNum;
+//	}
+//	public void setMemoReplyImageNum(int memoReplyImageNum) {
+//		this.memoReplyImageNum = memoReplyImageNum;
+//	}
+	
 	
 }

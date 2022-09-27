@@ -30,7 +30,9 @@ public class MemoServiceImpl implements MemoService{
 	@Autowired MemoMapper memoMap;
 	@Autowired CafeMemberMapper memoCafeMap;
 	@Autowired TestFileService replyFileService;
-
+	
+	
+	//메모 리스트
 	@Override
 	public List<HashMap<String, Object>> getMemoList() {
 		List<HashMap<String, Object>>map=memoMap.getMemoList();
@@ -42,11 +44,16 @@ public class MemoServiceImpl implements MemoService{
 		return map;
 	}
 
+	
+	
+	
+	//메모 댓글 리스트
 	@Override
 	public List<HashMap<String, Object>> getReplyList() {
 		return memoMap.getReplyList();
 	}
 
+	//메모 댓글 작성
 	@Override
 	public void saveMemoReply(MultipartHttpServletRequest mul, int step) {
 		TestFileDTO tfd=new TestFileDTO();
@@ -67,7 +74,6 @@ public class MemoServiceImpl implements MemoService{
 //		System.out.println("이미지파일 조건 여부:"+file.getSize());
 		if(file.getSize()!=0) {
 			int seq=memoCafeMap.getSequence();
-			dto.setMemoReplyImageName(seq);
 			tfd.setFileNum(seq);
 			tfd.setFileOrgName(replyFileService.saveFile(file));
 			memoCafeMap.saveFileDTO(tfd);
@@ -85,11 +91,14 @@ public class MemoServiceImpl implements MemoService{
 		}
 	}
 
+	
+	
+	//메모 작성시
 	@Override
 	public void memoSave(HttpServletRequest res) {
-		System.out.println(res.getParameter("userId"));
-		System.out.println(res.getParameter("memoContent"));
-		System.out.println(res.getParameter("checkbox"));
+		//System.out.println(res.getParameter("userId"));
+		//System.out.println(res.getParameter("memoContent"));
+		//System.out.println(res.getParameter("checkbox"));
 		MemoDTO dto=new MemoDTO();
 		dto.setUserId(res.getParameter("userId"));
 		dto.setMemoContent(res.getParameter("memoContent"));

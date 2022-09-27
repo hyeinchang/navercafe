@@ -44,7 +44,7 @@ public class MemoController {
 		model.addAttribute("memoReplyList",memoSer.getReplyList());
 		//System.out.println("메모 댓글 키 :"+memoSer.getReplyList());
 		//세션 아이디 줘서 정보 가져오기
-		model.addAttribute("sessionUser",cafeMemberService.getSessionUserInfo((String) sesison.getAttribute("sessionId")));
+		model.addAttribute("sessionUser",cafeMemberService.getSessionUserInfo((String) sesison.getAttribute("loginId")));
 		return "user/board/memoBoardList";
 	}
 	
@@ -71,16 +71,7 @@ public class MemoController {
 	}
 	
 	
-	
-	
-//	 @GetMapping("download") 
-//	 public void download(String file,HttpServletResponse res) throws Exception { 
-//		 //System.out.println("받아온 파일"+file);
-//		 res.addHeader("Content-disposition","attachment; fileName="+file); File f=new
-//		 File(FileService.IMAGE_REPO+"/"+file); FileInputStream in = new
-//		 FileInputStream(f); FileCopyUtils.copy(in, res.getOutputStream());
-//		 in.close(); 
-//	 }
+
 	 
 
 }
