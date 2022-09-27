@@ -28,7 +28,7 @@
 	닉네임<input type="text" name="cafeUserNickname"><br>
 	프로필 사진
 	<b>이미지파일 첨부</b><br>
-	<input type="file" name="cafeUserImage" onchange="readURL(this)">
+	<input type="file" name="cafeUserImageNum" onchange="readURL(this)">
 	<img id="preview" src="#" width=100 height=100 alt="선택된 이미지가 없습니다"><hr>
 	<input type="submit" value="회원생성">
 	<input type="button" value="목록보기" onclick="history.back()">

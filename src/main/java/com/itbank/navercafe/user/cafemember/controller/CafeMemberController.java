@@ -24,6 +24,7 @@ import com.itbank.navercafe.comon.file.FileUtils;
 import com.itbank.navercafe.comon.file.TestFileService;
 import com.itbank.navercafe.comon.file.dto.FileDTO;
 import com.itbank.navercafe.comon.file.dto.FileResult;
+import com.itbank.navercafe.comon.file.service.FileService;
 import com.itbank.navercafe.user.cafemember.dto.CafeMemberDTO;
 import com.itbank.navercafe.user.cafemember.dto.TestFileDTO;
 import com.itbank.navercafe.user.cafemember.service.CafeMemberService;
@@ -37,6 +38,7 @@ public class CafeMemberController {
 	@Autowired CafeMemberService cafeSer;
 	@Autowired
 	private FileUtils fileUtils;
+	@Autowired FileService fs;
 	
 	@GetMapping("/goCafeMemberList")
 	public String goCafeMemberList(Model model) {
@@ -73,7 +75,7 @@ public class CafeMemberController {
 	@ResponseBody
 	public HashMap<Object, Object> saveTitle(MultipartHttpServletRequest multiRequest) {
 		HashMap<Object, Object> map = new HashMap<>();
-		MultipartFile multipartFile = multiRequest.getFile("cafeUserImage");
+		MultipartFile multipartFile = multiRequest.getFile("cafeUserImageNum");
 		int result = 0;
 		try {
 			//생성할 디렉토리
@@ -98,14 +100,14 @@ public class CafeMemberController {
 			cmdto.setCafeId(multiRequest.getParameter("cafeId"));
 			cmdto.setUserId(multiRequest.getParameter("userId"));
 			cmdto.setCafeUserNickname(multiRequest.getParameter("cafeUserNickname"));
-			cmdto.setCafeUserImage(seq);
+			cmdto.setCafeUserImageNum(seq);
 			cafeSer.insert(cmdto);
 			
 			FileDTO fileDTO = null;
 			FileResult fileResult = fileUtils.uploadFile(multipartFile, directory);
 			fileDTO = fileResult.getFileDTO();
 			fileDTO.setProfileNum(seq);
-			//cafeSer.insertFile(fileDTO);//얘는 파일서비스에 누나가 만들어주실거임
+			fs.insertAttachFile(fileDTO);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -119,32 +121,32 @@ public class CafeMemberController {
 	
 	
 	
-	@PostMapping("saveData")
-	public String saveData(MultipartHttpServletRequest mul,
-							HttpServletRequest request){
-		cafeSer.writeSave(mul,request);
-		return "redirect:goCafeMemberList";
-	}
+//	@PostMapping("saveData")
+//	public String saveData(MultipartHttpServletRequest mul,
+//							HttpServletRequest request){
+//		cafeSer.writeSave(mul,request);
+//		return "redirect:goCafeMemberList";
+//	}
 	
 
-	 @GetMapping("test_download") 
-	 public void download(int fileImageNum,HttpServletResponse res) throws Exception { 
-		 //System.out.println("받아온 파일"+file);
-		 String file="";
-		 ArrayList<TestFileDTO>list=cafeSer.getFileNameList();
-		 for(int i=0;i<list.size();i++) {
-			 if(list.get(i).getFileNum()==fileImageNum) {
-				 file=list.get(i).getFileOrgName();
-				 //System.out.println("imageNum에 해당하는 파일명"+file);
-			 } 
-		 }
-		 
-		 res.addHeader("Content-disposition","attachment; fileName="+file); File f=new
-		 File(TestFileService.IMAGE_REPO+"/"+file); FileInputStream in = new
-		 FileInputStream(f); FileCopyUtils.copy(in, res.getOutputStream());
-		 in.close(); 
-	 }
-	
+//	 @GetMapping("test_download") 
+//	 public void download(int fileImageNum,HttpServletResponse res) throws Exception { 
+//		 //System.out.println("받아온 파일"+file);
+//		 String file="";
+//		 ArrayList<TestFileDTO>list=cafeSer.getFileNameList();
+//		 for(int i=0;i<list.size();i++) {
+//			 if(list.get(i).getFileNum()==fileImageNum) {
+//				 file=list.get(i).getFileOrgName();
+//				 //System.out.println("imageNum에 해당하는 파일명"+file);
+//			 } 
+//		 }
+//		 
+//		 res.addHeader("Content-disposition","attachment; fileName="+file); File f=new
+//		 File(TestFileService.IMAGE_REPO+"/"+file); FileInputStream in = new
+//		 FileInputStream(f); FileCopyUtils.copy(in, res.getOutputStream());
+//		 in.close(); 
+//	 }
+//	
 
 	
 	

@@ -17,7 +17,7 @@ import com.itbank.navercafe.user.cafemember.dto.TestFileDTO;
 public interface CafeMemberService {
 	public ArrayList<CafeMemberDTO> getCafeMemberList();
 	
-	public void writeSave(MultipartHttpServletRequest mul,HttpServletRequest request);
+	//public void writeSave(MultipartHttpServletRequest mul,HttpServletRequest request);
 	
 	public CafeMemberDTO getCafeUserInfo(String userId);
 	public CafeMemberDTO getSessionUserInfo(String sessionId);

@@ -8,7 +8,7 @@
 		<id property="cafeId" column="cafe_id"/>
 		<result property="userId" column="user_id"/>
 		<result property="cafeUserNickname" column="cafe_user_nickname"/>
-		<result property="cafeUserImage" column="cafe_user_image"/>
+		<result property="cafeUserImageNum" column="cafe_user_image_num"/>
 		<result property="cafeUserGrade" column="cafe_user_grade"/>
 		<result property="cafeUserVisit" column="cafe_user_visit"/>
 		<result property="cafeUserWrite" column="cafe_user_write"/>
@@ -82,12 +82,12 @@
 	</update>
 	
 	<select id="getSequence" resultType="int">
-		select file_num_seq.nextval fileNumSeq from dual
+		select cafe_user_image_num_seq.nextval cafeUserImageNumSeq from dual
 	</select>
 	
 	<insert id="insert">
-		insert into project_cafe_member(cafe_id,user_id,cafe_user_nickname,cafe_user_image)
-		values(#{cafeId},#{userId},#{cafeUserNickname},#{cafeUserImage})
+		insert into project_cafe_member(cafe_id,user_id,cafe_user_nickname,cafe_user_image_num)
+		values(#{cafeId},#{userId},#{cafeUserNickname},#{cafeUserImageNum})
 	</insert>
 
 

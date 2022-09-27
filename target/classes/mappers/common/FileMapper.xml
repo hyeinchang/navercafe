@@ -15,7 +15,7 @@
 		<result column="regdate" property="REGDATE"/>
 
 	</resultMap>
-	
+	<!--메모 댓글  이미지도 추가-->
 	<insert id="insertAttachFile" >
 		<![CDATA[INSERT INTO PROJECT_FILE(FILE_NUM, FILE_DIRECTORY, FILE_ORG_NAME, FILE_STORED_NAME, 
 			BOARD_NUM, REPLY_NUM, CAFE_USER_IMAGE_NUM, CAFE_TITLE_NUM, REGDATE)
