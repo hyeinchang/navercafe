@@ -76,8 +76,8 @@ public class CafeMemberController {
 		MultipartFile multipartFile = multiRequest.getFile("cafeUserImage");
 		int result = 0;
 		try {
-			String directory = "member";
 			//생성할 디렉토리
+			String directory = "member";
 			String userId =  multiRequest.getParameter("userId");
 			
 			System.out.println("userId : " + userId);
@@ -87,7 +87,7 @@ public class CafeMemberController {
 				directory += "/" + userId;
 			}
 			
-			//seq 땡겨오고
+			//seq 땡겨오고 -- 프로필 num seq 값을 넣어줘야 할듯?
 			int seq=cafeSer.getSequence();
 			System.out.println("넣어줄 seq 값 : "+seq);
 			multiRequest.getParameter("넘어온 : cafeId"+"cafeId");
@@ -100,7 +100,6 @@ public class CafeMemberController {
 			cmdto.setCafeUserNickname(multiRequest.getParameter("cafeUserNickname"));
 			cmdto.setCafeUserImage(seq);
 			cafeSer.insert(cmdto);
-			
 			
 			FileDTO fileDTO = null;
 			FileResult fileResult = fileUtils.uploadFile(multipartFile, directory);
