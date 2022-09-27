@@ -118,13 +118,13 @@ public class CafeMemberServiceImpl implements CafeMemberService{
 		//System.out.println("저장될 유저아이디:"+dto.getUserId());
 		//System.out.println("저장될 닉네임:"+dto.getCafeUserNickname());
 		//System.out.println("저장될 파일 :"+mul.getFile("cafeUserImage"));
-		MultipartFile file=mul.getFile("cafeUserImage");
+		MultipartFile file=mul.getFile("cafeUserImageNum");
 		//System.out.println("누구?:"+file);
 		if(file.getSize()!=0) {
 			//시퀀스값 빼오는애
 			int seq=mapper.getSequence();
 			System.out.println("가져온 seq:"+seq);
-			dto.setCafeUserImage(seq);//seq 가져와서 넣어주고
+			dto.setCafeUserImageNum(seq);//seq 가져와서 넣어주고
 			
 			tfd.setFileNum(seq);//번호 부여
 			//tfd.setProfileNum(profileNum);//같은 번호 부여

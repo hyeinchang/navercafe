@@ -23,7 +23,7 @@
 	<!-- 댓글 리스트 -->
 	<select id="getReplyList" resultType="HashMap">
 		select R.reply_num,R.board_num,R.reply_content,R.reply_saveDate,R.user_id,
-		R.reply_img_name,R.reply_group,R.reply_step,C.cafe_user_nickname,C.cafe_user_image
+		R.reply_img_name,R.reply_group,R.reply_step,C.cafe_user_nickname,C.cafe_user_image_num
 		from project_reply R inner join project_cafe_member C on R.user_id=C.user_id
 		where board_num=#{boardNum} order by reply_num desc
 	</select>

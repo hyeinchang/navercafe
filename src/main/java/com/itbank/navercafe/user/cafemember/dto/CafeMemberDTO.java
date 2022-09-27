@@ -6,7 +6,7 @@ public class CafeMemberDTO {
 	private String cafeId;
 	private String userId;
 	private String cafeUserNickname;
-	private int cafeUserImage;
+	private int cafeUserImageNum;
 	private int cafeUserGrade;
 	private int cafeUserVisit;
 	private int cafeUserWrite;
@@ -54,11 +54,12 @@ public class CafeMemberDTO {
 		return userId;
 	}
 
-	public int getCafeUserImage() {
-		return cafeUserImage;
+	
+	public int getCafeUserImageNum() {
+		return cafeUserImageNum;
 	}
-	public void setCafeUserImage(int cafeUserImage) {
-		this.cafeUserImage = cafeUserImage;
+	public void setCafeUserImageNum(int cafeUserImageNum) {
+		this.cafeUserImageNum = cafeUserImageNum;
 	}
 	public void setUserId(String userId) {
 		this.userId = userId;

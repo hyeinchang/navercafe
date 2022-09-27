@@ -52,7 +52,7 @@ public class BoardController {
 		//댓글 리스트 가져오기
 		model.addAttribute("replyList",replySer.getReplyList(boardNum));
 		//세션 아이디 줘서 정보 가져오기
-		model.addAttribute("sessionUser",boardCafeSer.getSessionUserInfo((String) session.getAttribute("sessionId")));
+		model.addAttribute("sessionUser",boardCafeSer.getSessionUserInfo((String) session.getAttribute("loginId")));
 		//말머리에 따른 게시물 목록 가져오기
 		//System.out.println("댓글 키들:"+replySer.getReplyList(boardNum));
 		
@@ -60,7 +60,7 @@ public class BoardController {
 		ser.hit(boardNum,num);
 		
 		//좋아요 되어있는지 여부
-		ser.likeViewChk(boardNum, (String) session.getAttribute("sessionId"), model);
+		ser.likeViewChk(boardNum, (String) session.getAttribute("loginId"), model);
 		
 		//인기글 리스트
 		ser.topList(model);

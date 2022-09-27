@@ -92,7 +92,7 @@
 	<!-- 카페 인기글 -->
 	<select id="topList" resultType="HashMap">
 		select B.board_num,B.board_title,B.board_likes,B.user_id,
-		C.cafe_user_nickname,C.cafe_user_image
+		C.cafe_user_nickname,C.cafe_user_image_num
 		from project_board B inner join project_cafe_member C on B.user_id = C.user_id
 		order by B.board_likes desc
 	</select>
