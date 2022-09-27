@@ -27,9 +27,7 @@ import com.itbank.navercafe.user.cafemember.dto.TestFileDTO;
 @Service
 public class CafeMemberServiceImpl implements CafeMemberService{
 
-	@Autowired CafeMemberMapper cafeMap;
 	@Autowired TestFileService fs;
-
 	@Autowired CafeMemberMapper mapper;
 
 
@@ -93,18 +91,18 @@ public class CafeMemberServiceImpl implements CafeMemberService{
 	
 	@Override
 	public CafeMemberDTO getCafeUserInfo(String userId) {
-		return cafeMap.getCafeUserInfo(userId);
+		return mapper.getCafeUserInfo(userId);
 	}
 	@Override
 	public CafeMemberDTO getSessionUserInfo(String sessionId) {
-		return cafeMap.getSessionUserInfo(sessionId);
+		return mapper.getSessionUserInfo(sessionId);
 	}
 	
 	
 	//게시글 더 보러가기
 	@Override
 	public void getUserViewList(String userId,Model model) {
-		model.addAttribute("getUserViewList",cafeMap.getUserViewList(userId));
+		model.addAttribute("getUserViewList",mapper.getUserViewList(userId));
 	}
 	
 	
@@ -124,7 +122,7 @@ public class CafeMemberServiceImpl implements CafeMemberService{
 		//System.out.println("누구?:"+file);
 		if(file.getSize()!=0) {
 			//시퀀스값 빼오는애
-			int seq=cafeMap.getSequence();
+			int seq=mapper.getSequence();
 			System.out.println("가져온 seq:"+seq);
 			dto.setCafeUserImage(seq);//seq 가져와서 넣어주고
 			
@@ -133,9 +131,9 @@ public class CafeMemberServiceImpl implements CafeMemberService{
 			tfd.setFileOrgName(fs.saveFile(file));//파일명
 			//System.out.println("저장될 tfd의 파일의 번호 : "+tfd.getFileNum());
 			//System.out.println("저장될 tfd의 파일 : "+tfd.getFileOrgName());
-			cafeMap.saveFileDTO(tfd);
+			mapper.saveFileDTO(tfd);
 		}
-		cafeMap.saveData(dto);
+		mapper.saveData(dto);
 	}
 
 

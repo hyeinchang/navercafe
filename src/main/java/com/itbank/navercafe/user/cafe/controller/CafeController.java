@@ -21,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
@@ -196,6 +197,20 @@ public class CafeController {
 		String result = cms.idOverlap(cafeUserNickname,cafeId, oldNick);
 		
 		return result;
+	}
+	
+	//수정에 참고할?
+	@PostMapping("saveData")
+	public String saveData(MultipartHttpServletRequest mul,
+							HttpServletRequest request){
+		cms.writeSave(mul,request);
+		return "redirect:goCafeMemberList";
+	}
+	//게시글 더 보러가기
+	@GetMapping("userViewList")
+	public String userViewList(String userId,Model model) {
+		cms.getUserViewList(userId,model);
+		return "board/userViewList";
 	}
 	
 }

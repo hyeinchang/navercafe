@@ -29,7 +29,7 @@ public class BoardController {
 		model.addAttribute("cafeDTO", cafeDTO);
 		return "user/board/writeForm";
 	}
-
+	//전체목록인데 수영이형이랑 상의.
 	@GetMapping("/goBoardList")
 	public String goBoardList(Model model){
 		model.addAttribute("boardList",ser.getBoardList());

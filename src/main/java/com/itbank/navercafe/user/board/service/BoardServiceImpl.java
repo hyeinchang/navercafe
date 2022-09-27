@@ -23,6 +23,7 @@ public class BoardServiceImpl implements BoardService{
 	@Autowired BoardMapper bm;
 	
 	
+	//전체목록인데 수영이형이랑 상의.
 	@Override
 	public ArrayList<BoardDTO> getBoardList() {
 		return bm.getBoardList();

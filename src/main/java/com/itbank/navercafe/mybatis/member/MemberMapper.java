@@ -7,7 +7,6 @@ import com.itbank.navercafe.user.member.dto.MemberDTO;
 
 
 public interface MemberMapper {
-	public ArrayList<MemberDTO> getMemberList();
 
 	public int signup(MemberDTO dto);
 

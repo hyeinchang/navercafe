@@ -26,10 +26,12 @@ public interface CafeMemberService {
 	public int cafeMemberUpdate(CafeMemberDTO dto);
 
 	public String idOverlap(String cafeUserNickname, String cafeId, String oldNick);
-
+	
+	//수정작업에 참고할?
+	public void writeSave(MultipartHttpServletRequest mul,HttpServletRequest request);
 	//닉네임때문에 따로 구해오는애들
 	public CafeMemberDTO getCafeUserInfo(String userId);
-	//댓글 작성하려고 구해온애들?
+	//댓글 작성하려고 구해온애
 	public CafeMemberDTO getSessionUserInfo(String sessionId);
 	//게시글 더 보러가기
 	public void getUserViewList(String userId,Model model);

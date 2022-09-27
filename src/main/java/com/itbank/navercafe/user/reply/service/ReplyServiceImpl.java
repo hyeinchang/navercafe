@@ -55,17 +55,17 @@ public class ReplyServiceImpl implements ReplyService{
 		
 		MultipartFile file = mul.getFile("replyImgName");
 		
-		System.out.println("보드번호:"+Integer.parseInt(mul.getParameter("boardNum")));
-		System.out.println("(세션통해서)유저아이디:"+mul.getParameter("userId"));
-		System.out.println("내용:"+mul.getParameter("replyContent"));
-		System.out.println("이미지파일:"+file);
-		System.out.println("이미지파일 조건 여부:"+file.getSize());
+//		System.out.println("보드번호:"+Integer.parseInt(mul.getParameter("boardNum")));
+//		System.out.println("(세션통해서)유저아이디:"+mul.getParameter("userId"));
+//		System.out.println("내용:"+mul.getParameter("replyContent"));
+//		System.out.println("이미지파일:"+file);
+//		System.out.println("이미지파일 조건 여부:"+file.getSize());
 		if(file.getSize()!=0) {
 			int seq=cafeMemberMap.getSequence();
 			dto.setReplyImgName(seq);
 			tfd.setFileNum(seq);
 			tfd.setFileOrgName(replyFileService.saveFile(file));
-			System.out.println("얘가 실행 되면 안되는데");
+			//System.out.println("얘가 실행 되면 안되는데");
 			cafeMemberMap.saveFileDTO(tfd);
 		}
 		//답글 작성시

@@ -19,11 +19,6 @@ public class MemberServiceImpl implements MemberService{
 
 	
 	@Override
-	public ArrayList<MemberDTO> getMemberList() {	
-		return mm.getMemberList();
-	}
-	
-	@Override
 	public int signup(MemberDTO dto) { //회원가입
 		String seq = en.encode(dto.getPassword());
 		dto.setPassword(seq);

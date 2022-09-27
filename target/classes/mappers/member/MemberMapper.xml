@@ -32,10 +32,7 @@
 		delete project_members where user_id = #{id}
 	</delete>
 	
-	<select id="getMemberList" resultMap="project_members">
-		select * from project_members
-	</select>
-	
+
 	
 	
 	

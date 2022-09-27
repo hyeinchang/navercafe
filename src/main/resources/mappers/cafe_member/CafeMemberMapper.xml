@@ -88,12 +88,12 @@
 	<insert id="saveFileDTO">
 		insert into project_file_test (file_num,file_org_name)values(#{fileNum},#{fileOrgName})
 	</insert> 
-	<!-- 게시글에 닉네임 이미지 표시하기위해 따로 빼와주는애 -->
+	<!-- 게시글에 닉네임,이미지 표시하기위해 따로 빼와주는애 -->
 	<select id="getCafeUserInfo" resultMap="project_cafe_member">
 		select user_id,cafe_user_nickname,cafe_user_image from project_cafe_member
 		where user_id=#{userId}
 	</select>
-	<!-- 댓글작성할때 필요한애  -->
+	<!-- 댓글작성할때 필요한 애  -->
 	<select id="getSessionUserInfo" resultMap="project_cafe_member">
 		select user_id,cafe_user_nickname from project_cafe_member where user_id=#{sessionId}
 	</select>

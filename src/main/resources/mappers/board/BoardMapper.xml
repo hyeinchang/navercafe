@@ -23,19 +23,20 @@
 		<id property="userId" column="user_id"/>
 	</resultMap>
 	
+	<!-- //전체목록인데 수영이형이랑 상의. -->
 	<select id="getBoardList" resultMap="project_board">
 		select * from project_board
 	</select>
 	
-	
-	
-	<!-- <select id="getUserBoardAll" resultType="HashMap">
+	<!-- clob 형식이 안따라옴
+	<select id="getUserBoardAll" resultType="HashMap">
 		select B.board_num,B.board_title,B.board_content,B.board_saveDate,
 		B.board_likes,B.board_prefix,B.user_id,B.hit,C.cafe_user_nickname,C.cafe_user_image
 		from project_board B inner join project_cafe_member C on B.user_id = C.user_id 
 		where board_num=#{boardNum}
 	</select> -->
 	
+	<!-- 보드넘에 따른 게시물 하나 -->
 	<select id="getUserBoard" resultMap="project_board">
 		select * from project_board where board_num=#{boardNum}
 	</select>
@@ -47,6 +48,7 @@
 		on B.user_id = C.user_id where board_prefix=#{boardPrefix}
 	</select> -->
 	
+	<!-- 말머리에 따른 리스트 -->
 	<select id="getPrefixList" resultType="HashMap">
 		select J.* from(select rownum rn, I.* from
 		(select B.board_title,B.board_saveDate,B.board_num,B.user_id,C.cafe_user_nickname 
@@ -55,22 +57,23 @@
 		order by board_num desc)I)J 
 		where rn between #{start} and #{end}
 	</select>
-
+	
+	<!-- 페이징 위해서 몇개인지 가져오기위한 용도-->
 	<select id="selectBoardCount" resultType="Integer">
 		select count(*) from project_board where board_prefix =#{getBoardPrefix}
 	</select>
 	
+	<!-- 조회수 올려주는애 -->
 	<update id="hitUp">
 		update project_board set hit = hit+1 where board_num=#{boardNum}
 	</update>
 	
-	
-	
-	
+	<!-- 좋아요 테이블에 있는 값들 리스트로 빼오기 -->
 	<select id="getLikesList" resultMap="project_likes">
 		select * from project_likes where board_num=#{boardNum} and user_id=#{userId}
 	</select>
-
+	
+	<!--좋아요 누르면 좋아요 테이블에도 값 추가  -->
 	<update id="likeUp">
 		update project_board set board_likes = board_likes+1 where board_num=#{boardNum}
 	</update>
@@ -78,6 +81,7 @@
 		insert into project_likes values(#{boardNum},#{userId})
 	</insert>
 	
+	<!-- 좋아요 취소하면 좋아요 테이블에 있는 값도 삭제 -->
 	<update id="likeDown">
 		update project_board set board_likes = board_likes-1 where board_num=#{boardNum}
 	</update>
@@ -85,6 +89,7 @@
 		delete from project_likes where board_num=#{boardNum} AND user_id=#{userId}
 	</delete>
 	
+	<!-- 카페 인기글 -->
 	<select id="topList" resultType="HashMap">
 		select B.board_num,B.board_title,B.board_likes,B.user_id,
 		C.cafe_user_nickname,C.cafe_user_image
