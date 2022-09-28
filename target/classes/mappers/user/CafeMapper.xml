@@ -46,4 +46,24 @@
 			SELECT cafe_title_num_seq.nextval seq from dual
 		]]>
 	</select>
+		
+	<select id="selectCafeList" resultMap="cafe">
+		<![CDATA[
+			SELECT * FROM
+				(SELECT ROWNUM RN, CAFE.* FROM
+					(SELECT * FROM PROJECT_CAFE_INFO WHERE CAFE_NAME LIKE '%' || #{cafeName} || '%' ORDER BY CAFE_ID DESC) CAFE
+				)
+			WHERE RN BETWEEN #{startRow} AND #{endRow}
+		]]>
+	</select>
+	
+		
+	<select id="selectCafeListTotalCount" resultType="Integer">
+		<![CDATA[
+			SELECT COUNT(*) TOTAL_COUNT 
+			FROM
+			(SELECT * FROM PROJECT_CAFE_INFO WHERE CAFE_NAME LIKE '%' || #{cafeName} || '%') CAFE
+		]]>
+	</select>
+
 </mapper>

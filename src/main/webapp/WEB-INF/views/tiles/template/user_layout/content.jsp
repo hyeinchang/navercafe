@@ -73,10 +73,13 @@
           </h4>
         </div>
         <div>
-          <form id="bbsearch" class="form-inline">
-          	<input type="text" class="form-control" placeholder="검색할 카페명을 입력해주십시오." style="height:auto;margin-top:0;">
+          <form id="searchCafeForm" name="searchCafeForm" class="form-inline" action="./">
+          	<input type="hidden" name="page" value="1">
+          	<input type="text" name="cafeName" class="form-control" placeholder="검색할 카페명을 입력해주십시오." value="${cafeDTO.cafeName}" 
+          		style="width:300px;height:auto;margin-top:0;">
           	<button type="button" class="btn btn-primary" 
-          		style="font-size:14px;padding: 8px 18px 5px;;margin-top:0;vertical-align:top;border:none;border-radius:2px;">검색</button>
+          		style="font-size:14px;padding: 8px 18px 5px;;margin-top:0;vertical-align:top;border:none;border-radius:2px;"
+          		onclick="searchCafe(1)">검색</button>
           </form>
         </div>
         <div class="title">
@@ -106,7 +109,16 @@
           	<c:forEach var="cafe" items="${cafeList}">
           	<tr>
               <td onclick="changeCafe('${cafe.cafeId}')">${cafe.cafeName}</td>
-              <td onclick="changeCafe('${cafe.cafeId}')">${cafe.cafeExplanation}</td>
+              <td onclick="changeCafe('${cafe.cafeId}')">
+              <c:choose>
+              	<c:when test="${cafe.cafeExplanation eq null || cafe.cafeExplanation.length() == 0}">
+              	등록된 카페 소개가 없습니다.
+              	</c:when>	
+              	<c:otherwise>
+              	${cafe.cafeExplanation}
+              	</c:otherwise>
+              </c:choose>
+              </td>
             </tr>
             </c:forEach>
           	</c:otherwise>
@@ -115,11 +127,15 @@
         </table>
         <div class=" text-center">
           <ul class="pagination">
-            <li><a href="#">«</a></li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">»</a></li>
+          <c:if test="${pagination.prevActive}">
+          	<li><a href="#">«</a></li>
+          </c:if>
+          <c:forEach var="page" begin="${pagination.startPage}" end="${pagination.endPage}">
+            <li${pagination.page eq page ? ' class="active"' : ''}><a href="javascript:searchCafe(${page})">${page}</a></li>
+          </c:forEach>
+          <c:if test="${pagination.nextActive}">
+          	<li><a href="#">»</a></li>
+          </c:if>
           </ul>
         </div>
       </div>
@@ -186,76 +202,16 @@
     </div>
     <!-- end container -->
   </section>
- <section class="section1" style="display:none;">
-    <div class="container clearfix">
-      <div class="col-lg-12 col-md-12 col-sm-12 clearfix">
-        <div class="clearfix"></div>
-      	<h4 class="title">
-          <span>최근 방문한 카페</span>
-        </h4>
-
-        <div class="col-lg-2 col-md-2 col-sm-2">
-          <div class="servicetitle">
-            <h5><a href="#">IT뱅크 산업기사 평가과정B</a></h5>
-            <hr>
-            <p>카페소개</p>
-           </div>
-        </div>
-        <!-- large-2 -->
-
-        <div class="col-lg-2 col-md-2 col-sm-2">
-          <div class="servicetitle">
-            <h5><a href="#">IT뱅크 산업기사 평가과정B</a></h5>
-            <hr>
-            <p>카페소개</p>
-           </div>
-        </div>
-        <!-- large-2 -->
-
-        <div class="col-lg-2 col-md-2 col-sm-2">
-          <div class="servicetitle">
-            <h5><a href="#">IT뱅크 산업기사 평가과정B</a></h5>
-            <hr>
-            <p>카페소개</p>
-           </div>
-        </div>
-        <!-- large-2 -->
-
-         <div class="col-lg-2 col-md-2 col-sm-2">
-          <div class="servicetitle">
-            <h5><a href="#">IT뱅크 산업기사 평가과정B</a></h5>
-            <hr>
-            <p>카페소개</p>
-           </div>
-        </div>
-        <!-- large-2 -->
-        
-        <div class="col-lg-2 col-md-2 col-sm-2">
-          <div class="servicetitle">
-            <h5><a href="#">IT뱅크 산업기사 평가과정B</a></h5>
-            <hr>
-            <p>카페소개</p>
-           </div>
-        </div>
-        <!-- large-2 -->
-        
-        <div class="col-lg-2 col-md-2 col-sm-2">
-          <div class="servicetitle">
-            <h5><a href="#">IT뱅크 산업기사 평가과정B</a></h5>
-            <hr>
-            <p>카페소개</p>
-           </div>
-        </div>
-        <!-- large-2 -->
-        
-      </div>
-      <!-- end content -->
-    </div>
-    <!-- end container -->
-  </section>
   
  <script type="text/javascript">
  	function logout() {
  		location.href='${contextPath}/user/logout';
- 	} 
+ 	}
+ 	
+ 	function searchCafe(page) {
+ 		var form = document.searchCafeForm;
+ 		
+ 		form.page.value = page;
+ 		form.submit();
+ 	}
  </script>

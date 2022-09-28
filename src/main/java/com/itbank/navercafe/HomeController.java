@@ -1,14 +1,7 @@
 package com.itbank.navercafe;
 
-import java.lang.reflect.Field;
-import java.text.DateFormat;
 import java.util.ArrayList;
-import java.util.Date;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Locale;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -19,7 +12,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -31,6 +23,7 @@ import com.itbank.navercafe.common.file.FileUtils;
 import com.itbank.navercafe.common.file.dto.FileDTO;
 import com.itbank.navercafe.common.file.dto.FileResult;
 import com.itbank.navercafe.common.file.service.FileService;
+import com.itbank.navercafe.common.pagination.Pagination;
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
 import com.itbank.navercafe.user.cafe.service.CafeService;
 import com.itbank.navercafe.user.cafeJoin.CafeJoinQuestionDTO;
@@ -52,61 +45,28 @@ public class HomeController {
 	@Autowired
 	private FileService fileService;
 	
-	/**
-	 * Simply selects the home view to render by returning its name.
-	 */
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model, HttpServletRequest request) {
-		logger.info("Welcome home! The client locale is {}.", locale);
-		
-		Date date = new Date();
-		DateFormat dateFormat = DateFormat.getDateTimeInstance(DateFormat.LONG, DateFormat.LONG, locale);
-		
-		String formattedDate = dateFormat.format(date);
-		
-		//model.addAttribute("serverTime", formattedDate );
-		
-		String url = "home";
-		url = "index";
-		
-		String contextPath = request.getContextPath();
-		
-		ArrayList<CafeDTO> cafeList = new ArrayList<>();
+	public String home(HttpServletRequest request, CafeDTO cafeDTO, Pagination pagination, Model model) {
+		String url = "index";
 		ArrayList<CafeDTO> rankingList = new ArrayList<>();
-		
-		for(int i=0; i<10; i++) {
-			CafeDTO cafe = new CafeDTO();
-			int order = i+1;
-			String skin = "";
-			cafe.setCafeId("cafeId" + order);
-			cafe.setCafeName("테스트 카페" + order);
-			cafe.setCafeExplanation("테스트 카페"+ order +"(cafeId: cafeId" + order + ")에 대한 소개입니다.");
-		
+		List<CafeDTO> cafeList = new ArrayList<>();
+
+		try {
+			int totalCafeCount = cafeService.selectCafeListTotalCount(cafeDTO);
+			int page = pagination.getPage();
 			
-			switch(order) {
-			case 1 : skin = "asphalt";
-				break;
-			case 2 : skin = "blue";
-				break;
-			case 3 : skin = "brown";
-				break;
-			case 4 : skin = "mustard";
-				break;
-			case 5 : skin = "pomegranate";
-				break;
-			case 6 : skin = "turquoise";
-				break;
-			case 7 : skin = "yellow";
-				break;
+			if(page == 0) {
+				page = 1;
 			}
 			
-			cafeList.add(cafe);
-			
-			if(order <= 3) {
-				rankingList.add(cafe);
-			}
+			pagination.setPageination(page, totalCafeCount);
+			cafeList = cafeService.selectCafeList(cafeDTO, pagination);
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
 		
+		model.addAttribute("cafeDTO" , cafeDTO);
+		model.addAttribute("pagination" , pagination);
 		model.addAttribute("cafeList" , cafeList);
 		model.addAttribute("rankingList" , rankingList);
 		

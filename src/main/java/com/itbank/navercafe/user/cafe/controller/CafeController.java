@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -13,13 +14,25 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.itbank.navercafe.common.file.FileUtils;
+import com.itbank.navercafe.common.file.service.FileService;
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
+import com.itbank.navercafe.user.cafe.service.CafeService;
 import com.itbank.navercafe.user.category.dto.MenuDTO;
 import com.itbank.navercafe.user.member.dto.MemberDTO;
 
 @Controller
 @RequestMapping("/user")
 public class CafeController {
+	@Autowired
+	private CafeService cafeService;
+	
+	@Autowired
+	private FileUtils fileUtils;
+	
+	@Autowired
+	private FileService fileService;
+	
 	@GetMapping("/main")
 	public String index(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes, 
 			@RequestParam(value="cafeId", required=false) String cafeId, HttpSession session) {
