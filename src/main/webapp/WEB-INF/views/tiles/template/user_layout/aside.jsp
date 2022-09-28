@@ -23,7 +23,7 @@
                   	</span>
                   	<div class="mananger_info">
                       <span class="gradeText">매니저</span>                   
-                      <b title="${cafeDTO.cafeManagerNickName}">${cafeDTO.cafeManagerNickName}</b>
+                      <b title="${cafeDTO.userId}">${cafeDTO.userId}</b>
                     </div>
                     <div>since 2022.08.19.</div>    
                     <div class="cafeSetting">

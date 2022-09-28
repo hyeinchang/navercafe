@@ -47,11 +47,11 @@
           <div class="dmbox" style="padding:18px;">
             <div class="service-icon">
               <div class="dm-icon-effect-1 effect-slide-bottom in" data-effect="slide-bottom" style="transition: all 0.7s ease-in-out 0s;">
-                <a href="${contextPath}/user/main?cafeId=${ranking.cafeId}"><img src="$${contextPath}/file/download?titleNum=${ranking.titleNum}" alt="${ranking.cafeName}" style="width:300px;height:300px;"></a>
+                <a href="${contextPath}/user/main?cafeId=${ranking.cafeId}"><img src="$${contextPath}/file/download?cafeTitleNum=${ranking.cafeTitleNum}" alt="${ranking.cafeName}" style="width:300px;height:300px;"></a>
               </div>
             </div>
             <h4><a href="${contextPath}/user/main?cafeId=${ranking.cafeId}">${ranking.cafeName}</a></h4>
-            <p>${ranking.cafeIntroduce}</p>
+            <p>${ranking.cafeExplanation}</p>
           </div>
         </div>
         <!-- end dmbox -->
@@ -106,7 +106,7 @@
           	<c:forEach var="cafe" items="${cafeList}">
           	<tr>
               <td onclick="changeCafe('${cafe.cafeId}')">${cafe.cafeName}</td>
-              <td onclick="changeCafe('${cafe.cafeId}')">${cafe.cafeIntroduce}</td>
+              <td onclick="changeCafe('${cafe.cafeId}')">${cafe.cafeExplanation}</td>
             </tr>
             </c:forEach>
           	</c:otherwise>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.itbank.navercafe.user.cafe.mapper.CafeMapper">
-	<resultMap type="com.itbank.navercafe.user.cafe.dto" id="cafe">
+	<resultMap type="com.itbank.navercafe.user.cafe.dto.CafeDTO" id="cafe">
 		<id column="CAFE_ID" property="cafeId"/>
         <result column="CAFE_NAME" property="cafeName"/>
         <result column="CAFE_EXPLANATION" property="cafeExplanation"/>
