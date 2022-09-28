@@ -4,15 +4,34 @@
 	<resultMap type="com.itbank.navercafe.user.cafe.dto.CafeDTO" id="cafe">
 		<id column="CAFE_ID" property="cafeId"/>
         <result column="CAFE_NAME" property="cafeName"/>
+        <result column="USER_ID" property="userId"/>
         <result column="CAFE_EXPLANATION" property="cafeExplanation"/>
         <result column="CAFE_TITLE_NUM" property="cafeTitleNum"/>
         <result column="CAFE_FRONT" property="cafeFront"/>
         <result column="CAFE_SKIN" property="cafeSkin"/>
         <result column="CAFE_LAYOUT" property="cafeLayout"/>
-        <result column="USER_ID" property="userId"/>
         <result column="CAFE_JOIN_APPLY" property="cafeJoinApply"/>
         <result column="CAFE_JOIN_GENDER" property="cafeJoinGender"/>
         <result column="CAFE_JOIN_AGE" property="cafeJoinAge"/>
         <result column="CAFE_ICON_NUM" property="cafeIconNum"/>
 	</resultMap>
+	
+	<insert id="InsertCafe">
+		<![CDATA[
+			INSERT INTO PROJECT_CAFE_INFO
+			(CAFE_ID, CAFE_NAME, USER_ID, CAFE_EXPLANATION, 
+			CAFE_TITLE_NUM, CAFE_FRONT, CAFE_SKIN, CAFE_LAYOUT, 
+			CAFE_JOIN_APPLY, CAFE_JOIN_GENDER, CAFE_JOIN_AGE, CAFE_ICON_NUM)
+			VALUES
+			(#{cafeId}, #{cafeName}, #{userId}, #{cafeExplanation},
+			 #{cafeTitleNum}, #{cafeFront}, #{cafeSkin}, #{cafeLayout},
+			 #{cafeJoinApply}, #{cafeJoinGender}, #{cafeJoinAge}, #{cafeIconNum})
+		]]>
+	</insert>
+	
+	<select id="checkCafeId" resultType="Integer">
+		<![CDATA[
+			SELECT COUNT(*) ID_COUNT FROM PROJECT_CAFE_INFO WHERE CAFE_ID = #{cafeId}
+		]]>
+	</select>
 </mapper>

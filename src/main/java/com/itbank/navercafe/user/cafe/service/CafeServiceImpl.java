@@ -23,4 +23,14 @@ public class CafeServiceImpl implements CafeService {
 		return null;
 	}
 
+	@Override
+	public int checkCafeId(String cafeId) throws Exception {
+		return cafeMapper.checkCafeId(cafeId);
+	}
+
+	@Override
+	public int InsertCafe(CafeDTO cafeDTO) throws Exception {
+		return cafeMapper.InsertCafe(cafeDTO);
+	}
+
 }

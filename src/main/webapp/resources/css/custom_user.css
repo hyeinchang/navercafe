@@ -137,3 +137,8 @@ img.profileImg {border:none !important;border-radius:100%;width:58px;height:58px
 #createCafeForm .checkArea {padding:0 20px;}
 #createCafeForm .checkLable-inline {width:100px;}
 #createCafeForm .button{margin:0;}
+#createCafeForm .infoUl {padding-top:10px;padding-left:20px;}
+#createCafeForm #joinQuestionArea label {cursor:default;width:100px;}
+#createCafeForm #joinQuestionArea input[type="text"] {width:700px;}
+#createCafeForm #joinQuestionArea button {vertical-align:top;}
+#createCafeForm #joinQuestionArea button.btn-danger {margin-left:10px;}
