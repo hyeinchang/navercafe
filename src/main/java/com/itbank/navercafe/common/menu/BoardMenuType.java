@@ -1,4 +1,4 @@
-package com.itbank.navercafe.admin.menu;
+package com.itbank.navercafe.common.menu;
 
 import java.util.ArrayList;
 import java.util.List;

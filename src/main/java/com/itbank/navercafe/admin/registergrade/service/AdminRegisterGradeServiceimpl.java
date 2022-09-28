@@ -11,11 +11,11 @@ import org.springframework.ui.Model;
 
 import com.itbank.navercafe.admin.registergrade.dto.MembersGradeDTO;
 import com.itbank.navercafe.admin.registergrade.dto.RegisterInfoDTO;
-import com.itbank.navercafe.mybatis.board.AdminBoardMapper;
+import com.itbank.navercafe.admin.registergrade.mapper.AdminRegisterGradeMapper;
 
 @Service
-public class RegisterGradeServiceimpl implements RegisterGradeService {
-	@Autowired AdminBoardMapper mapper;
+public class AdminRegisterGradeServiceimpl implements AdminRegisterGradeService {
+	@Autowired AdminRegisterGradeMapper mapper;
 	
 	//받아온 id들 정리해서 arraylist 로 리턴
 	public ArrayList<String> nameSort(String ids) {
@@ -50,25 +50,32 @@ public class RegisterGradeServiceimpl implements RegisterGradeService {
 	// 자동회원가입x 일때 회원가입 시켜주기
 	public String acceptMembers(String acceptMembers) {
 		ArrayList<String> idList = nameSort(acceptMembers);
-		
+		String url = "";
+		String msg = "";
 		int result = 0;
-		// request table 에서 삭제
-		for(int i = 0; i < idList.size(); i++) {
-			result += mapper.deleteRequest(idList.get(i));
-		}
 		
-		// 카페 회원가입 수정필요
-		for(int i = 0; i< idList.size(); i++) {
-			result += mapper.acceptMembers(idList.get(i));
-		}
-		
-		String url, msg;
-		if(result == idList.size()*2) {
-			msg = "가입이 승인 되었습니다";
-			url = "manageRegisterRequest";
-		} else {
-			msg = "오류가 발생했습니다!";
-			url = "manageRegisterRequest";
+		try {
+			// request table 에서 삭제
+			for(int i = 0; i < idList.size(); i++) {
+				result += mapper.deleteRequest(idList.get(i));
+			}
+			
+			// 카페 회원가입 수정필요
+			for(int i = 0; i< idList.size(); i++) {
+				result += mapper.acceptMembers(idList.get(i));
+			}
+			
+			
+			if(result == idList.size()*2) {
+				msg = "가입이 승인 되었습니다";
+				url = "manageRegisterRequest";
+			} else {
+				msg = "오류가 발생했습니다!";
+				url = "manageRegisterRequest";
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
 		
 		return getMessage(msg,url);

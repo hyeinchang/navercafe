@@ -9,8 +9,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.itbank.navercafe.admin.menu.BoardMenuType;
 import com.itbank.navercafe.admin.menu.service.AdminMenuService;
+import com.itbank.navercafe.common.menu.BoardMenuType;
 import com.itbank.navercafe.user.boardmenu.dto.BoardMenuDTO;
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
 

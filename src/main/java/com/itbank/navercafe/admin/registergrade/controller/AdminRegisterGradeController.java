@@ -20,12 +20,12 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.itbank.navercafe.admin.cafemember.dto.AdminCafeMemberDTO;
 import com.itbank.navercafe.admin.registergrade.dto.MembersGradeDTO;
 import com.itbank.navercafe.admin.registergrade.dto.RegisterInfoDTO;
-import com.itbank.navercafe.admin.registergrade.service.RegisterGradeService;
+import com.itbank.navercafe.admin.registergrade.service.AdminRegisterGradeService;
 
 @Controller
 @RequestMapping("admin")
 public class AdminRegisterGradeController {
-	@Autowired RegisterGradeService rgs;
+	@Autowired AdminRegisterGradeService rgs;
 	
 	@GetMapping("manageMembersGrade")
 	public String manageMembersGrade(Model model) {

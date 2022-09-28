@@ -20,6 +20,7 @@ import com.itbank.navercafe.admin.deco.service.AdminDecoService;
 import com.itbank.navercafe.comon.file.FileUtils;
 import com.itbank.navercafe.comon.file.dto.FileDTO;
 import com.itbank.navercafe.comon.file.dto.FileResult;
+import com.itbank.navercafe.comon.file.service.FileService;
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
 
 @Controller
@@ -30,6 +31,9 @@ public class AdminDecoController {
 	
 	@Autowired
 	private FileUtils fileUtils;
+	
+	@Autowired
+	private FileService fileService;
 	
 	@GetMapping("frontdoor")
 	public String frontdoor(HttpServletRequest request, CafeDTO cafeDTO, Model model) {
@@ -160,7 +164,8 @@ public class AdminDecoController {
 		
 			FileResult fileResult = fileUtils.uploadFile(multipartFile, directory);
 			FileDTO fileDTO = fileResult.getFileDTO();
-
+			System.out.println(fileDTO.getFileStoredName());
+			fileService.insertAttachFile(fileDTO);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
