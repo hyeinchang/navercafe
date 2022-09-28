@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.itbank.navercafe.mybatis.reply.ReplyMapper">
+<mapper namespace="com.itbank.navercafe.user.reply.mapper.ReplyMapper">
 
 	<!-- <resultMap type="com.itbank.navercafe.user.reply.dto.ReplyDTO" id="project_reply">
 		<id property="replyNum" column="reply_num"/>
@@ -45,7 +45,7 @@
 	<insert id="saveReply">
 		insert into project_reply(reply_num,board_num,reply_content,user_id,
 		reply_group,reply_step) 
-		values(reply_num_seq.nextval,#{boardNum},#{replyContent},#{userId},
+		values(#{replyNum},#{boardNum},#{replyContent},#{userId},
 		reply_num_seq.currval,#{replyStep})
 	</insert>
 	
@@ -53,7 +53,7 @@
 	<insert id="saveGroupNumReply">
 		insert into project_reply(reply_num,board_num,reply_content,user_id,
 		reply_group,reply_step) 
-		values(reply_num_seq.nextval,#{boardNum},#{replyContent},#{userId},
+		values(#{replyNum},#{boardNum},#{replyContent},#{userId},
 		#{replyGroup},#{replyStep})
 	</insert>
 	
@@ -84,7 +84,10 @@
 	</insert> -->
 	
 	
-	
+	<!--시퀀스값 빼와주는애  -->
+	<select id="getReplyNum" resultType="int">
+		select reply_num_seq.nextval replyNum from dual
+	</select>
 	
 	
 	

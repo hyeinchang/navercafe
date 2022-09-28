@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import com.itbank.navercafe.mybatis.member.MemberMapper;
 import com.itbank.navercafe.user.member.dto.MemberDTO;
+import com.itbank.navercafe.user.member.mapper.MemberMapper;
 
 @Service
 public class MemberServiceImpl implements MemberService{

@@ -1,4 +1,4 @@
-package com.itbank.navercafe.mybatis.grade;
+package com.itbank.navercafe.user.grade.mapper;
 
 
 import java.util.HashMap;

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper
   PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.itbank.navercafe.mybatis.grade.GradeMapper">
+<mapper namespace="com.itbank.navercafe.user.grade.mapper.GradeMapper">
 
 	<resultMap type="com.itbank.navercafe.user.grade.dto.GradeDTO" id="project_upgrade_board">
 		<id property="userId" column="user_id"/>

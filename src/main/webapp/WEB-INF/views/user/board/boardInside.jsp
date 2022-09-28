@@ -213,7 +213,7 @@ li.bbp-topic-freshness-test{
 				              			width="40px" class="img-circle alignleft" alt="">
 				              		</c:if>
 									<c:if test="${ cafeUserInfo.cafeUserImage  != 0 }">
-										<img src="test_download?fileImageNum=${cafeUserInfo.cafeUserImage }" 
+										<img src="download?fileNum=${cafeUserInfo.cafeUserImage }" 
 										width="40px" class="img-circle alignleft" alt="">
 									</c:if>
 				              	</a>
@@ -251,7 +251,7 @@ li.bbp-topic-freshness-test{
 	              			width="50" class="img-circle alignleft" alt="">
 	              		</c:if>
 						<c:if test="${ cafeUserInfo.cafeUserImage != 0 }">
-							<img src="test_download?fileImageNum=${cafeUserInfo.cafeUserImage}" 
+							<img src="download?fileNum=${cafeUserInfo.cafeUserImage}" 
 							width="50" class="img-circle alignleft" alt="">
 						</c:if>
 	              	</a>
@@ -298,7 +298,7 @@ li.bbp-topic-freshness-test{
 			              			width="40px" class="img-circle alignleft" alt="">
 			              		</c:if>
 								<c:if test="${ reply.CAFE_USER_IMAGE  != 0 }">
-									<img src="test_download?fileImageNum=${reply.CAFE_USER_IMAGE}" 
+									<img src="download?fileNum=${reply.CAFE_USER_IMAGE}" 
 									width="40px" class="img-circle alignleft" alt="">
 								</c:if>
 				             </a>
@@ -311,7 +311,7 @@ li.bbp-topic-freshness-test{
 		                  	  </h4>
 		                   		${reply.REPLY_CONTENT}<br>
 		                   		<c:if test="${reply.REPLY_IMG_NAME != 0}">
-		                   			<img src="test_download?fileImageNum=${reply.REPLY_IMG_NAME}" 
+		                   			<img src="download?fileNum=${reply.REPLY_IMG_NAME}" 
 									width="30%">
 		                   		</c:if>
 		                   		
@@ -363,7 +363,7 @@ li.bbp-topic-freshness-test{
 							              			width="40px" class="img-circle alignleft" alt="">
 							              		</c:if>
 												<c:if test="${ replyreply.CAFE_USER_IMAGE  != 0 }">
-													<img src="test_download?fileImageNum=${replyreply.CAFE_USER_IMAGE}" 
+													<img src="download?fileNum=${replyreply.CAFE_USER_IMAGE}" 
 													width="40px" class="img-circle alignleft" alt="">
 												</c:if>
 							              	</a>
@@ -376,7 +376,7 @@ li.bbp-topic-freshness-test{
 					                  	  </h4>
 					                   		${replyreply.REPLY_CONTENT}<br>
 					                   		<c:if test="${replyreply.REPLY_IMG_NAME != 0}">
-					                   			<img src="test_download?fileImageNum=${replyreply.REPLY_IMG_NAME}" 
+					                   			<img src="download?fileNum=${replyreply.REPLY_IMG_NAME}" 
 												width="30%">
 					                   		</c:if>
 					                   		
@@ -558,7 +558,7 @@ li.bbp-topic-freshness-test{
 		              	  </c:if>
 						  <c:if test="${ top6.CAFE_USER_IMAGE  != 0 }">
 							  <img class="lazyOwl" style="height: 280px;"
-							  data-src="test_download?fileImageNum=${top6.CAFE_USER_IMAGE}" alt="">
+							  data-src="download?fileNum=${top6.CAFE_USER_IMAGE}" alt="">
 						  </c:if>
 		            	
 		              <div class="he-view">

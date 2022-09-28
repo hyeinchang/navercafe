@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import com.itbank.navercafe.mybatis.grade.GradeMapper;
+import com.itbank.navercafe.user.grade.mapper.GradeMapper;
 
 
 

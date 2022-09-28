@@ -115,7 +115,6 @@ public class HomeController { //메인 로그인관련
 	@GetMapping("/userInfo")
 	public String userUpdate(String id, Model model) {
 		MemberDTO dto = ms.getU(id);
-		
 		model.addAttribute("id", dto.getId());
 		model.addAttribute("name", dto.getName());
 		model.addAttribute("phone", dto.getPhone());
@@ -138,21 +137,21 @@ public class HomeController { //메인 로그인관련
 		return "redirect:"+url;
 	}
 	
-		@GetMapping("delete")
-		public String delete(String id, HttpServletRequest request, HttpSession session) {
-			String url = "http://localhost:8085/navercafe/";
-			cc.logout(request, session);
-			
-			int result = ms.delete(id);
-			if(result==1) {
-				return "redirect:"+url;
-			}
+	@GetMapping("delete")
+	public String delete(String id, HttpServletRequest request, HttpSession session) {
+		String url = "http://localhost:8085/navercafe/";
+		cc.logout(request, session);
+		
+		int result = ms.delete(id);
+		if(result==1) {
 			return "redirect:"+url;
+		}
+		return "redirect:"+url;
 
-		}
-		@GetMapping("/cafe/createCafeForm")
-		public String createCafeForm() {
-			return "cafe/createCafeForm";
-	
-		}
+	}
+	@GetMapping("/cafe/createCafeForm")
+	public String createCafeForm() {
+		return "cafe/createCafeForm";
+
+	}
 }

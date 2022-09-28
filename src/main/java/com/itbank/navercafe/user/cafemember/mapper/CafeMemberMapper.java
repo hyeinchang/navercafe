@@ -1,4 +1,4 @@
-package com.itbank.navercafe.mybatis.cafemember;
+package com.itbank.navercafe.user.cafemember.mapper;
 
 import java.util.ArrayList;
 

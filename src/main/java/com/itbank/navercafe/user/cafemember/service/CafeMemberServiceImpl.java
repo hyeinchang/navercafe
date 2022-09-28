@@ -16,11 +16,10 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.itbank.navercafe.comon.file.TestFileService;
 import com.itbank.navercafe.comon.file.dto.FileDTO;
 //import com.itbank.navercafe.comon.file.FileService;
-
-import com.itbank.navercafe.mybatis.cafemember.CafeMemberMapper;
 import com.itbank.navercafe.user.cafejoin.dto.CafeJoinDTO;
 import com.itbank.navercafe.user.cafemember.dto.CafeMemberDTO;
 import com.itbank.navercafe.user.cafemember.dto.TestFileDTO;
+import com.itbank.navercafe.user.cafemember.mapper.CafeMemberMapper;
 
 
 

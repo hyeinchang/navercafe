@@ -1,4 +1,4 @@
-package com.itbank.navercafe.mybatis.reply;
+package com.itbank.navercafe.user.reply.mapper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -18,5 +18,7 @@ public interface ReplyMapper {
 	public int saveReply(ReplyDTO dto);
 	//답글
 	public void saveGroupNumReply(ReplyDTO dto);
+	//replyNum 시퀀스값 
+	public int getReplyNum();
 }
 

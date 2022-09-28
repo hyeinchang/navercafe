@@ -17,11 +17,11 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.itbank.navercafe.comon.file.TestFileService;
-import com.itbank.navercafe.mybatis.cafemember.CafeMemberMapper;
-import com.itbank.navercafe.mybatis.memo.MemoMapper;
 import com.itbank.navercafe.user.cafemember.dto.TestFileDTO;
+import com.itbank.navercafe.user.cafemember.mapper.CafeMemberMapper;
 import com.itbank.navercafe.user.memo.dto.MemoDTO;
 import com.itbank.navercafe.user.memo.dto.MemoReplyDTO;
+import com.itbank.navercafe.user.memo.mapper.MemoMapper;
 import com.itbank.navercafe.user.reply.dto.ReplyDTO;
 
 

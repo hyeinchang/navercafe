@@ -1,4 +1,4 @@
-package com.itbank.navercafe.mybatis.memo;
+package com.itbank.navercafe.user.memo.mapper;
 
 import java.util.ArrayList;
 import java.util.HashMap;
