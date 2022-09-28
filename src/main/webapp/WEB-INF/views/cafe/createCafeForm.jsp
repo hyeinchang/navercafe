@@ -9,7 +9,7 @@
       <div class="ror">
         <div class="col-md-8 col-md-offset-2">
           <h1>네이버 카페</h1>
-          <p>원하는 주제로 다양한 카페를 만들 수 있습니다.</p>
+          <p>원하시는 주제로 다양한 카페를 만들 수 있습니다.</p>
         </div>
       </div>
     </div>
@@ -52,12 +52,15 @@
 	          	  		<span title="카페아이콘 등록">
 	          		  		<img src="${contextPath}/resources/img/cafeicon_default_112x112.png" width="112" height="112" alt="카페 아이콘" id="iconImg">
 	          			</span>
-	          			<span style="display:inline-block;margin-left:20px;vertical-align:top;">
-	          				우리 카페를 표현할 카페 아이콘을 등록해주세요.<br>
+	          			<div style="display:inline-block;margin-left:20px;vertical-align:top;">
+	          				<div>우리 카페를 표현할 카페 아이콘을 등록해주세요.<br>
 							등록하신 아이콘은 카페에서 활용됩니다.<br>
-							<input type="file" name="iconImage" class="form-control-inline" onchange="previewIcon()">
-							<button type="button" class="btn btn-danger" onclick="deleteIcon()">삭제</button>
-	          			</span>
+							</div><br>
+							<div>
+								<input type="file" name="iconImage" class="form-control-inline" onchange="previewIcon()">
+								<button type="button" class="btn btn-danger" onclick="deleteIcon()">삭제</button>
+							</div>
+	          			</div>
 	          		</div>
 				</div>
        		</div>
