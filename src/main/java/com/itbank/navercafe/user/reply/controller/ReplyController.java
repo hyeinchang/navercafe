@@ -15,19 +15,6 @@ import com.itbank.navercafe.user.reply.service.ReplyService;
 public class ReplyController {
 	@Autowired ReplyService replySer;
 
-	//	댓글, 답글 step으로 식별하기
-	@PostMapping("saveReply")
-	public String saveReply(MultipartHttpServletRequest mul,
-		@RequestParam(value="step",required=false,defaultValue="0")int step) {
-		replySer.saveReply(mul,step);
-		return "redirect:goBoardInside?boardNum="
-				+mul.getParameter("boardNum")+"&num="+1;
-							//댓글 작성시 조회수 오르는거 방지
-	}
-	
-	
-	
-	
 	
 	
 

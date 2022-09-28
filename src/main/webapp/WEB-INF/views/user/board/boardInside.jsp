@@ -208,12 +208,12 @@ li.bbp-topic-freshness-test{
 			              
 			              	<div class="div-one">
 			              		<a href="#">
-				              		<c:if test="${ cafeUserInfo.cafeUserImage == 0 }">
+				              		<c:if test="${ cafeUserInfo.cafeUserImageNum == 0 }">
 				              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
 				              			width="40px" class="img-circle alignleft" alt="">
 				              		</c:if>
-									<c:if test="${ cafeUserInfo.cafeUserImage  != 0 }">
-										<img src="download?fileNum=${cafeUserInfo.cafeUserImage }" 
+									<c:if test="${ cafeUserInfo.cafeUserImageNum  != 0 }">
+										<img src="download?fileNum=${cafeUserInfo.cafeUserImageNum }" 
 										width="40px" class="img-circle alignleft" alt="">
 									</c:if>
 				              	</a>
@@ -246,12 +246,12 @@ li.bbp-topic-freshness-test{
 		          <div class="more-one">
 		          
 		          	<a href="#">
-	              		<c:if test="${ cafeUserInfo.cafeUserImage == 0 }">
+	              		<c:if test="${ cafeUserInfo.cafeUserImageNum == 0 }">
 	              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
 	              			width="50" class="img-circle alignleft" alt="">
 	              		</c:if>
-						<c:if test="${ cafeUserInfo.cafeUserImage != 0 }">
-							<img src="download?fileNum=${cafeUserInfo.cafeUserImage}" 
+						<c:if test="${ cafeUserInfo.cafeUserImageNum != 0 }">
+							<img src="download?fileNum=${cafeUserInfo.cafeUserImageNum}" 
 							width="50" class="img-circle alignleft" alt="">
 						</c:if>
 	              	</a>
@@ -293,12 +293,12 @@ li.bbp-topic-freshness-test{
 			            <li>
 			              <article class="comment">
 			              	<a href="#">
-			              		<c:if test="${ reply.CAFE_USER_IMAGE== 0}">
+			              		<c:if test="${ reply.CAFE_USER_IMAGE_NUM== 0}">
 			              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
 			              			width="40px" class="img-circle alignleft" alt="">
 			              		</c:if>
-								<c:if test="${ reply.CAFE_USER_IMAGE  != 0 }">
-									<img src="download?fileNum=${reply.CAFE_USER_IMAGE}" 
+								<c:if test="${ reply.CAFE_USER_IMAGE_NUM  != 0 }">
+									<img src="download?fileNum=${reply.CAFE_USER_IMAGE_NUM}" 
 									width="40px" class="img-circle alignleft" alt="">
 								</c:if>
 				             </a>
@@ -310,8 +310,8 @@ li.bbp-topic-freshness-test{
 		                       
 		                  	  </h4>
 		                   		${reply.REPLY_CONTENT}<br>
-		                   		<c:if test="${reply.REPLY_IMG_NAME != 0}">
-		                   			<img src="download?fileNum=${reply.REPLY_IMG_NAME}" 
+		                   		<c:if test="${reply.CAFE_USER_IMAGE_NUM != 0}">
+		                   			<img src="download?fileNum=${reply.CAFE_USER_IMAGE_NUM}" 
 									width="30%">
 		                   		</c:if>
 		                   		
@@ -358,12 +358,12 @@ li.bbp-topic-freshness-test{
 		                      			<li>
 						              <article class="comment" style="color:black;">
 						              	<a href="#">
-							              		<c:if test="${ replyreply.CAFE_USER_IMAGE== 0}">
+							              		<c:if test="${ replyreply.CAFE_USER_IMAGE_NUM== 0}">
 							              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
 							              			width="40px" class="img-circle alignleft" alt="">
 							              		</c:if>
-												<c:if test="${ replyreply.CAFE_USER_IMAGE  != 0 }">
-													<img src="download?fileNum=${replyreply.CAFE_USER_IMAGE}" 
+												<c:if test="${ replyreply.CAFE_USER_IMAGE_NUM  != 0 }">
+													<img src="download?fileNum=${replyreply.CAFE_USER_IMAGE_NUM}" 
 													width="40px" class="img-circle alignleft" alt="">
 												</c:if>
 							              	</a>
@@ -375,11 +375,13 @@ li.bbp-topic-freshness-test{
 					                       
 					                  	  </h4>
 					                   		${replyreply.REPLY_CONTENT}<br>
-					                   		<c:if test="${replyreply.REPLY_IMG_NAME != 0}">
-					                   			<img src="download?fileNum=${replyreply.REPLY_IMG_NAME}" 
-												width="30%">
-					                   		</c:if>
-					                   		
+					                   		<c:forEach var="file" items="${fileList}">
+					                   			<c:if test="${file.replyNum == replyreply.REPLY_NUM}">
+					                   				<img src="download?fileNum=${replyreply.REPLY_NUM}" 
+													width="30%">
+					                   			</c:if>
+					                   		</c:forEach>
+
 					                   		
 					                      	<p>
 					                      		<a onclick="replyClick(this)" id="${replyreply.REPLY_NUM}" style="cursor:pointer">
@@ -552,13 +554,13 @@ li.bbp-topic-freshness-test{
 					<div class="col-lg-12">
 		            <div class="he-wrap tpl6 market-item">
 					<div class="name-topList">${top6.BOARD_TITLE}</div>
-		            	 <c:if test="${ top6.CAFE_USER_IMAGE== 0}">
+		            	 <c:if test="${ top6.CAFE_USER_IMAGE_NUM== 0}">
 				       		  <img class="lazyOwl" style="height: 280px;"
 				       		  data-src="<%=request.getContextPath()%>/resources/img/프로필.jpg">
 		              	  </c:if>
-						  <c:if test="${ top6.CAFE_USER_IMAGE  != 0 }">
+						  <c:if test="${ top6.CAFE_USER_IMAGE_NUM  != 0 }">
 							  <img class="lazyOwl" style="height: 280px;"
-							  data-src="download?fileNum=${top6.CAFE_USER_IMAGE}" alt="">
+							  data-src="download?fileNum=${top6.CAFE_USER_IMAGE_NUM}" alt="">
 						  </c:if>
 		            	
 		              <div class="he-view">

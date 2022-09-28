@@ -7,18 +7,24 @@
 		<result column="fileOrgName" property="FILE_ORG_NAME"/>
 		<result column="fileStoredName" property="FILE_STORED_NAME"/>
 		<result column="boardNum" property="BOARD_NUM"/>
-		<result column="boardReplyNum" property="REPLY_NUM"/>
-		<result column="profileNum" property="CAFE_USER_IMAGE_NUM"/>
-		<result column="titleNum" property="CAFE_TITLE_NUM"/>
-		<result column="regdate" property="REGDATE"/>
+		<result column="replyNum" property="REPLY_NUM"/>
+		<result column="cafeUserImageNum" property="CAFE_USER_IMAGE_NUM"/>
+		<result column="cafeTitleNum" property="CAFE_TITLE_NUM"/>
+		<result column="memoReplyNum" property="MEMO_REPLY_NUM"/>
+		<result column="cafeIconNum" property="CAFE_ICON_NUM"/>
+		<result column="regdate" property="regdate"/>
 
 	</resultMap>
 	
 	<insert id="insertAttachFile" >
 		<![CDATA[INSERT INTO PROJECT_FILE(FILE_NUM, FILE_DIRECTORY, FILE_ORG_NAME, FILE_STORED_NAME, 
-			BOARD_NUM, REPLY_NUM, CAFE_USER_IMAGE_NUM, CAFE_TITLE_NUM, REGDATE)
+			BOARD_NUM, REPLY_NUM, CAFE_USER_IMAGE_NUM, CAFE_TITLE_NUM, regdate, MEMO_REPLY_NUM)
 		VALUES(project_file_seq.nextval, #{fileDirectory}, #{fileOrgName}, #{fileStoredName}, 
-			#{boardNum}, #{boardReplyNum}, #{profileNum}, #{titleNum}, sysdate)]]>
+			#{boardNum}, #{replyNum}, #{cafeUserImageNum}, #{cafeTitleNum}, sysdate, #{memoReplyNum})]]>
 	</insert>
+	<!--임시  -->
+	<select id="getFileList" resultMap="file">
+		select * from project_file
+	</select>
 </mapper>
 

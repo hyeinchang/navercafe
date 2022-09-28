@@ -22,29 +22,7 @@
 	</resultMap>
 	
 
-	<!-- <resultMap type="com.itbank.navercafe.comon.file.dto.FileDTO" id="project_file">
-		<id property="fileNum" column="file_num"/>
-		<result property="fileDirectory" column="file_directory"/>
-		<result property="fileOrgName" column="file_org_name"/>
-		<result property="fileStoredName" column="file_stored_name"/>
-		<result property="regdate" column="regdate"/>
-		<result property="boardNum" column="board_num"/>
-		<result property="boardReplyNum" column="board_reply_num"/>
-		<result property="cafeTitleNum" column="cafe_title_num"/>
-		<result property="memoReplyNum" column="memo_reply_num"/>
-		<result property="profileNum" column="profile_num"/>
-	</resultMap> -->
-	
-	<resultMap type="com.itbank.navercafe.user.cafemember.dto.TestFileDTO" id="project_file_test">
-		<id property="fileNum" column="file_num"/>
-		<result property="fileOrgName" column="file_org_name"/>
-		<result property="regdate" column="regdate"/>
-		<result property="boardNum" column="board_num"/>
-		<result property="boardReplyNum" column="board_reply_num"/>
-		<result property="cafeTitleNum" column="cafe_title_num"/>
-		<result property="memoReplyNum" column="memo_reply_num"/>
-		<result property="profileNum" column="profile_num"/>
-	</resultMap>
+
 
 	
 	<select id="idOverlap" resultType="Integer">
@@ -75,19 +53,7 @@
 		values(cafejoin_SEQ.nextval,#{cafeId}, #{userId}, #{userNickname})
 	</insert>
 
-
-
-
-	<!-- 변형해서 수정 쓸 것 -->
-	<insert id="saveData">
-		insert into project_cafe_member(cafe_id,user_id,cafe_user_nickname,cafe_user_image_num)
-		values(#{cafeId},#{userId},#{cafeUserNickname},#{cafeUserImageNum})
-	</insert>
 	
-	<!-- 파일테이블에도 추가  -->
-	<insert id="saveFileDTO">
-		insert into project_file_test (file_num,file_org_name)values(#{fileNum},#{fileOrgName})
-	</insert> 
 	<!-- 게시글에 닉네임,이미지 표시하기위해 따로 빼와주는애 -->
 	<select id="getCafeUserInfo" resultMap="project_cafe_member">
 		select user_id,cafe_user_nickname,cafe_user_image_num from project_cafe_member
@@ -101,5 +67,9 @@
 	<select id="getSequence" resultType="int">
 		select file_num_seq.nextval fileNumSeq from dual
 	</select>
+	<!--카페회원 댓글 작성시 댓글작성횟수 올려주기-->
+	<update id="replyUp">
+		update project_cafe_member set cafe_user_reply=cafe_user_reply+1 where user_id=#{userId}
+	</update>
 
 </mapper>

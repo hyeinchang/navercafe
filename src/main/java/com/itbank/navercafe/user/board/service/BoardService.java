@@ -30,5 +30,10 @@ public interface BoardService {
 	
 	//인기글 리스트
 	public void topList(Model model);
+	
+	//파일테이블리스트
+	public void getFileList(Model model);
+	
+	
 
 }

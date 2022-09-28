@@ -14,6 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
+import com.itbank.navercafe.comon.file.dto.FileDTO;
+import com.itbank.navercafe.comon.file.mapper.FileMapper;
 import com.itbank.navercafe.user.board.dto.BoardDTO;
 import com.itbank.navercafe.user.board.mapper.BoardMapper;
 
@@ -22,6 +24,7 @@ import com.itbank.navercafe.user.board.mapper.BoardMapper;
 @Service
 public class BoardServiceImpl implements BoardService{
 	@Autowired BoardMapper bm;
+	@Autowired FileMapper fm;
 	
 	
 	//전체목록인데 수영이형이랑 상의.
@@ -29,37 +32,7 @@ public class BoardServiceImpl implements BoardService{
 	public ArrayList<BoardDTO> getBoardList() {
 		return bm.getBoardList();
 	}
-	
-//	@Override
-//	public BoardDTO getUserBoard(int boardNum,Model model) {
-//		// 이전글 다음글 
-//		ArrayList<BoardDTO> listChk= bm.getBoardList();
-//		int j = 0;
-//		for(j=0; j<listChk.size();j++) {
-//			System.out.println("j 마지막 값 구하기");
-//		}
-//		if(boardNum==listChk.get(j-1).getBoardNum()) {
-//			model.addAttribute("Next",false);
-//		}else if(boardNum==listChk.get(0).getBoardNum()){
-//			model.addAttribute("Preview",false);
-//		}
-//		
-//		BoardDTO dto = bm.getUserBoard(boardNum);
-//		SimpleDateFormat date = new SimpleDateFormat("YYYY.MM.dd");
-//		//말머리 이용해서 날짜 형식 포멧 후 리스트 출력
-//		List<HashMap<String,Object>> list =bm.getPrefixList(dto.getBoardPrefix());
-//		for(int i=0;i<list.size();i++) {
-//			String d= date.format(list.get(i).get("BOARD_SAVEDATE"));
-//			list.get(i).put("BOARD_SAVEDATE", d);
-//			System.out.println(i+"번째"+list.get(i).get("BOARD_SAVEDATE"));
-//			System.out.println(i+"번째"+list.get(i).get("BOARD_TITLE"));
-//		}
-//		model.addAttribute("prefixList",list);
-//		return dto;
-//	}
-	
 
-	
 	@Override
 	public BoardDTO getUserBoard(int boardNum,Model model,int pageNum) {
 		
@@ -149,6 +122,17 @@ public class BoardServiceImpl implements BoardService{
 	public void topList(Model model) {
 		model.addAttribute("topList",bm.topList());
 		//System.out.println(bm.topList());
+	}
+
+	@Override
+	public void getFileList(Model model) {
+		ArrayList<FileDTO> list=fm.getFileList();
+		for(int i=0 ; i<list.size();i++) {
+			System.out.println(list.get(i).getBoardNum());
+			System.out.println(list.get(i).getRegdate());
+			System.out.println(list.get(i).getReplyNum());
+		}
+		model.addAttribute("fileList",fm.getFileList());
 	}
 }
 

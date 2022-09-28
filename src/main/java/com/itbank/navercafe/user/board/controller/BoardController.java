@@ -51,6 +51,8 @@ public class BoardController {
 		
 		//댓글 리스트 가져오기
 		model.addAttribute("replyList",replySer.getReplyList(boardNum));
+		//System.out.println(replySer.getReplyList(boardNum));
+		
 		//세션 아이디 줘서 정보 가져오기
 		model.addAttribute("sessionUser",boardCafeSer.getSessionUserInfo((String) session.getAttribute("loginId")));
 		//말머리에 따른 게시물 목록 가져오기
@@ -64,19 +66,22 @@ public class BoardController {
 		
 		//인기글 리스트
 		ser.topList(model);
+		
+		//파일테이블리스트
+		ser.getFileList(model);
 		return "user/board/boardInside";
 	}
 
 	
-//	//			댓글, 답글 step으로 식별하기
-//	@PostMapping("saveReply")
-//	public String saveReply(MultipartHttpServletRequest mul,
-//			@RequestParam(value="step",required=false,defaultValue="0")int step) {
-//		replySer.saveReply(mul,step);
-//		return "redirect:goBoardInside?boardNum="
-//				+mul.getParameter("boardNum")+"&num="+1;
-//							//댓글 작성시 조회수 오르는거 방지
-//	}
+//	댓글, 답글 step으로 식별하기
+	@PostMapping("saveReply")
+	public String saveReply(MultipartHttpServletRequest mul,
+		@RequestParam(value="step",required=false,defaultValue="0")int step) {
+		replySer.saveReply(mul,step);
+		return "redirect:goBoardInside?boardNum="
+				+mul.getParameter("boardNum")+"&num="+1;
+							//댓글 작성시 조회수 오르는거 방지
+	}
 	
 	@GetMapping("likeChk")
 	public String likeChk(int boardNum,String userId,Model model) {
