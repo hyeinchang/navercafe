@@ -13,8 +13,6 @@ public interface CafeMemberMapper {
 	
 	public int signup(CafeMemberDTO dto);
 	
-	public int cafeMembers();
-
 	public Integer cafeMembers(@Param("cafeId")String cafeId, @Param("userId")String userId);
 
 	public CafeMemberDTO getCafeMember(@Param("cafeId")String cafeId, @Param("userId")String userId);
@@ -23,5 +21,4 @@ public interface CafeMemberMapper {
 
 	public Integer idOverlap(@Param("cafeUserNickname")String cafeUserNickname, @Param("cafeId")String cafeId);
 
-	public String iddd(String cafeUserNickname, String cafeId);
 }

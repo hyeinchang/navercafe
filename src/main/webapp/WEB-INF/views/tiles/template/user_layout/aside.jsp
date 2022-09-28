@@ -113,8 +113,8 @@
                   	<span>
                   	  <a href="#">
                   	  	<c:choose>
-                  	  		<c:when test="${cafeMember.cafeUserImage eq nan}"> <!-- 프로필 기본사진 -->
-                  	  			<img class="profileImg" src="${contextPath}/resources/img/profileImage.jpg" alt="프로필 이미지">
+                  	  		<c:when test="${cafeMember.cafeUserImage eq 'nan'}"> <!-- 프로필 기본사진 -->
+                  	  			<img class="profileImg" src="${contextPath}/resources/img/cafe_profile.png" alt="프로필 이미지">
                   	  		</c:when>
                   	  		<c:otherwise>
                   	  			<img class="profileImg" src="${contextPath}/resources/img/profileImage.jpg" alt="프로필 이미지">
@@ -165,7 +165,7 @@
                   <li>
                   <c:choose>
                   <c:when test="${cafemem==1}">
-                    <input type="button" class="button" value="카페 글쓰기" onclick="alert('카페 글쓰기 이동')" style="width:100%;">
+                    <input type="button" class="button" value="카페 글쓰기" onclick="changeCafeMenu('${contextPath}/user/board/writeForm')" style="width:100%;">
                   </c:when>
                   <c:otherwise>
                     <c:if test="${loginId ne null}">
