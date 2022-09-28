@@ -54,7 +54,7 @@ public class CafeController {
 		CafeDTO cafeDTO = new CafeDTO();
 		int order = Integer.parseInt(cafeId.replaceAll("\\D", ""));
 		String skin = "default";
-		cafeDTO.setCafeManagerNickName("테스트 카페" + order + "의 매니저 아이디");
+		cafeDTO.setUserId("테스트 카페" + order + "의 매니저 아이디");
 		
 		switch(order) {
 		case 1 : skin = "asphalt";
@@ -91,7 +91,7 @@ public class CafeController {
 		case 2 : skin = "blue";
 			cafeDTO.setCafeFront("<img src=\"" + request.getContextPath() + "/resources/upload/free-icon-joy-7021182.png\" id=\"userImg4894358\" style=\"width: 512px; height: 512px;\" alt=\"대문이미지\" onload=\"resizeImage(4894358)\" name=\"cafeuserimg\" onclick=\"popview(this)\"><div><br></div><div>카페 대문</div>");
 		
-			cafeDTO.setCafeManagerNickName("정보처리산업기사");
+			cafeDTO.setUserId("정보처리산업기사");
 			
 			if(session.getAttribute("loginId") != null && session.getAttribute("loginId").equals("chi9148")) {
 				cafeDTO.setCafeMember(true);
@@ -111,7 +111,7 @@ public class CafeController {
 			
 			break;
 		case 5 : skin = "pomegranate";
-			cafeDTO.setCafeLayout(1);
+			cafeDTO.setCafeLayout("1");
 			break;
 		case 6 : skin = "turquoise";
 			break;
@@ -122,7 +122,7 @@ public class CafeController {
 		cafeDTO.setCafeId(cafeId);
 		cafeDTO.setCafeSkin(skin);
 		cafeDTO.setCafeName("테스트 카페" + order);
-		cafeDTO.setCafeIntroduce("테스트 카페"+ order +"(cafeId: cafeId"+ order +")에 대한 소개입니다.");
+		cafeDTO.setUserId("테스트 카페"+ order +"(cafeId: cafeId"+ order +")에 대한 소개입니다.");
 	
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("cafeDTO", cafeDTO);

@@ -24,16 +24,18 @@
       </div>
       <div class="col-lg-12 col-md-12 col-sm-12 clearfix">
 
-        <form id="createCafeForm" action="" name="createCafeForm" method="post">
+        <form id="createCafeForm" action="./createCafe" name="createCafeForm" method="post">
         	<h5 class="title">카페 기본 정보</h5>
         	<div class="infoLine">
         		<label for="cafeId" class="infoLabel">카페 아이디 <span class="required">*</span></label>
-          		<input type="text" name="cafeId" id="cafeId" class="form-control-inline" placeholder="카페 아이디를 입력해주세요.">
+          		<input type="text" name="cafeId" id="cafeId" class="form-control-inline" placeholder="카페 아이디를 입력해주세요."
+          			data-length="1~100" data-format="numAndEng" data-text="카페 아이디">
           		<input type="button" value="중복확인" class="button" style="margin-left:10px;" onclick="checkCafeId()">
         	</div>
         	<div class="infoLine">
         		<label for="cafeName" class="infoLabel">카페 이름 <span class="required">*</span></label>
-          		<input type="text" name="cafeName" id="cafeName" class="form-control-inline" placeholder="카페 이름을 입력해주세요.">
+          		<input type="text" name="cafeName" id="cafeName" class="form-control-inline" placeholder="카페 이름을 입력해주세요."
+          			data-type="1~200" data-format="" data-text="카페 이름">
         	</div>
         	
           	<div class="clearfix"></div>
@@ -56,7 +58,8 @@
 	          			</button>
 	          			<span style="display:inline-block;margin-left:20px;vertical-align:top;">
 	          				우리 카페를 표현할 카페 아이콘을 등록해주세요.<br>
-							등록하신 아이콘은 카페에서 활용됩니다.
+							등록하신 아이콘은 카페에서 활용됩니다.<br>
+							<input type="file" name="iconImage">
 	          			</span>
 	          		</div>
 				</div>
@@ -64,7 +67,8 @@
        	
        		<div class="infoLine">
        			<label for="cafeExplanation" class="infoLabel">카페 소개 </label>
-       			<input type="text" id="cafeExplanation" name="cafeExplanation" class="form-control" placeholder="카페 소개를 입력해주세요." style="width:100%;">
+       			<input type="text" id="cafeExplanation" name="cafeExplanation" class="form-control" placeholder="카페 소개를 입력해주세요." style="width:100%;"
+       				data-type="0~2000" data-format="" data-text="카페 소개">
        			<p>입력한 내용이 카페 메인, 검색결과등의 카페리스트에 반영 됩니다.</p>
        		</div>	
           		
@@ -76,7 +80,8 @@
         	
       		<div class="infoLine">
        			<label for="cafeJoinInfomation" class="infoLabel">카페 가입 안내</label>
-       			<input type="text" id="cafeJoinInfomation" name="cafeJoinInfomation" class="form-control" placeholder="카페 가입 안내를 입력해주세요." style="width:100%;">
+       			<input type="text" id="cafeJoinInfomation" name="cafeJoinInfomation" class="form-control" placeholder="카페 가입 안내를 입력해주세요." style="width:100%;"
+       				data-type="0~2000" data-format="" data-text="카페 가입 정보">
        			<ul style="padding-top:10px;padding-left:20px;">
        				<li>입력한 내용은 멤버의 카페 가입 시 안내 문구로 활용됩니다.</li>
 					<li>HTML 태그는 사용하실 수 없습니다.</li>
@@ -168,9 +173,8 @@
                 </label>
 			</div>
 
-          <br><br>
-        
-          <button class="button large btn-block" onclick="createCafe()">카페 만들기</button>
+          	<br><br>
+        	<button type="button" class="button large btn-block" onclick="createCafe()">카페 만들기</button>
         </form>
       
       </div>
@@ -208,12 +212,45 @@ function setJoinAgeSelect() {
 }
 
 function createCafe() {
-	
+	formCheck();
 }
 
 function formCheck() {
-	var createCafeForm = document.createCafeForm;
+	var form = document.createCafeForm;
 	
+	for(var i=0;i<form.length;i++) {
+		var element = form[i];
+		
+		if(!element.name) {
+			continue;
+		}
+		
+		var value = element.value;
+		
+		if(element.dataset.length) {
+			var length = element.dataset.length;
+			
+			if(length.indexOf('~') > -1) {
+				var range = length.split('~');
+				var min = Number(range[0]);
+				var max = Number(range[1]);
+				
+				if(min > 0) {
+					if(value == '') {
+						alert(element.placeholder);
+						element.focus();
+						return;
+					}
+	
+				} else {
+					
+				}
+			}
+			
+			
+		}
+		
+	}
 }
 
 function checkCafeId() {

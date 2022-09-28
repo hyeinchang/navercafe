@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>create sql mysql -> oracle 변환</title>
+</head>
+<body>
+    <div id="result"></div>
+    <div id="inputArea">
+        <p>https://www.erdcloud.com/d/qDEwQrnL8z7ibB5Hc > SQLPreview의 값 또는 Download SQL로 받은 파일의 값 입력</p>
+        <textarea id="sql" cols="100" rows="30"></textarea>
+        <br>
+        <button onclick="change()">바꾸기</button>
+    </div>
+<script type="text/javascript">
+    function change() {
+        var sql = document.getElementById('sql');
+        var result = document.getElementById('result');
+        var lines = sql.value.split(/\r|\n/);
+        var resultVal = '';
+        
+        for(var i=0; i<lines.length; i++) {
+            var line = lines[i].replace(/NOT NULL\tDEFAULT|NULL\tDEFAULT/gi, '\tDEFAULT');
+            line = line.replace(/\`/gi, '');
+            line = line.replace('COMMENT \'게시판고유번호(시퀀스)\'', '');
+            line = line.replace('varchar2(5000)', 'clob');
+            line = line.replace('both', '\'both\'');
+            line = line.replace(/\t/gi, '&nbsp;&nbsp;&nbsp;&nbsp;');
+            line = line.replace(/\s/gi, ' ');
+
+            resultVal += '<br>' + line;
+        }
+        
+        result.innerHTML = resultVal;
+
+        document.getElementById('inputArea').style.display = 'none';
+    }
+</script>    
+</body>
+</html>

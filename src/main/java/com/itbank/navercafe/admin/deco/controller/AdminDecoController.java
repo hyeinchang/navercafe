@@ -184,8 +184,7 @@ public class AdminDecoController {
 		
 		try {
 			if(cafeDTO != null && cafeDTO.getCafeId() != null) {
-				int titleNum = cafeDTO.getTitleNum();
-				
+				int titleNum = cafeDTO.getCafeTitleNum();		
 				adminDecoService.deleteTitle(titleNum);
 			}
 		} catch(Exception e) {
