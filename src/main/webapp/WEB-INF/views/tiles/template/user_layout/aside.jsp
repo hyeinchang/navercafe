@@ -15,7 +15,15 @@
                   <li>
                   	<span>
                   	  <a href="#">
-                  	    <img class="profileImg" src="${contextPath}/resources/img/cafe_thumb_noimg_55.png" alt="카페 아이콘 없음">
+                  	  <c:choose>
+                  	  	<c:when test="${cafeDTO.cafeIconNum eq null || cafeDTO.cafeIconNum == 0}">
+                  	  	<img class="profileImg" src="${contextPath}/resources/img/cafe_thumb_noimg_55.png" alt="카페 아이콘 없음">
+                  	  	</c:when>
+                  	  	<c:otherwise>
+                  	  	<img class="profileImg" src="${contextPath}/file/download?cafeIconNum=${cafeDTO.cafeIconNum}" alt="카페 아이콘 없음">
+                  	  	</c:otherwise>
+                  	  </c:choose>
+                  	  
                       </a>
                       <c:if test="${cafeDTO.isCafeManager()}"> 
                       <a href="javascript:alert('카페 프로필 변경하기')" class="lab_thmb">카페 프로필 변경하기</a>

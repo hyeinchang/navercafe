@@ -11,7 +11,7 @@
       <div class="ror">
         <div class="col-md-8 col-md-offset-2">
           <h1>네이버 카페</h1>
-          <p>원하는 주제로 다양한 카페를 만들 수 있습니다.</p>
+          <p>원하시는 주제로 다양한 카페를 만들 수 있습니다.</p>
         </div>
       </div>
     </div>
@@ -36,7 +36,7 @@
                 <i class="dm-icon fa fa-exclamation fa-3x" style="cursor:default;"></i>
               </div>
             </div>
-            <h4>등록된 카페가 없습니다.</h4>
+            <h4>랭킹 카페가 없습니다.</h4>
           </div>
         </div>
         <!-- end dmbox -->

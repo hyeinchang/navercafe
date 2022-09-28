@@ -38,8 +38,7 @@ public class CafeServiceImpl implements CafeService {
 	
 	@Override
 	public CafeDTO selectCafe(String cafeId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return cafeMapper.selectCafe(cafeId);
 	}
 
 	@Override

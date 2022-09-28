@@ -141,5 +141,5 @@ img.profileImg {border:none !important;border-radius:100%;width:58px;height:58px
 #createCafeForm #joinQuestionArea label {cursor:default;width:100px;}
 #createCafeForm #joinQuestionArea input[type="text"] {width:700px;}
 #createCafeForm #joinQuestionArea button {vertical-align:top;}
-#createCafeForm #joinQuestionArea button.btn-danger {margin-left}
+#createCafeForm #joinQuestionArea button.btn-danger {margin-left:10px;}
 #createCafeForm #iconImg {width:112px;height:112px;border-radius:45%;}

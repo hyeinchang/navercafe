@@ -57,12 +57,17 @@
 		]]>
 	</select>
 	
-		
 	<select id="selectCafeListTotalCount" resultType="Integer">
 		<![CDATA[
 			SELECT COUNT(*) TOTAL_COUNT 
 			FROM
 			(SELECT * FROM PROJECT_CAFE_INFO WHERE CAFE_NAME LIKE '%' || #{cafeName} || '%') CAFE
+		]]>
+	</select>
+	
+	<select id="selectCafe" resultMap="cafe">
+		<![CDATA[
+			SELECT * FROM PROJECT_CAFE_INFO WHERE CAFE_ID = #{cafeId}
 		]]>
 	</select>
 
