@@ -12,6 +12,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.itbank.navercafe.comon.file.FileUtils;
 import com.itbank.navercafe.comon.file.dto.FileDTO;
 import com.itbank.navercafe.comon.file.dto.FileResult;
 import com.itbank.navercafe.comon.file.service.FileService;
@@ -28,6 +29,8 @@ public class ReplyServiceImpl implements ReplyService{
 	@Autowired ReplyMapper rm;
 	@Autowired CafeMemberMapper cafeMemberMap;
 	@Autowired FileService fs;
+	@Autowired
+	private FileUtils fileUtils;
 	
 	
 	@Override
@@ -95,7 +98,7 @@ public class ReplyServiceImpl implements ReplyService{
 			String userId =  mul.getParameter("userId");
 			
 			System.out.println("userId : " + userId);
-			System.out.println("cafeUserImage : " + multipartFile.getOriginalFilename());
+			System.out.println("replyImgName : " + multipartFile.getOriginalFilename());
 			
 			if(userId != null && userId.length() > 0) {
 				directory += "/" + userId;
@@ -111,13 +114,18 @@ public class ReplyServiceImpl implements ReplyService{
 			redto.setReplyContent(mul.getParameter("replyContent"));
 			redto.setReplyStep(step);
 			redto.setReplyNum(seq);
+			System.out.println("들어갈 보드넘 :"+redto.getBoardNum());
+			System.out.println("들어갈 유저아이디 :"+redto.getUserId());
+			System.out.println("들어갈 내용 :"+redto.getReplyContent());
+			System.out.println("들어갈 스탭 :"+redto.getReplyStep());
+			System.out.println("들어갈 댓글넘버 :"+redto.getReplyNum());
 			
 			FileDTO fileDTO = null;
 			FileResult fileResult = fileUtils.uploadFile(multipartFile, directory);
 			fileDTO = fileResult.getFileDTO();
 			fileDTO.setProfileNum(seq);
 			fs.insertAttachFile(fileDTO);
-			
+			System.out.println("댓글인지 답글인지 판단할 그룹번호 : "+mul.getParameter("groupNum"));
 			//답글 작성시
 			if(mul.getParameter("groupNum")!=null) {
 				redto.setReplyGroup(Integer.parseInt(mul.getParameter("groupNum")));
@@ -137,16 +145,9 @@ public class ReplyServiceImpl implements ReplyService{
 		result = 1;
 		
 		map.put("result", result);
-		
 
-		
 	}
 
 
-	
-	
-	
-	
-	
 
 }

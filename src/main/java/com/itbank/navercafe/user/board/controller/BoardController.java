@@ -68,15 +68,15 @@ public class BoardController {
 	}
 
 	
-	//			댓글, 답글 step으로 식별하기
-	@PostMapping("saveReply")
-	public String saveReply(MultipartHttpServletRequest mul,
-			@RequestParam(value="step",required=false,defaultValue="0")int step) {
-		replySer.saveReply(mul,step);
-		return "redirect:goBoardInside?boardNum="
-				+mul.getParameter("boardNum")+"&num="+1;
-							//댓글 작성시 조회수 오르는거 방지
-	}
+//	//			댓글, 답글 step으로 식별하기
+//	@PostMapping("saveReply")
+//	public String saveReply(MultipartHttpServletRequest mul,
+//			@RequestParam(value="step",required=false,defaultValue="0")int step) {
+//		replySer.saveReply(mul,step);
+//		return "redirect:goBoardInside?boardNum="
+//				+mul.getParameter("boardNum")+"&num="+1;
+//							//댓글 작성시 조회수 오르는거 방지
+//	}
 	
 	@GetMapping("likeChk")
 	public String likeChk(int boardNum,String userId,Model model) {
