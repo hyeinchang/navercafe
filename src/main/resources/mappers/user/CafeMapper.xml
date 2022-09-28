@@ -16,4 +16,3 @@
         <result column="CAFE_ICON_NUM" property="cafeIconNum"/>
 	</resultMap>
 </mapper>
-
