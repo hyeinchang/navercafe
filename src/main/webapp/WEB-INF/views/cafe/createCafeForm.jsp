@@ -55,7 +55,8 @@
 	          			<span style="display:inline-block;margin-left:20px;vertical-align:top;">
 	          				우리 카페를 표현할 카페 아이콘을 등록해주세요.<br>
 							등록하신 아이콘은 카페에서 활용됩니다.<br>
-							<input type="file" name="iconImage" onchange="previewIcon()">
+							<input type="file" name="iconImage" class="form-control-inline" onchange="previewIcon()">
+							<button type="button" class="btn btn-danger" onclick="deleteIcon()">삭제</button>
 	          			</span>
 	          		</div>
 				</div>
@@ -357,6 +358,16 @@ function previewIcon() {
 			iconImg.src = fileReader.result;
 		}
 	}	
+}
+
+function deleteIcon() {
+	var iconImg = document.getElementById('iconImg');
+	var orgSrc= '${contextPath}/resources/img/cafeicon_default_112x112.png';
+	var fileInput = document.createCafeForm.iconImage;
+	
+	iconImg.src = orgSrc;
+	fileInput.files = null;
+	fileInput.value = '';
 }
 
 function showJoinQuestionInput() {

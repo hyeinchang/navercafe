@@ -140,6 +140,6 @@ img.profileImg {border:none !important;border-radius:100%;width:58px;height:58px
 #createCafeForm .infoUl {padding-top:10px;padding-left:20px;}
 #createCafeForm #joinQuestionArea label {cursor:default;width:100px;}
 #createCafeForm #joinQuestionArea input[type="text"] {width:700px;}
-#createCafeForm #joinQuestionArea button {vertical-align:top;}
-#createCafeForm #joinQuestionArea button.btn-danger {margin-left:10px;}
+#createCafeForm button {vertical-align:top;}
+#createCafeForm button.btn-danger {margin-left:5px;}
 #createCafeForm #iconImg {width:112px;height:112px;border-radius:45%;}
