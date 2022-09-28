@@ -92,10 +92,10 @@ public class CafeMemberController {
 			//seq 땡겨오고 -- 프로필 num seq 값을 넣어줘야 할듯?
 			int seq=cafeSer.getSequence();
 			System.out.println("넣어줄 seq 값 : "+seq);
-			multiRequest.getParameter("넘어온 : cafeId"+"cafeId");
-			multiRequest.getParameter("넘어온 : userId"+"userId");
-			multiRequest.getParameter("넘어온 : cafeUserNickname"+"cafeUserNickname");
-			
+			System.out.println(multiRequest.getParameter("넘어온 : cafeId"+"cafeId"));
+			System.out.println(multiRequest.getParameter("넘어온 : userId"+"userId"));
+			System.out.println(multiRequest.getParameter("넘어온 : cafeUserNickname"+"cafeUserNickname"));
+
 			CafeMemberDTO cmdto=new CafeMemberDTO();
 			cmdto.setCafeId(multiRequest.getParameter("cafeId"));
 			cmdto.setUserId(multiRequest.getParameter("userId"));
