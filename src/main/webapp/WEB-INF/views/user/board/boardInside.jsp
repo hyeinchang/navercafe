@@ -485,6 +485,8 @@ li.bbp-topic-freshness-test{
 	            <li class="bbp-header-header">
 	              <ul class="forum-titles">
 	                <li class="bbp-forum-info-allBoard">
+	                <!-- 여기서 카페아이디랑 카페유저 아이디 비교해서  if문으로   처리?
+	                	안된다 애초에 리스트 가져올때 처리해야 페이징도 되고 원래 그게 맞다-->
 	                '${userBoard.boardPrefix}' 게시판 글</li>
 
 	              </ul>
