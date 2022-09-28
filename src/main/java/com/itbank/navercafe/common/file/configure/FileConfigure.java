@@ -1,4 +1,4 @@
-package com.itbank.navercafe.comon.file.configure;
+package com.itbank.navercafe.common.file.configure;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

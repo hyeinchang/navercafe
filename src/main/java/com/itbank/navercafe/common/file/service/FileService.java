@@ -1,10 +1,10 @@
-package com.itbank.navercafe.comon.file.mapper;
+package com.itbank.navercafe.common.file.service;
 
-import com.itbank.navercafe.comon.file.dto.FileDTO;
+import com.itbank.navercafe.common.file.dto.FileDTO;
 
-public interface FileMapper {
+public interface FileService {
 	public FileDTO selectAttachFile(FileDTO fileDTO) throws Exception;
-	public FileDTO selectAttachFile(int fileNum) throws Exception;
+	public FileDTO selectAttachFile_fileNum(int fileNum) throws Exception;
 	public int selectAttachFileNum(FileDTO fileDTO) throws Exception;
 	public int insertAttachFile(FileDTO fileDTO) throws Exception;
 	public int modifyAttachFile(FileDTO fileDTO) throws Exception;

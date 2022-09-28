@@ -1,4 +1,4 @@
-package com.itbank.navercafe.comon.file;
+package com.itbank.navercafe.common.file;
 
 import java.io.File;
 import java.io.FileInputStream;
@@ -21,9 +21,9 @@ import org.springframework.util.FileCopyUtils;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.itbank.navercafe.comon.file.dto.FileDTO;
-import com.itbank.navercafe.comon.file.dto.FileResult;
-import com.itbank.navercafe.comon.file.service.FileService;
+import com.itbank.navercafe.common.file.dto.FileDTO;
+import com.itbank.navercafe.common.file.dto.FileResult;
+import com.itbank.navercafe.common.file.service.FileService;
 
 @Component
 public class FileUtils {
@@ -195,7 +195,7 @@ public class FileUtils {
 	// DB에서  파일 num 또는 reference num으로 파일정보를 찾아 다운로드
 	public void download(HttpServletResponse response,  int fileNum) throws IOException {
 		try {
-			FileDTO fileDTO = fileService.selectAttachFile(fileNum);
+			FileDTO fileDTO = fileService.selectAttachFile_fileNum(fileNum);
 			
 			if(fileDTO != null) {
 				String orgFileName = fileDTO.getFileOrgName();

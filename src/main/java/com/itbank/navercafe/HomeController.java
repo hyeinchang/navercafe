@@ -23,9 +23,14 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.itbank.navercafe.common.CommonUtils;
+import com.itbank.navercafe.common.file.FileUtils;
+import com.itbank.navercafe.common.file.dto.FileDTO;
+import com.itbank.navercafe.common.file.dto.FileResult;
+import com.itbank.navercafe.common.file.service.FileService;
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
 import com.itbank.navercafe.user.cafe.service.CafeService;
 import com.itbank.navercafe.user.cafeJoin.CafeJoinQuestionDTO;
@@ -40,6 +45,12 @@ public class HomeController {
 	
 	@Autowired
 	private CafeService cafeService;
+	
+	@Autowired
+	private FileUtils fileUtils;
+	
+	@Autowired
+	private FileService fileService;
 	
 	/**
 	 * Simply selects the home view to render by returning its name.
@@ -116,7 +127,7 @@ public class HomeController {
 			CommonUtils commonUtils = new CommonUtils();
 			CafeDTO cafeDTO = new CafeDTO();
 			String cafeId = null;
-		
+			MultipartFile iconImage = multiRequest.getFile("iconImage");
 			commonUtils.setMultirequestToDTO(multiRequest, cafeDTO);
 			
 			cafeId = cafeDTO.getCafeId();
@@ -125,9 +136,22 @@ public class HomeController {
 				return result;
 			}
 			
-			System.out.println("cafeId : " + cafeId);
+			if(iconImage != null) {
+				FileResult fileResult = fileUtils.uploadFile(iconImage, "icon/" + cafeId);
+				FileDTO fileDTO = fileResult.getFileDTO();
+				int cafeIconNum = cafeService.getIconSeq();
+				
+				fileDTO.setCafeIconNum(cafeIconNum);
+				cafeDTO.setCafeIconNum(cafeIconNum);
+				
+				fileService.insertAttachFile(fileDTO);
+			}
+
+			result = cafeService.InsertCafe(cafeDTO);
 			
-			int cafeResult = cafeService.InsertCafe(cafeDTO);
+			if(result == 0) {
+				return result;
+			}
 			
 			// 카페가입질문 설정
 			String questionFlag = multiRequest.getParameter("cafeJoinQuestion");

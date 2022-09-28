@@ -1,10 +1,10 @@
-package com.itbank.navercafe.comon.file.service;
+package com.itbank.navercafe.common.file.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.itbank.navercafe.comon.file.dto.FileDTO;
-import com.itbank.navercafe.comon.file.mapper.FileMapper;
+import com.itbank.navercafe.common.file.dto.FileDTO;
+import com.itbank.navercafe.common.file.mapper.FileMapper;
 
 @Service
 public class FileServiceImpl implements FileService {
@@ -13,12 +13,12 @@ public class FileServiceImpl implements FileService {
 	
 	@Override
 	public FileDTO selectAttachFile(FileDTO fileDTO) throws Exception {
-		return null;
+		return fileMapper.selectAttachFile(fileDTO);
 	}
 	
 	@Override
-	public FileDTO selectAttachFile(int fileNum) throws Exception {
-		return null;
+	public FileDTO selectAttachFile_fileNum(int fileNum) throws Exception {
+		return fileMapper.selectAttachFile_fileNum(fileNum);
 	}
 	
 	@Override

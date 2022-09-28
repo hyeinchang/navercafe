@@ -1,25 +1,46 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.itbank.navercafe.comon.file.mapper.FileMapper">
-	<resultMap type="com.itbank.navercafe.comon.file.dto.FileDTO" id="file">
-        <id column="FILE_NUM" property="fileNum"/>
+<mapper namespace="com.itbank.navercafe.common.file.mapper.FileMapper">
+	<resultMap type="com.itbank.navercafe.common.file.dto.FileDTO" id="file">
+    	<id column="FILE_NUM" property="fileNum"/>
         <result column="FILE_DIRECTORY" property="fileDirectory"/>
         <result column="FILE_ORG_NAME" property="fileOrgName"/>
         <result column="FILE_STORED_NAME" property="fileStoredName"/>
-        <result column="REGDATE" property="regdate"/>
-        <result column="BOARD_NUM" property="boardNum"/>
-        <result column="CAFE_TITLE_NUM" property="cafeTitleNum"/>
-        <result column="REPLY_NUM" property="replyNum"/>
-        <result column="CAFE_USER_IMAGE_NUM" property="cafeUserImageNum"/>
         <result column="CAFE_ICON_NUM" property="cafeIconNum"/>
+       	<result column="CAFE_TITLE_NUM" property="cafeTitleNum"/>
+		<result column="CAFE_USER_IMAGE_NUM" property="cafeUserImageNum"/>       
+        <result column="BOARD_NUM" property="boardNum"/>
+        <result column="REPLY_NUM" property="replyNum"/>
         <result column="MEMO_REPLY_NUM" property="memoReplyNum"/>
+        <result column="REGDATE" property="regdate"/>
     </resultMap>
 	
 	<insert id="insertAttachFile" >
-		<![CDATA[INSERT INTO PROJECT_FILE(FILE_NUM, FILE_DIRECTORY, FILE_ORG_NAME, FILE_STORED_NAME, 
-			BOARD_NUM, REPLY_NUM, CAFE_USER_IMAGE_NUM, CAFE_TITLE_NUM, REGDATE)
-		VALUES(project_file_seq.nextval, #{fileDirectory}, #{fileOrgName}, #{fileStoredName}, 
-			#{boardNum}, #{boardReplyNum}, #{profileNum}, #{titleNum}, sysdate)]]>
+		<![CDATA[
+			INSERT INTO PROJECT_FILE
+			(FILE_NUM, FILE_DIRECTORY, FILE_ORG_NAME, FILE_STORED_NAME, 
+			CAFE_ICON_NUM, CAFE_TITLE_NUM, CAFE_USER_IMAGE_NUM, BOARD_NUM, REPLY_NUM, MEMO_REPLY_NUM,
+			REGDATE)
+			VALUES
+			(project_file_seq.nextval, #{fileDirectory}, #{fileOrgName}, #{fileStoredName}, 
+			#{cafeIconNum}, #{cafeTitleNum}, #{cafeUserImageNum}, #{boardNum}, #{replyNum}, #{memoReplyNum},
+			sysdate)
+		]]>
 	</insert>
+	
+	<select id="selectAttachFile" resultMap="file">
+		<![CDATA[
+			SELECT * FROM PROJECT_FILE WHERE 
+			NVL(CAFE_ICON_NUM, 0) = #{cafeIconNum} AND NVL(CAFE_TITLE_NUM, 0) = #{cafeTitleNum} AND
+			NVL(CAFE_USER_IMAGE_NUM, 0) = #{cafeUserImageNum} AND NVL(BOARD_NUM, 0) = #{boardNum} AND
+			NVL(REPLY_NUM, 0) = #{replyNum} AND NVL(MEMO_REPLY_NUM, 0) = #{memoReplyNum}
+		]]>
+	</select>
+	
+	<select id="selectAttachFile_fileNum" resultMap="file">
+		<![CDATA[
+			SELECT * FROM PROJECT_FILE WHERE FILE_NUM = #{fileNun}
+		]]>
+	</select>
 </mapper>
 

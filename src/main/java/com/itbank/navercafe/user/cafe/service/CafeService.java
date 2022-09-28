@@ -7,4 +7,6 @@ public interface CafeService {
 	public CafeDTO selectCafe(String cafeId) throws Exception;
 	public int checkCafeId(String cafeId) throws Exception;
 	public int InsertCafe(CafeDTO cafeDTO) throws Exception;
+	public int getIconSeq() throws Exception;
+	public int getTitleSeq() throws Exception;
 }

@@ -1,4 +1,4 @@
-package com.itbank.navercafe.comon.file.controller;
+package com.itbank.navercafe.common.file.controller;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -11,10 +11,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.itbank.navercafe.comon.file.FileUtils;
-import com.itbank.navercafe.comon.file.dto.FileDTO;
-import com.itbank.navercafe.comon.file.dto.FileResult;
-import com.itbank.navercafe.comon.file.service.FileService;
+import com.itbank.navercafe.common.file.FileUtils;
+import com.itbank.navercafe.common.file.dto.FileDTO;
+import com.itbank.navercafe.common.file.dto.FileResult;
+import com.itbank.navercafe.common.file.service.FileService;
 
 @Controller
 @RequestMapping("/file")

@@ -34,4 +34,16 @@
 			SELECT COUNT(*) ID_COUNT FROM PROJECT_CAFE_INFO WHERE CAFE_ID = #{cafeId}
 		]]>
 	</select>
+	
+	<select id="getIconSeq" resultType="Integer">
+		<![CDATA[
+			SELECT cafe_icon_num_seq.nextval seq from dual
+		]]>
+	</select>
+	
+	<select id="getTitleSeq" resultType="Integer">
+		<![CDATA[
+			SELECT cafe_title_num_seq.nextval seq from dual
+		]]>
+	</select>
 </mapper>

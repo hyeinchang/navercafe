@@ -1,4 +1,4 @@
-package com.itbank.navercafe.comon.file.dto;
+package com.itbank.navercafe.common.file.dto;
 
 import java.util.ArrayList;
 

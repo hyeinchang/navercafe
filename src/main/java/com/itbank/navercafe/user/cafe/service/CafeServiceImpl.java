@@ -33,4 +33,14 @@ public class CafeServiceImpl implements CafeService {
 		return cafeMapper.InsertCafe(cafeDTO);
 	}
 
+	@Override
+	public int getIconSeq() throws Exception {
+		return cafeMapper.getIconSeq();
+	}
+
+	@Override
+	public int getTitleSeq() throws Exception {
+		return cafeMapper.getTitleSeq();
+	}
+
 }
