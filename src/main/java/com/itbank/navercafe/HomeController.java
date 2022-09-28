@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
 import org.springframework.web.bind.annotation.PostMapping;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -62,15 +64,13 @@ public class HomeController { //메인 로그인관련
 			String skin = "";
 			cafe.setCafeId("cafeId" + order);
 			cafe.setCafeName("테스트 카페" + order);
-			cafe.setCafeIntroduce("테스트 카페"+ order +"(cafeId: cafeId"+ order +")에 대한 소개입니다.");
+			cafe.setCafeIntroduce("테스트 카페"+ order +"(cafeId: cafeId" + order + ")에 대한 소개입니다.");
 		
 			
 			switch(order) {
 			case 1 : skin = "asphalt";
-			
 				break;
 			case 2 : skin = "blue";
-			
 				break;
 			case 3 : skin = "brown";
 				break;
@@ -97,6 +97,7 @@ public class HomeController { //메인 로그인관련
 		return url;
 	}
 	
+
 	@GetMapping("/signup")
 	public String signup() {
 		return "member/signup";
@@ -137,15 +138,21 @@ public class HomeController { //메인 로그인관련
 		return "redirect:"+url;
 	}
 	
-	@GetMapping("delete")
-	public String delete(String id, HttpServletRequest request, HttpSession session) {
-		String url = "http://localhost:8085/navercafe/";
-		cc.logout(request, session);
-		
-		int result = ms.delete(id);
-		if(result==1) {
+		@GetMapping("delete")
+		public String delete(String id, HttpServletRequest request, HttpSession session) {
+			String url = "http://localhost:8085/navercafe/";
+			cc.logout(request, session);
+			
+			int result = ms.delete(id);
+			if(result==1) {
+				return "redirect:"+url;
+			}
 			return "redirect:"+url;
+
 		}
-		return "redirect:"+url;
-	}
+		@GetMapping("/cafe/createCafeForm")
+		public String createCafeForm() {
+			return "cafe/createCafeForm";
+	
+		}
 }

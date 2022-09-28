@@ -1,5 +1,6 @@
 package com.itbank.navercafe.user.board.service;
 
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -149,10 +150,9 @@ public class BoardServiceImpl implements BoardService{
 		model.addAttribute("topList",bm.topList());
 		//System.out.println(bm.topList());
 	}
-
-	
-	
-	
-	
-
 }
+
+	
+	
+
+
