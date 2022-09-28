@@ -144,7 +144,7 @@
 					</div>
 				</div>
                	
-               		<form name="f1" id="f1" method="post" action="modifyRegisterInfo">
+               		<form name="f1" id="f1" method="post" action="modifyMembersGrade">
                     	<div class="form-group">
                     		 <ul>
                     		 	<li> 카페 멤버별 등급 조건을 관리합니다. 멤버의 등업 방식으로 자동등업이나 등업 게시판을 설정할 수 있습니다. </li>
@@ -180,7 +180,7 @@
 										<td><input id="conditionName1" type="text" name="cutName" value="새싹멤버"  maxlength="10" ></td>
 										<td><input class="cutdesc" id="conditionDesc1" type="text" name="cutDesc" value="가입 후 막 활동을 시작하는 멤버" maxlength="50">
 										</td>
-											<input type="hidden" name="cafeUserGrade" value="1" > 
+											<input type="hidden" name="cafeUserGrade" value="1" id="aa">
 											<input type="hidden" name="cutBoard" value="0" > 
 											<input type="hidden" name="cutReply" value="0" > 
 											<input type="hidden" name="cutVisit" value="0" > 

@@ -141,11 +141,17 @@ public class AdminRegisterGradeController {
 		
 	}
 	
-	@PostMapping(value="modifyRegisterInfo", produces="application/json; charset=utf-8")
+	@PostMapping(value="modifyMembersGrade", produces="application/json; charset=utf-8")
 	@ResponseBody
-	public String modifyRegisterInfo(@RequestBody Map<String, List<MembersGradeDTO>> dataList) {
+	public String modifyMembersGrade(@RequestBody Map<String, List<MembersGradeDTO>> dataList) {
 		List<MembersGradeDTO> update = dataList.get("data");
-		return rgs.modifyRegisterInfo(update);
+		return rgs.modifyMembersGrade(update);
+	}
+	
+	@PostMapping("modifyRegisterInfo")
+	public String modifyRegisterInfo(RegisterInfoDTO dto) {
+		String msg = rgs.modifyRegisterInfo(dto);
+		return "redirect:manageRegisterInfo";
 	}
 	
 }

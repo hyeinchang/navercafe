@@ -7,6 +7,7 @@ import javax.servlet.http.HttpServletRequest;
 import org.springframework.ui.Model;
 
 import com.itbank.navercafe.admin.registergrade.dto.MembersGradeDTO;
+import com.itbank.navercafe.admin.registergrade.dto.RegisterInfoDTO;
 
 public interface RegisterGradeService {
 
@@ -16,6 +17,8 @@ public interface RegisterGradeService {
 
 	public String rejectMembers(String rejectMembers, HttpServletRequest req);
 
-	public String modifyRegisterInfo(List<MembersGradeDTO> result);
+	public String modifyMembersGrade(List<MembersGradeDTO> result);
+
+	public String modifyRegisterInfo(RegisterInfoDTO dto);
 
 }

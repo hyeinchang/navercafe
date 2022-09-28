@@ -25,5 +25,10 @@ public class AdminCafeManageController {
 		return "admin/cafeManage/layoffManager";
 	}
 	
+	@GetMapping("searchId")
+	public String searchId(String id) {
+		return "매니저 : "+id;
+	}
+	
 	
 }
