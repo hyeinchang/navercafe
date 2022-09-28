@@ -1,5 +1,6 @@
 package com.itbank.navercafe.user.board.service;
 
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -29,4 +30,5 @@ public interface BoardService {
 	
 	//인기글 리스트
 	public void topList(Model model);
+
 }

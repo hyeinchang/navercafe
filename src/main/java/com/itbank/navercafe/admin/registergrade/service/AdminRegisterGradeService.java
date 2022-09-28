@@ -8,7 +8,7 @@ import org.springframework.ui.Model;
 
 import com.itbank.navercafe.admin.registergrade.dto.MembersGradeDTO;
 
-public interface RegisterGradeService {
+public interface AdminRegisterGradeService {
 
 	public void unbanMembers2(String unbanMembers);
 
