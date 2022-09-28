@@ -23,6 +23,22 @@
 		<put-attribute name="aside" value="/WEB-INF/views/tiles/template/user_layout/aside.jsp"/>
 		<put-attribute name="content" value="/WEB-INF/views/user/{1}/{2}.jsp" />
   	</definition>
+  	
+  	<definition name="cafe_layout" template="/WEB-INF/views/tiles/template/cafe_layout.jsp">
+    	<put-attribute name="header" value="/WEB-INF/views/tiles/template/user_layout/header.jsp"/>
+    	<put-attribute name="nav" value="/WEB-INF/views/tiles/template/user_layout/nav.jsp"/>
+    	<put-attribute name="content" value="/WEB-INF/views/tiles/template/user_layout/content.jsp"/>
+    	<put-attribute name="footer" value="/WEB-INF/views/tiles/template/user_layout/footer.jsp"/>
+  	</definition>
+  	
+	<definition name="cafe/*" extends="cafe_layout">
+		<put-attribute name="content" value="/WEB-INF/views/cafe/{1}.jsp" />
+  	</definition>
+  	
+  	<definition name="cafe/*/*" extends="cafe_layout">
+		<put-attribute name="content" value="/WEB-INF/views/cafe/{1}/{2}.jsp" />
+  	</definition>
+  
   
   	<definition name="error" extends="user_layout">
   	 	<put-attribute name="content" value="/WEB-INF/views/error/404.jsp" />

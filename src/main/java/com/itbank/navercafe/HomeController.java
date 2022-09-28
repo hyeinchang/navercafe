@@ -14,7 +14,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+
 import org.springframework.web.bind.annotation.PostMapping;
+
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
@@ -62,7 +64,7 @@ public class HomeController { //메인 로그인관련
 			String skin = "";
 			cafe.setCafeId("cafeId" + order);
 			cafe.setCafeName("테스트 카페" + order);
-			cafe.setCafeIntroduce("테스트 카페"+ order +"(cafeId: cafeId"+ order +")에 대한 소개입니다.");
+			cafe.setCafeIntroduce("테스트 카페"+ order +"(cafeId: cafeId" + order + ")에 대한 소개입니다.");
 		
 			
 			switch(order) {
@@ -95,6 +97,7 @@ public class HomeController { //메인 로그인관련
 		return url;
 	}
 	
+
 	@GetMapping("/signup")
 	public String signup() {
 		return "member/signup";
@@ -113,7 +116,6 @@ public class HomeController { //메인 로그인관련
 	@GetMapping("/userInfo")
 	public String userUpdate(String id, Model model) {
 		MemberDTO dto = ms.getU(id);
-		
 		model.addAttribute("id", dto.getId());
 		model.addAttribute("name", dto.getName());
 		model.addAttribute("phone", dto.getPhone());
@@ -146,5 +148,11 @@ public class HomeController { //메인 로그인관련
 			return "redirect:"+url;
 		}
 		return "redirect:"+url;
+
+	}
+	@GetMapping("/cafe/createCafeForm")
+	public String createCafeForm() {
+		return "cafe/createCafeForm";
+
 	}
 }

@@ -1,5 +1,6 @@
 package com.itbank.navercafe.user.board.service;
 
+
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -13,8 +14,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import com.itbank.navercafe.mybatis.board.BoardMapper;
 import com.itbank.navercafe.user.board.dto.BoardDTO;
+import com.itbank.navercafe.user.board.mapper.BoardMapper;
 
 
 
@@ -23,6 +24,7 @@ public class BoardServiceImpl implements BoardService{
 	@Autowired BoardMapper bm;
 	
 	
+	//전체목록인데 수영이형이랑 상의.
 	@Override
 	public ArrayList<BoardDTO> getBoardList() {
 		return bm.getBoardList();
@@ -148,10 +150,9 @@ public class BoardServiceImpl implements BoardService{
 		model.addAttribute("topList",bm.topList());
 		//System.out.println(bm.topList());
 	}
-
-	
-	
-	
-	
-
 }
+
+	
+	
+
+

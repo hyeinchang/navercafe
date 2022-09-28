@@ -29,7 +29,6 @@ import com.itbank.navercafe.comon.file.service.FileService;
 public class FileUtils {
 	@Autowired FileService fileService;
 	//@Value("${navercafe.file.upload_path}")
-	
 	private String upload_path;
 	private final String PATH_DELIMITER = "/";
 	
@@ -175,6 +174,7 @@ public class FileUtils {
 	public FileResult uploadFile(MultipartFile multipartFile, String uploadPath, String directory, String orgFileName, String storedFileName) {
 		FileResult fileResult = new FileResult();
 		FileDTO fileDTO = new FileDTO();
+		
 		
 		try {
 			multipartFile.transferTo(new File(uploadPath + PATH_DELIMITER + storedFileName));

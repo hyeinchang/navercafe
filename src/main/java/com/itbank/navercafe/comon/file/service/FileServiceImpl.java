@@ -1,12 +1,16 @@
 package com.itbank.navercafe.comon.file.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.itbank.navercafe.comon.file.dto.FileDTO;
+import com.itbank.navercafe.comon.file.mapper.FileMapper;
 
 @Service
 public class FileServiceImpl implements FileService {
-
+	@Autowired
+	private FileMapper fileMapper;
+	
 	@Override
 	public FileDTO selectAttachFile(FileDTO fileDTO) throws Exception {
 		return null;
@@ -24,7 +28,7 @@ public class FileServiceImpl implements FileService {
 
 	@Override
 	public int insertAttachFile(FileDTO fileDTO) throws Exception {
-		return 0;
+		return fileMapper.insertAttachFile(fileDTO);
 	}
 
 	@Override

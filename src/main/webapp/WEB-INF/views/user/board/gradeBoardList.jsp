@@ -1,44 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>MaxiBiz Bootstrap Business Template</title>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <meta content="" name="keywords">
-  <meta content="" name="description">
 
-  <!-- Favicons -->
-  <link href="<%=request.getContextPath() %>/resources/img/favicon.png" rel="icon">
-  <link href="<%=request.getContextPath() %>/resources/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Ruda:400,900,700" rel="stylesheet">
-
-  <!-- Bootstrap CSS File -->
-  <link href="<%=request.getContextPath() %>/resources/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Libraries CSS Files -->
-  <link href="<%=request.getContextPath() %>/resources/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-  <link href="<%=request.getContextPath() %>/resources/lib/prettyphoto/css/prettyphoto.css" rel="stylesheet">
-  <link href="<%=request.getContextPath() %>/resources/lib/hover/hoverex-all.css" rel="stylesheet">
-  <link href="<%=request.getContextPath() %>/resources/lib/jetmenu/jetmenu.css" rel="stylesheet">
-  <link href="<%=request.getContextPath() %>/resources/lib/owl-carousel/owl-carousel.css" rel="stylesheet">
-
-  <!-- Main Stylesheet File -->
-  <link href="<%=request.getContextPath() %>/resources/css/style.css" rel="stylesheet">
-  <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/colors/blue.css">
-
-  <link href="<%=request.getContextPath() %>/resources/css/bbpress.css" rel="stylesheet">
-
-  <!-- =======================================================
-    Template Name: MaxiBiz
-    Template URL: https://templatemag.com/maxibiz-bootstrap-business-template/
-    Author: TemplateMag.com
-    License: https://templatemag.com/license/
-  ======================================================= -->
 <style type="text/css">
 /*//////////////////////////////////   등업 게시판   ////////////////////////////////  */
 .grade-button{background-color: white;color:black; border:1px solid black;}
@@ -53,22 +16,120 @@
 .grade-two{width:50%; text-align: right;}
 .grade-result{padding-top:50px;}
 
-.bbp-forum-test-nickname{float: left;text-align:left;width: 20%;}
+.bbp-forum-test-nickname{float: left;text-align:left;width: 15%;}
 
-.bbp-forum-test-grade,.bbp-forum-test-nowGrade{float: left;text-align:left;width: 15%;}
+.bbp-forum-test-grade,.bbp-forum-test-nowGrade{float: left;text-align:left;width: 12.5%;}
 
 .bbp-forum-test-visit-count,.bbp-forum-test-board-count,
 .bbp-forum-test-reply-count,.bbp-forum-test-joindate,
 .bbp-forum-test-request{float: left;text-align:left;width: 10%;}
+.bbp-forum-test-joindate,.bbp-forum-test-request{
+float: left;text-align:left;width: 15%;
+}
+/* /////////////////////////////////////////    게시판    //////////////////////////////////////// */
+
+li.bbp-forum-info-test,
+li.bbp-topic-title-test {
+	float: left;
+	text-align: center;
+	width: 40%;
+}
+
+li.bbp-forum-info-allBoard,
+li.bbp-topic-title-allBoard{
+	/* float: left; */
+	text-align: left;
+	width: 50%;
+	font-size: 10pt;
+}
+
+li.bbp-forum-topic-count-test{
+	float: left;
+	text-align: center;
+	width: 20%;
+}
+
+.board-title{width:70%;float: left;text-align: left;}
+.board-nickname{width:15%;float: left;text-align: left;}
+.board-date{width:15%;float: left;text-align: left;}
+
+li.bbp-topic-voice-count-test,
+li.bbp-forum-reply-count-test,
+li.bbp-topic-reply-count-test,
+li.bbp-forum-likeCount-test,
+li.bbp-forum-num-test{
+	float: left;
+	text-align: center;
+	width: 10%;
+}
+
+li.bbp-forum-freshness-test,
+li.bbp-topic-freshness-test{
+	text-align: center;
+	float: left;
+	width: 10%;
+}
+/* bbpress 부분 */
+#bbpress-forums li.bbp-header-header{background-color:#141618!important;color:#fff!important;padding:20px!important;}
+
+#bbpress-forums li.bbp-header-content{background-color:white!important;color:black!important;padding:12px!important;
+					border-top: 1px solid #E0E0E0;border-bottom: 1px solid #E0E0E0;}
+#bbpress-forums li.bbp-header-grade-list{background-color:white!important;color:black!important;padding:20px!important;
+					border-top: 1px solid #E0E0E0;border-bottom: 1px solid #E0E0E0;}
+#bbpress-forums ul li ul.forum-titles-test{ padding-bottom: 10px;}
+/*///////////////////////////   컬럼명 부분   //////////////////  */
+#bbpress-forums-test{
+	background: transparent;
+	clear: both;
+	margin-bottom: 0px;
+	overflow: hidden;
+	font-size: 12px;
+}
+/* //////////////////////////////////영역 설정 부분/////////////////////////////////////// */
+
+.board-img{width:90%;}
+
+.more-more{display:flex;}
+.more-one{width:15%;}
+.more-two{width:85%; padding-top:10px; font-size: 15pt;}
+
+.post-meta-test{display: flex;padding-bottom: 10px;}
+.div-one{width:10%;}
+.div-two{width:40%;}
+.div-three{width:50%; text-align:right;padding-top:10px;}
+.memo-div-two{width:40%;padding-top:10px;}
+/* 댓글 쪽 */
+.reply-one{width:50%}
+.reply-two{width:50%; text-align: right;}
+.board-post-desc{
+	padding-left:10%; width:90%;
+}
+.board-post-desc img{
+	width:100%;
+}
+/* ///////////////// 게시물쪽 //////////////// */
+.blog-wrap-test{
+  background: #ffffff;
+  padding: 0;
+  position: relative;
+  display: block;
+  z-index: 1;
+}
+.board-board{border:1px solid silver; padding:10px;}
+
+ul{
+	list-style: none;
+}
+
+
 </style>
-</head>
 
-<body>
-
-
+<div class="content pull-right col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix cstmContent" ${cafeDTO.cafeLayout > 0 ? '' : 'style="float:right;"'}>
+<section class="section1">
 
 <div class="container clearfix">
-	      <div class="content col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix">
+	      <div class="content col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix"
+	      style="background-color:#F5F5F5;">
 					<h1>등업 게시판입니다</h1>
 
 		        <!-- SLIDE POST -->
@@ -85,12 +146,13 @@
 		         	</div>
 			     </div>  
 			     
+
 			     
-		<div class="grade-board-list">     
+		<div class="grade-board-list">  
+
 			<div id="bbpress-forums">
-	          <ul class="bbp-forums">
-	            <li class="bbp-header">
-	              <ul class="forum-titles">
+	              <ul class="forum-titles" style="background-color:black;color:white;
+	              padding:20px 30px 30px 35px; margin:0 auto;">
 	                <li class="bbp-forum-test-nickname">신청자</li>
 	                <li class="bbp-forum-test-grade">신청등급</li>
 	                <li class="bbp-forum-test-nowGrade">현재등급</li>
@@ -100,45 +162,32 @@
 	                <li class="bbp-forum-test-joindate">가입일</li>
 	                <li class="bbp-forum-test-request">신청일</li>
 	              </ul>
-	            </li>
-	            <!-- .bbp-header -->
-	          </ul>
-	          <!-- .forums-directory -->
 	        </div>
-	        <!-- /bbpress -->
-		         
+
 		     <div id="bbpress-forums">
-		     
+
 	          <ul class="bbp-forums">
-	          
-		          <li class="bbp-header-grade-list">
-		            	<ul class="forum-titles-test">
-	
-				            <li class="bbp-forum-test-nickname">
-				            <img src="<%=request.getContextPath() %>/resources/img/윌.png" 
-				            class="img-circle"> 쪼비</li>
-			                <li class="bbp-forum-test-grade">성실멤버</li>
-			                <li class="bbp-forum-test-nowGrade">일반멤버</li>
-			                <li class="bbp-forum-test-visit-count">9</li>
-			                <li class="bbp-forum-test-board-count">1</li>
-			                <li class="bbp-forum-test-reply-count">3</li>
-			                <li class="bbp-forum-test-joindate">2022.08.24.</li>
-			                <li class="bbp-forum-test-request">2022.09.01.</li>
-			                
-		              	</ul>
-		            </li>
-	          
 		          <c:forEach var="gradeList" items="${getGradeList}">
 		          		<li class="bbp-header-grade-list">
 			              <ul class="forum-titles-test">
-			               <li class="bbp-forum-test-nickname">${gradeList.userId}</li>
-			                <li class="bbp-forum-test-grade">${gradeList.gradeUp}</li>
-			                <li class="bbp-forum-test-nowGrade">${gradeList.gradeNow}</li>
-			                <li class="bbp-forum-test-visit-count">${gradeList.visit}</li>
-			                <li class="bbp-forum-test-board-count">${gradeList.boardCount}</li>
-			                <li class="bbp-forum-test-reply-count">${gradeList.replyCount}</li>
-			                <li class="bbp-forum-test-joindate">${gradeList.regdate}</li>
-			                <li class="bbp-forum-test-request">${gradeList.applyDate}</li>
+			               <li class="bbp-forum-test-nickname">
+			                <c:if test="${ gradeList.CAFE_USER_IMAGE== 0}">
+		              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
+		              			width="40px" class="img-circle alignleft" alt="">
+		              		</c:if>
+							<c:if test="${ gradeList.CAFE_USER_IMAGE  != 0 }">
+								<img src="test_download?fileImageNum=${gradeList.CAFE_USER_IMAGE}" 
+								width="40px" class="img-circle alignleft" alt="">
+							</c:if>
+			               	${gradeList.CAFE_USER_NICKNAME}
+			               </li>
+			                <li class="bbp-forum-test-grade">${gradeList.GRADE_UP}</li>
+			                <li class="bbp-forum-test-nowGrade">${gradeList.GRADE_NOW}</li>
+			                <li class="bbp-forum-test-visit-count">${gradeList.VISIT}</li>
+			                <li class="bbp-forum-test-board-count">${gradeList.BOARD_COUNT}</li>
+			                <li class="bbp-forum-test-reply-count">${gradeList.REPLY_COUNT}</li>
+			                <li class="bbp-forum-test-joindate">${gradeList.REGDATE}</li>
+			                <li class="bbp-forum-test-request">${gradeList.APPLY_DATE}</li>
 			              </ul>
 			            </li>  	
 		          </c:forEach>
@@ -149,38 +198,16 @@
 	          <!-- .forums-directory -->
 			</div>
 		</div>
- </article>
-		          
-
-				<!--	페이징  -->
-		  <div class="page-one">
-			  <ul class="pagination">
-			    <li><a href="#">1</a></li>
-			    <li><a href="#">2</a></li>
-			    <li><a href="#">3</a></li>
-			  </ul>
-		  </div>
+ </article>         
+					<!--	페이징  -->
+			  <div class="paging" align="center">
+				  <ul class="pagination">
+				    <li><a href="#">1</a></li>
+				    <li><a href="#">2</a></li>
+				    <li><a href="#">3</a></li>
+				  </ul>
+			  </div>
+		</div>
 	</div>
+</section>
 </div>
-
-
-  <!-- JavaScript Libraries -->
-  <script src="<%=request.getContextPath() %>/resources/lib/jquery/jquery.min.js"></script>
-  <script src="<%=request.getContextPath() %>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
-  <script src="<%=request.getContextPath() %>/resources/lib/php-mail-form/validate.js"></script>
-  <script src="<%=request.getContextPath() %>/resources/lib/prettyphoto/js/prettyphoto.js"></script>
-  <script src="<%=request.getContextPath() %>/resources/lib/isotope/isotope.min.js"></script>
-  <script src="<%=request.getContextPath() %>/resources/lib/hover/hoverdir.js"></script>
-  <script src="<%=request.getContextPath() %>/resources/lib/hover/hoverex.min.js"></script>
-  <script src="<%=request.getContextPath() %>/resources/lib/unveil-effects/unveil-effects.js"></script>
-  <script src="<%=request.getContextPath() %>/resources/lib/owl-carousel/owl-carousel.js"></script>
-  <script src="<%=request.getContextPath() %>/resources/lib/jetmenu/jetmenu.js"></script>
-  <script src="<%=request.getContextPath() %>/resources/lib/animate-enhanced/animate-enhanced.min.js"></script>
-  <script src="<%=request.getContextPath() %>/resources/lib/jigowatt/jigowatt.js"></script>
-  <script src="<%=request.getContextPath() %>/resources/lib/easypiechart/easypiechart.min.js"></script>
-
-  <!-- Template Main Javascript File -->
-  <script src="<%=request.getContextPath() %>/resources/js/main.js"></script>
-
-</body>
-</html>

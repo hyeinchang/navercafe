@@ -8,12 +8,10 @@ public class ReplyDTO {
 	private String replyContent;
 	private Timestamp replySaveDate;
 	private String userId;
-	private String replyImgName;
 	private int replyGroup;
 	private int replyStep;
 	
-	
-	
+
 	public int getReplyGroup() {
 		return replyGroup;
 	}
@@ -56,11 +54,14 @@ public class ReplyDTO {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public String getReplyImgName() {
-		return replyImgName;
-	}
-	public void setReplyImgName(String replyImgName) {
-		this.replyImgName = replyImgName;
-	}
+	
+//private int replyImgName;
+//	public int getReplyImgName() {
+//		return replyImgName;
+//	}
+//	public void setReplyImgName(int replyImgName) {
+//		this.replyImgName = replyImgName;
+//	}
+	
 	
 }

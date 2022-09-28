@@ -12,6 +12,7 @@ public class MemberDTO {
 	private String gender;
 	private int birthdate;
 	
+	
 	public String getGender() {
 		return gender;
 	}

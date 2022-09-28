@@ -1,48 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="utf-8">
-  <title>MaxiBiz Bootstrap Business Template</title>
-  <meta content="width=device-width, initial-scale=1.0" name="viewport">
-  <meta content="" name="keywords">
-  <meta content="" name="description">
-
-  <!-- Favicons -->
-  <link href="<%=request.getContextPath() %>/resources/img/favicon.png" rel="icon">
-  <link href="<%=request.getContextPath() %>/resources/img/apple-touch-icon.png" rel="apple-touch-icon">
-
-  <!-- Google Fonts -->
-  <link href="https://fonts.googleapis.com/css?family=Ruda:400,900,700" rel="stylesheet">
-
-  <!-- Bootstrap CSS File -->
-  <link href="<%=request.getContextPath() %>/resources/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-
-  <!-- Libraries CSS Files -->
-  <link href="<%=request.getContextPath() %>/resources/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">
-  <link href="<%=request.getContextPath() %>/resources/lib/prettyphoto/css/prettyphoto.css" rel="stylesheet">
-  <link href="<%=request.getContextPath() %>/resources/lib/hover/hoverex-all.css" rel="stylesheet">
-  <link href="<%=request.getContextPath() %>/resources/lib/jetmenu/jetmenu.css" rel="stylesheet">
-  <link href="<%=request.getContextPath() %>/resources/lib/owl-carousel/owl-carousel.css" rel="stylesheet">
-
-  <!-- Main Stylesheet File -->
-  <link href="<%=request.getContextPath() %>/resources/css/style.css" rel="stylesheet">
-  <link rel="stylesheet" href="<%=request.getContextPath() %>/resources/css/colors/blue.css">
-
-  <link href="<%=request.getContextPath() %>/resources/css/bbpress.css" rel="stylesheet">
-
-  <!-- =======================================================
-    Template Name: MaxiBiz
-    Template URL: https://templatemag.com/maxibiz-bootstrap-business-template/
-    Author: TemplateMag.com
-    License: https://templatemag.com/license/
-  ======================================================= -->
-  <style type="text/css">
-  	
-	
+<style type="text/css">
 
 	.test{
 		display: block;
@@ -71,45 +30,15 @@
 	  text-align: center;
 	}
 	
-/* bbpress 부분 */
-
-#bbpress-forums li.bbp-header-content{background-color:white!important;color:black!important;padding:12px!important;
-					border-top: 1px solid #E0E0E0;border-bottom: 1px solid #E0E0E0;}
-#bbpress-forums li.bbp-header-grade-list{background-color:white!important;color:black!important;padding:20px!important;
-					border-top: 1px solid #E0E0E0;border-bottom: 1px solid #E0E0E0;}
-#bbpress-forums ul li ul.forum-titles-test{ padding-bottom: 10px;}
-/*///////////////////////////   컬럼명 부분   //////////////////  */
-#bbpress-forums {
-	background: transparent;
-	clear: both;
-	margin-bottom: 0;
-	overflow: hidden;
-	font-size: 12px;
-}
-#bbpress-forums-test{
-	background: transparent;
-	clear: both;
-	margin-bottom: 0px;
-	overflow: hidden;
-	font-size: 12px;
-}
+#bbpress-forums ul li{list-style: none;}
 
 /* ////////////////////////////////페이징 ///////////////////////////////////// */
 .page{display:flex;}
 .page-one{width:55%; text-align:right;}
 .page-two{width:45%; text-align:right;}
-
-
 .before-next-nav{text-align:right;}
 
-
 /* /////////////////////////////////////////    게시판    //////////////////////////////////////// */
-li.bbp-forum-info,
-li.bbp-topic-title {
-	float: left;
-	text-align: center;
-	width: 55%;
-}
 
 li.bbp-forum-info-test,
 li.bbp-topic-title-test {
@@ -117,36 +46,24 @@ li.bbp-topic-title-test {
 	text-align: center;
 	width: 40%;
 }
+
 li.bbp-forum-info-allBoard,
 li.bbp-topic-title-allBoard{
-	float: left;
+	/* float: left; */
 	text-align: left;
 	width: 50%;
+	font-size: 10pt;
 }
 
-li.bbp-forum-topic-count{
-	float: left;
-	text-align: center;
-	width: 20%;
-}
 li.bbp-forum-topic-count-test{
 	float: left;
 	text-align: center;
 	width: 20%;
 }
 
-
 .board-title{width:70%;float: left;text-align: left;}
 .board-nickname{width:15%;float: left;text-align: left;}
 .board-date{width:15%;float: left;text-align: left;}
-
-li.bbp-topic-voice-count,
-li.bbp-forum-reply-count,
-li.bbp-topic-reply-count{
-	float: left;
-	text-align: left;
-	width: 10%;
-}
 
 li.bbp-topic-voice-count-test,
 li.bbp-forum-reply-count-test,
@@ -158,41 +75,28 @@ li.bbp-forum-num-test{
 	width: 10%;
 }
 
-li.bbp-forum-freshness,
-li.bbp-topic-freshness{
-	text-align: left;
-	float: left;
-	width: 25%;
-}
-
 li.bbp-forum-freshness-test,
 li.bbp-topic-freshness-test{
 	text-align: center;
 	float: left;
 	width: 10%;
 }
+/* bbpress 부분 */
+#bbpress-forums li.bbp-header-header{background-color:#141618!important;color:#fff!important;padding:20px!important;}
 
-		style 부분
-
-/* ///////////////// 게시물쪽 //////////////// */
-.blog-wrap-test{
-  background: #ffffff;
-  padding: 0;
-  position: relative;
-  display: block;
-  z-index: 1;
+#bbpress-forums li.bbp-header-content{background-color:white!important;color:black!important;padding:12px!important;
+					border-top: 1px solid #E0E0E0;border-bottom: 1px solid #E0E0E0;}
+#bbpress-forums li.bbp-header-grade-list{background-color:white!important;color:black!important;padding:20px!important;
+					border-top: 1px solid #E0E0E0;border-bottom: 1px solid #E0E0E0;}
+#bbpress-forums ul li ul.forum-titles-test{ padding-bottom: 10px;}
+/*///////////////////////////   컬럼명 부분   //////////////////  */
+#bbpress-forums-test{
+	background: transparent;
+	clear: both;
+	margin-bottom: 0px;
+	overflow: hidden;
+	font-size: 12px;
 }
-
-.board-board{border:1px solid silver; padding:10px;}
-
-/* /////////////////////////////////////// */
-.board-post-desc{
-	padding-left:10%; width:90%;
-}
-.board-post-desc img{
-	width:100%;
-}
-
 /* //////////////////////////////////영역 설정 부분/////////////////////////////////////// */
 
 .board-img{width:90%;}
@@ -206,14 +110,26 @@ li.bbp-topic-freshness-test{
 .div-two{width:40%;}
 .div-three{width:50%; text-align:right;padding-top:10px;}
 .memo-div-two{width:40%;padding-top:10px;}
-
-
 /* 댓글 쪽 */
 .reply-one{width:50%}
 .reply-two{width:50%; text-align: right;}
+.board-post-desc{
+	padding-left:10%; width:90%;
+}
+.board-post-desc img{
+	width:100%;
+}
+/* ///////////////// 게시물쪽 //////////////// */
+.blog-wrap-test{
+  background: #ffffff;
+  padding: 0;
+  position: relative;
+  display: block;
+  z-index: 1;
+}
+.board-board{border:1px solid silver; padding:10px;}
 
-  </style>
-</head>
+</style>
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
@@ -254,14 +170,9 @@ li.bbp-topic-freshness-test{
 		document.getElementById(-obj.id).style="display:none";
 	}
 
-	
-	
-	
 </script>
 
-<body>
-
-
+<div class="content pull-right col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix cstmContent" ${cafeDTO.cafeLayout > 0 ? '' : 'style="float:right;"'}>
   <section class="section1">
     <div class="container clearfix">
 	      <div class="content col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix">
@@ -297,12 +208,12 @@ li.bbp-topic-freshness-test{
 			              
 			              	<div class="div-one">
 			              		<a href="#">
-				              		<c:if test="${ cafeUserInfo.cafeUserImage == 'nan' }">
+				              		<c:if test="${ cafeUserInfo.cafeUserImage == 0 }">
 				              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
 				              			width="40px" class="img-circle alignleft" alt="">
 				              		</c:if>
-									<c:if test="${ cafeUserInfo.cafeUserImage  != 'nan' }">
-										<img src="download?file=${cafeUserInfo.cafeUserImage }" 
+									<c:if test="${ cafeUserInfo.cafeUserImage  != 0 }">
+										<img src="download?fileNum=${cafeUserInfo.cafeUserImage }" 
 										width="40px" class="img-circle alignleft" alt="">
 									</c:if>
 				              	</a>
@@ -335,12 +246,12 @@ li.bbp-topic-freshness-test{
 		          <div class="more-one">
 		          
 		          	<a href="#">
-	              		<c:if test="${ cafeUserInfo.cafeUserImage == 'nan' }">
+	              		<c:if test="${ cafeUserInfo.cafeUserImage == 0 }">
 	              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
 	              			width="50" class="img-circle alignleft" alt="">
 	              		</c:if>
-						<c:if test="${ cafeUserInfo.cafeUserImage != 'nan' }">
-							<img src="download?file=${cafeUserInfo.cafeUserImage}" 
+						<c:if test="${ cafeUserInfo.cafeUserImage != 0 }">
+							<img src="download?fileNum=${cafeUserInfo.cafeUserImage}" 
 							width="50" class="img-circle alignleft" alt="">
 						</c:if>
 	              	</a>
@@ -351,7 +262,9 @@ li.bbp-topic-freshness-test{
 		          	<b>${cafeUserInfo.cafeUserNickname}</b>님의 게시글 더보기</a>
 		          </div>
 		        </div>
-	
+		        
+			
+				
 		        <div id="comments_wrapper">
 		        	
 		          <h4 class="title">
@@ -376,19 +289,19 @@ li.bbp-topic-freshness-test{
 		          <ul class="comment-list">
 		          
 		          	<c:forEach var="reply" items="${replyList}">
-		          		<c:if test="${reply.REPLY_STEP == 0}">
+		          		<c:if test="${reply.REPLY_STEP == 0}"><!--댓글 이라면-->
 			            <li>
 			              <article class="comment">
 			              	<a href="#">
-				              		<c:if test="${ reply.CAFE_USER_IMAGE== 'nan'}">
-				              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
-				              			width="40px" class="img-circle alignleft" alt="">
-				              		</c:if>
-									<c:if test="${ reply.CAFE_USER_IMAGE  != 'nan' }">
-										<img src="download?file=${reply.CAFE_USER_IMAGE}" 
-										width="40px" class="img-circle alignleft" alt="">
-									</c:if>
-				              	</a>
+			              		<c:if test="${ reply.CAFE_USER_IMAGE== 0}">
+			              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
+			              			width="40px" class="img-circle alignleft" alt="">
+			              		</c:if>
+								<c:if test="${ reply.CAFE_USER_IMAGE  != 0 }">
+									<img src="download?fileNum=${reply.CAFE_USER_IMAGE}" 
+									width="40px" class="img-circle alignleft" alt="">
+								</c:if>
+				             </a>
 			               
 			                	
 			                <div class="comment-content">
@@ -397,8 +310,8 @@ li.bbp-topic-freshness-test{
 		                       
 		                  	  </h4>
 		                   		${reply.REPLY_CONTENT}<br>
-		                   		<c:if test="${reply.REPLY_IMG_NAME != 'nan'}">
-		                   			<img src="download?file=${reply.REPLY_IMG_NAME}" 
+		                   		<c:if test="${reply.REPLY_IMG_NAME != 0}">
+		                   			<img src="download?fileNum=${reply.REPLY_IMG_NAME}" 
 									width="30%">
 		                   		</c:if>
 		                   		
@@ -445,12 +358,12 @@ li.bbp-topic-freshness-test{
 		                      			<li>
 						              <article class="comment" style="color:black;">
 						              	<a href="#">
-							              		<c:if test="${ replyreply.CAFE_USER_IMAGE== 'nan'}">
+							              		<c:if test="${ replyreply.CAFE_USER_IMAGE== 0}">
 							              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
 							              			width="40px" class="img-circle alignleft" alt="">
 							              		</c:if>
-												<c:if test="${ replyreply.CAFE_USER_IMAGE  != 'nan' }">
-													<img src="download?file=${replyreply.CAFE_USER_IMAGE}" 
+												<c:if test="${ replyreply.CAFE_USER_IMAGE  != 0 }">
+													<img src="download?fileNum=${replyreply.CAFE_USER_IMAGE}" 
 													width="40px" class="img-circle alignleft" alt="">
 												</c:if>
 							              	</a>
@@ -462,8 +375,8 @@ li.bbp-topic-freshness-test{
 					                       
 					                  	  </h4>
 					                   		${replyreply.REPLY_CONTENT}<br>
-					                   		<c:if test="${replyreply.REPLY_IMG_NAME != 'nan'}">
-					                   			<img src="download?file=${replyreply.REPLY_IMG_NAME}" 
+					                   		<c:if test="${replyreply.REPLY_IMG_NAME != 0}">
+					                   			<img src="download?fileNum=${replyreply.REPLY_IMG_NAME}" 
 												width="30%">
 					                   		</c:if>
 					                   		
@@ -555,18 +468,20 @@ li.bbp-topic-freshness-test{
 					</div>  
 			          
 			    </div>
-     
-			      </article>
+			    
+			  </article>
+			  
+
          
-		          
+		       
 		          					<!-- 말머리 기준 관련 게시판   -->
+		          				
 		<div class="content col-lg-12 col-md-12 col-sm-12 clearfix">   
 			<!--전체게시판은 제목 50 작성자20 나머지 10  -->
-	        <div id="bbpress-forums">
-	          <ul class="bbp-forums">
-	            <li class="bbp-header">
+	         <div id="bbpress-forums">
+	          <ul class="bbp-forums" style="margin:0;">
+	            <li class="bbp-header-header">
 	              <ul class="forum-titles">
-	              
 	                <li class="bbp-forum-info-allBoard">
 	                '${userBoard.boardPrefix}' 게시판 글</li>
 
@@ -576,7 +491,6 @@ li.bbp-topic-freshness-test{
 	          </ul>
 	          <!-- .forums-directory -->
 	        </div>
-	        <!-- /bbpress -->
 	        
 			<div id="bbpress-forums">
 	          <ul class="bbp-forums">
@@ -619,88 +533,58 @@ li.bbp-topic-freshness-test{
 	        </div>
 	        
       </div>
-      <!-- end content -->
-		          
+      <!-- 말머리 영역 끝 -->
+	            
 
-		<!--카페 인기글 헤더  -->
-		
+							<!--카페 인기글 헤더  -->
+					<!-- style="background-color:#F5F5F5;" -->
         <div class="content col-lg-12 col-md-12 col-sm-12 clearfix">
-
 	        <div class="general-title text-center">
 	          <h3>이 카페 인기글</h3>
 	          <hr>
 	        </div>
-	
 	        <div class="divider"></div>
-	        
-        
-        
         					<!--카페 인기글 이미지  -->
 
-        <div id="popularitems" class="owl-carousel">
-
-								<!-- 9개만 표현 -->
-		<c:forEach var="top6" items="${topList}" begin="1" end="9" step="1">
-			<div class="col-lg-12">
-            <div class="he-wrap tpl6 market-item">
-			<div class="name-topList">${top6.BOARD_TITLE}</div>
-            	 <c:if test="${ top6.CAFE_USER_IMAGE== 'nan'}">
-		       		  <img class="lazyOwl" style="max-width: 100%; height: 279px"
-		       		  data-src="<%=request.getContextPath()%>/resources/img/프로필.jpg">
-              	  </c:if>
-				  <c:if test="${ top6.CAFE_USER_IMAGE  != 'nan' }">
-					  <img class="lazyOwl"
-					  data-src="download?file=${top6.CAFE_USER_IMAGE}" alt="">
-				  </c:if>
-            	
-            	
-              <div class="he-view">
-                <div class="bg a0" data-animate="fadeIn">
-                  <h3 class="a1" data-animate="fadeInDown">${top6.CAFE_USER_NICKNAME}</h3>
-                  <a href="goBoardInside?boardNum=${top6.BOARD_NUM}&userId=${top6.USER_ID}"
-                  class="dmbutton a2" data-animate="fadeIn">게시글 보러가기</a>
-
-                </div>
-               
-              </div>
-              
-            </div>
-           
-          </div>
-		</c:forEach>
-         
-        </div>
-        <!-- popular items -->
-        
+	        <div id="popularitems" class="owl-carousel">
+									<!-- 9개만 표현 -->
+				<c:forEach var="top6" items="${topList}" begin="1" end="9" step="1">
+					<div class="col-lg-12">
+		            <div class="he-wrap tpl6 market-item">
+					<div class="name-topList">${top6.BOARD_TITLE}</div>
+		            	 <c:if test="${ top6.CAFE_USER_IMAGE== 0}">
+				       		  <img class="lazyOwl" style="height: 280px;"
+				       		  data-src="<%=request.getContextPath()%>/resources/img/프로필.jpg">
+		              	  </c:if>
+						  <c:if test="${ top6.CAFE_USER_IMAGE  != 0 }">
+							  <img class="lazyOwl" style="height: 280px;"
+							  data-src="download?fileNum=${top6.CAFE_USER_IMAGE}" alt="">
+						  </c:if>
+		            	
+		              <div class="he-view">
+		                <div class="bg a0" data-animate="fadeIn">
+		                  <h3 class="a1" data-animate="fadeInDown">
+		                  	작성자 <br><Br> ${top6.CAFE_USER_NICKNAME}</h3>
+		                  <a href="goBoardInside?boardNum=${top6.BOARD_NUM}&userId=${top6.USER_ID}"
+		                  class="dmbutton a2" data-animate="fadeIn">게시글 보러가기</a>
+		                </div>
+		              </div>
+		            </div>
+		          </div>
+				</c:forEach>
+	        </div>
+        <!-- 리스트 끝 -->
       </div>
-      <!-- end content -->
-          
+      <!-- 카페 인기글 영역 끝 -->
+      
 	 </div>
 <!-- end comments_Form -->
 
-      <div class="divider"></div>
-
+     	 <div class="divider"></div>
         <!-- div comments -->
       </div>
       <!-- end content -->
       <div id="nav" class="right"></div>
-
-  <!-- JavaScript Libraries -->
-  <script src="<%=request.getContextPath() %>/resources/lib/jquery/jquery.min.js"></script>
-  <script src="<%=request.getContextPath() %>/resources/lib/bootstrap/js/bootstrap.min.js"></script>
-  <script src="<%=request.getContextPath() %>/resources/lib/php-mail-form/validate.js"></script>
-  <script src="<%=request.getContextPath() %>/resources/lib/prettyphoto/js/prettyphoto.js"></script>
-  <script src="<%=request.getContextPath() %>/resources/lib/isotope/isotope.min.js"></script>
-  <script src="<%=request.getContextPath() %>/resources/lib/hover/hoverdir.js"></script>
-  <script src="<%=request.getContextPath() %>/resources/lib/hover/hoverex.min.js"></script>
-  <script src="<%=request.getContextPath() %>/resources/lib/unveil-effects/unveil-effects.js"></script>
-  <script src="<%=request.getContextPath() %>/resources/lib/owl-carousel/owl-carousel.js"></script>
-  <script src="<%=request.getContextPath() %>/resources/lib/jetmenu/jetmenu.js"></script>
-  <script src="<%=request.getContextPath() %>/resources/lib/animate-enhanced/animate-enhanced.min.js"></script>
-  <script src="<%=request.getContextPath() %>/resources/lib/jigowatt/jigowatt.js"></script>
-  <script src="<%=request.getContextPath() %>/resources/lib/easypiechart/easypiechart.min.js"></script>
-  <!-- Template Main Javascript File -->
-  <script src="<%=request.getContextPath() %>/resources/js/main.js"></script>
-  
-</body>
-</html>
+    
+	</section>
+</div>

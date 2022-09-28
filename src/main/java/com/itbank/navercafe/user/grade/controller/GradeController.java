@@ -15,10 +15,9 @@ import com.itbank.navercafe.user.grade.service.GradeService;
 public class GradeController {
 	@Autowired GradeService upSer;
 	
-	
 	@GetMapping("/goGradeBoardList")
 	public String goGradeBoardList(Model model) {
-		model.addAttribute("getGradeList",upSer.getUpGradeboardList());
+		upSer.getGradeList(model);
 		return "user/board/gradeBoardList";
 	}
 }

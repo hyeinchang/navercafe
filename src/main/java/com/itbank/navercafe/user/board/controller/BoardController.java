@@ -29,14 +29,14 @@ public class BoardController {
 		model.addAttribute("cafeDTO", cafeDTO);
 		return "user/board/writeForm";
 	}
-
+	//전체목록인데 수영이형이랑 상의.
 	@GetMapping("/goBoardList")
 	public String goBoardList(Model model){
 		model.addAttribute("boardList",ser.getBoardList());
 		return "user/board/boardList";
 	}
 
-	@GetMapping("goBoardInside")
+	@GetMapping("/goBoardInside")
 	public String goBoardInside(int boardNum, Model model,HttpSession session,
 			@RequestParam(value="num",required=false,defaultValue="0")int num) {
 		//댓글 갯수 세오기
@@ -52,7 +52,7 @@ public class BoardController {
 		//댓글 리스트 가져오기
 		model.addAttribute("replyList",replySer.getReplyList(boardNum));
 		//세션 아이디 줘서 정보 가져오기
-		model.addAttribute("sessionUser",boardCafeSer.getSessionUserInfo((String) session.getAttribute("sessionId")));
+		model.addAttribute("sessionUser",boardCafeSer.getSessionUserInfo((String) session.getAttribute("loginId")));
 		//말머리에 따른 게시물 목록 가져오기
 		//System.out.println("댓글 키들:"+replySer.getReplyList(boardNum));
 		
@@ -60,23 +60,23 @@ public class BoardController {
 		ser.hit(boardNum,num);
 		
 		//좋아요 되어있는지 여부
-		ser.likeViewChk(boardNum, (String) session.getAttribute("sessionId"), model);
+		ser.likeViewChk(boardNum, (String) session.getAttribute("loginId"), model);
 		
 		//인기글 리스트
 		ser.topList(model);
-		return "board/boardInside";
+		return "user/board/boardInside";
 	}
 
 	
-	//			댓글, 답글 groupNum으로 식별하기
-	@PostMapping("saveReply")
-	public String saveReply(MultipartHttpServletRequest mul,
-			@RequestParam(value="step",required=false,defaultValue="0")int step) {
-		replySer.saveReply(mul,step);
-		return "redirect:goBoardInside?boardNum="
-				+mul.getParameter("boardNum")+"&num="+1;
-							//댓글 작성시 조회수 오르는거 방지
-	}
+//	//			댓글, 답글 step으로 식별하기
+//	@PostMapping("saveReply")
+//	public String saveReply(MultipartHttpServletRequest mul,
+//			@RequestParam(value="step",required=false,defaultValue="0")int step) {
+//		replySer.saveReply(mul,step);
+//		return "redirect:goBoardInside?boardNum="
+//				+mul.getParameter("boardNum")+"&num="+1;
+//							//댓글 작성시 조회수 오르는거 방지
+//	}
 	
 	@GetMapping("likeChk")
 	public String likeChk(int boardNum,String userId,Model model) {
