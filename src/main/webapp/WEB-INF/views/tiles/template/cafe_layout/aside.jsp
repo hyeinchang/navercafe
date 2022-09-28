@@ -166,7 +166,7 @@
           </h4>
           <ul class="categories">            
             <li>
-            	<a href="javascript:alert('전체글 보기 이동')">전체글보기</a>
+            	<a href="board/goBoardList">전체글보기</a>
             	<span class="text-primary">3</span>
             </li>
           </ul>

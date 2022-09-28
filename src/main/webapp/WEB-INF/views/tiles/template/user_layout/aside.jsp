@@ -113,7 +113,7 @@
                   	<span>
                   	  <a href="#">
                   	  	<c:choose>
-                  	  		<c:when test="${cafeMember.cafeUserImage eq 'nan'}"> <!-- 프로필 기본사진 -->
+                  	  		<c:when test="${cafeMember.cafeUserImageNum == 0}"> <!-- 프로필 기본사진 -->
                   	  			<img class="profileImg" src="${contextPath}/resources/img/cafe_profile.png" alt="프로필 이미지">
                   	  		</c:when>
                   	  		<c:otherwise>
@@ -189,7 +189,7 @@
           </h4>
           <ul class="categories">            
             <li>
-            	<a href="javascript:alert('전체글 보기 이동')">전체글보기</a>
+            	<a href="goBoardList">전체글보기</a>
             	<span class="text-primary">3</span>
             </li>
           </ul>
