@@ -9,7 +9,7 @@ public class BoardDTO {
 	private String boardContent;
 	
 	private Timestamp boardSaveDate;
-	SimpleDateFormat simple= new SimpleDateFormat("YYYY.MM.dd. HH:mm");
+	SimpleDateFormat simple= new SimpleDateFormat("YYYY.MM.dd");
 	
 	private int boardLikes;
 	private String boardNotice;

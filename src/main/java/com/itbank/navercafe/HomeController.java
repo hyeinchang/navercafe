@@ -105,6 +105,7 @@ public class HomeController { //메인 로그인관련
 	
 	@PostMapping("register")
 	public String register(MemberDTO dto) {
+		
 		int result = ms.signup(dto);
 		if(result==1) {
 			return "redirect:/";

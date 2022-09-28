@@ -24,11 +24,14 @@
 
 
 
-	
+
+
+	<!-- 카페 닉네임 중복검사 -->
+
 	<select id="idOverlap" resultType="Integer">
 		select count(user_id) from project_cafe_member where cafe_id = #{cafeId} and cafe_user_nickname = #{cafeUserNickname}
 	</select>
-	
+	<!-- 카페 회원가입 -->
 	<insert id="signup">
 		insert into project_cafe_member(cafe_id,user_id,cafe_user_nickname)
 		values(#{cafeId},#{userId},#{cafeUserNickname})

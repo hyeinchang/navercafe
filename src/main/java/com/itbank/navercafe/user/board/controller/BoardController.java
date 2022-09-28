@@ -39,6 +39,7 @@ public class BoardController {
 	@GetMapping("/goBoardInside")
 	public String goBoardInside(int boardNum, Model model,HttpSession session,
 			@RequestParam(value="num",required=false,defaultValue="0")int num) {
+		System.out.println("boardInside실행");
 		//댓글 갯수 세오기
 		model.addAttribute("replyCount",replySer.getReplyCount(boardNum));
 		
@@ -57,18 +58,16 @@ public class BoardController {
 		model.addAttribute("sessionUser",boardCafeSer.getSessionUserInfo((String) session.getAttribute("loginId")));
 		//말머리에 따른 게시물 목록 가져오기
 		//System.out.println("댓글 키들:"+replySer.getReplyList(boardNum));
-		
 		//조회수
 		ser.hit(boardNum,num);
-		
 		//좋아요 되어있는지 여부
 		ser.likeViewChk(boardNum, (String) session.getAttribute("loginId"), model);
-		
 		//인기글 리스트
 		ser.topList(model);
 		
 		//파일테이블리스트
 		ser.getFileList(model);
+
 		return "user/board/boardInside";
 	}
 

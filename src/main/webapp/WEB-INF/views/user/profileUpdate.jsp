@@ -67,8 +67,8 @@
 		line-height: 36px;
 	}
 </style>
-프로필 사진, 중복확인<br>
-유져닉네임
+프로필 사진<br>
+
 <div	class="content col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix cstmContent"
 	${cafeDTO.cafeLayout > 0 ? '' : 'style="float:right;"'} >
 	
@@ -76,10 +76,11 @@
 		<b>프로필 수정</b>
 	</h2>
 	<div style="margin-top: 30px; padding: 8px 32px 32px; border: 1px solid #ebecef; line-height: 20px; border-radius: 10px;">
-		<form action="profilesubmit" method="post" name="profilForm">
+		<form action="profilesubmit" method="post" name="profilForm" id="profilForm" >
 			<input type="hidden" value="${cafeId}" name="cafeId" id="cafeId">
 			<input type="hidden" value="${loginId}" name="userId">
 			<input type="hidden" value="${cafeMember.cafeUserNickname }" name="oldNick" id="oldNick">
+			<input type="hidden" name="status" id="status" value="OK">
 			<div class="join_info">
 				<div class="join_info_head">
 					<strong style="line-height: 20px;">닉네임</strong>
@@ -91,16 +92,15 @@
 						<p style="font-size: 13px;">한글 1~10자, 영문 대소문자 2~20자, 숫자를 사용할 수 있습니다.(혼용가능)</p>
 						<p style="font-size: 13px;">중복되지 않은 별명으로 변경해주세요.</p>
 					</div>
-				</div>
+				</div> 
 			</div>
 			<div class="join_info">
 				<div class="join_info_head">
 					<strong style="line-height: 20px;">프로필 이미지</strong>
 				</div>
 				<div class="join_info_body">
-					프로필 사진 등록!@!@
 					<div style="position: relative; display: inline-block; margin: 0; padding: 0;">
-						<input class="input_text" type="text" placeholder="닉네임" name="userNickname">
+						<input type="file" >
 					</div>
 					<p>프로필은 카페별로 설정가능합니다.</p>
 				</div>
@@ -153,7 +153,7 @@
 				<button class="btn" type="button" style="background-color: gray;">
 					<span >취소</span>
 				</button>
-				<button class="btn" type="submit">
+				<button class="btn" type="button" onclick="update()">
 					<span >수정</span>
 				</button>
 			</div>
@@ -166,6 +166,7 @@
 			let oldNick = document.getElementById("oldNick").value;
 			let cafeId = document.getElementById("cafeId").value;
 			let confirm = document.getElementById("confirm");
+			let status = document.getElementById("status");
 			
 			$.ajax({
 				type : "POST",
@@ -176,15 +177,29 @@
 					if(data=="OK"){
 						confirm.style.color="#0000ff";
 						confirm.innerHTML = "사용 가능한 닉네임 입니다.";
+						$('input[name=status]').attr('value',"OK");
+						
 					}else{
 						confirm.style.color="#ff0000";
 						confirm.innerHTML = "사용 불가능한 닉네임 입니다.";
+						$('input[name=status]').attr('value',"NO");
 					}
 				},
 				error : function(){
 					alert("에러ㅓㅓ")
 				}
 			});
+		}
+		
+		function update(){
+			let confirm = document.getElementById("confirm");
+			let status = document.getElementById("status").value;
+			console.log(status)
+			if(status == "OK"){
+				document.getElementById("profilForm").submit();
+			}else{
+				alert('수정 정보를 다시 확인해주세요')
+			}
 		}
 	</script>
 </div>

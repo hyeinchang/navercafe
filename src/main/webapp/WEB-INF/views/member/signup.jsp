@@ -26,11 +26,22 @@
 		</div>
 		<div class="mb-3">
 			<label class="form-label">이름</label>
+			<label style="color: red;" id="namelabel"></label>
 			<input type="text" id="name" name="name" class="form-control">
 		</div>
 		<div class="mb-3">
 			<label class="form-label">휴대폰번호</label>
-			<input type="tel" id="phone" name="phone" class="form-control" oninput="onlyNumber()">
+			<label style="color: red;" id="phlabel"></label>
+			<input type="tel" id="phone" name="phone" class="form-control" >
+		</div>
+		<div class="mb-3">
+			<label class="form-label">태어난 연도</label>
+			<input type="tel" id="birthdate" name="birthdate" class="form-control" maxlength="4" min="1950" max="2022">
+		</div>
+		<div class="mb-3">
+			<label class="form-label">성별</label>
+			<input type="radio"  name="gender" value="male" id="gender">남자
+			<input type="radio"  name="gender" value="female" id="gender">여자
 		</div>
 		<div class="mb-3">
 			<label class="form-label">주소</label>
@@ -60,14 +71,31 @@
 	var email = document.getElementById("email");	
 	var addr1 = document.getElementById("addr1");	
 	var addr3 = document.getElementById("addr3");	
+	var birthdate = document.getElementById("birthdate");	
+	var gender = document.getElementsByName("gender");	
+	var boo = false;
 	
-	var pwck = /^.*(?=^.{8,15}$)(?=.*\d)(?=.*[a-zA-Z])(?=.*[!@#$%^&+=]).*$/;
-	var emck = /^[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_.]?[0-9a-zA-Z])*.[a-zA-Z]{2,3}$/i;
+	var nameck = /^[가-힣]+$/;
+	var idck = /^[a-z]+[a-z0-9-_]{4,20}$/g;
+	var phck = /^\d{3}-\d{3,4}-\d{4}$/;
+	var pwck = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[#?!@$%^&*-])[\w#?!@$%^&*-]{8,15}$/g;
+	var emck = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/g;
 	
 	function reg(){
 		if(id.value==""){
 			alert("아이디를 입력하세요.");
 			id.focus();
+			return false;
+		}
+		if(!idck.test(id.value)){ //아이디 체크
+			document.getElementById("idlabel").innerHTML = "아이디는 5~20자의 영문소문자, 숫자, (-), (_)만 사용가능합니다."
+			document.getElementById("idlabel").style.color = "red"
+			id.focus();
+			return false;
+		}else{
+			document.getElementById("idlabel").innerHTML = "사용가능합니다."
+			document.getElementById("idlabel").style.color = "green"
+			pw.focus();
 			return false;
 		}
 		if(pw.value==""){
@@ -78,21 +106,28 @@
 		
 		if(!pwck.test(pw.value)){ //비밀번호 체크
 			document.getElementById("pwlabel").innerHTML = "비밀번호는 영문자+숫자+특수문자 조합으로 8~15자리 입력해주세요"
+			document.getElementById("pwlabel").style.color = "red"
+			pw.focus();
 			return false;
 		}else{
 			document.getElementById("pwlabel").innerHTML = "사용가능합니다."
+			document.getElementById("pwlabel").style.color = "green"
+			pw2.focus();
 		}
 		if(pw2.value==""){
 			alert("비밀번호를 확인해주세요.");
 			pw2.focus();
 			return false;
 		}
-		if(pw.value !== pw2.value){
+		if(pw.value !== pw2.value){ // 비밀번호 일치 체크
 			document.getElementById("pw2label").innerHTML = "비밀번호가 일치하지 않습니다."
+			document.getElementById("pw2label").style.color = "red"
 			pw2.focus();
 			return false;
 		}else{
 			document.getElementById("pw2label").innerHTML = "비밀번호가 일치합니다."
+			document.getElementById("pw2label").style.color = "green"
+			name.focus();
 		}
 		
 		if(name.value==""){
@@ -100,11 +135,44 @@
 			name.focus();
 			return false;
 		}
+		if(!nameck.test(name.value)){ //이름 체크
+			document.getElementById("namelabel").innerHTML = "한글이름만 가입가능합니다."
+			document.getElementById("namelabel").style.color = "red"
+			name.focus();
+			return false;
+		}else{
+			document.getElementById("namelabel").innerHTML = "사용가능합니다."
+			document.getElementById("namelabel").style.color = "green"
+		}
 		if(phone.value==""){
 			alert("핸드폰번호를 입력해 주세요.");
 			phone.focus();
 			return false;
 		}
+		if(!phck.test(phone.value)){ // 폰번호체크
+			document.getElementById("phlabel").innerHTML = "숫자만 입력해주세요"
+			document.getElementById("phlabel").style.color = "red"
+			phone.focus();
+			return false;
+		}else{
+			document.getElementById("phlabel").innerHTML = "사용가능합니다."
+			document.getElementById("phlabel").style.color = "green"
+		}
+		if(birthdate.value==""){
+			alert("태어난 년도를 입력해 주세요.");
+			birthdate.focus();
+			return false;
+		}
+		for (var i=0;i<gender.length;i++) {
+	        if (gender[i].checked==true) {
+	            boo = true;
+	            break;
+	        }
+	    }
+	    if (boo == false) {
+	        alert("성별을 선택해 주세요.");
+	        return;
+	    }
 		if(addr1.value==""){
 			alert("주소를 검색해 입력해주세요");
 			addr1.focus();
@@ -122,6 +190,7 @@
 		}
 		if(!emck.test(email.value)){ //이메일정규식 체크
 			document.getElementById("emaillabel").innerHTML = "이메일형식으로 작성해주세요."
+			email.focus();
 			return false;
 		}else{
 			document.getElementById("emaillabel").innerHTML = "사용가능합니다."

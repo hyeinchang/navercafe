@@ -128,9 +128,10 @@ public class BoardServiceImpl implements BoardService{
 	public void getFileList(Model model) {
 		ArrayList<FileDTO> list=fm.getFileList();
 		for(int i=0 ; i<list.size();i++) {
-			System.out.println(list.get(i).getBoardNum());
-			System.out.println(list.get(i).getRegdate());
-			System.out.println(list.get(i).getReplyNum());
+			System.out.println("파일 고유 번호 :"+list.get(i).getFileNum());
+			System.out.println("사진 정보 :"+list.get(i).getFileOrgName());
+			System.out.println("replyNum :"+list.get(i).getReplyNum());
+			System.out.println("userImageNum :"+list.get(i).getCafeUserImageNum());
 		}
 		model.addAttribute("fileList",fm.getFileList());
 	}

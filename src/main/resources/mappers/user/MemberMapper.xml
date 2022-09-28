@@ -13,11 +13,13 @@
 		<result property="addr1" column="user_postalcode"/>
 		<result property="addr2" column="user_addr"/>
 		<result property="addr3" column="user_detail_addr"/>
+		<result property="gender" column="user_gender"/>
+		<result property="birthdate" column="user_birthdate"/>
 	</resultMap>
 	
 	<insert id="signup">
-		insert into project_members(user_id, user_pw, user_name, user_phone, user_email, user_postalcode, user_addr, user_detail_addr) 
-		values(#{id}, #{password}, #{name}, #{phone}, #{mail}, #{addr1}, #{addr2}, #{addr3})
+		insert into project_members(user_id, user_pw, user_name, user_phone, user_email, user_postalcode, user_addr, user_detail_addr, user_gender, user_birthdate) 
+		values(#{id}, #{password}, #{name}, #{phone}, #{mail}, #{addr1}, #{addr2}, #{addr3}, #{gender}, #{birthdate})
 	</insert>
 	
 	<select id="getUser" resultMap="project_members">

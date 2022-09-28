@@ -6,13 +6,11 @@ public class MemberDTO {
 	private String name;
 	private String phone;
 	private String mail;
-	
 	private String addr1;
 	private String addr2;
 	private String addr3;
 	private String gender;
 	private int birthdate;
-	
 	
 	
 	public String getGender() {
@@ -27,9 +25,6 @@ public class MemberDTO {
 	public void setBirthdate(int birthdate) {
 		this.birthdate = birthdate;
 	}
-	
-	
-	
 	public String getAddr1() {
 		return addr1;
 	}
