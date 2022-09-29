@@ -1,5 +1,7 @@
 package com.itbank.navercafe.user.cafe.dto;
 
+import java.util.Date;
+
 public class CafeDTO {
 	private String cafeId;
 	private String cafeName;
@@ -13,6 +15,8 @@ public class CafeDTO {
 	private String cafeJoinGender;
 	private String cafeJoinAge;
 	private int cafeIconNum;
+	private String cafeJoinInformation;
+	private Date cafeRegdate;
 	private boolean isCafeMember;
 	private boolean isCafeManager;
 	
@@ -91,6 +95,18 @@ public class CafeDTO {
 	}
 	public int getCafeIconNum() {
 		return cafeIconNum;
+	}
+	public String getCafeJoinInformation() {
+		return cafeJoinInformation;
+	}
+	public void setCafeJoinInformation(String cafeJoinInformation) {
+		this.cafeJoinInformation = cafeJoinInformation;
+	}
+	public Date getCafeRegdate() {
+		return cafeRegdate;
+	}
+	public void setCafeRegdate(Date cafeRegdate) {
+		this.cafeRegdate = cafeRegdate;
 	}
 	public void setCafeIconNum(int cafeIconNum) {
 		this.cafeIconNum = cafeIconNum;

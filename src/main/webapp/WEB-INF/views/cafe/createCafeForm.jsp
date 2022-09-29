@@ -80,7 +80,7 @@
         	
       		<div class="infoLine">
        			<label for="cafeJoinInfomation" class="infoLabel">카페 가입 안내</label>
-       			<textarea id="cafeJoinInfomation" name="cafeJoinInfomation" class="form-control" placeholder="카페 가입 안내를 입력해주십시오." style="width:100%;"
+       			<textarea id="cafeJoinInfomation" name="cafeJoinInformation" class="form-control" placeholder="카페 가입 안내를 입력해주십시오." style="width:100%;"
        				data-length="0~2000" data-format="" data-text="카페 가입 정보"></textarea>
        			<ul class="infoUl">
        				<li>입력한 내용은 멤버의 카페 가입 시 안내 문구로 활용됩니다.</li>

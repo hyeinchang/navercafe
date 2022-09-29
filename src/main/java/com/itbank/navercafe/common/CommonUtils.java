@@ -23,6 +23,7 @@ public class CommonUtils {
 						if(multiRequest.getParameter(paramName) != null) {
 							f.setAccessible(true);
 							f.set(DTO, multiRequest.getParameter(paramName));
+							f.setAccessible(false);
 						}
 						break;
 					}
