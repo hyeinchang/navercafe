@@ -76,7 +76,11 @@ CREATE TABLE project_board_type (
     board_menu_name    varchar2(200)    NOT NULL,
     cafe_id    varchar2(20)    NULL,
     board_order    number(5)    NULL,
-    board_menu_type    number(2)    NOT NULL
+    board_menu_type    number(2)    NOT NULL,
+    board_likes_flag    char(1)        DEFAULT 'Y',
+    board_reply_flag    char(1)        DEFAULT 'Y',
+    board_prefixes_flag    char(1)        DEFAULT 'N',
+    board_public_flag    char(1)        DEFAULT 'Y'
 );
 
 CREATE TABLE project_likes (
@@ -96,7 +100,7 @@ CREATE TABLE project_reply (
 
 CREATE TABLE project_member_grade (
     cafe_id    varchar2(20)    NOT NULL,
-    cafe_user_grade    number        DEFAULT 1,
+    cafe_user_grade    number        DEFAULT 0,
     cut_visit    number(4)    NULL,
     cut_reply    number(4)    NULL,
     cut_board    number(4)    NULL,
@@ -126,8 +130,7 @@ CREATE TABLE project_memo_reply (
     user_id    varchar2(20)    NOT NULL,
     memo_reply_content    varchar2(100)    NOT NULL,
     memo_reply_saveDate    Date        DEFAULT sysdate,
-    memo_reply_group    number(6)    NULL,
-    memo_reply_step    number(6)        DEFAULT 0
+    memo_reply_group    number(6)    NULL
 );
 
 CREATE TABLE project_cafe_info (

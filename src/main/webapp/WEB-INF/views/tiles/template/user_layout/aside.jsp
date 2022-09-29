@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
 <!-- SIDEBAR -->
       <div id="sidebar" class="col-lg-4 col-md-4 col-sm-4 col-xs-12 cstmAside" ${cafeDTO.cafeLayout > 0 ? 'style="float:right;"' : ''}>
         <div class="widget">
@@ -33,7 +35,7 @@
                       <span class="gradeText">매니저</span>                   
                       <b title="${cafeDTO.userId}">${cafeDTO.userId}</b>
                     </div>
-                    <div>since 2022.08.19.</div>    
+                    <div>since <fmt:formatDate value="${cafeDTO.cafeRegdate}" pattern="YYYY.MM.dd"/> </div>    
                     <div class="cafeSetting">
                     <c:choose>
                     <c:when test="${cafeDTO.isCafeManager()}">

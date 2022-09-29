@@ -2,23 +2,31 @@ package com.itbank.navercafe.admin.menu.service;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.itbank.navercafe.user.boardmenu.dto.BoardMenuDTO;
-import com.itbank.navercafe.user.cafe.dto.CafeDTO;
+import com.itbank.navercafe.admin.menu.dto.AdminMenuDTO;
+import com.itbank.navercafe.admin.menu.mapper.AdminMenuMapper;
 
 @Service
 public class AdminMenuServiceImpl implements AdminMenuService {
+	@Autowired
+	AdminMenuMapper adminMenuMapper;
+	
+
 	@Override
-	public List<BoardMenuDTO> selectBoardMenuList(CafeDTO cafeDTO) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public int insertBoardMenu(AdminMenuDTO adminMenuDTO) throws Exception {
+		return insertBoardMenu(adminMenuDTO);
 	}
 
+	
+	@Override
+	public List<AdminMenuDTO> selectBoardMenuList(String cafeId) throws Exception {
+		return adminMenuMapper.selectBoardMenuList(cafeId);
+	}
 
 	@Override
-	public List<BoardMenuDTO> selectBoardMenuList(String cafeId) throws Exception {
-		// TODO Auto-generated method stub
-		return null;
+	public AdminMenuDTO selectBoardMenu(int boardMenuNum) throws Exception {
+		return adminMenuMapper.selectBoardMenu(boardMenuNum);
 	}
 }

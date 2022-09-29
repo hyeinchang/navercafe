@@ -13,7 +13,7 @@
 				<input type="text" class="ipt_type" name="boardMenuName" value="${menuDTO.boardMenuName}" onkeyup="changeMenuValue()">
 				<br>
 				<span class="p_type2">
-					<input id="member1" type="checkbox"class="check">
+					<input id="member1" type="checkbox"class="check" name="boardPublicFlag" value="N" onchange="changeMenuValue()">
 					<label for="member1">멤버에게만 공개</label>
 				</span>
 			</td>

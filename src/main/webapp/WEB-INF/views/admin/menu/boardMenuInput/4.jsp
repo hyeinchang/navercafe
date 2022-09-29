@@ -1,4 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <form name="menuInfoForm" id="menuInfoForm_${menuDTO.boardOrder}">
 <table border="1" cellspacing="0" width="100%">
 	<caption>
@@ -27,15 +29,14 @@
 			<th scope="row">등업신청 조건</th>
 			<td class="last"><p class="p_type3">
 					멤버등급관리에서 설정할 수 있습니다.<br>
-					<a
-						href="https://cafe.naver.com/ManageMemberLevel.nhn?clubid=30790472"
+					<a href="${contextPath}/admin/manageMembersGrade?cafeId=${cafeDTO.cafeId}"
 						target="_blank" class="btn_go2">등급 조건 관리</a>
 				</p></td>
 		</tr>
 		<tr>
 			<th scope="row" colspan="2" class="line"></th>
 		</tr>
-		<tr>
+		<tr style="display:none;">
 			<th scope="row">등업게시판 공지</th>
 			<td class="last"><p style="padding-top: 2px;">
 					<input id="member1" type="checkbox" class="check"><label
@@ -47,7 +48,7 @@
 					<em>0</em> / 160byte
 				</p></td>
 		</tr>
-		<tr>
+		<tr style="display:none;">
 			<th scope="row" colspan="2" class="line"></th>
 		</tr>
 	</tbody>

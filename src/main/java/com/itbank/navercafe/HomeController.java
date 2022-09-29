@@ -88,7 +88,8 @@ public class HomeController {
 			CafeDTO cafeDTO = new CafeDTO();
 			String cafeId = null;
 			MultipartFile iconImage = multiRequest.getFile("iconImage");
-			commonUtils.setMultirequestToDTO(multiRequest, cafeDTO);
+			
+			commonUtils.setDTO(multiRequest, cafeDTO);
 			
 			cafeId = cafeDTO.getCafeId();
 			

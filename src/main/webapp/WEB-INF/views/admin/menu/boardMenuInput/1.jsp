@@ -28,12 +28,12 @@
 					<p class="">
 						<strong>글쓰기</strong>
 						<select style="width: 145px;" name="boardWriteAuth" onchange="changeMenuValue()">
-							<option	value="1">새싹멤버</option>
-							<option value="110">일반멤버</option>
-							<option value="120">성실멤버</option>
-							<option value="130">열심멤버</option>
-							<option value="140">우수멤버</option>
-							<option value="150">감사멤버</option>
+							<option	value="0">새싹멤버</option>
+							<option value="1">일반멤버</option>
+							<option value="2">성실멤버</option>
+							<option value="3">열심멤버</option>
+							<option value="4">우수멤버</option>
+							<option value="5">감사멤버</option>
 							<option value="888">카페스탭</option>
 							<option value="999">카페매니저</option>
 						</select> 이상
@@ -41,25 +41,24 @@
 					<p>
 						<strong>댓글쓰기</strong>
 						<select style="width: 145px;" name="boardReplyAuth" onchange="changeMenuValue()">
-							<option value="1">새싹멤버</option>
-							<option value="110">일반멤버</option>
-							<option value="120">성실멤버</option>
-							<option value="130">열심멤버</option>
-							<option value="140">우수멤버</option>
-							<option value="150">감사멤버</option>
+							<option	value="0">새싹멤버</option>
+							<option value="1">일반멤버</option>
+							<option value="2">성실멤버</option>
+							<option value="3">열심멤버</option>
+							<option value="4">우수멤버</option>
+							<option value="5">감사멤버</option>
 							<option value="888">카페스탭</option>
 							<option value="999">카페매니저</option></select> 이상
 					</p>
 					<p class="p_last">
 						<strong>읽기</strong>
 						<select style="width: 145px;" name="boardReadAuth" onchange="changeMenuValue()">
-							<option value="0">전체공개</option>
-							<option value="1">새싹멤버</option>
-							<option value="110">일반멤버</option>
-							<option value="120">성실멤버</option>
-							<option value="130">열심멤버</option>
-							<option value="140">우수멤버</option>
-							<option value="150">감사멤버</option>
+							<option	value="0">새싹멤버</option>
+							<option value="1">일반멤버</option>
+							<option value="2">성실멤버</option>
+							<option value="3">열심멤버</option>
+							<option value="4">우수멤버</option>
+							<option value="5">감사멤버</option>
 							<option value="888">카페스탭</option>
 							<option value="999">카페매니저</option>
 						</select> 이상
@@ -72,12 +71,16 @@
 		</tr>
 		<tr>
 			<th scope="row" class="solo">공개설정</th>
-			<td class="solo"><p class="ra_tx_area">
-					<span class="in_ra"><input id="defaultWriteOpenType1"
-						type="radio" class="check" value="1"><label
-						for="defaultWriteOpenType1">전체공개</label></span><span><input
-						id="defaultWriteOpenType2" type="radio" class="check" value="0"><label
-						for="defaultWriteOpenType2">멤버공개</label></span>
+			<td class="solo">
+				<p class="ra_tx_area">
+					<span class="in_ra">
+						<input id="defaultWriteOpenType1" type="radio" class="check" name="boardPublicFlag" value="Y" onchange="changeMenuValue()">
+						<label for="defaultWriteOpenType1">전체공개</label>
+					</span>
+					<span>
+						<input id="defaultWriteOpenType2" type="radio" class="check" name="boardPublicFlag" value="N" onchange="changeMenuValue()">
+						<label for="defaultWriteOpenType2">멤버공개</label>
+					</span>
 				</p>
 				<p class="p_type">
 					게시글 공개 범위를 전체로 기본 설정합니다.<br>단, 작성자가 게시글 작성 시 변경할 수 있습니다.
@@ -91,10 +94,12 @@
 		</tr>
 		<tr>
 			<th scope="row" class="solo">좋아요 기능</th>
-			<td class="solo"><input id="in_type6" type="checkbox"
-				class="check"><label for="in_type6">사용</label></td>
+			<td class="solo">
+				<input id="in_type6" name="boardLikesFlag" type="checkbox" class="check" value="Y" checked onchange="changeMenuValue()">
+				<label for="in_type6">사용</label>
+			</td>
 		</tr>
-		<tr>
+		<tr style="display:none;">
 			<th scope="row" class="solo4">게시글 설정</th>
 			<td class="solo4"><div class="ch_view">
 					<p>
@@ -140,10 +145,10 @@
 					</div>
 				</div></td>
 		</tr>
-		<tr>
+		<tr style="display:none;">
 			<th scope="row" colspan="2" class="line"></th>
 		</tr>
-		<tr>
+		<tr style="display:none;">
 			<th scope="row">형태</th>
 			<td class=""><p class="ra_tx_area" style="margin-top: 2px;">
 					<span class="in_ra"><input id="ra_type2" type="radio"
@@ -154,7 +159,7 @@
 						for="ra_type4">게시판형</label></span>
 				</p></td>
 		</tr>
-		<tr>
+		<tr style="display:none;">
 			<th scope="row" class="dh_p2">글양식 사용</th>
 			<td class="dh_p"><select style="width: 242px;"><option
 						value="0">사용안함</option>
@@ -162,14 +167,15 @@
 				class="btn_modification">수정하기</a>
 			<p>&nbsp;</p></td>
 		</tr>
-		<tr>
+		<tr style="display:none;">
 			<th scope="row" colspan="2" class="line"></th>
 		</tr>
-		<tr>
+		<tr style="display:none;">
 			<th scope="row" class="solo">말머리</th>
-			<td class="solo"><input id="in_type7" type="checkbox"
-				class="check"><label for="in_type7">사용</label>
-			<!----></td>
+			<td class="solo">
+				<input id="in_type7" type="checkbox" class="check" name="boardPrefixesFlag" value="Y" onchange="changeMenuValue()">
+				<label for="in_type7">사용</label>
+			</td>
 		</tr>
 		<tr>
 			<th scope="row" colspan="2" class="line"></th>

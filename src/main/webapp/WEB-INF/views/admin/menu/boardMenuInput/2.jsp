@@ -28,12 +28,12 @@
 					<p class="">
 						<strong>글쓰기</strong>
 						<select style="width: 145px;" name="boardWriteAuth" onchange="changeMenuValue()">
-							<option	value="1">새싹멤버</option>
-							<option value="110">일반멤버</option>
-							<option value="120">성실멤버</option>
-							<option value="130">열심멤버</option>
-							<option value="140">우수멤버</option>
-							<option value="150">감사멤버</option>
+							<option	value="0">새싹멤버</option>
+							<option value="1">일반멤버</option>
+							<option value="2">성실멤버</option>
+							<option value="3">열심멤버</option>
+							<option value="4">우수멤버</option>
+							<option value="5">감사멤버</option>
 							<option value="888">카페스탭</option>
 							<option value="999">카페매니저</option>
 						</select> 이상
@@ -41,25 +41,24 @@
 					<p>
 						<strong>댓글쓰기</strong>
 						<select style="width: 145px;" name="boardReplyAuth" onchange="changeMenuValue()">
-							<option value="1">새싹멤버</option>
-							<option value="110">일반멤버</option>
-							<option value="120">성실멤버</option>
-							<option value="130">열심멤버</option>
-							<option value="140">우수멤버</option>
-							<option value="150">감사멤버</option>
+							<option	value="0">새싹멤버</option>
+							<option value="1">일반멤버</option>
+							<option value="2">성실멤버</option>
+							<option value="3">열심멤버</option>
+							<option value="4">우수멤버</option>
+							<option value="5">감사멤버</option>
 							<option value="888">카페스탭</option>
 							<option value="999">카페매니저</option></select> 이상
 					</p>
 					<p class="p_last">
 						<strong>읽기</strong>
 						<select style="width: 145px;" name="boardReadAuth" onchange="changeMenuValue()">
-							<option value="0">전체공개</option>
-							<option value="1">새싹멤버</option>
-							<option value="110">일반멤버</option>
-							<option value="120">성실멤버</option>
-							<option value="130">열심멤버</option>
-							<option value="140">우수멤버</option>
-							<option value="150">감사멤버</option>
+							<option	value="0">새싹멤버</option>
+							<option value="1">일반멤버</option>
+							<option value="2">성실멤버</option>
+							<option value="3">열심멤버</option>
+							<option value="4">우수멤버</option>
+							<option value="5">감사멤버</option>
 							<option value="888">카페스탭</option>
 							<option value="999">카페매니저</option>
 						</select> 이상
