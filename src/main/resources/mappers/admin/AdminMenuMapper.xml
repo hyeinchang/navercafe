@@ -25,16 +25,27 @@
     			BOARD_LIKES_FLAG, BOARD_REPLY_FLAG, BOARD_PREFIXES_FLAG, BOARD_PUBLIC_FLAG,
     			CAFE_ID, BOARD_ORDER)
     		VALUES
-    			(BOARD_MENU_TYPE_SEQ.NEXTVAL, #{boardMenuName}, #{boardMenuDesc}, #{boardMenuType},
+    			(PROJECT_BOARD_TYPE_SEQ.NEXTVAL, #{boardMenuName}, #{boardMenuDesc}, #{boardMenuType},
     			#{boardWriteAuth}, #{boardReplyAuth}, #{boardReadAuth},
     			#{boardLikesFlag}, #{boardReplyFlag}, #{boardPrefixesFlag}, #{boardPublicFlag},
     			#{cafeId}, #{boardOrder})	
     	]]>
     </insert>
     
+    <update id="updateBoardMenu">
+    	<![CDATA[
+    		UPDATE PROJECT_BOARD_TYPE SET
+	    		BOARD_MENU_NAME = #{boardMenuName}, BOARD_MENU_DESC = #{boardMenuDesc},
+	    		BOARD_WRITE_AUTH = #{boardWriteAuth}, BOARD_REPLY_AUTH = #{boardReplyAuth}, BOARD_READ_AUTH = #{boardReadAuth},
+	    		BOARD_LIKES_FLAG = #{boardLikesFlag}, BOARD_REPLY_FLAG = #{boardReplyFlag}, BOARD_PREFIXES_FLAG = #{boardPrefixesFlag}, BOARD_PUBLIC_FLAG = #{boardPublicFlag},
+	    		BOARD_ORDER = #{boardOrder}
+    		WHERE BOARD_MENU_NUM = #{boardMenuNum}
+    	]]>
+    </update>
+    
     <select id="selectBoardMenuList" resultMap="adminMenu">
     	<![CDATA[
-    		SELECT * FROM PROJECT_BOARD_TYPE WHERE CAFE_ID = #{cafeId}
+    		SELECT * FROM PROJECT_BOARD_TYPE WHERE CAFE_ID = #{cafeId} ORDER BY BOARD_ORDER
     	]]>
     </select>
     

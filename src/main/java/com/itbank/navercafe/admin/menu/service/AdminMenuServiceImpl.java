@@ -12,13 +12,16 @@ import com.itbank.navercafe.admin.menu.mapper.AdminMenuMapper;
 public class AdminMenuServiceImpl implements AdminMenuService {
 	@Autowired
 	AdminMenuMapper adminMenuMapper;
-	
 
 	@Override
 	public int insertBoardMenu(AdminMenuDTO adminMenuDTO) throws Exception {
-		return insertBoardMenu(adminMenuDTO);
+		return adminMenuMapper.insertBoardMenu(adminMenuDTO);
 	}
 
+	@Override
+	public int updateBoardMenu(AdminMenuDTO adminMenuDTO) throws Exception {
+		return adminMenuMapper.updateBoardMenu(adminMenuDTO);
+	}
 	
 	@Override
 	public List<AdminMenuDTO> selectBoardMenuList(String cafeId) throws Exception {
@@ -29,4 +32,5 @@ public class AdminMenuServiceImpl implements AdminMenuService {
 	public AdminMenuDTO selectBoardMenu(int boardMenuNum) throws Exception {
 		return adminMenuMapper.selectBoardMenu(boardMenuNum);
 	}
+
 }

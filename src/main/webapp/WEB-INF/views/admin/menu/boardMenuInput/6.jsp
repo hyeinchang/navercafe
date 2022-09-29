@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!-- 출석게시판 -->
 <form name="menuInfoForm" id="menuInfoForm_${menuDTO.boardOrder}">
 <table border="1" cellspacing="0" width="100%" summary="메뉴관리 설정">
 	<caption style="display: none;">메뉴관리 설정 정보</caption>
@@ -10,10 +11,11 @@
 		<tr>
 			<th>메뉴명</th>
 			<td>
-				<input type="text" class="ipt_type" name="boardMenuName" value="${menuDTO.boardMenuName}" onkeyup="changeMenuValue()">
+				<input type="text" class="ipt_type" name="boardMenuName" value="${menuDTO.boardMenuName}" onkeyup="changeMenuValue()" onchange="changeMenuValue()">
 				<br>
 				<span class="p_type2">
-					<input id="member1" type="checkbox"class="check" name="boardPublicFlag" value="N" onchange="changeMenuValue()">
+					<input id="member1" type="checkbox"class="check" name="boardPublicFlag" value="N"
+						onchange="changeMenuValue()"${menuDTO.boardPublicFlag eq 'N' ||  menuDTO.boardPublicFlag eq null ? ' checked' : ''}>
 					<label for="member1">멤버에게만 공개</label>
 				</span>
 			</td>

@@ -10,6 +10,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.itbank.navercafe.admin.menu.dto.AdminMenuDTO;
@@ -55,7 +56,9 @@ public class AdminMenuController {
 			
 			inputFileUrl = inputFileUrl + menuDTO.getBoardMenuType();
 			
-			menuDTO = adminMenuService.selectBoardMenu(boardMenuNum);
+			if(boardMenuNum != 0) {
+				menuDTO = adminMenuService.selectBoardMenu(boardMenuNum);
+			} 
 			
 			model.addAttribute("noLayout", true);
 			model.addAttribute("cafeDTO", cafeDTO);
@@ -67,12 +70,43 @@ public class AdminMenuController {
 	}
 	
 	
-	@PostMapping("/saveBoardMenu")
+	@RequestMapping("/saveBoardMenu")
 	public String saveBoardMenu(HttpServletRequest request, CafeDTO cafeDTO, RedirectAttributes ra) {
-		CommonUtils commonUtils = new CommonUtils();
-		AdminMenuDTO menuDTO = new AdminMenuDTO();
+		String[] boardMenuNums = request.getParameterValues("boardMenuNum");
+		CommonUtils commonUtils = new CommonUtils();	
+
+		try {
+			if(boardMenuNums != null && boardMenuNums.length > 0) {
+				int order = 1;
+				
+				for(int i=0; i<boardMenuNums.length; i++) {
+					AdminMenuDTO menuDTO = new AdminMenuDTO();
+					
+					menuDTO.setCafeId(cafeDTO.getCafeId());
+					commonUtils.setDTO(request, menuDTO, i);
+					
+					if(menuDTO.getDelFlag().equals("Y")) {
+						continue;
+					}
+					
+					menuDTO.setBoardOrder(order);
+					
+					// insert
+					if(menuDTO.getBoardMenuNum() == 0) {
+						adminMenuService.insertBoardMenu(menuDTO);
+					// update
+					} else {
+						adminMenuService.updateBoardMenu(menuDTO);
+					}
+					
+					order++;
+				}
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
 		
-		ra.addAttribute("cafeId", menuDTO.getBoardMenuName());
+		ra.addAttribute("cafeId", cafeDTO.getCafeId());
 		
 		return "redirect:boardMenu";
 	}
