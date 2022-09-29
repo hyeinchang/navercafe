@@ -86,11 +86,22 @@ public class CafeMemberServiceImpl implements CafeMemberService{
 
 	}
 	
-	
+	@Override
+	public String idOverlap(String cafeUserNickname, String cafeId) {
+		String result = null;
+		int idCheck = mapper.idOverlap(cafeUserNickname,cafeId);
+		
+		if(idCheck!=1) {
+			result = "OK"; // 중복X
+		}else {
+			result = "NO";
+		}
+		return result;
+	}
 	
 	@Override
-	public CafeMemberDTO getCafeUserInfo(String userId) {
-		return mapper.getCafeUserInfo(userId);
+	public CafeMemberDTO getCafeUserInfo(String userId, String cafeId) {
+		return mapper.getCafeUserInfo(userId, cafeId);
 	}
 	@Override
 	public CafeMemberDTO getSessionUserInfo(String sessionId) {

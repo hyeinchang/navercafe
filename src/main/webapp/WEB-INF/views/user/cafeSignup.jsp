@@ -74,9 +74,10 @@
 	</h2>
 	<p>카페 가입을 위한 정보를 입력해주세요.</p>
 	<div style="margin-top: 30px; padding: 8px 32px 32px; border: 1px solid #ebecef; line-height: 20px; border-radius: 10px;">
-		<form action="cafeRegApp" method="post" name="signupForm">
-			<input type="hidden" value="${cafeId}" name="cafeId">
+		<form action="cafeRegApp" method="post" name="signupForm" id="signupForm">
+			<input type="hidden" value="${cafeId}" name="cafeId" id="cafeId">
 			<input type="hidden" value="${loginId}" name="userId">
+			<input type="hidden" name="status" id="status" value="OK">
 			<div class="join_info">
 				<div class="join_info_head">
 					<strong style="line-height: 20px;">카페설명</strong>
@@ -100,7 +101,8 @@
 				</div>
 				<div class="join_info_body">
 					<div style="position: relative; display: inline-block; margin: 0; padding: 0;">
-						<input class="input_text" type="text" placeholder="닉네임" name="cafeUserNickname">
+						<input class="input_text" type="text" placeholder="닉네임" id="cafeUserNickname" name="cafeUserNickname" onkeyup="idOverlap()">
+						<span id="confirm"></span>
 						<button type="button" class="btn_close"></button>
 					</div>
 				</div>
@@ -125,7 +127,7 @@
 				</div>
 			</div>
 			<div style="margin-top: 16px; text-align: center;">
-				<button class="signbutton" type="submit">
+				<button class="signbutton" type="button" onclick="update()">
 					<span style="color: #009f47">동의 후 가입하기</span>
 				</button>
 			</div>
@@ -133,10 +135,47 @@
 	</div>
 	
 </div>
+<script type="text/javascript" src="resources/js/jquery3.6.0.js"></script>
 <script type="text/javascript">
- var nick = document.getElementById("nickName"); 
-	function reset(){
-	nick.value() = "";
- }
+function idOverlap(){
+	let idCheck = document.getElementById("cafeUserNickname").value;
+	/*  let oldNick = document.getElementById("oldNick").value; */
+	let cafeId = document.getElementById("cafeId").value;
+	let confirm = document.getElementById("confirm");
+	let status = document.getElementById("status");
+	
+	$.ajax({
+		type : "POST",
+		url : "nickCheck2",
+		data : {"id" : idCheck,"cafeId":cafeId},
+		dataType : "text",
+		success : function(data){
+			if(data=="OK"){
+				confirm.style.color="#0000ff";
+				confirm.innerHTML = "사용 가능한 닉네임 입니다.";
+				$('input[name=status]').attr('value',"OK");
+				
+			}else{
+				confirm.style.color="#ff0000";
+				confirm.innerHTML = "사용 불가능한 닉네임 입니다.";
+				$('input[name=status]').attr('value',"NO");
+			}
+		},
+		error : function(){
+			alert("에러ㅓㅓ")
+		}
+	});
+}
+
+function update(){
+	let confirm = document.getElementById("confirm");
+	let status = document.getElementById("status").value;
+	console.log(status)
+	if(status == "OK"){
+		document.getElementById("signupForm").submit();
+	}else{
+		alert('수정 정보를 다시 확인해주세요')
+	}
+}
 </script>
 <!-- end content -->

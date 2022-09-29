@@ -31,23 +31,25 @@ public class BoardController {
 	}
 	//전체목록인데 수영이형이랑 상의.
 	@GetMapping("/goBoardList")
-	public String goBoardList(Model model){
-		model.addAttribute("boardList",ser.getBoardList());
+	public String goBoardList(Model model, String cafeId){
+		System.out.println("보드 리스트 cafeId:"+cafeId);
+		model.addAttribute("boardList",ser.getBoardList(cafeId));
 		return "user/board/boardList";
 	}
 
 	@GetMapping("/goBoardInside")
 	public String goBoardInside(int boardNum, Model model,HttpSession session,
-			@RequestParam(value="num",required=false,defaultValue="0")int num) {
+			@RequestParam(value="num",required=false,defaultValue="0")int num, String cafeId) {
 		System.out.println("boardInside실행");
+		System.out.println("cafeId:"+cafeId);
 		//댓글 갯수 세오기
 		model.addAttribute("replyCount",replySer.getReplyCount(boardNum));
 		
 		//게시물 가져오기
-		BoardDTO dto= ser.getUserBoard(boardNum,model,num);
+		BoardDTO dto= ser.getUserBoard(boardNum,model,num,cafeId);
 		model.addAttribute("userBoard",dto);
 		//카페유저 정보 가져오기
-		model.addAttribute("cafeUserInfo",boardCafeSer.getCafeUserInfo(dto.getUserId()));
+		model.addAttribute("cafeUserInfo",boardCafeSer.getCafeUserInfo(dto.getUserId(), cafeId));
 		//위에있는거 2개 맵으로 가져와서 합쳐 줄 라고 했는데 clob이 문제가 생기네?
 		
 		//댓글 리스트 가져오기
