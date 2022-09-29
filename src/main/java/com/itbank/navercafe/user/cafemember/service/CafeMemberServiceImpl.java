@@ -1,24 +1,13 @@
 package com.itbank.navercafe.user.cafemember.service;
 
-import java.io.File;
-import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.itbank.navercafe.comon.file.TestFileService;
-import com.itbank.navercafe.comon.file.dto.FileDTO;
-//import com.itbank.navercafe.comon.file.FileService;
-import com.itbank.navercafe.user.cafejoin.dto.CafeJoinDTO;
 import com.itbank.navercafe.user.cafemember.dto.CafeMemberDTO;
-import com.itbank.navercafe.user.cafemember.dto.TestFileDTO;
 import com.itbank.navercafe.user.cafemember.mapper.CafeMemberMapper;
 
 
@@ -26,7 +15,6 @@ import com.itbank.navercafe.user.cafemember.mapper.CafeMemberMapper;
 @Service
 public class CafeMemberServiceImpl implements CafeMemberService{
 
-	@Autowired TestFileService fs;
 	@Autowired CafeMemberMapper mapper;
 
 
@@ -70,6 +58,12 @@ public class CafeMemberServiceImpl implements CafeMemberService{
 	}
 	
 	@Override
+	public int cafeMemberUpdate(MultipartHttpServletRequest mul) {
+
+		return 0;
+	}
+	
+	@Override
 	public String idOverlap(String cafeUserNickname, String cafeId, String oldNick) {
 		String result = null;
 		int idCheck = mapper.idOverlap(cafeUserNickname,cafeId);
@@ -86,7 +80,18 @@ public class CafeMemberServiceImpl implements CafeMemberService{
 
 	}
 	
-	
+	@Override
+	public String idOverlap(String cafeUserNickname, String cafeId) {
+		String result = null;
+		int idCheck = mapper.idOverlap(cafeUserNickname,cafeId);
+		
+		if(idCheck!=1) {
+			result = "OK"; // 중복X
+		}else {
+			result = "NO";
+		}
+		return result;
+	}
 	
 	@Override
 	public CafeMemberDTO getCafeUserInfo(String cafeId,String userId) {
@@ -103,6 +108,9 @@ public class CafeMemberServiceImpl implements CafeMemberService{
 	public void getUserViewList(String cafeId,String userId,Model model) {
 		model.addAttribute("getUserViewList",mapper.getUserViewList(cafeId,userId));
 	}
+	
+	
+	
 	
 
 

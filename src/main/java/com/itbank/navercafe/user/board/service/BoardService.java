@@ -14,10 +14,10 @@ import com.itbank.navercafe.user.board.dto.BoardDTO;
 
 public interface BoardService {
 	//전체목록인데 수영이형이랑 상의.
-	public ArrayList<BoardDTO> getBoardList();
+	public ArrayList<BoardDTO> getBoardList(String cafeId);
 	
 	//게시글 가져오기
-	public BoardDTO getUserBoard(int boardNum, Model model,int pageNum);
+	public BoardDTO getUserBoard(int boardNum, Model model,int pageNum, String cafeId);
 	
 	//조회수
 	public void hit(int boardNum,int num);
@@ -33,6 +33,7 @@ public interface BoardService {
 	
 	//파일테이블리스트
 	public void getFileList(Model model);
+
 	
 	
 

@@ -30,9 +30,10 @@ public class BoardController {
 		return "user/board/writeForm";
 	}
 	//전체목록인데 수영이형이랑 상의.
-	@GetMapping("/goBoardList")
-	public String goBoardList(String cafeId,Model model){
-		model.addAttribute("boardList",ser.getBoardList());
+	@GetMapping("/goBoardList")	
+	public String goBoardList(Model model, String cafeId){
+		System.out.println("보드 리스트 cafeId:"+cafeId);
+		model.addAttribute("boardList",ser.getBoardList(cafeId));
 		return "user/board/boardList";
 	}
 
@@ -40,11 +41,12 @@ public class BoardController {
 	public String goBoardInside(int boardNum, Model model,HttpSession session,String cafeId,
 			@RequestParam(value="num",required=false,defaultValue="0")int num) {
 		System.out.println("boardInside실행");
+		System.out.println("cafeId:"+cafeId);
 		//댓글 갯수 세오기
 		model.addAttribute("replyCount",replySer.getReplyCount(boardNum));
 		
 		//게시물 가져오기
-		BoardDTO dto= ser.getUserBoard(boardNum,model,num);
+		BoardDTO dto= ser.getUserBoard(boardNum,model,num,cafeId);
 		model.addAttribute("userBoard",dto);
 		//카페유저 정보 가져오기
 		model.addAttribute("cafeUserInfo",boardCafeSer.getCafeUserInfo(cafeId,dto.getUserId()));

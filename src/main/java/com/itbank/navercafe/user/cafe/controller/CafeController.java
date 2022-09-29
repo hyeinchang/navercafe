@@ -191,10 +191,28 @@ public class CafeController {
 		return "redirect:/user/main?cafeId="+dto.getCafeId();
 	}
 	
+	@PostMapping("profilesubmit2")
+	public String profilesubmit2(MultipartHttpServletRequest mul) {
+		System.out.println();
+		int result = cms.cafeMemberUpdate(mul);
+		if(result == 1 ) {
+			
+			return "redirect:/user/main?cafeId="+mul.getParameter("cafeId");
+		}
+		return "redirect:/user/main?cafeId="+mul.getParameter("cafeId");
+		
+	}
+	
 	//@RequestMapping(value = "/nickCheck", method = RequestMethod.POST)
-	@PostMapping(value = "/nickCheck")
+	@PostMapping(value = "/nickCheck") // 카페회원정보수정 닉네임 체크
 	public @ResponseBody String nickCheck(@RequestParam("oldNick") String oldNick,@RequestParam("id") String cafeUserNickname, @RequestParam("cafeId")String cafeId) {
 		String result = cms.idOverlap(cafeUserNickname,cafeId, oldNick);
+		
+		return result;
+	}
+	@PostMapping(value = "/nickCheck2") // 카페 회원가입 닉네임 체크
+	public @ResponseBody String nickCheck2(@RequestParam("id") String cafeUserNickname, @RequestParam("cafeId")String cafeId) {
+		String result = cms.idOverlap(cafeUserNickname,cafeId);
 		
 		return result;
 	}

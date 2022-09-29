@@ -29,7 +29,7 @@
 			// 열 넓이 설정
 			columnDefs: [
 				// visible 숨김, orderable 정렬기능
-				{ visible:false, orderable: true, targets: 0, width: 0 },// 1번째 항목 넓이를 10px로 설정
+				{ visible: false, orderable: true, targets: 0, width: 0 },// 1번째 항목 넓이를 10px로 설정
 				{ orderable: false, targets: 1, width: 180 },// 2번째 항목 넓이를 30px로 설정
 				{ orderable: false, targets: 2, width: 5 },// 3번째 항목 넓이를 30px로 설정
 				{ orderable: false, targets: 3, width: 5 },// 4번째 항목 넓이를 30px로 설정
@@ -71,7 +71,7 @@
 		
 		$('.dataTables_filter input').unbind().bind('keyup', function () {
 	        var colIndex = document.querySelector('#select').selectedIndex;
-	        table.column(colIndex).search(this.value).draw();
+	        table.column(colIndex+1).search(this.value).draw(); // 컬럼 숨기면 검색 인덱스 +1
 	    });
 		console.log();
 	});
@@ -94,10 +94,11 @@
 						</tr>
 					</thead>
 					<c:forEach var="dto" items="${boardList}">
+					<!--  <a href="javascript:changeCafeMenu('/navercafe/user/board/goBoardInside')">113</a> -->
 						<tr>
 							<th>${dto.boardNum}</th>
 							<th><a href="goBoardInside?boardNum=${dto.boardNum}&cafeId=${cafeId}">
-									${dto.boardTitle} </a></th>
+							${dto.boardTitle} </a></th>
 							<th>${dto.userId}</th>
 							<th>${dto.boardSaveDate}</th>
 							<th>${dto.hit}</th>

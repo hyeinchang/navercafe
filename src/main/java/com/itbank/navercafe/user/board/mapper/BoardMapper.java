@@ -15,7 +15,7 @@ import com.itbank.navercafe.user.board.dto.LikesDTO;
 
 public interface BoardMapper {
 	//전체목록인데 수영이형이랑 상의.
-	public ArrayList<BoardDTO> getBoardList();
+	public ArrayList<BoardDTO> getBoardList(String cafeId);
 	//보드 넘에 따른 게시물
 	public BoardDTO getUserBoard(int boardNum);
 	//페이징 사용 안하면.

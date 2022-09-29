@@ -16,6 +16,7 @@
 		<result property="userId" column="user_id"/>
 		<result property="boardMenuNum" column="board_menu_num"/>
 		<result property="hit" column="hit"/>
+		<result property="cafeId" column="cafe_id"/>
 	</resultMap>
 	
 	<resultMap type="com.itbank.navercafe.user.board.dto.LikesDTO" id="project_likes">
@@ -25,7 +26,7 @@
 	
 	<!-- //전체목록인데 수영이형이랑 상의. -->
 	<select id="getBoardList" resultMap="project_board">
-		select * from project_board
+		select * from project_board where cafe_id=#{cafeId}
 	</select>
 	
 	<!-- clob 형식이 안따라옴

@@ -29,19 +29,20 @@ public class BoardServiceImpl implements BoardService{
 	
 	//전체목록인데 수영이형이랑 상의.
 	@Override
-	public ArrayList<BoardDTO> getBoardList() {
-		return bm.getBoardList();
+	public ArrayList<BoardDTO> getBoardList(String cafeId) {
+		System.out.println("service 보드 리스트 cafeId:"+cafeId);
+		return bm.getBoardList(cafeId);
 	}
 
 	@Override
-	public BoardDTO getUserBoard(int boardNum,Model model,int pageNum) {
+	public BoardDTO getUserBoard(int boardNum,Model model,int pageNum,String cafeId) {
 		
 		//System.out.println("페이지넘버 : " + pageNum);
 		if(pageNum == 0) {
 			pageNum++;
 		}
 		// 이전글 다음글 
-		ArrayList<BoardDTO> listChk= bm.getBoardList();
+		ArrayList<BoardDTO> listChk= bm.getBoardList(cafeId);
 		int j = 0;
 		for(j=0; j<listChk.size();j++) {
 			//System.out.println("j 마지막 값 구하기");

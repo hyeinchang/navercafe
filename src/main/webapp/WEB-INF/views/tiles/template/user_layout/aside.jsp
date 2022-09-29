@@ -189,7 +189,7 @@
           </h4>
           <ul class="categories">            
             <li>
-            	<a href="goBoardList">전체글보기</a>
+            	<a href="javascript:changeCafeMenu('${contextPath}/user/board/goBoardList')">전체글보기</a>
             	<span class="text-primary">3</span>
             </li>
           </ul>

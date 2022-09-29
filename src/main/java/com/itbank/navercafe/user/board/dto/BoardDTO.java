@@ -18,7 +18,14 @@ public class BoardDTO {
 	private String userId;
 	private int boardMenuNum;
 	private int hit;
+	private String cafeId;
 	
+	public String getCafeId() {
+		return cafeId;
+	}
+	public void setCafeId(String cafeId) {
+		this.cafeId = cafeId;
+	}
 	public int getBoardNum() {
 		return boardNum;
 	}
