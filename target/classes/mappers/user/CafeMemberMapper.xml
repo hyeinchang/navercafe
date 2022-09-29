@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itbank.navercafe.user.cafemember.mapper.CafeMemberMapper">
+	<resultMap type="com.itbank.navercafe.user.cafemember.dto.CafeMemberDTO" id="cafeMapper">
+		<id column="CAFE_ID" property="cafeId"/>
+        <result column="CAFE_NAME" property="cafeName"/>
+        <result column="USER_ID" property="userId"/>
+        <result column="CAFE_EXPLANATION" property="cafeExplanation"/>
+        <result column="CAFE_TITLE_NUM" property="cafeTitleNum"/>
+        <result column="CAFE_FRONT" property="cafeFront"/>
+        <result column="CAFE_SKIN" property="cafeSkin"/>
+        <result column="CAFE_LAYOUT" property="cafeLayout"/>
+        <result column="CAFE_JOIN_APPLY" property="cafeJoinApply"/>
+        <result column="CAFE_JOIN_GENDER" property="cafeJoinGender"/>
+        <result column="CAFE_JOIN_AGE" property="cafeJoinAge"/>
+        <result column="CAFE_ICON_NUM" property="cafeIconNum"/>
+        <result column="CAFE_JOIN_INFORMATION" property="cafeJoinInformation"/>
+        <result column="CAFE_REGDATE" property="cafeRegdate"/>
+	</resultMap>
+	
+	<insert id="insertCafeMember">
+		<![CDATA[
+			
+		]]>
+	</insert>
+	
+</mapper>

@@ -17,8 +17,8 @@ import com.itbank.navercafe.admin.menu.dto.AdminMenuDTO;
 import com.itbank.navercafe.admin.menu.service.AdminMenuService;
 import com.itbank.navercafe.common.CommonUtils;
 import com.itbank.navercafe.common.menu.BoardMenuType;
-import com.itbank.navercafe.user.boardmenu.dto.BoardMenuDTO;
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
+import com.itbank.navercafe.user.menu.dto.MenuDTO;
 
 @Controller
 @RequestMapping("admin/menu")
@@ -28,10 +28,10 @@ public class AdminMenuController {
 	
 	// BoardMenuType class로 게시판 메뉴 타입 설정
 	private BoardMenuType boardMenuType = new BoardMenuType();
-	private List<BoardMenuDTO> boardMenuTypeList = boardMenuType.getBoardMenuTypeList();
+	private List<MenuDTO> boardMenuTypeList = boardMenuType.getBoardMenuTypeList();
 	
 	@RequestMapping("/boardMenu")
-	public String boardMenu(CafeDTO cafeDTO, BoardMenuDTO menuDTO, Model model) {
+	public String boardMenu(CafeDTO cafeDTO, MenuDTO menuDTO, Model model) {
 		try {
 			String cafeId = cafeDTO.getCafeId();
 			List<AdminMenuDTO> boardMenuList = adminMenuService.selectBoardMenuList(cafeId);
@@ -81,18 +81,24 @@ public class AdminMenuController {
 				
 				for(int i=0; i<boardMenuNums.length; i++) {
 					AdminMenuDTO menuDTO = new AdminMenuDTO();
+					int boardMenuNum = 0;
 					
 					menuDTO.setCafeId(cafeDTO.getCafeId());
 					commonUtils.setDTO(request, menuDTO, i);
+					boardMenuNum = menuDTO.getBoardMenuNum();
 					
 					if(menuDTO.getDelFlag().equals("Y")) {
+						// delete
+						if(boardMenuNum != 0) {
+							adminMenuService.deleteBoardMenu(boardMenuNum);
+						}
 						continue;
 					}
 					
 					menuDTO.setBoardOrder(order);
 					
 					// insert
-					if(menuDTO.getBoardMenuNum() == 0) {
+					if(boardMenuNum == 0) {
 						adminMenuService.insertBoardMenu(menuDTO);
 					// update
 					} else {

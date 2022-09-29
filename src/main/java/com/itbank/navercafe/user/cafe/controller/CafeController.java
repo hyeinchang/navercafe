@@ -1,5 +1,8 @@
 package com.itbank.navercafe.user.cafe.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -17,12 +20,17 @@ import com.itbank.navercafe.common.file.service.FileService;
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
 import com.itbank.navercafe.user.cafe.service.CafeService;
 import com.itbank.navercafe.user.member.dto.MemberDTO;
+import com.itbank.navercafe.user.menu.dto.MenuDTO;
+import com.itbank.navercafe.user.menu.service.MenuService;
 
 @Controller
 @RequestMapping("/user")
 public class CafeController {
 	@Autowired
 	private CafeService cafeService;
+	
+	@Autowired
+	private MenuService menuService;
 	
 	@Autowired
 	private FileUtils fileUtils;
@@ -41,6 +49,7 @@ public class CafeController {
 		
 		CafeDTO cafeDTO = new CafeDTO();
 		String loginId = (String) session.getAttribute("loginId");
+		List<MenuDTO> menuList = new ArrayList<>();
 		
 		try {
 			cafeDTO = cafeService.selectCafe(cafeId);

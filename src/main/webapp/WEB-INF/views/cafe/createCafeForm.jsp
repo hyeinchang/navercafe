@@ -304,6 +304,12 @@ function checkCafeId() {
 	var cafeId = form.cafeId;
 	var xhr = new XMLHttpRequest();
 	
+	if(form.cafeIdCheck.value != 'Y') {
+		alert('아이디 중복 확인을 해주십시오.');
+		cafeId.focus();
+		return;
+	}
+	
 	if(cafeId.value == '') {
 		alert('카페 아이디를 입력해주십시오.');
 		cafeId.focus();

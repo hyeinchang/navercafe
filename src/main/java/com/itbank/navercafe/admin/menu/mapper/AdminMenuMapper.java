@@ -9,4 +9,6 @@ public interface AdminMenuMapper {
 	public int updateBoardMenu(AdminMenuDTO adminMenuDTO) throws Exception;
 	public List<AdminMenuDTO> selectBoardMenuList(String cafeId) throws Exception;
 	public AdminMenuDTO selectBoardMenu(int boardMenuNum) throws Exception;
+	public int deleteBoardMenu(int boardMenuNum) throws Exception;
+	public int deleteBoardList(int boardMenuNum) throws Exception;
 }

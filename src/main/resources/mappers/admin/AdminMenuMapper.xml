@@ -54,5 +54,18 @@
     		SELECT * FROM PROJECT_BOARD_TYPE WHERE BOARD_MENU_NUM = #{boardMenuNum}
     	]]>
     </select>
+    
+    <delete id="deleteBoardMenu">
+    	<![CDATA[
+    		DELETE FROM PROJECT_BOARD_TYPE WHERE BOARD_MENU_NUM = #{boardMenuNum}
+    	]]>
+    </delete>
+    
+     <delete id="deleteBoardList">
+    	<![CDATA[
+    		DELETE FROM PROJECT_BOARD WHERE BOARD_MENU_NUM = #{boardMenuNum}
+    	]]>
+    </delete>
+   
 </mapper>
 

@@ -188,8 +188,8 @@
             <span>Categories</span>
           </h4>
           <ul class="categories">            
-            <c:forEach var="category" items="${categoryList}">
-            <li><a href="${category.categoryLink}">${category.categoryName}</a></li>
+            <c:forEach var="cafeMenu" items="${cafeDTO.cafeMenuList}">
+            <li><a href="javascript:alert('${cafeMenu.boardMenuNum} 번 게시판으로 이동');">${cafeMenu.boardMenuName}</a></li>
             </c:forEach>
           </ul>
         </div>

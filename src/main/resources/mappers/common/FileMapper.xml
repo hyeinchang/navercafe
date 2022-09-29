@@ -18,13 +18,13 @@
 	<insert id="insertAttachFile" >
 		<![CDATA[
 			INSERT INTO PROJECT_FILE
-			(FILE_NUM, FILE_DIRECTORY, FILE_ORG_NAME, FILE_STORED_NAME, 
-			CAFE_ICON_NUM, CAFE_TITLE_NUM, CAFE_USER_IMAGE_NUM, BOARD_NUM, REPLY_NUM, MEMO_REPLY_NUM,
-			REGDATE)
+				(FILE_NUM, FILE_DIRECTORY, FILE_ORG_NAME, FILE_STORED_NAME, 
+				CAFE_ICON_NUM, CAFE_TITLE_NUM, CAFE_USER_IMAGE_NUM, BOARD_NUM, REPLY_NUM, MEMO_REPLY_NUM,
+				REGDATE)
 			VALUES
-			(project_file_seq.nextval, #{fileDirectory}, #{fileOrgName}, #{fileStoredName}, 
-			#{cafeIconNum}, #{cafeTitleNum}, #{cafeUserImageNum}, #{boardNum}, #{replyNum}, #{memoReplyNum},
-			sysdate)
+				(project_file_seq.nextval, #{fileDirectory}, #{fileOrgName}, #{fileStoredName}, 
+				#{cafeIconNum}, #{cafeTitleNum}, #{cafeUserImageNum}, #{boardNum}, #{replyNum}, #{memoReplyNum},
+				sysdate)
 		]]>
 	</insert>
 	
@@ -39,8 +39,22 @@
 	
 	<select id="selectAttachFile_fileNum" resultMap="file">
 		<![CDATA[
-			SELECT * FROM PROJECT_FILE WHERE FILE_NUM = #{fileNun}
+			SELECT * FROM PROJECT_FILE WHERE FILE_NUM = #{fileNum}
 		]]>
 	</select>
+	
+	<update id="updateAttachFile">
+		<![CDATA[
+			UPDATE PROJECT_FILE SET 
+				FILE_ORG_NAME = #{fileOrgName}, FILE_STORED_NAME = #{fileStoredName}
+			WHERE FILE_NUM = #{fileNum}
+		]]>
+	</update>
+	
+	<delete id="deleteAttachFile">
+		<![CDATA[
+			DELETE FROM PROJECT_FILE SET WHERE FILE_NUM = #{fileNum}
+		]]>
+	</delete>
 </mapper>
 

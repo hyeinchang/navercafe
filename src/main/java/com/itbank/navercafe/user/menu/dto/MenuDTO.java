@@ -1,6 +1,6 @@
-package com.itbank.navercafe.user.boardmenu.dto;
+package com.itbank.navercafe.user.menu.dto;
 
-public class BoardMenuDTO {
+public class MenuDTO {
 	private int boardMenuNum;
 	private String cafeId;
 	private String boardMenuName;

@@ -30,14 +30,14 @@ public class FileServiceImpl implements FileService {
 	public int insertAttachFile(FileDTO fileDTO) throws Exception {
 		return fileMapper.insertAttachFile(fileDTO);
 	}
-
+	
 	@Override
-	public int modifyAttachFile(FileDTO fileDTO) throws Exception {
-		return 0;
+	public int updateAttachFile(FileDTO fileDTO) throws Exception {
+		return fileMapper.updateAttachFile(fileDTO);
 	}
 
 	@Override
 	public int deleteAttachFile(int fileNum) throws Exception {
-		return 0;
+		return fileMapper.deleteAttachFile(fileNum);
 	}
 }

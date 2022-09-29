@@ -1,6 +1,9 @@
 package com.itbank.navercafe.user.cafe.dto;
 
 import java.util.Date;
+import java.util.List;
+
+import com.itbank.navercafe.user.menu.dto.MenuDTO;
 
 public class CafeDTO {
 	private String cafeId;
@@ -19,6 +22,7 @@ public class CafeDTO {
 	private Date cafeRegdate;
 	private boolean isCafeMember;
 	private boolean isCafeManager;
+	private List<MenuDTO> cafeMenuList;
 	
 	public CafeDTO() {
 		this.cafeSkin = "default";
@@ -122,5 +126,13 @@ public class CafeDTO {
 	}
 	public void setCafeManager(boolean isCafeManager) {
 		this.isCafeManager = isCafeManager;
+	}
+
+	public List<MenuDTO> getCafeMenuList() {
+		return cafeMenuList;
+	}
+
+	public void setCafeMenuList(List<MenuDTO> cafeMenuList) {
+		this.cafeMenuList = cafeMenuList;
 	}
 }

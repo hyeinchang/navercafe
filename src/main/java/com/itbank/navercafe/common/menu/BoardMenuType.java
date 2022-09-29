@@ -3,7 +3,7 @@ package com.itbank.navercafe.common.menu;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.itbank.navercafe.user.boardmenu.dto.BoardMenuDTO;
+import com.itbank.navercafe.user.menu.dto.MenuDTO;
 
 // 게시판 메뉴 타입 설정
 public class BoardMenuType {
@@ -24,13 +24,13 @@ public class BoardMenuType {
 	private int boardMenuNum[] = {TOTAL_BOARD_NUM, /*SIMPLE_BOARD_NUM, STAFF_BOARD_NUM, */GRADE_BOARD_NUM, MEMO_BOARD_NUM, ATTENDANCE_BOARD_NUM};
 	private String boardMenuName[] = {TOTAL_BOARD_NAME, /*SIMPLE_BOARD_NAME, /*STAFF_BOARD_NAME, */GRADE_BOARD_NAME, MEMO_BOARD_NAME, ATTENDANCE_BOARD_NAME};
 	
-	private List<BoardMenuDTO> boardMenuTypeList;
+	private List<MenuDTO> boardMenuTypeList;
 
-	public List<BoardMenuDTO> getBoardMenuTypeList() {
+	public List<MenuDTO> getBoardMenuTypeList() {
 		boardMenuTypeList = new ArrayList<>();
 		
 		for(int i=0; i<boardMenuNum.length; i++) {
-			BoardMenuDTO boardMenuDTO = new BoardMenuDTO();
+			MenuDTO boardMenuDTO = new MenuDTO();
 			
 			boardMenuDTO.setBoardMenuType(boardMenuNum[i]);
 			boardMenuDTO.setBoardMenuName(boardMenuName[i]);
@@ -40,7 +40,7 @@ public class BoardMenuType {
 		
 		return boardMenuTypeList;
 	}
-	public void setBoardMenuTypeList(List<BoardMenuDTO> boardMenuTypeList) {
+	public void setBoardMenuTypeList(List<MenuDTO> boardMenuTypeList) {
 		this.boardMenuTypeList = boardMenuTypeList;
 	}
 	public int getTOTAL_BOARD_NUM() {

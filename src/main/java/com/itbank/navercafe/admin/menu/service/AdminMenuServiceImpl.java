@@ -33,4 +33,19 @@ public class AdminMenuServiceImpl implements AdminMenuService {
 		return adminMenuMapper.selectBoardMenu(boardMenuNum);
 	}
 
+	@Override
+	public int deleteBoardMenu(int boardMenuNum) throws Exception {
+		try {
+			// 해당 게시판의 게시글 삭제
+			this.deleteBoardList(boardMenuNum);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return adminMenuMapper.deleteBoardMenu(boardMenuNum);
+	}
+
+	@Override
+	public int deleteBoardList(int boardMenuNum) throws Exception {
+		return adminMenuMapper.deleteBoardList(boardMenuNum);
+	}
 }

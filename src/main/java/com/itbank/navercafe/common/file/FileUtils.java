@@ -46,6 +46,95 @@ public class FileUtils {
 		System.out.println("upload_path ---- " + upload_path);
 	}
 	
+	// 파일 업데이트
+	public FileResult updateFile(MultipartFile multipartFile, FileDTO fileDTO) {
+		FileResult fileResult = new FileResult();
+		
+		try {
+			fileDTO = fileService.selectAttachFile(fileDTO);
+			
+			if(fileDTO != null) {
+				String directory = fileDTO.getFileDirectory();
+				String uploadPath = getUploadPath(directory);
+				String beforeStoredName = fileDTO.getFileStoredName();
+				
+				if(checkDirectory(uploadPath)) {
+					if(beforeStoredName != null && beforeStoredName.length() > 0) {
+						File beforeFile = new File(uploadPath + "/" + fileDTO.getFileStoredName());
+						
+						if(beforeFile.exists()) {
+							beforeFile.delete();
+						}
+					}
+					
+					fileResult = uploadFile(multipartFile, directory);
+					
+					if(fileResult.getState() == fileResult.SUCCESS) {
+						FileDTO uploadDTO = fileResult.getFileDTO();
+						int dbUpdate = 0;
+								
+						fileDTO.setFileOrgName(uploadDTO.getFileOrgName());
+						fileDTO.setFileStoredName(uploadDTO.getFileStoredName());
+						
+						dbUpdate = fileService.updateAttachFile(fileDTO);
+						fileResult.setState(dbUpdate);
+					}
+				} else {
+					fileResult.setState(fileResult.FAIL);
+				}
+			} else {
+				fileResult.setState(fileResult.FAIL);
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			fileResult.setState(fileResult.FAIL);
+		}
+		
+		return fileResult;
+	}
+	
+	// 파일 삭제
+	public FileResult deleteFile(MultipartFile multipartFile, FileDTO fileDTO) {
+		FileResult fileResult = new FileResult();
+		
+		try {
+			fileDTO = fileService.selectAttachFile(fileDTO);
+			
+			if(fileDTO != null) {
+				String directory = fileDTO.getFileDirectory();
+				String uploadPath = getUploadPath(directory);
+				String beforeStoredName = fileDTO.getFileStoredName();
+				
+				if(checkDirectory(uploadPath)) {
+					int dbDelete = 0;
+					
+					if(beforeStoredName != null && beforeStoredName.length() > 0) {
+						File beforeFile = new File(uploadPath + "/" + fileDTO.getFileStoredName());
+						
+						if(beforeFile.exists()) {
+							beforeFile.delete();
+						}
+					}
+					
+					dbDelete = fileService.deleteAttachFile(fileDTO.getFileNum());
+					fileResult.setState(dbDelete);
+				} else {
+					fileResult.setState(fileResult.FAIL);
+				}
+			} else {
+				fileResult.setState(fileResult.FAIL);
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+			fileResult.setState(fileResult.FAIL);
+		}
+		
+		return fileResult;
+	}
+	
+	
 	// 파일 다중 업로드
 	public FileResult uploadFile(MultipartHttpServletRequest multiRequest, String directory, boolean onlyFile) {
 		FileResult fileResult = new FileResult();

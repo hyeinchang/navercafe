@@ -2,7 +2,6 @@ package com.itbank.navercafe.user.cafe.service;
 
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,11 +9,16 @@ import org.springframework.stereotype.Service;
 import com.itbank.navercafe.common.pagination.Pagination;
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
 import com.itbank.navercafe.user.cafe.mapper.CafeMapper;
+import com.itbank.navercafe.user.menu.dto.MenuDTO;
+import com.itbank.navercafe.user.menu.service.MenuService;
 
 @Service
 public class CafeServiceImpl implements CafeService {
 	@Autowired
 	private CafeMapper cafeMapper;
+	
+	@Autowired
+	private MenuService menuService;
 	
 	@Override
 	public List<CafeDTO> selectCafeList(CafeDTO cafeDTO, Pagination pagination) throws Exception {
@@ -38,7 +42,20 @@ public class CafeServiceImpl implements CafeService {
 	
 	@Override
 	public CafeDTO selectCafe(String cafeId) throws Exception {
-		return cafeMapper.selectCafe(cafeId);
+		CafeDTO cafeDTO = null;
+		List<MenuDTO> cafeMenuList = null;
+		
+		try {
+			cafeDTO = cafeMapper.selectCafe(cafeId);
+			cafeMenuList = menuService.selectBoardMenuList(cafeId);
+			
+			if(cafeMenuList != null) {
+				cafeDTO.setCafeMenuList(cafeMenuList);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return cafeDTO;
 	}
 
 	@Override
