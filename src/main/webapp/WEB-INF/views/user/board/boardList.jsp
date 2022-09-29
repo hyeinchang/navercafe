@@ -77,7 +77,7 @@
 	});
 	
 </script>
-<h1>${cafeId}</h1>
+<h1>넘어온 카페 아이디:${cafeId}</h1>
 <div class="content pull-right col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix cstmContent" ${cafeDTO.cafeLayout > 0 ? '' : 'style="float:right;"'}>
 	<div class="container clearfix">
 		<div class="content col-lg-12 col-md-12 col-sm-12 clearfix">
@@ -96,7 +96,7 @@
 					<c:forEach var="dto" items="${boardList}">
 						<tr>
 							<th>${dto.boardNum}</th>
-							<th><a href="goBoardInside?boardNum=${dto.boardNum}">
+							<th><a href="goBoardInside?boardNum=${dto.boardNum}&cafeId=${cafeId}">
 									${dto.boardTitle} </a></th>
 							<th>${dto.userId}</th>
 							<th>${dto.boardSaveDate}</th>
