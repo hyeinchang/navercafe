@@ -98,8 +98,8 @@ public class CafeMemberServiceImpl implements CafeMemberService{
 		return mapper.getCafeUserInfo(cafeId,userId);
 	}
 	@Override
-	public CafeMemberDTO getSessionUserInfo(String cafeId,String sessionId) {
-		return mapper.getSessionUserInfo(cafeId,sessionId);
+	public CafeMemberDTO getSessionUserInfo(String cafeId,String userId) {
+		return mapper.getSessionUserInfo(cafeId,userId);
 	}
 	
 	

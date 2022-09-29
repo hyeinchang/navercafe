@@ -60,7 +60,7 @@
 	</update>
 	<!-- 댓글작성할때 필요한 애  -->
 	<select id="getSessionUserInfo" resultMap="project_cafe_member">
-		select user_id,cafe_user_nickname from project_cafe_member where user_id=#{sessionId} and cafe_id=#{cafeId}
+		select user_id,cafe_user_nickname from project_cafe_member where user_id=#{userId} and cafe_id=#{cafeId}
 	</select>
 	<!-- 게시글에 닉네임,이미지 표시하기위해 따로 빼와주는애 -->
 	<select id="getCafeUserInfo" resultMap="project_cafe_member">

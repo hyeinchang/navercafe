@@ -94,10 +94,11 @@
 						</tr>
 					</thead>
 					<c:forEach var="dto" items="${boardList}">
-					<!--  <a href="javascript:changeCafeMenu('/navercafe/user/board/goBoardInside')">113</a> -->
 						<tr>
 							<th>${dto.boardNum}</th>
-							<th><a href="goBoardInside?boardNum=${dto.boardNum}&cafeId=${cafeId}">
+							<th><h1>${dto.boardNum}</h1></th>
+							<th>
+							<a href="goBoardInside?boardNum=${dto.boardNum }&cafeId=${cafeId}">
 							${dto.boardTitle} </a></th>
 							<th>${dto.userId}</th>
 							<th>${dto.boardSaveDate}</th>

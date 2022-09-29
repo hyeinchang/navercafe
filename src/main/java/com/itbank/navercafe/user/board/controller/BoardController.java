@@ -34,41 +34,47 @@ public class BoardController {
 	public String goBoardList(Model model, String cafeId){
 		System.out.println("보드 리스트 cafeId:"+cafeId);
 		model.addAttribute("boardList",ser.getBoardList(cafeId));
+		model.addAttribute("cafeId",cafeId);
 		return "user/board/boardList";
 	}
 
 	@GetMapping("/goBoardInside")
 	public String goBoardInside(int boardNum, Model model,HttpSession session,String cafeId,
 			@RequestParam(value="num",required=false,defaultValue="0")int num) {
+		System.out.println("넘어온 보드 값 : "+boardNum);
 		System.out.println("boardInside실행");
 		System.out.println("cafeId:"+cafeId);
 		//댓글 갯수 세오기
 		model.addAttribute("replyCount",replySer.getReplyCount(boardNum));
-		
+		System.out.println("댓글 갯수 세오기 컷");
 		//게시물 가져오기
 		BoardDTO dto= ser.getUserBoard(boardNum,model,num,cafeId);
 		model.addAttribute("userBoard",dto);
+		System.out.println("게시물 가져오기 컷");
 		//카페유저 정보 가져오기
 		model.addAttribute("cafeUserInfo",boardCafeSer.getCafeUserInfo(cafeId,dto.getUserId()));
 		//위에있는거 2개 맵으로 가져와서 합쳐 줄 라고 했는데 clob이 문제가 생기네?
-		
+		System.out.println("카페 유저 정보 가져오기 컷");
 		//댓글 리스트 가져오기
 		model.addAttribute("replyList",replySer.getReplyList(boardNum));
 		//System.out.println(replySer.getReplyList(boardNum));
+		System.out.println("댓글 리스트 가져오기 컷");
 		
 		//세션 아이디 줘서 정보 가져오기
 		model.addAttribute("sessionUser",boardCafeSer.getSessionUserInfo(cafeId,(String) session.getAttribute("loginId")));
-		//말머리에 따른 게시물 목록 가져오기
-		//System.out.println("댓글 키들:"+replySer.getReplyList(boardNum));
+		System.out.println("세션 아디 줘서 정보 가져오기 컷");
 		//조회수
 		ser.hit(boardNum,num);
+		System.out.println("조회수 컷");
 		//좋아요 되어있는지 여부
 		ser.likeViewChk(boardNum, (String) session.getAttribute("loginId"), model);
+		System.out.println("좋아요 되있는지 여부 이상부");
 		//인기글 리스트
 		ser.topList(model);
-		
+		System.out.println("인기글 리스트 이상무");
 		//파일테이블리스트
 		ser.getFileList(model);
+		System.out.println("파일 테이블 리스트 이상무");
 
 		return "user/board/boardInside";
 	}

@@ -34,7 +34,7 @@ public interface CafeMemberService {
 	//닉네임때문에 따로 구해오는애들
 	public CafeMemberDTO getCafeUserInfo(String cafeId,String userId);
 	//댓글 작성하려고 구해온애
-	public CafeMemberDTO getSessionUserInfo(String cafeId,String sessionId);
+	public CafeMemberDTO getSessionUserInfo(String cafeId,String userId);
 	//게시글 더 보러가기
 	public void getUserViewList(String cafeId,String userId,Model model);
 
