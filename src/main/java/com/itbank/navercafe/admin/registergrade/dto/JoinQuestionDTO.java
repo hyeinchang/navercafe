@@ -1,8 +1,8 @@
 package com.itbank.navercafe.admin.registergrade.dto;
 
 public class JoinQuestionDTO {
-	private String cafeQuestionContent;
-	private int cafeId, cafeQuestionNum;
+	private String cafeQuestionContent, cafeId;
+	private int cafeQuestionNum;
 	
 	public int getCafeQuestionNum() {
 		return cafeQuestionNum;
@@ -16,10 +16,10 @@ public class JoinQuestionDTO {
 	public void setCafeQuestionContent(String cafeQuestionContent) {
 		this.cafeQuestionContent = cafeQuestionContent;
 	}
-	public int getCafeId() {
+	public String getCafeId() {
 		return cafeId;
 	}
-	public void setCafeId(int cafeId) {
+	public void setCafeId(String cafeId) {
 		this.cafeId = cafeId;
 	}
 }
