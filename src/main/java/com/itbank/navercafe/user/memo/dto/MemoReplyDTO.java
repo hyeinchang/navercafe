@@ -8,7 +8,6 @@ public class MemoReplyDTO {
 	private String memoReplyContent;
 	private Timestamp memoReplySavedate;
 	private int memoReplyGroup;
-	private int memoReplyStep;
 	
 	
 	public int getMemoReplyGroup() {
@@ -16,12 +15,6 @@ public class MemoReplyDTO {
 	}
 	public void setMemoReplyGroup(int memoReplyGroup) {
 		this.memoReplyGroup = memoReplyGroup;
-	}
-	public int getMemoReplyStep() {
-		return memoReplyStep;
-	}
-	public void setMemoReplyStep(int memoReplyStep) {
-		this.memoReplyStep = memoReplyStep;
 	}
 	public int getMemoReplyNum() {
 		return memoReplyNum;
@@ -48,13 +41,7 @@ public class MemoReplyDTO {
 		this.memoReplySavedate = memoReplySavedate;
 	}
 	
-//	private int memoReplyImageNum;
-//	public int getMemoReplyImageNum() {
-//		return memoReplyImageNum;
-//	}
-//	public void setMemoReplyImageNum(int memoReplyImageNum) {
-//		this.memoReplyImageNum = memoReplyImageNum;
-//	}
+
 	
 	
 }

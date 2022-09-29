@@ -205,17 +205,10 @@ public class CafeController {
 		return result;
 	}
 	
-	//수정에 참고할?
-	@PostMapping("saveData")
-	public String saveData(MultipartHttpServletRequest mul,
-							HttpServletRequest request){
-		cms.writeSave(mul,request);
-		return "redirect:goCafeMemberList";
-	}
 	//게시글 더 보러가기
 	@GetMapping("userViewList")
-	public String userViewList(String userId,Model model) {
-		cms.getUserViewList(userId,model);
+	public String userViewList(String cafeId,String userId,Model model) {
+		cms.getUserViewList(cafeId,userId,model);
 		return "board/userViewList";
 	}
 	

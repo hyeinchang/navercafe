@@ -29,14 +29,12 @@ public interface CafeMemberService {
 	
 	public String idOverlap(String cafeUserNickname, String cafeId);
 	
-	//수정작업에 참고할?
-	public void writeSave(MultipartHttpServletRequest mul,HttpServletRequest request);
 	//닉네임때문에 따로 구해오는애들
-	public CafeMemberDTO getCafeUserInfo(String userId, String cafeId);
+	public CafeMemberDTO getCafeUserInfo(String cafeId,String userId);
 	//댓글 작성하려고 구해온애
-	public CafeMemberDTO getSessionUserInfo(String sessionId);
+	public CafeMemberDTO getSessionUserInfo(String cafeId,String sessionId);
 	//게시글 더 보러가기
-	public void getUserViewList(String userId,Model model);
+	public void getUserViewList(String cafeId,String userId,Model model);
 
 	
 

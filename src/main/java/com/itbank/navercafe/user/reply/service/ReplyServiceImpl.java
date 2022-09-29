@@ -92,11 +92,11 @@ public class ReplyServiceImpl implements ReplyService{
 			if(mul.getParameter("groupNum")!=null) {
 				redto.setReplyGroup(Integer.parseInt(mul.getParameter("groupNum")));
 				rm.saveGroupNumReply(redto);
-				cafeMemberMap.replyUp(mul.getParameter("userId"));//세션값 넘겨준거임
+				cafeMemberMap.replyUp(mul.getParameter("cafeId"),mul.getParameter("userId"));//세션값 넘겨준거임
 			}else {//댓글 작성시	
 				int saveResult=rm.saveReply(redto);
 				if(saveResult==1) {
-					cafeMemberMap.replyUp(mul.getParameter("userId"));//세션값 넘겨준거임
+					cafeMemberMap.replyUp(mul.getParameter("cafeId"),mul.getParameter("userId"));//세션값 넘겨준거임
 				}
 			}
 
