@@ -89,51 +89,22 @@ public class CafeMemberServiceImpl implements CafeMemberService{
 	
 	
 	@Override
-	public CafeMemberDTO getCafeUserInfo(String userId) {
-		return mapper.getCafeUserInfo(userId);
+	public CafeMemberDTO getCafeUserInfo(String cafeId,String userId) {
+		return mapper.getCafeUserInfo(cafeId,userId);
 	}
 	@Override
-	public CafeMemberDTO getSessionUserInfo(String sessionId) {
-		return mapper.getSessionUserInfo(sessionId);
+	public CafeMemberDTO getSessionUserInfo(String cafeId,String sessionId) {
+		return mapper.getSessionUserInfo(cafeId,sessionId);
 	}
 	
 	
 	//게시글 더 보러가기
 	@Override
-	public void getUserViewList(String userId,Model model) {
-		model.addAttribute("getUserViewList",mapper.getUserViewList(userId));
+	public void getUserViewList(String cafeId,String userId,Model model) {
+		model.addAttribute("getUserViewList",mapper.getUserViewList(cafeId,userId));
 	}
 	
-	
-	//수정 할때 변경해서 임시로 사용
-	public void writeSave(MultipartHttpServletRequest mul,HttpServletRequest request) {
-		TestFileDTO tfd=new TestFileDTO();
-		
-		CafeMemberDTO dto= new CafeMemberDTO();
-		dto.setCafeId(mul.getParameter("cafeId"));
-		dto.setUserId(mul.getParameter("userId"));
-		dto.setCafeUserNickname(mul.getParameter("cafeUserNickname"));
-		//System.out.println("저장될 카페아이디:"+dto.getCafeId());
-		//System.out.println("저장될 유저아이디:"+dto.getUserId());
-		//System.out.println("저장될 닉네임:"+dto.getCafeUserNickname());
-		//System.out.println("저장될 파일 :"+mul.getFile("cafeUserImage"));
-		MultipartFile file=mul.getFile("cafeUserImageNum");
-		//System.out.println("누구?:"+file);
-		if(file.getSize()!=0) {
-			//시퀀스값 빼오는애
-			int seq=mapper.getSequence();
-			System.out.println("가져온 seq:"+seq);
-			dto.setCafeUserImageNum(seq);//seq 가져와서 넣어주고
-			
-			tfd.setFileNum(seq);//번호 부여
-			//tfd.setProfileNum(profileNum);//같은 번호 부여
-			tfd.setFileOrgName(fs.saveFile(file));//파일명
-			//System.out.println("저장될 tfd의 파일의 번호 : "+tfd.getFileNum());
-			//System.out.println("저장될 tfd의 파일 : "+tfd.getFileOrgName());
-			mapper.saveFileDTO(tfd);
-		}
-		mapper.saveData(dto);
-	}
+
 
 
 	

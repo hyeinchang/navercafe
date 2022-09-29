@@ -37,7 +37,7 @@ public class BoardController {
 	}
 
 	@GetMapping("/goBoardInside")
-	public String goBoardInside(int boardNum, Model model,HttpSession session,
+	public String goBoardInside(int boardNum, Model model,HttpSession session,String cafeId,
 			@RequestParam(value="num",required=false,defaultValue="0")int num) {
 		System.out.println("boardInside실행");
 		//댓글 갯수 세오기
@@ -47,7 +47,7 @@ public class BoardController {
 		BoardDTO dto= ser.getUserBoard(boardNum,model,num);
 		model.addAttribute("userBoard",dto);
 		//카페유저 정보 가져오기
-		model.addAttribute("cafeUserInfo",boardCafeSer.getCafeUserInfo(dto.getUserId()));
+		model.addAttribute("cafeUserInfo",boardCafeSer.getCafeUserInfo(cafeId,dto.getUserId()));
 		//위에있는거 2개 맵으로 가져와서 합쳐 줄 라고 했는데 clob이 문제가 생기네?
 		
 		//댓글 리스트 가져오기
@@ -55,7 +55,7 @@ public class BoardController {
 		//System.out.println(replySer.getReplyList(boardNum));
 		
 		//세션 아이디 줘서 정보 가져오기
-		model.addAttribute("sessionUser",boardCafeSer.getSessionUserInfo((String) session.getAttribute("loginId")));
+		model.addAttribute("sessionUser",boardCafeSer.getSessionUserInfo(cafeId,(String) session.getAttribute("loginId")));
 		//말머리에 따른 게시물 목록 가져오기
 		//System.out.println("댓글 키들:"+replySer.getReplyList(boardNum));
 		//조회수

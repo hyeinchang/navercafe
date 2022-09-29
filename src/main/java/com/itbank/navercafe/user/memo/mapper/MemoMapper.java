@@ -15,10 +15,11 @@ public interface MemoMapper {
 	
 	//댓글 작성
 	public int saveMemoReply(MemoReplyDTO dto);
-	//답글 작성
-	public void saveGroupNumReply(MemoReplyDTO dto);
+
 	//댓글 갯수 가져오기
 	public int getReplyCount(Object object);
 	//메모게시글 작성
 	public void memoSave(MemoDTO dto);
+	//시퀀스
+	public int getMemoReplyNumSeq();
 }

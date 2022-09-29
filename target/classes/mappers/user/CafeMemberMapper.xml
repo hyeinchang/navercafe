@@ -57,22 +57,22 @@
 	</insert>
 
 	
+	<!--카페회원 댓글 작성시 댓글작성횟수 올려주기-->
+	<update id="replyUp">
+		update project_cafe_member set cafe_user_reply=cafe_user_reply+1 where user_id=#{userId} and cafe_id=#{cafeId}
+	</update>
+	<!-- 댓글작성할때 필요한 애  -->
+	<select id="getSessionUserInfo" resultMap="project_cafe_member">
+		select user_id,cafe_user_nickname from project_cafe_member where user_id=#{sessionId} and cafe_id=#{cafeId}
+	</select>
 	<!-- 게시글에 닉네임,이미지 표시하기위해 따로 빼와주는애 -->
 	<select id="getCafeUserInfo" resultMap="project_cafe_member">
 		select user_id,cafe_user_nickname,cafe_user_image_num from project_cafe_member
-		where user_id=#{userId}
+		where user_id=#{userId} and cafe_id=#{cafeId}
 	</select>
-	<!-- 댓글작성할때 필요한 애  -->
-	<select id="getSessionUserInfo" resultMap="project_cafe_member">
-		select user_id,cafe_user_nickname from project_cafe_member where user_id=#{sessionId}
+	<!-- 게시글 더보러가기  -->
+	<select id="getUserViewList" resultMap="project_cafe_member">
+		select * from project_cafe_member where user_id=#{userId} and cafe_id=#{cafeId}
 	</select>
-	<!--시퀀스값 빼와주는애  -->
-	<select id="getSequence" resultType="int">
-		select file_num_seq.nextval fileNumSeq from dual
-	</select>
-	<!--카페회원 댓글 작성시 댓글작성횟수 올려주기-->
-	<update id="replyUp">
-		update project_cafe_member set cafe_user_reply=cafe_user_reply+1 where user_id=#{userId}
-	</update>
 
 </mapper>

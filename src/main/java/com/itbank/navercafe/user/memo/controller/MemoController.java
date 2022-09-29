@@ -36,7 +36,7 @@ public class MemoController {
 	//boardInside 방식참고해서 num 도 넣어주고
 	
 	@GetMapping("/goMemoBoardList")
-	public String goMemoBoardList(Model model,HttpSession sesison){
+	public String goMemoBoardList(String cafeId,Model model,HttpSession sesison){
 		//메모 게시글들
 		model.addAttribute("mapList",memoSer.getMemoList());
 		//System.out.println("메모 게시물들 키 :"+memoSer.getMemoList());
@@ -44,23 +44,18 @@ public class MemoController {
 		model.addAttribute("memoReplyList",memoSer.getReplyList());
 		//System.out.println("메모 댓글 키 :"+memoSer.getReplyList());
 		//세션 아이디 줘서 정보 가져오기
-		model.addAttribute("sessionUser",cafeMemberService.getSessionUserInfo((String) sesison.getAttribute("loginId")));
+		model.addAttribute("sessionUser",cafeMemberService.getSessionUserInfo(cafeId,(String) sesison.getAttribute("loginId")));
 		return "user/board/memoBoardList";
 	}
 	
-	//	댓글, 답글 step으로 식별하기
-	@PostMapping("saveMemoReply")
-	public String saveReply(MultipartHttpServletRequest mul,
-		@RequestParam(value="step",required=false,defaultValue="1")int step) {
-												//답글에 답글 step 2로 해서 줘도 될 듯?
-//		System.out.println("그룹번호:"+mul.getParameter("groupNum"));
-//		System.out.println("넘겨준 스텝값:"+mul.getParameter("step"));
-//		System.out.println("현재스텝값:"+step);
-//		System.out.println("작성하고있는쉐끼:"+mul.getParameter("userId"));
-//		System.out.println("내용:"+mul.getParameter("replyContent"));
-//		System.out.println("파일명:"+mul.getFile("replyImageName"));
 
-		memoSer.saveMemoReply(mul,step);
+	@PostMapping("saveMemoReply")
+	public String saveReply(MultipartHttpServletRequest mul) {
+		System.out.println("그룹번호:"+mul.getParameter("groupNum"));
+		System.out.println("작성하고있는쉐끼:"+mul.getParameter("userId"));
+		System.out.println("내용:"+mul.getParameter("memoReplyContent"));
+		System.out.println("파일명:"+mul.getFile("replyImageName"));
+		memoSer.saveMemoReply(mul);
 		return "redirect:goMemoBoardList";
 	}
 	

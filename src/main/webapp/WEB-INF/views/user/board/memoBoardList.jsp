@@ -1,7 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-
-    <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <style>
 /*//////////////////////////////////   메모 게시판   ////////////////////////////////  */
 .memo-board{padding-top:10px;}
@@ -70,7 +69,7 @@ function back(obj){
 <div class="content pull-right col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix cstmContent" ${cafeDTO.cafeLayout > 0 ? '' : 'style="float:right;"'}>
 <div class="container clearfix" style="list-style: none;">
 	      <div class="content col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix">
-					<h1>메모 게시판입니다</h1>
+				<h1>메모 게시판입니다</h1>
 		        <!-- SLIDE POST -->
 		        <article class="blog-wrap-test">
 		        
@@ -100,12 +99,12 @@ function back(obj){
 			            <div class="post-meta-test">
 			              	<div class="div-one">
 				              	<a href="#">
-				              		<c:if test="${memoList.CAFE_USER_IMAGE == 0 }">
+				              		<c:if test="${memoList.CAFE_USER_IMAGE_NUM == 0 }">
 				              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
 				              			width="40px;" class="img-circle alignleft">
 				              		</c:if>
-									<c:if test="${memoList.CAFE_USER_IMAGE != 0 }">
-										<img src="test_download?fileImageNum=${memoList.CAFE_USER_IMAGE}" 
+									<c:if test="${memoList.CAFE_USER_IMAGE_NUM != 0 }">
+										<img src="download?fileNum=${memoList.CAFE_USER_IMAGE_NUM}" 
 										width="40px;" class="img-circle alignleft">
 									</c:if>
 				              	</a>
@@ -134,71 +133,44 @@ function back(obj){
 			          <div id="${-memoList.MEMO_NUM}" style="display:none;" >
 			          		<hr><!--  	근데 메모는 답글들 먼저 보여주고. 답글view		 -->
 		                      	<c:forEach var="memoReply" items="${memoReplyList}">
-		                      		<c:if test="${memoList.MEMO_NUM == memoReply.MEMO_REPLY_GROUP && memoReply.MEMO_REPLY_STEP == 1}">
+		                      		<c:if test="${memoList.MEMO_NUM == memoReply.MEMO_REPLY_GROUP}">
 		                      			<li>
 						              <article class="comment" style="color:black;">
 						              	<a href="#">
-							              		<c:if test="${ memoReply.CAFE_USER_IMAGE== 0}">
+							              		<c:if test="${ memoReply.CAFE_USER_IMAGE_NUM== 0}">
 							              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
 							              			width="40px" class="img-circle alignleft" alt="">
 							              		</c:if>
-												<c:if test="${ memoReply.CAFE_USER_IMAGE  != 0 }">
-													<img src="test_download?fileImageNum=${memoReply.CAFE_USER_IMAGE}" 
+												<c:if test="${ memoReply.CAFE_USER_IMAGE_NUM  != 0 }">
+													<img src="download?fileNum=${memoReply.CAFE_USER_IMAGE_NUM}" 
 													width="40px" class="img-circle alignleft" alt="">
 												</c:if>
 							              	</a>
 						               
-						               	<!-- style="border:solid 1px gray; "-->
-						                <div class="comment-content">
-						                  <h4 class="comment-author">
-					                        ${memoReply.CAFE_USER_NICKNAME} <small class="comment-meta">${memoReply.REPLY_SAVEDATE}</small>
-					                  	  </h4>
-					                   		${memoReply.MEMO_REPLY_CONTENT}<br>
-					                   					<!-- 내용에 이미지가 있다면 보여주고 -->
-					                   		<c:if test="${memoReply.MEMO_REPLY_IMAGE_NAME != 0}">
-					                   			<img src="test_download?fileImageNum=${memoReply.MEMO_REPLY_IMAGE_NAME}" 
-												width="30%">
-					                   		</c:if>			                   		
-					                   		
-					                      	<p>
-					                      		<a onclick="replyClick(this)" id="${memoReply.MEMO_REPLY_NUM}" style="cursor:pointer">
-					                      		<b>답글 쓰기</b> 그룹:${memoReply.MEMO_REPLY_GROUP}</a>
-					                      	</p>
-					                      	
-					                      			<!-- 답글 쓰기 클릭시 생성되는 div  -->
-					                      	<div id="${-memoReply.MEMO_REPLY_NUM}" style="display:none;">
-					                      		<form id="comments_form" action="saveMemoReply?groupNum=${memoList.MEMO_NUM}&step=1" class="row" 
-												  		method="post" enctype="multipart/form-data">
-												  		<input type="hidden" name="userId" value="${sessionUser.userId}">
-												    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-												    										
-												      <p><span style="font-weight:1000; font-size: 20pt;">${sessionUser.cafeUserNickname}</span></p>
-												      <textarea class="form-control" name="memoReplyContent" id="comments" 
-												      rows="6" placeholder="답글을 남겨보세요"></textarea>
-												      
-													  <div class="post-meta-test">
-													  	<div class="reply-one">
-															<input type="file" name="replyImgName">
-													  	</div>
-													  	<div class="reply-two"> 
-													  		<input type="button" value="취소" onclick="back(this)" id="${memoReply.MEMO_REPLY_NUM}" class="button small">
-													  		<input type="submit" value="등록" id="submit" class="button small">
-													  	</div>
-													  </div>
-												      
-												      <hr>
-												    </div>
-												  </form>
-					                      	</div>
-					                      	</div>
-					                      	</article>
+							               	<!-- style="border:solid 1px gray; "-->
+							                <div class="comment-content">
+							                  <h4 class="comment-author">
+						                        ${memoReply.CAFE_USER_NICKNAME} <small class="comment-meta">${memoReply.REPLY_SAVEDATE}</small>
+						                  	  </h4>
+						                   		${memoReply.MEMO_REPLY_CONTENT}<br>
+						                   					<!-- 내용에 이미지가 있다면 보여주고 -->
+						                   		
+						                   		<c:forEach var="file" items="${fileList}">
+						                   			<c:if test="${file.memoReplyNum == replyreply.MEMO_REPLY_NUM}">
+						                   				<img src="download?fileNum=${replyreply.MEMO_REPLY_NUM}" 
+														width="30%">
+						                   			</c:if>
+						                   		</c:forEach>	                   		
+						                   		
+						                      </div>
+					                      </article>
 		                   			   	</li>
 		                      		</c:if>
 		                      	</c:forEach>
 			          
 			          
 			          
-                     		<form id="comments_form" action="saveMemoReply?groupNum=${memoList.MEMO_NUM}&step=1" class="row" 
+                     		<form id="comments_form" action="saveMemoReply?groupNum=${memoList.MEMO_NUM}" class="row" 
 						  		method="post" enctype="multipart/form-data">
 						  		<input type="hidden" name="userId" value="${sessionUser.userId}">
 						    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">

@@ -10,6 +10,7 @@ public class MemoDTO {
 	private String memoContent;
 	private Timestamp memoSaveDate;
 	private String memoStepOnly;
+	private int boardMenuNum;
 
 	SimpleDateFormat simple = new SimpleDateFormat("YYYY.MM.dd. HH:mm");
 	
@@ -45,6 +46,13 @@ public class MemoDTO {
 	}
 	public void setMemoStepOnly(String memoStepOnly) {
 		this.memoStepOnly = memoStepOnly;
+	}
+	
+	public int getBoardMenuNum() {
+		return boardMenuNum;
+	}
+	public void setBoardMenuNum(int boardMenuNum) {
+		this.boardMenuNum = boardMenuNum;
 	}
 
 	

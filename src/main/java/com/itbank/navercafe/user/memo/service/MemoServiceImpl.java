@@ -16,7 +16,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.itbank.navercafe.comon.file.FileUtils;
 import com.itbank.navercafe.comon.file.TestFileService;
+import com.itbank.navercafe.comon.file.dto.FileDTO;
+import com.itbank.navercafe.comon.file.dto.FileResult;
+import com.itbank.navercafe.comon.file.service.FileService;
 import com.itbank.navercafe.user.cafemember.dto.TestFileDTO;
 import com.itbank.navercafe.user.cafemember.mapper.CafeMemberMapper;
 import com.itbank.navercafe.user.memo.dto.MemoDTO;
@@ -29,7 +33,8 @@ import com.itbank.navercafe.user.reply.dto.ReplyDTO;
 public class MemoServiceImpl implements MemoService{
 	@Autowired MemoMapper memoMap;
 	@Autowired CafeMemberMapper memoCafeMap;
-	@Autowired TestFileService replyFileService;
+	@Autowired FileService fs;
+	@Autowired private FileUtils fileUtils;
 	
 	
 	//메모 리스트
@@ -55,39 +60,41 @@ public class MemoServiceImpl implements MemoService{
 
 	//메모 댓글 작성
 	@Override
-	public void saveMemoReply(MultipartHttpServletRequest mul, int step) {
-		TestFileDTO tfd=new TestFileDTO();
-		
-		MemoReplyDTO dto = new MemoReplyDTO();
-		
-		dto.setUserId(mul.getParameter("userId"));
-		dto.setMemoReplyContent(mul.getParameter("memoReplyContent"));
-		dto.setMemoReplyStep(step);
-//		System.out.println("순서:"+dto.getMemoReplyStep());
-//		System.out.println("그룹번호 : "+mul.getParameter("groupNum"));
-		
-		MultipartFile file = mul.getFile("replyImgName");
-		
-		
-//		System.out.println("(세션통해서)유저아이디:"+mul.getParameter("userId"));
-//		System.out.println("내용:"+mul.getParameter("memoReplyContent"));
-//		System.out.println("이미지파일 조건 여부:"+file.getSize());
-		if(file.getSize()!=0) {
-			int seq=memoCafeMap.getSequence();
-			tfd.setFileNum(seq);
-			tfd.setFileOrgName(replyFileService.saveFile(file));
-			memoCafeMap.saveFileDTO(tfd);
-		}
-		//답글 작성시
-		if(mul.getParameter("groupNum")!=null) {
-			dto.setMemoReplyGroup(Integer.parseInt(mul.getParameter("groupNum")));
-			memoMap.saveGroupNumReply(dto);
-			memoCafeMap.replyUp(mul.getParameter("userId"));//세션값 넘겨준거임
-		}else {//댓글 작성시	
-			int result=memoMap.saveMemoReply(dto);
-			if(result==1) {
-				memoCafeMap.replyUp(mul.getParameter("userId"));//세션값 넘겨준거임
+	public void saveMemoReply(MultipartHttpServletRequest mul) {
+		MultipartFile multipartFile = mul.getFile("replyImgName");
+		try {
+			String directory = "memoReply";
+			String userId =  mul.getParameter("userId");
+			System.out.println("userId : " + userId);
+			System.out.println("replyImgName : " + multipartFile.getOriginalFilename());
+			
+			if(userId != null && userId.length() > 0) {
+				directory += "/" + userId;
 			}
+			System.out.println("directory >>>> " + directory);
+			
+			//memo_reply_num_seq
+			int seq=memoMap.getMemoReplyNumSeq();
+	
+			MemoReplyDTO dto = new MemoReplyDTO();
+			dto.setMemoReplyGroup(Integer.parseInt(mul.getParameter("groupNum")));
+			System.out.println("댓글을 작성할 메모 게시글 번호 : "+Integer.parseInt(mul.getParameter("groupNum")));
+			dto.setUserId(mul.getParameter("userId"));
+			dto.setMemoReplyContent(mul.getParameter("memoReplyContent"));
+			dto.setMemoReplyNum(seq);
+			System.out.println("memoreplyNum을 생성할 번호 :"+seq);
+			
+			if(multipartFile.getSize()!=0) {
+				FileDTO fileDTO = null;
+				FileResult fileResult = fileUtils.uploadFile(multipartFile, directory);
+				fileDTO = fileResult.getFileDTO();
+				fileDTO.setMemoReplyNum(seq);
+				fs.insertAttachFile(fileDTO);
+			}
+			memoMap.saveMemoReply(dto);
+			memoCafeMap.replyUp(mul.getParameter("cafeId"),mul.getParameter("userId"));
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
