@@ -76,7 +76,7 @@
 		<b>프로필 수정</b>
 	</h2>
 	<div style="margin-top: 30px; padding: 8px 32px 32px; border: 1px solid #ebecef; line-height: 20px; border-radius: 10px;">
-		<form action="profilesubmit" method="post" name="profilForm" id="profilForm" >
+		<form action="profilesubmit2" method="post" name="profilForm" id="profilForm" enctype="multipart/form-data">
 			<input type="hidden" value="${cafeId}" name="cafeId" id="cafeId">
 			<input type="hidden" value="${loginId}" name="userId">
 			<input type="hidden" value="${cafeMember.cafeUserNickname }" name="oldNick" id="oldNick">

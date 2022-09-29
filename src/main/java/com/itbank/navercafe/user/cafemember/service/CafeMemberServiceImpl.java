@@ -5,7 +5,7 @@ package com.itbank.navercafe.user.cafemember.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
-
+import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.itbank.navercafe.user.cafemember.dto.CafeMemberDTO;
 import com.itbank.navercafe.user.cafemember.mapper.CafeMemberMapper;
@@ -58,6 +58,12 @@ public class CafeMemberServiceImpl implements CafeMemberService{
 	}
 	
 	@Override
+	public int cafeMemberUpdate(MultipartHttpServletRequest mul) {
+
+		return 0;
+	}
+	
+	@Override
 	public String idOverlap(String cafeUserNickname, String cafeId, String oldNick) {
 		String result = null;
 		int idCheck = mapper.idOverlap(cafeUserNickname,cafeId);
@@ -102,6 +108,8 @@ public class CafeMemberServiceImpl implements CafeMemberService{
 	public void getUserViewList(String cafeId,String userId,Model model) {
 		model.addAttribute("getUserViewList",mapper.getUserViewList(cafeId,userId));
 	}
+	
+	
 	
 	
 

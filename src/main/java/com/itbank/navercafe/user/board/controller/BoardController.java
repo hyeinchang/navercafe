@@ -38,13 +38,8 @@ public class BoardController {
 	}
 
 	@GetMapping("/goBoardInside")
-<<<<<<< HEAD
-	public String goBoardInside(int boardNum, Model model,HttpSession session,
-			@RequestParam(value="num",required=false,defaultValue="0")int num, String cafeId) {
-=======
 	public String goBoardInside(int boardNum, Model model,HttpSession session,String cafeId,
 			@RequestParam(value="num",required=false,defaultValue="0")int num) {
->>>>>>> 97eccd8a1f495eefad1c822dd252c8ab0a0658b7
 		System.out.println("boardInside실행");
 		System.out.println("cafeId:"+cafeId);
 		//댓글 갯수 세오기
@@ -54,11 +49,7 @@ public class BoardController {
 		BoardDTO dto= ser.getUserBoard(boardNum,model,num,cafeId);
 		model.addAttribute("userBoard",dto);
 		//카페유저 정보 가져오기
-<<<<<<< HEAD
-		model.addAttribute("cafeUserInfo",boardCafeSer.getCafeUserInfo(dto.getUserId(), cafeId));
-=======
 		model.addAttribute("cafeUserInfo",boardCafeSer.getCafeUserInfo(cafeId,dto.getUserId()));
->>>>>>> 97eccd8a1f495eefad1c822dd252c8ab0a0658b7
 		//위에있는거 2개 맵으로 가져와서 합쳐 줄 라고 했는데 clob이 문제가 생기네?
 		
 		//댓글 리스트 가져오기

@@ -24,6 +24,8 @@ public interface CafeMemberService {
 	public CafeMemberDTO getCafeMember(String cafeId, String userId);
 
 	public int cafeMemberUpdate(CafeMemberDTO dto);
+	
+	public int cafeMemberUpdate(MultipartHttpServletRequest mul);
 
 	public String idOverlap(String cafeUserNickname, String cafeId, String oldNick);
 	
@@ -35,6 +37,8 @@ public interface CafeMemberService {
 	public CafeMemberDTO getSessionUserInfo(String cafeId,String sessionId);
 	//게시글 더 보러가기
 	public void getUserViewList(String cafeId,String userId,Model model);
+
+	
 
 	
 
