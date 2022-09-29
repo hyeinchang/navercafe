@@ -20,16 +20,10 @@ public class CafeDTO {
 	private int cafeIconNum;
 	private String cafeJoinInformation;
 	private Date cafeRegdate;
-	private boolean isCafeMember;
-	private boolean isCafeManager;
+	private String isCafeMember;
+	private String isCafeManager;
+	private String loginId;
 	private List<MenuDTO> cafeMenuList;
-	
-	public CafeDTO() {
-		this.cafeSkin = "default";
-		// 카페 회원 여부, 카페 메니저 여부 초기화
-		this.isCafeMember = false;
-		this.isCafeManager = false;
-	}
 
 	public String getCafeId() {
 		return cafeId;
@@ -115,23 +109,27 @@ public class CafeDTO {
 	public void setCafeIconNum(int cafeIconNum) {
 		this.cafeIconNum = cafeIconNum;
 	}
-	public boolean isCafeMember() {
+	public String getIsCafeMember() {
 		return isCafeMember;
 	}
-	public void setCafeMember(boolean isCafeMember) {
+	public void setIsCafeMember(String isCafeMember) {
 		this.isCafeMember = isCafeMember;
 	}
-	public boolean isCafeManager() {
+	public String getIsCafeManager() {
 		return isCafeManager;
 	}
-	public void setCafeManager(boolean isCafeManager) {
+	public void setIsCafeManager(String isCafeManager) {
 		this.isCafeManager = isCafeManager;
 	}
-
+	public String getLoginId() {
+		return loginId;
+	}
+	public void setLoginId(String loginId) {
+		this.loginId = loginId;
+	}
 	public List<MenuDTO> getCafeMenuList() {
 		return cafeMenuList;
 	}
-
 	public void setCafeMenuList(List<MenuDTO> cafeMenuList) {
 		this.cafeMenuList = cafeMenuList;
 	}

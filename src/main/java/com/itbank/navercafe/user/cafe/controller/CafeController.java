@@ -1,8 +1,5 @@
 package com.itbank.navercafe.user.cafe.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -20,7 +17,6 @@ import com.itbank.navercafe.common.file.service.FileService;
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
 import com.itbank.navercafe.user.cafe.service.CafeService;
 import com.itbank.navercafe.user.member.dto.MemberDTO;
-import com.itbank.navercafe.user.menu.dto.MenuDTO;
 import com.itbank.navercafe.user.menu.service.MenuService;
 
 @Controller
@@ -40,23 +36,17 @@ public class CafeController {
 	
 	@GetMapping("/main")
 	public String main(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes, 
-			@RequestParam(value="cafeId", required=false) String cafeId, HttpSession session) {
+			CafeDTO cafeDTO, HttpSession session) {
 		
-		if(cafeId == null || cafeId.length() == 0) {
+		if(cafeDTO == null || cafeDTO.getCafeId() == null) {
 			redirectAttributes.addFlashAttribute("message", "존재하지 않는 카페입니다.");
 			return "redirect:/";
 		}
 		
-		CafeDTO cafeDTO = new CafeDTO();
-		String loginId = (String) session.getAttribute("loginId");
-		List<MenuDTO> menuList = new ArrayList<>();
-		
 		try {
-			cafeDTO = cafeService.selectCafe(cafeId);
-			
-			if(loginId != null && loginId.equals(cafeDTO.getUserId())) {
-				cafeDTO.setCafeManager(true);
-			}
+			String loginId = (String) session.getAttribute("loginId");
+			cafeDTO.setLoginId(loginId);
+			cafeDTO = cafeService.selectCafe(cafeDTO);	
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

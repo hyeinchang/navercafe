@@ -41,12 +41,12 @@ public class CafeServiceImpl implements CafeService {
 	}
 	
 	@Override
-	public CafeDTO selectCafe(String cafeId) throws Exception {
-		CafeDTO cafeDTO = null;
+	public CafeDTO selectCafe(CafeDTO cafeDTO) throws Exception {
 		List<MenuDTO> cafeMenuList = null;
 		
 		try {
-			cafeDTO = cafeMapper.selectCafe(cafeId);
+			String cafeId = cafeDTO.getCafeId();
+			cafeDTO = cafeMapper.selectCafe(cafeDTO);
 			cafeMenuList = menuService.selectBoardMenuList(cafeId);
 			
 			if(cafeMenuList != null) {

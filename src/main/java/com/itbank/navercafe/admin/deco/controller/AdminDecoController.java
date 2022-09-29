@@ -40,11 +40,9 @@ public class AdminDecoController {
 	
 	@GetMapping("frontdoor")
 	public String frontdoor(HttpServletRequest request, CafeDTO cafeDTO, Model model) {
-		try {
-			String cafeId = cafeDTO.getCafeId();
-			
-			if(cafeId != null) {
-				cafeDTO = cafeService.selectCafe(cafeId);
+		try {			
+			if(cafeDTO != null) {
+				cafeDTO = cafeService.selectCafe(cafeDTO);
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -77,10 +75,8 @@ public class AdminDecoController {
 		ArrayList<String> skinList = null;
 		
 		try {
-			String cafeId = cafeDTO.getCafeId();
-			
-			if(cafeId != null) {
-				cafeDTO = cafeService.selectCafe(cafeId);
+			if(cafeDTO != null) {
+				cafeDTO = cafeService.selectCafe(cafeDTO);
 			}
 			
 			if(cafeDTO.getCafeSkin() == null) {
@@ -117,10 +113,9 @@ public class AdminDecoController {
 	@GetMapping("title")
 	public String title(HttpServletRequest request, CafeDTO cafeDTO, Model model) {
 		try {
-			String cafeId = cafeDTO.getCafeId();
-			
-			if(cafeId != null) {
-				cafeDTO = cafeService.selectCafe(cafeId);
+
+			if(cafeDTO != null) {
+				cafeDTO = cafeService.selectCafe(cafeDTO);
 			}
 		} catch(Exception e) {
 			e.printStackTrace();

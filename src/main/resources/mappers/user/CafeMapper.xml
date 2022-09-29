@@ -16,20 +16,22 @@
         <result column="CAFE_ICON_NUM" property="cafeIconNum"/>
         <result column="CAFE_JOIN_INFORMATION" property="cafeJoinInformation"/>
         <result column="CAFE_REGDATE" property="cafeRegdate"/>
+        <result column="IS_CAFE_MEMBER" property="isCafeMember"/>
+        <result column="IS_CAFE_MANAGER" property="isCafeManager"/>
 	</resultMap>
 	
 	<insert id="InsertCafe">
 		<![CDATA[
 			INSERT INTO PROJECT_CAFE_INFO
-			(CAFE_ID, CAFE_NAME, USER_ID, CAFE_EXPLANATION, 
-			CAFE_TITLE_NUM, CAFE_FRONT, CAFE_SKIN, CAFE_LAYOUT, 
-			CAFE_JOIN_APPLY, CAFE_JOIN_GENDER, CAFE_JOIN_AGE, CAFE_JOIN_INFORMATION, 
-			CAFE_ICON_NUM, CAFE_REGDATE)
+				(CAFE_ID, CAFE_NAME, USER_ID, CAFE_EXPLANATION, 
+				CAFE_TITLE_NUM, CAFE_FRONT, CAFE_SKIN, CAFE_LAYOUT, 
+				CAFE_JOIN_APPLY, CAFE_JOIN_GENDER, CAFE_JOIN_AGE, CAFE_JOIN_INFORMATION, 
+				CAFE_ICON_NUM, CAFE_REGDATE)
 			VALUES
-			(#{cafeId}, #{cafeName}, #{userId}, #{cafeExplanation},
-			 #{cafeTitleNum}, #{cafeFront}, #{cafeSkin}, #{cafeLayout},
-			 #{cafeJoinApply}, #{cafeJoinGender}, #{cafeJoinAge}, #{cafeJoinInformation},
-			 #{cafeIconNum}, sysdate)
+				(#{cafeId}, #{cafeName}, #{userId}, #{cafeExplanation},
+				 #{cafeTitleNum}, #{cafeFront}, #{cafeSkin}, #{cafeLayout},
+				 #{cafeJoinApply}, #{cafeJoinGender}, #{cafeJoinAge}, #{cafeJoinInformation},
+				 #{cafeIconNum}, sysdate)
 		]]>
 	</insert>
 	
@@ -71,7 +73,14 @@
 	
 	<select id="selectCafe" resultMap="cafe">
 		<![CDATA[
-			SELECT * FROM PROJECT_CAFE_INFO WHERE CAFE_ID = #{cafeId}
+			SELECT CAFE.*,
+				NVL2(CAFE_MEMBER.USER_ID, 'true', 'false') IS_CAFE_MEMBER,
+				(CASE WHEN CAFE.USER_ID = #{loginId} THEN 'true' ELSE 'false' END) IS_CAFE_MANAGER
+			FROM 
+				(SELECT * FROM PROJECT_CAFE_INFO WHERE CAFE_ID = #{cafeId}) CAFE
+			LEFT JOIN
+				(SELECT CAFE_ID, USER_ID FROM PROJECT_CAFE_MEMBER WHERE USER_ID = #{loginId}) CAFE_MEMBER
+			ON CAFE.CAFE_ID = CAFE_MEMBER.CAFE_ID
 		]]>
 	</select>
 
