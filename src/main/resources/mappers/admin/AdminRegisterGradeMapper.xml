@@ -109,25 +109,25 @@
 	
 	<!-- 등급 신청관리 리스트 가져오기 -->
 	<select id="getGradeUpAppliesList" resultMap="gradeUpApplies" parameterType="String">
-select rownum rn, presentData.*, upData.* from
-    (select board.board_num, cafeMember.*, grade.cut_name, board.board_savedate from
-        (select board_menu_num, board_menu_type from project_board_type where board_menu_type = 4) boardMenu,
-        (select board_menu_num, board_num, user_id, board_savedate from project_board) board,
-        (select * from project_cafe_member where cafe_id = #{value}) cafeMember,
-        (select cafe_id, cafe_user_grade, cut_name from project_member_grade) grade
-    where
-    boardMenu.board_menu_num = board.board_menu_num
-    and
-    board.user_id = cafeMember.user_id
-    and
-    cafeMember.cafe_id = grade.cafe_id
-    and
-    cafeMember.cafe_user_grade = grade.cafe_user_grade
-    ) presentData
-left join
-    (select cafe_user_grade up_cafe_user_grade, cut_name up_cut_name from project_member_grade) upData
-on presentData.cafe_user_grade+1 = upData.up_cafe_user_grade
-order by presentData.board_num desc
+		select rownum rn, presentData.*, upData.* from
+		    (select board.board_num, cafeMember.*, grade.cut_name, board.board_savedate from
+		        (select board_menu_num, board_menu_type from project_board_type where board_menu_type = 4) boardMenu,
+		        (select board_menu_num, board_num, user_id, board_savedate from project_board) board,
+		        (select * from project_cafe_member where cafe_id = #{value}) cafeMember,
+		        (select cafe_id, cafe_user_grade, cut_name from project_member_grade) grade
+		    where
+		    boardMenu.board_menu_num = board.board_menu_num
+		    and
+		    board.user_id = cafeMember.user_id
+		    and
+		    cafeMember.cafe_id = grade.cafe_id
+		    and
+		    cafeMember.cafe_user_grade = grade.cafe_user_grade
+		    ) presentData
+		left join
+		    (select cafe_user_grade up_cafe_user_grade, cut_name up_cut_name from project_member_grade) upData
+		on presentData.cafe_user_grade+1 = upData.up_cafe_user_grade
+		order by presentData.board_num desc
 	</select>	
 	
 	<!-- 가입 불가 관리 리스트 가져오기 -->
@@ -154,6 +154,6 @@ order by presentData.board_num desc
 	<select id="getRegisterRequestList" parameterType="String" resultMap="registerRequest">
 		select * from project_cafe_join_request where cafe_id = #{value}
 	</select>
-	
+
 </mapper>
 

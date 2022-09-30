@@ -7,13 +7,13 @@ public class FileDTO {
 	private String fileDirectory;
 	private String fileOrgName;
 	private String fileStoredName;
-	private Date regdate;
 	private int boardNum;
-	private int cafeTitleNum;
 	private int replyNum;
 	private int cafeUserImageNum;
-	private int cafeIconNum;
+	private int cafeTitleNum;
 	private int memoReplyNum;
+	private int cafeIconNum;
+	private Date regdate;
 	
 	public int getFileNum() {
 		return fileNum;
@@ -39,23 +39,11 @@ public class FileDTO {
 	public void setFileStoredName(String fileStoredName) {
 		this.fileStoredName = fileStoredName;
 	}
-	public Date getRegdate() {
-		return regdate;
-	}
-	public void setRegdate(Date regdate) {
-		this.regdate = regdate;
-	}
 	public int getBoardNum() {
 		return boardNum;
 	}
 	public void setBoardNum(int boardNum) {
 		this.boardNum = boardNum;
-	}
-	public int getCafeTitleNum() {
-		return cafeTitleNum;
-	}
-	public void setCafeTitleNum(int cafeTitleNum) {
-		this.cafeTitleNum = cafeTitleNum;
 	}
 	public int getReplyNum() {
 		return replyNum;
@@ -69,16 +57,28 @@ public class FileDTO {
 	public void setCafeUserImageNum(int cafeUserImageNum) {
 		this.cafeUserImageNum = cafeUserImageNum;
 	}
-	public int getCafeIconNum() {
-		return cafeIconNum;
+	public int getCafeTitleNum() {
+		return cafeTitleNum;
 	}
-	public void setCafeIconNum(int cafeIconNum) {
-		this.cafeIconNum = cafeIconNum;
+	public void setCafeTitleNum(int cafeTitleNum) {
+		this.cafeTitleNum = cafeTitleNum;
 	}
 	public int getMemoReplyNum() {
 		return memoReplyNum;
 	}
 	public void setMemoReplyNum(int memoReplyNum) {
 		this.memoReplyNum = memoReplyNum;
+	}
+	public int getCafeIconNum() {
+		return cafeIconNum;
+	}
+	public void setCafeIconNum(int cafeIconNum) {
+		this.cafeIconNum = cafeIconNum;
+	}
+	public Date getRegdate() {
+		return regdate;
+	}
+	public void setRegdate(Date regdate) {
+		this.regdate = regdate;
 	}
 }

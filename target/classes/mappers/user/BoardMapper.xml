@@ -1,6 +1,112 @@
 <?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.itbank.navercafe.user.board.mapper.BoardMapper">
+
+	<resultMap type="com.itbank.navercafe.user.board.dto.BoardDTO" id="project_board">
+		<id property="boardNum" column="board_num"/>
+		<result property="boardTitle" column="board_title"/>
+		<result property="boardContent" column="board_content"/>
+		<result property="boardSaveDate" column="board_saveDate"/>
+		<result property="boardLikes" column="board_likes"/>
+		<result property="boardNotice" column="board_notice"/>
+		<result property="boardReplyAllow" column="board_reply_allow"/>
+		<result property="boardPrefix" column="board_prefix"/>
+		<result property="userId" column="user_id"/>
+		<result property="boardMenuNum" column="board_menu_num"/>
+		<result property="hit" column="hit"/>
+		<result property="cafeId" column="cafe_id"/>
+	</resultMap>
+	
+	<resultMap type="com.itbank.navercafe.user.boardmenu.dto.BoardMenuDTO" id="project_boardType">
+		<id property="boardMenuNum" column="board_menu_num"/>
+		<result property="boardMenuDesc" column="board_menu_desc"/>
+		<result property="boardWriteAuth" column="board_write_auth"/>
+		<result property="boardReplyAuth" column="board_reply_auth"/>
+		<result property="boardReadAuth" column="board_read_auth"/>
+		<result property="boardMenuName" column="board_menu_name"/>
+		<result property="cafeId" column="cafe_id"/>
+		<result property="boardOrder" column="board_order"/>
+		<result property="boardMenuType" column="board_menu_type"/>
+	</resultMap>
+
+
+
+	<resultMap type="com.itbank.navercafe.user.board.dto.LikesDTO" id="project_likes">
+		<id property="boardNum" column="board_num"/>
+		<id property="userId" column="user_id"/>
+	</resultMap>
+	
+	<!-- //전체목록인데 수영이형이랑 상의. -->
+	<select id="getBoardList" resultMap="project_board">
+		select boardMenu.cafe_id, board.* from 
+		(select * from project_boardType where cafe_id = #{cafeId}) boardMenu
+		inner join
+		(select * from project_board) board
+		on boardMenu.board_menu_num = board.board_menu_num
+	</select>
+	
+
+	<!-- 보드넘에 따른 게시물 하나 -->
+	<select id="getUserBoard" resultMap="project_board">
+		select * from project_board where board_num=#{boardNum}
+	</select>
+	
+
+	<!-- 페이징 위해서 몇개인지 가져오기위한 용도-->
+	<select id="selectBoardCount" resultType="Integer">
+		select count(*) from project_board where board_menu_num=#{boardMenuNum}
+	</select>
+	
+	<!-- 조회수 올려주는애 -->
+	<update id="hitUp">
+		update project_board set hit = hit+1 where board_num=#{boardNum}
+	</update>
+	
+	<!-- 좋아요 테이블에 있는 값들 리스트로 빼오기 -->
+	<select id="getLikesList" resultMap="project_likes">
+		select * from project_likes where board_num=#{boardNum} and user_id=#{userId}
+	</select>
+	
+	<!--좋아요 누르면 좋아요 테이블에도 값 추가  -->
+	<update id="likeUp">
+		update project_board set board_likes = board_likes+1 where board_num=#{boardNum}
+	</update>
+	<insert id="insertLike">
+		insert into project_likes values(#{boardNum},#{userId})
+	</insert>
+	
+	<!-- 좋아요 취소하면 좋아요 테이블에 있는 값도 삭제 -->
+	<update id="likeDown">
+		update project_board set board_likes = board_likes-1 where board_num=#{boardNum}
+	</update>
+	<delete id="deleteLike">
+		delete from project_likes where board_num=#{boardNum} AND user_id=#{userId}
+	</delete>
+	
+	<!-- 카페 인기글 -->
+	<select id="topList" resultType="HashMap">
+		select B.board_num,B.board_title,B.board_likes,B.user_id,
+		C.cafe_user_nickname,C.cafe_user_image_num
+		from project_board B inner join project_cafe_member C on B.user_id = C.user_id
+		order by B.board_likes desc
+	</select>
+	
+	<!--보드 타입 정보 가져오기  -->
+	<select id="getBoardMenuType" resultMap="project_boardType">
+		select * from project_boardType where board_menu_num=#{boardMenuNum}
+	</select>
+	
+	<!-- 보드 타입에 따른 리스트 가져오기 -->
+	<select id="getBoardMenuTypeList" resultType="HashMap">
+		select J.* from(select rownum rn, I.* from
+		(select B.*,C.cafe_user_nickname from project_board B inner join project_cafe_member C
+		on B.user_id = C.user_id where B.board_menu_num=#{boardMenuNum} and C.cafe_id=#{cafeId}
+		order by board_num desc)I)J 
+		where rn between #{start} and #{end}
+	</select>
+	
 	
 </mapper>
 

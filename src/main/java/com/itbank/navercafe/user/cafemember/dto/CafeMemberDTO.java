@@ -1,5 +1,6 @@
 package com.itbank.navercafe.user.cafemember.dto;
 
+import java.sql.Timestamp;
 import java.util.Date;
 
 public class CafeMemberDTO {
@@ -13,7 +14,7 @@ public class CafeMemberDTO {
 	private int cafeUserReply;
 	private int cafeUserVisitCheck;
 	private Date cafeUserRegdate;
-	private Date cafeUserApplydate;
+	private Timestamp cafeUserApplyDate;
 	private String cafeUserStatus;
 	private String cafeUserEmailReceieve;
 	private String cafeUserGenderReveal;
@@ -78,11 +79,11 @@ public class CafeMemberDTO {
 	public void setCafeUserRegdate(Date cafeUserRegdate) {
 		this.cafeUserRegdate = cafeUserRegdate;
 	}
-	public Date getCafeUserApplydate() {
-		return cafeUserApplydate;
+	public Timestamp getCafeUserApplyDate() {
+		return cafeUserApplyDate;
 	}
-	public void setCafeUserApplydate(Date cafeUserApplydate) {
-		this.cafeUserApplydate = cafeUserApplydate;
+	public void setCafeUserApplyDate(Timestamp cafeUserApplyDate) {
+		this.cafeUserApplyDate = cafeUserApplyDate;
 	}
 	public String getCafeUserStatus() {
 		return cafeUserStatus;

@@ -1,27 +1,75 @@
-<?xml version="1.0" encoding="UTF-8" ?>
-<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.itbank.navercafe.user.cafemember.mapper.CafeMemberMapper">
-	<resultMap type="com.itbank.navercafe.user.cafemember.dto.CafeMemberDTO" id="cafeMapper">
-		<id column="CAFE_ID" property="cafeId"/>
-        <result column="CAFE_NAME" property="cafeName"/>
-        <result column="USER_ID" property="userId"/>
-        <result column="CAFE_EXPLANATION" property="cafeExplanation"/>
-        <result column="CAFE_TITLE_NUM" property="cafeTitleNum"/>
-        <result column="CAFE_FRONT" property="cafeFront"/>
-        <result column="CAFE_SKIN" property="cafeSkin"/>
-        <result column="CAFE_LAYOUT" property="cafeLayout"/>
-        <result column="CAFE_JOIN_APPLY" property="cafeJoinApply"/>
-        <result column="CAFE_JOIN_GENDER" property="cafeJoinGender"/>
-        <result column="CAFE_JOIN_AGE" property="cafeJoinAge"/>
-        <result column="CAFE_ICON_NUM" property="cafeIconNum"/>
-        <result column="CAFE_JOIN_INFORMATION" property="cafeJoinInformation"/>
-        <result column="CAFE_REGDATE" property="cafeRegdate"/>
+
+	<resultMap type="com.itbank.navercafe.user.cafemember.dto.CafeMemberDTO" id="project_cafe_member">
+		<id property="cafeId" column="cafe_id"/>
+		<result property="userId" column="user_id"/>
+		<result property="cafeUserNickname" column="cafe_user_nickname"/>
+		<result property="cafeUserImageNum" column="cafe_user_image_num"/>
+		<result property="cafeUserGrade" column="cafe_user_grade"/>
+		<result property="cafeUserVisit" column="cafe_user_visit"/>
+		<result property="cafeUserWrite" column="cafe_user_write"/>
+		<result property="cafeUserReply" column="cafe_user_reply"/>
+		<result property="cafeUserVisitCheck" column="cafe_user_visit_check"/>
+		<result property="cafeUserRegdate" column="cafe_user_regdate"/>
+		<result property="cafeUserApplyDate" column="cafe_user_applydate"/>
+		<result property="cafeUserStatus" column="cafe_user_status"/>
+		<result property="cafeUserEmailReceieve" column="cafe_user_email_receieve"/>
+		<result property="cafeUserGenderReveal" column="cafe_user_gender_reveal"/>
 	</resultMap>
 	
-	<insert id="insertCafeMember">
-		<![CDATA[
-			
-		]]>
+
+
+	<!-- 카페 닉네임 중복검사 -->
+
+	<select id="idOverlap" resultType="Integer">
+		select count(user_id) from project_cafe_member where cafe_id = #{cafeId} and cafe_user_nickname = #{cafeUserNickname}
+	</select>
+	<!-- 카페 회원가입 -->
+	<insert id="signup">
+		insert into project_cafe_member(cafe_id,user_id,cafe_user_nickname)
+		values(#{cafeId},#{userId},#{cafeUserNickname})
 	</insert>
 	
+	<select id="cafeMembers" resultType="Integer">
+		select count(*) from project_cafe_member where cafe_id = #{cafeId} and user_id = #{userId}
+	</select>
+	
+	<select id="getCafeMember" resultMap="project_cafe_member">
+		select * from project_cafe_member where cafe_id = #{cafeId} and user_id = #{userId}
+	</select>
+	
+	<update id="cafeMemberUpdate">
+		update project_cafe_member set cafe_user_nickname = #{cafeUserNickname}, cafe_user_email_receieve = #{cafeUserEmailReceieve},
+		cafe_user_gender_reveal = #{cafeUserGenderReveal}
+		where cafe_id = #{cafeId} and user_id = #{userId}
+	</update>
+	
+	<insert id="signup2">
+		insert into project_cafe_join_request(cafe_request_num, cafe_id, user_id, cafe_user_nickname)
+		values(cafejoin_SEQ.nextval,#{cafeId}, #{userId}, #{userNickname})
+	</insert>
+
+	
+	<!--카페회원 댓글 작성시 댓글작성횟수 올려주기-->
+	<update id="replyUp">
+		update project_cafe_member set cafe_user_reply=cafe_user_reply+1 where user_id=#{userId} and cafe_id=#{cafeId}
+	</update>
+	<!-- 댓글작성할때 필요한 애  -->
+	<select id="getSessionUserInfo" resultMap="project_cafe_member">
+		select user_id,cafe_user_nickname from project_cafe_member where user_id=#{userId} and cafe_id=#{cafeId}
+	</select>
+	<!-- 게시글에 닉네임,이미지 표시하기위해 따로 빼와주는애 -->
+	<select id="getCafeUserInfo" resultMap="project_cafe_member">
+		select user_id,cafe_user_nickname,cafe_user_image_num from project_cafe_member
+		where user_id=#{userId} and cafe_id=#{cafeId}
+	</select>
+	<!-- 게시글 더보러가기  -->
+	<select id="getUserViewList" resultMap="project_cafe_member">
+		select * from project_cafe_member where user_id=#{userId} and cafe_id=#{cafeId}
+	</select>
+
 </mapper>

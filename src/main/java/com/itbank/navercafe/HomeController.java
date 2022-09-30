@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,15 +25,22 @@ import com.itbank.navercafe.common.file.dto.FileDTO;
 import com.itbank.navercafe.common.file.dto.FileResult;
 import com.itbank.navercafe.common.file.service.FileService;
 import com.itbank.navercafe.common.pagination.Pagination;
+import com.itbank.navercafe.user.cafe.controller.CafeController;
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
 import com.itbank.navercafe.user.cafe.service.CafeService;
 import com.itbank.navercafe.user.cafeJoin.CafeJoinQuestionDTO;
+import com.itbank.navercafe.user.member.dto.MemberDTO;
+import com.itbank.navercafe.user.member.service.MemberService;
+
 
 /**
  * Handles requests for the application home page.
  */
 @Controller
-public class HomeController {
+public class HomeController { //메인 로그인관련
+	
+	@Autowired MemberService ms; 
+	@Autowired CafeController cc;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -73,9 +81,63 @@ public class HomeController {
 		return url;
 	}
 	
+
+	@GetMapping("/signup")
+	public String signup() {
+		return "member/signup";
+	}
+	
+	@PostMapping("register")
+	public String register(MemberDTO dto) {
+		
+		int result = ms.signup(dto);
+		if(result==1) {
+			return "redirect:/";
+		}
+		return "redirect:signup";
+	}
+	
+	@GetMapping("/userInfo")
+	public String userUpdate(String id, Model model) {
+		MemberDTO dto = ms.getU(id);
+		model.addAttribute("id", dto.getId());
+		model.addAttribute("name", dto.getName());
+		model.addAttribute("phone", dto.getPhone());
+		model.addAttribute("addr1", dto.getAddr1());
+		model.addAttribute("addr2", dto.getAddr2());
+		model.addAttribute("addr3", dto.getAddr3());
+		model.addAttribute("email", dto.getMail());
+		return "member/userInfo";
+	}
+	
+	@PostMapping("/userUpdate")
+	public String userUpdate(MemberDTO dto) {
+		String url = "http://localhost:8085/navercafe/";
+		if(dto.getPassword()!="") {
+			int result = ms.update(dto);
+			if(result==1) {
+				return "redirect:"+url;
+			}return "redirect:"+url;
+		}
+		return "redirect:"+url;
+	}
+	
+	@GetMapping("delete")
+	public String delete(String id, HttpServletRequest request, HttpSession session) {
+		String url = "http://localhost:8085/navercafe/";
+		cc.logout(request, session);
+		
+		int result = ms.delete(id);
+		if(result==1) {
+			return "redirect:"+url;
+		}
+		return "redirect:"+url;
+
+	}
 	@GetMapping("/cafe/createCafeForm")
 	public String createCafeForm() {
 		return "cafe/createCafeForm";
+
 	}
 	
 	@PostMapping(value="/cafe/createCafe", produces="application/json")

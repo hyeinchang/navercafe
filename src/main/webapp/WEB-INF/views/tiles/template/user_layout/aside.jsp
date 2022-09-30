@@ -73,11 +73,12 @@
                     </div>
                   </li>
                   <li>
+
                     <c:if test="${cafeDTO.isCafeManager eq 'true' || cafeDTO.isCafeMember eq 'true'}">
                   	<input type="button" class="button" value="카페 글쓰기" onclick="changeCafeMenu('${contextPath}/user/board/writeForm')" style="width:100%;">
                   	</c:if>
                   	<c:if test="${cafeDTO.isCafeMember eq 'false'}">
-                  	<input type="button" class="button" value="카페 가입하기" onclick="alert('카페 가입하기 이동')" style="width:100%;">
+                  	<input type="button" class="button" value="카페 가입하기" onclick="changeCafeMenu('${contextPath}/user/cafeSignup?cafeId=${cafeDTO.cafeId }')" style="width:100%;">
                   	</c:if>
                   </li>
                 </ul>
@@ -117,46 +118,71 @@
 		        </c:if>
 		      
                 <ul class="recent_posts">
+               
                   <!-- start 카페 가입 회원 정보 -->
                   <c:if test="${cafeDTO.isCafeMember eq 'true'}">
                   <li>
                   	<span>
                   	  <a href="#">
-                        <img class="profileImg" src="${contextPath}/resources/img/profileImage.jpg" alt="프로필 이미지">
+                  	  	<c:choose>
+                  	  		<c:when test="${cafeMember.cafeUserImageNum == 0}"> <!-- 프로필 기본사진 -->
+                  	  			<img class="profileImg" src="${contextPath}/resources/img/cafe_profile.png" alt="프로필 이미지">
+                  	  		</c:when>
+                  	  		<c:otherwise>
+                  	  			<img class="profileImg" src="${contextPath}/resources/img/profileImage.jpg" alt="프로필 이미지">
+                  	  		</c:otherwise>
+                  	  	</c:choose>
                       </a>
-                      <a href="javascript:alert('프로필 변경하기')" class="lab_thmb">프로필 변경하기</a>
+                      <a href="profileUpdate?cafeId=${cafeMember.cafeId }" class="lab_thmb">프로필 변경하기</a>
                   	</span>
-                    <b>ㅇㅇ</b>
-                    <div>가입 2022.08.19.</div>
+                    <b>${cafeMember.cafeUserNickname }</b>
+                    <div>가입 ${cafeMember.cafeUserRegdate}</div>
                     <div class="gradeInfo">
+                    	<c:choose>
+                    		<c:when test="${cafeMember.cafeUserGrade eq 1}">
+                    		<span>카페등급1 <img src="${contextPath}/resources/img/grade_manager.gif" alt=""></span>
+                    		</c:when>
+                    		<c:when test="${cafeMember.cafeUserGrade eq 2}">
+                    		<span>카페등급2 <img src="${contextPath}/resources/img/grade_manager.gif" alt=""></span>
+                    		</c:when>
+                    		<c:when test="${cafeMember.cafeUserGrade eq 3}">
+                    		<span>카페등급3 <img src="${contextPath}/resources/img/grade_manager.gif" alt=""></span>
+                    		</c:when>
+                    		<c:otherwise>
+                    		아니야
+                    		</c:otherwise>
+                    	</c:choose>
+                    	<!--  
 	                   	<span>카페 매니저 <img src="${contextPath}/resources/img/grade_manager.gif" alt=""></span>
 	                   	<a href="javscript:alert('멤버등급 안내')">등급 안내</a>
+	                   	-->
                     </div>
                   </li>
                   <li class="cafeInfo">
                     <div>
                       <span class="ico_vst"></span>
-                      <b>방문 :</b> 21회
+                      <b>방문 :</b> ${cafeMember.cafeUserVisit}회
                     </div>
                     <div>
                       <span class="ico_wrt"></span>
-                      <b>내가 쓴 글 보기 :</b> 3개
+                      <b>내가 쓴 글 보기 :</b> ${cafeMember.cafeUserWrite}개
                     </div>
                     <div>
                       <span class="ico_cmt"></span>
-                      <b>내가 쓴 댓글보기 :</b> 1개
+                      <b>내가 쓴 댓글보기 :</b> ${cafeMember.cafeUserReply}개
                     </div>
                   </li>
                   </c:if>
                   <!-- end 카페 가입 회원 정보 -->
                   <li>
                   <c:choose>
+
                   <c:when test="${cafeDTO.isCafeManager eq 'true' || cafeDTO.isCafeMember eq 'true'}">
                     <input type="button" class="button" value="카페 글쓰기" onclick="alert('카페 글쓰기 이동')" style="width:100%;">
                   </c:when>
                   <c:otherwise>
                     <c:if test="${loginId ne null}">
-                    <input type="button" class="button" value="카페 가입하기" onclick="alert('카페 가입하기 이동')" style="width:100%;">
+                    <input type="button" class="button" value="카페 가입하기" onclick="changeCafeMenu('${contextPath}/user/cafeSignup?cafeId=${cafeDTO.cafeId }')" style="width:100%;">
                     </c:if>
                   </c:otherwise>
                   </c:choose>
@@ -174,6 +200,7 @@
           <h4 class="title">
             <span>전체글보기</span>
           </h4>
+
           <ul class="categories">
           <c:choose>
           	<c:when test="${cafeDTO.cafeMenuList eq null || cafeDTO.cafeMenuList.size() == 0}">
@@ -181,7 +208,7 @@
           	</c:when>
           	<c:otherwise>
           	<li>
-            	<a href="javascript:alert('전체글 보기 이동')">전체글보기</a>
+            	<a href="javascript:changeCafeMenu('${contextPath}/user/board/goBoardList')">전체글보기</a>
             	<span class="text-primary">3</span>
             </li>
           	</c:otherwise>	

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itbank.navercafe.user.reply.mapper.ReplyMapper">
+
+	
+	<resultMap type="com.itbank.navercafe.user.reply.dto.ReplyDTO" id="project_reply">
+		<id property="replyNum" column="reply_num"/>
+		<result property="boardNum" column="board_num"/>
+		<result property="replyContent" column="reply_content"/>
+		<result property="replySaveDate" column="reply_saveDate"/>
+		<result property="userId" column="user_id"/>
+		<result property="replyGroup" column="reply_group"/>
+		<result property="replyStep" column="reply_step"/>
+	</resultMap>
+	
+	
+	
+	<!-- 댓글 갯수 -->
+	<select id="getReplyCount" resultType="int">
+		select count(*) from project_reply where board_num=#{boardNum}
+	</select>
+	
+	
+	<!-- 댓글 리스트 -->			<!--imgname 지우고 파일테이블에서 reply_num으로 접근할것.  -->
+	<select id="getReplyList" resultType="HashMap">
+		select R.reply_num,R.board_num,R.reply_content,R.reply_saveDate,R.user_id,
+		R.reply_group,R.reply_step,C.cafe_user_nickname,C.cafe_user_image_num
+		from project_reply R inner join project_cafe_member C on R.user_id=C.user_id
+		where board_num=#{boardNum} order by reply_num desc
+	</select>
+	
+	<!-- 댓글 작성  -->
+	<insert id="saveReply">
+		insert into project_reply(reply_num,board_num,reply_content,user_id,
+		reply_group,reply_step) 
+		values(#{replyNum},#{boardNum},#{replyContent},#{userId},#{replyNum},#{replyStep})
+	</insert>
+	
+	<!-- 답글 작성  -->
+	<insert id="saveGroupNumReply">
+		insert into project_reply(reply_num,board_num,reply_content,user_id,
+		reply_group,reply_step) 
+		values(#{replyNum},#{boardNum},#{replyContent},#{userId},
+		#{replyGroup},#{replyStep})
+	</insert>
+
+	
+	<!--시퀀스값 빼와주는애  -->
+	<select id="getReplyNum" resultType="int">
+		select reply_num_seq.nextval replyNum from dual
+	</select>
+	
+	
+	
+	
+</mapper>
