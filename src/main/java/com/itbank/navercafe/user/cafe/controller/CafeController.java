@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -66,23 +67,18 @@ public class CafeController {
 	
 	
 	
-	@PostMapping("login")
-	public String login(MemberDTO memberDTO,
-			HttpServletRequest request,HttpSession session) {
-		String url = "/";
-		String referer = request.getHeader("referer");
-		int result = ms.loginChk(request);
+	@PostMapping(value="login", produces="application/json")
+	@ResponseBody
+	public int login(@RequestBody MemberDTO memberDTO, HttpSession session) {
+		int result = ms.loginChk(memberDTO);
 		MemberDTO name = ms.getU(memberDTO.getId());
-		if(result==0) {
+		
+		if(result > 0) {
 			session.setAttribute("loginId",  memberDTO.getId());
 			session.setAttribute("loginName",  name.getName());
 		}
 		
-		if(referer != null) {
-			url = referer;
-		}
-
-		return "redirect:" + url;
+		return result;
 	}
 	
 	@GetMapping("logout")
@@ -97,12 +93,6 @@ public class CafeController {
 		}
 
 		return "redirect:" + url;
-	}
-	
-	@GetMapping("/changeColor")
-	public String changeColor(HttpServletRequest request, HttpSession session, String color) {
-		session.setAttribute("color", color);
-		return "test/main";
 	}
 	
 	@GetMapping("cafeSignup")  //카페 회원가입 페이지 이동

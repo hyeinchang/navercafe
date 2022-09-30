@@ -4,18 +4,7 @@
 <c:set var="address" value="${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}"/>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
-  <section id="intro">
-    <div class="container">
-      <div class="ror">
-        <div class="col-md-8 col-md-offset-2">
-          <h1>네이버 카페</h1>
-          <p>원하시는 주제로 다양한 카페를 만들 수 있습니다.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <section class="section1">
+  <section class="section1 cafe_layout_area">
     <div class="container clearfix">
       <div class="">
        	<h4>
@@ -24,7 +13,7 @@
       </div>
       <div class="col-lg-12 col-md-12 col-sm-12 clearfix">
 
-        <form id="createCafeForm" action="./createCafe" name="createCafeForm" method="post" enctype="multipart/form-data">
+        <form id="createCafeForm" class="main_form" action="./createCafe" name="createCafeForm" method="post" enctype="multipart/form-data">
         	<input type="hidden" name="cafeIdCheck" value="N">
         	<input type="hidden" name="userId" value="${loginId}">
         	<h5 class="title">카페 기본 정보</h5>

@@ -1,8 +1,5 @@
 package com.itbank.navercafe.user.member.mapper;
 
-import java.util.ArrayList;
-
-
 import com.itbank.navercafe.user.member.dto.MemberDTO;
 
 
@@ -15,5 +12,6 @@ public interface MemberMapper {
 	public MemberDTO getUser(String id);
 
 	public int delete(String id);
-
+	
+	public int loginChk(MemberDTO memberDTO);
 }

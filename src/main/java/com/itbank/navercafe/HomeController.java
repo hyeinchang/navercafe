@@ -82,9 +82,9 @@ public class HomeController { //메인 로그인관련
 	}
 	
 
-	@GetMapping("/signup")
+	@GetMapping("/cafe/member/signup")
 	public String signup() {
-		return "member/signup";
+		return "cafe/member/signup";
 	}
 	
 	@PostMapping("register")
@@ -97,7 +97,7 @@ public class HomeController { //메인 로그인관련
 		return "redirect:signup";
 	}
 	
-	@GetMapping("/userInfo")
+	@GetMapping("cafe/member/userInfo")
 	public String userUpdate(String id, Model model) {
 		MemberDTO dto = ms.getU(id);
 		model.addAttribute("id", dto.getId());
@@ -107,7 +107,7 @@ public class HomeController { //메인 로그인관련
 		model.addAttribute("addr2", dto.getAddr2());
 		model.addAttribute("addr3", dto.getAddr3());
 		model.addAttribute("email", dto.getMail());
-		return "member/userInfo";
+		return "cafe/member/userInfo";
 	}
 	
 	@PostMapping("/userUpdate")

@@ -7,6 +7,7 @@
     	<put-attribute name="header" value="/WEB-INF/views/tiles/template/user_layout/header.jsp"/>
     	<put-attribute name="nav" value="/WEB-INF/views/tiles/template/user_layout/nav.jsp"/>
     	<put-attribute name="front" value=""/>
+    	<put-attribute name="intro" value="/WEB-INF/views/tiles/template/user_layout/intro.jsp"/>
     	<put-attribute name="content" value="/WEB-INF/views/tiles/template/user_layout/content.jsp"/>
     	<put-attribute name="aside" value=""/>
     	<put-attribute name="footer" value="/WEB-INF/views/tiles/template/user_layout/footer.jsp"/>
@@ -14,12 +15,14 @@
   	
 	<definition name="user/*" extends="user_layout">
 	    <put-attribute name="front" value="/WEB-INF/views/tiles/template/user_layout/front.jsp"/>
+	    <put-attribute name="intro" value=""/>
 		<put-attribute name="aside" value="/WEB-INF/views/tiles/template/user_layout/aside.jsp"/>
 		<put-attribute name="content" value="/WEB-INF/views/user/{1}.jsp" />
   	</definition>
   	
   	<definition name="user/*/*" extends="user_layout">
 	    <put-attribute name="front" value="/WEB-INF/views/tiles/template/user_layout/front.jsp"/>
+	    <put-attribute name="intro" value=""/>
 		<put-attribute name="aside" value="/WEB-INF/views/tiles/template/user_layout/aside.jsp"/>
 		<put-attribute name="content" value="/WEB-INF/views/user/{1}/{2}.jsp" />
   	</definition>
@@ -27,6 +30,7 @@
   	<definition name="cafe_layout" template="/WEB-INF/views/tiles/template/cafe_layout.jsp">
     	<put-attribute name="header" value="/WEB-INF/views/tiles/template/user_layout/header.jsp"/>
     	<put-attribute name="nav" value="/WEB-INF/views/tiles/template/user_layout/nav.jsp"/>
+    	<put-attribute name="intro" value="/WEB-INF/views/tiles/template/user_layout/intro.jsp"/>
     	<put-attribute name="content" value="/WEB-INF/views/tiles/template/user_layout/content.jsp"/>
     	<put-attribute name="footer" value="/WEB-INF/views/tiles/template/user_layout/footer.jsp"/>
   	</definition>

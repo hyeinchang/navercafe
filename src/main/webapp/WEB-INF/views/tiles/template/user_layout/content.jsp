@@ -6,17 +6,6 @@
 	alert('${message}');
 </script>
 </c:if>
-  <section id="intro">
-    <div class="container">
-      <div class="ror">
-        <div class="col-md-8 col-md-offset-2">
-          <h1>네이버 카페</h1>
-          <p>원하시는 주제로 다양한 카페를 만들 수 있습니다.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
  
   <section class="section1">
     <div class="container clearfix">
@@ -76,7 +65,7 @@
           <form id="searchCafeForm" name="searchCafeForm" class="form-inline" action="./">
           	<input type="hidden" name="page" value="1">
           	<input type="text" name="cafeName" class="form-control" placeholder="검색할 카페명을 입력해주십시오." value="${cafeDTO.cafeName}" 
-          		style="width:300px;height:auto;margin-top:0;">
+          		style="width:300px;height:auto;margin-top:0;" onkeypress="if(event.keyCode == 13)searchCafe(1)">
           	<button type="button" class="btn btn-primary" 
           		style="font-size:14px;padding: 8px 18px 5px;;margin-top:0;vertical-align:top;border:none;border-radius:2px;"
           		onclick="searchCafe(1)">검색</button>
@@ -151,13 +140,13 @@
           <div class="form-group">
             <div class="input-group">
               <span class="input-group-addon"><i class="fa fa-user"></i></span>
-              <input type="text" class="form-control" name="id" placeholder="아이디를 입력해주십시오." >
+              <input type="text" class="form-control" name="id" placeholder="아이디를 입력해주십시오." onkeypress="if(event.keyCode == 13)checkLoginForm()">
             </div>
           </div>
           <div class="form-group">
             <div class="input-group">
               <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-              <input type="password" class="form-control" name="password" placeholder="비밀번호를 입력해주십시오." >
+              <input type="password" class="form-control" name="password" placeholder="비밀번호를 입력해주십시오." onkeypress="if(event.keyCode == 13)checkLoginForm()">
             </div>
           </div>
           <div class="form-group">
@@ -169,7 +158,7 @@
           </div>
           <div class="form-group">
             <button type="button" class="button" onclick="checkLoginForm()">로그인</button>
-            <button type="button" class="button" onclick="location.href='signup'">회원가입</button>
+            <button type="button" class="button" onclick="location.href='cafe/member/signup'">회원가입</button>
           </div>
         </form>
 	  </c:when>
