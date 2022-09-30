@@ -3,8 +3,8 @@ package com.itbank.navercafe.admin.memberstaff.dto;
 import java.util.Date;
 
 public class DeportedMembersDTO {
-	private String cafeId, userId, deportedReason;
-	private Date regDate;
+	private String cafeId, userId, reason;
+	private Date regdate;
 	private int banFlag;
 	
 	public int getBanFlag() {
@@ -25,16 +25,16 @@ public class DeportedMembersDTO {
 	public void setUserId(String userId) {
 		this.userId = userId;
 	}
-	public String getDeportedReason() {
-		return deportedReason;
+	public String getReason() {
+		return reason;
 	}
-	public void setDeportedReason(String deportedReason) {
-		this.deportedReason = deportedReason;
+	public void setReason(String deportedReason) {
+		this.reason = deportedReason;
 	}
-	public Date getRegDate() {
-		return regDate;
+	public Date getRegdate() {
+		return regdate;
 	}
-	public void setRegDate(Date regDate) {
-		this.regDate = regDate;
+	public void setRegdate(Date regdate) {
+		this.regdate = regdate;
 	}
 }

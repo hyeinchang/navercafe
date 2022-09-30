@@ -141,12 +141,12 @@ $(document).ready(function () {
         <tbody>
         <c:forEach var="dto" items="${list }">
             <tr>
-                <td align="center"><input type="checkbox" class="registerBan-cb-item" name="temp" value="${dto.userName }"></td>
-                <td>${dto.userName }</td>
-                <td>${dto.userLevel }</td>
-                <td>${dto.userPoint }</td>
-                <td>${dto.userEmail }</td>
-                <td>${dto.userEmail }</td>
+                <td align="center"><input type="checkbox" class="registerBan-cb-item" name="temp" value="${dto.userId }"></td>
+                <td>${dto.userId }</td>
+                <td>${dto.reason }</td>
+                <td>${dto.regdate }</td>
+                <td>처리자?</td>
+                <td>가입불가?</td>
             </tr>
         </c:forEach>
         </tbody>
@@ -165,9 +165,11 @@ $(document).ready(function () {
     
 <form action="unbanMembers" id="f-unban" method="post">
 	<input type="hidden" value="" name="unbanMembers" id="unbanMembers">
+	<input type="hidden" value="${cafeId}" name="cafeId">
 </form>
 <form action="banMembers" id="f-ban" method="post">
 	<input type="hidden" value="" name="banMembers" id="banMembers">
+	<input type="hidden" value="${cafeId}" name="cafeId">
 </form>	
     	</div>
     </div>

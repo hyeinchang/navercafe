@@ -17,6 +17,13 @@
         <result column="CAFE_USER_EMAIL_RECEIEVE" property="cafeUserEmailReceieve"/>
         <result column="CAFE_USER_GENDER_REVEAL" property="cafeUserGenderReveal"/>
     </resultMap>
+    
+    <resultMap type="com.itbank.navercafe.admin.memberstaff.dto.DeportedMembersDTO" id="deportedMembers">
+        <id column="CAFE_ID" property="cafeId"/>
+        <result column="USER_ID" property="userId"/>   
+        <result column="blacklist_regdate" property="regdate"/>   
+        <result column="reason" property="reason"/>   
+    </resultMap>
 	
 	<select id="getAllMembersList" resultMap="allMembers" parameterType="String">
 		select * from project_cafe_member where cafe_id = #{value}
@@ -24,6 +31,27 @@
 	
 	<select id="getCafeGradeNames" parameterType="String" resultType="String">
 		select cut_name from project_member_grade where cafe_id = #{value} order by cafe_user_grade asc
+	</select>	
+	
+	<update id="modifyMembersGrade" parameterType="Map">
+		update project_cafe_member set cafe_user_grade = #{cafeUserGrade} where user_id = #{userId} and cafe_id = #{cafeId}
+	</update>
+	
+	<delete id="deportMembers" parameterType="Map">
+		delete from project_cafe_member where cafe_id = #{cafeId} and user_id = #{userId}
+	</delete>
+	
+	<select id="getEmailList" parameterType="String" resultType="String">
+		select user_email from project_members where user_id = #{value}
 	</select>
+	
+	<insert id="insertDeportedList" parameterType="Map" >
+		insert into project_cafe_deported values(#{cafeId}, #{userId}, sysdate, #{reason})
+	</insert>
+	
+	<select id="getDeportedMembersList" resultMap="deportedMembers" parameterType="String">
+		select * from project_cafe_deported where cafe_id = #{value}
+	</select>
+	
 </mapper>
 
