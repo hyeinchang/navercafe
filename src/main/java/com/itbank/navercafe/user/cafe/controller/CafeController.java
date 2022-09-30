@@ -96,8 +96,17 @@ public class CafeController {
 	}
 	
 	@GetMapping("cafeSignup")  //카페 회원가입 페이지 이동
-	public String cafeSignup(Model model, String cafeId) {
-		model.addAttribute("cafeId",cafeId);
+	public String cafeSignup(Model model, CafeDTO cafeDTO, HttpSession session) {
+		try {
+			String loginId = (String) session.getAttribute("loginId");
+			cafeDTO.setLoginId(loginId);
+			cafeDTO = cafeService.selectCafe(cafeDTO);	
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		model.addAttribute("cafeDTO", cafeDTO);
+		
 		return "user/cafeSignup";
 	}
 	
