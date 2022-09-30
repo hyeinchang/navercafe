@@ -29,7 +29,7 @@ function createSEditor2(elIRField, htParams, elSeAppContainer){
 		nHeight:elIRField.style.height||elIRField.offsetHeight,
 		nWidth:elIRField.style.width||elIRField.parentElement.offsetWidth
 	};
-	console.log(htDimension);
+	
 	var htConversionMode = {
 		bUseVerticalResizer : htParams.bUseVerticalResizer,
 		bUseModeChanger : htParams.bUseModeChanger

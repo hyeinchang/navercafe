@@ -3,7 +3,6 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <c:set var="adminPath" value="${contextPath}/resources/admin"/>
 <c:set var="adminViewPath" value="${contextPath }/admin" />
-${cafeId}
   <!-- Page Wrapper -->
     <div id="wrapper">
     
@@ -124,7 +123,7 @@ ${cafeId}
                 </a>
                 <div id="email" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/email')">메일 보내기</a>
+                        <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/email/emailForm')">메일 보내기</a>
                     </div>
                 </div>
             </li>

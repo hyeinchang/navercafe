@@ -44,14 +44,16 @@
 		
 		        <div class="clearfix"></div>
 		        <div class="divider"></div>
-		
+		        <h1>1111</h1><h1>1111</h1><h1>1111</h1><h1>1111</h1><h1>1111</h1><h1>1111</h1>
+				<h1>두번째 div 끝</h1>
 		      </div>
 		      <!-- end content -->
+		      <h1>첫번째 div 끝</h1>
 		    </div>
 		    <!-- end container -->
+	 	 <h1>section 안</h1>
 		  </section>
-	  
-	  
+		  <h1>section 밖</h2>
  	  </div>
       <!-- end content -->
       

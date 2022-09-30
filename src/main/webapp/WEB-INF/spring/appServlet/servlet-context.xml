@@ -41,6 +41,19 @@
         <beans:property name="location" value="/config/config.properties"/>
         <beans:property name="fileEncoding" value="UTF-8" />
     </beans:bean>
+    
+	<beans:bean id="testIn" class="com.itbank.navercafe.common.TestInterceptor"/>
+	
+	<interceptors>
+		<interceptor>
+			<mapping path="/*"/>
+			<mapping path="/user/*"/>
+			<mapping path="user/*"/>
+			<beans:ref bean="testIn"/>
+		</interceptor>
+	
+	</interceptors>
+	
 	
 	<context:component-scan base-package="com.itbank.navercafe" />
 	

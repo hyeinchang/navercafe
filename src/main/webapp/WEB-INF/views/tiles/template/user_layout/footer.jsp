@@ -121,6 +121,8 @@
   }
   
   function checkLoginForm() {
+	  var xhr = new XMLHttpRequest();
+	  var data = new Object();
 	  loginForm = document.loginForm;
 	  
 	  if(loginForm.id.value == '') {
@@ -135,7 +137,21 @@
 		  return;
 	  }
 	  
-	  loginForm.submit();
+	  data.id = loginForm.id.value;
+	  data.password = loginForm.password.value;
+	  
+	  xhr.open('post', '${contextPath}/user/login');
+	  xhr.setRequestHeader('Content-Type', 'application/json');
+	  xhr.onreadystatechange = function() {
+		  if(xhr.readyState == 4 && xhr.status == 200) {
+			  if(xhr.response == 'false') {
+				  alert('등록되지 않은 회원입니다.');
+			  } else {
+				  location.reload();
+			  }
+		  }
+	  }
+	  xhr.send(JSON.stringify(data));
   }
 </script>
 </body>

@@ -19,7 +19,7 @@
                	
                		<form name="titleForm">
                			<input type="hidden" name="cafeId" value="${cafeDTO.cafeId}">
-               			<input type="hidden" name="titleNum" value="${cafeDTO.titleNum}">
+               			<input type="hidden" name="cafeTitleNum" value="${cafeDTO.cafeTitleNum}">
                			<div class="card mb-4">
 							<div class="card-header">
 								<b>카페 타이틀 이미지 업로드</b>
@@ -36,8 +36,8 @@
 			               				
 			               				<div class="preview">
 			               					<c:choose>
-			               						<c:when test="${cafeDTO.titleNum ne null && cafeDTO.titleNum > 0}">
-										    	<img src="${contextPath}/file/download?titleNum=${cafeDTO.titleNum}" id="previewImg">
+			               						<c:when test="${cafeDTO.cafeTitleNum ne null && cafeDTO.cafeTitleNum > 0}">
+										    	<img src="${contextPath}/file/download?cafeTitleNum=${cafeDTO.cafeTitleNum}" id="previewImg">
 				               					</c:when>
 				               					<c:otherwise>
 				               					<img src="" id="previewImg" style="display:none;">
@@ -57,7 +57,7 @@
                               </span>
                               <span class="text">저장하기</span>
                          </a>
-						<c:if test="${cafeDTO.titleNum ne null && cafeDTO.titleNum > 0}">
+						<c:if test="${cafeDTO.cafeTitleNum ne null && cafeDTO.cafeTitleNum > 0}">
 						<a href="javascript:deleteTitle()" class="btn btn-danger btn-icon-split">
                               <span class="icon text-white-50">
                                    <i class="fas fa-trash"></i>
@@ -90,10 +90,9 @@ function saveTitle() {
 	
 	xhr.onreadystatechange = function() {
 		if(xhr.readyState == 4 && xhr.status == 200) {
- 			var data = JSON.parse(xhr.response);
  			var message = '';
  			
- 			if(data.result == 1) {
+ 			if(Number(xhr.response) == 1) {
  				message = '저장되었습니다.';
  			} else {
  				message = '저장에 실패했습니다.';

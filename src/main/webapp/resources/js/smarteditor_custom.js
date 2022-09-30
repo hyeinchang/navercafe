@@ -68,7 +68,6 @@
 					}
 					
 					// class 삭제
-					
 					while(tempImageList.length > 0) {
 						var target = tempImageList[tempImageList.length-1];
 						
