@@ -14,9 +14,9 @@ $(document).ready(function () {
     	
 	"columnDefs": [
         { orderable: false, "width": "10px", "targets": 0 },
-        { orderable: true, "targets": 1 }
+        { orderable: true, "targets": 1 }	
       ] ,
-    "order": [[ 3, 'desc' ]], 	// 방문일 기준 기본 정렬값 desc 설정 
+    "order": [[ 3, 'desc' ]], 	// 처리일 기준 기본 정렬값 desc 설정 
     "autoWidth": false,
     language : {
         "decimal":        "",
@@ -130,11 +130,11 @@ $(document).ready(function () {
         <tbody>
         <c:forEach var="dto" items="${list }">
             <tr>
-                <td align="center"><input type="checkbox" class="registerBan-cb-item" name="temp" value="${dto.userName }"></td>
-                <td>${dto.userName }</td>
-                <td>${dto.userLevel }</td>
-                <td>${dto.userPoint }</td>
-                <td>${dto.userEmail }</td>
+                <td align="center"><input type="checkbox" class="registerBan-cb-item" name="temp" value="${dto.userId }"></td>
+                <td>${dto.userId }</td>
+                <td>${dto.reason }</td>
+                <td>${dto.blacklistRegdate }</td>
+                <td>${dto.userId }</td>
             </tr>
         </c:forEach>
         </tbody>
@@ -152,6 +152,7 @@ $(document).ready(function () {
     
 <form action="unbanMembers2" id="f-unban2" method="post">
 	<input type="hidden" value="" name="unbanMembers" id="unbanMembers">
+	<input type="hidden" value="${cafeId }" name="cafeId">
 </form>
     	</div>
     </div>

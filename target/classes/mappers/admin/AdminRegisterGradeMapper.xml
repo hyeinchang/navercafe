@@ -27,10 +27,37 @@
 		<result property="userId" column="user_id"/>
 	</resultMap>
 	
+	<resultMap type="com.itbank.navercafe.admin.registergrade.dto.RegisterBanDTO" id="registerBan">
+		<id property="userId" column="user_id"/>
+		<result property="cafeId" column="cafe_id" />
+		<result property="blacklistRegdate" column="blacklist_regdate"/>
+		<result property="reason" column="reason"/>
+	</resultMap>
+	
+	<resultMap type="com.itbank.navercafe.admin.registergrade.dto.RegisterInfoDTO" id="registerInfo">
+		<id property="cafeId" column="cafe_id"/>
+		<result property="explanation" column="cafe_join_information" />	
+		<result property="cafeJoinAge" column="cafe_join_age" />	
+		<result property="cafeJoinGender" column="cafe_join_gender" />	
+	</resultMap>
+	
+	<resultMap type="com.itbank.navercafe.admin.registergrade.dto.JoinQuestionDTO" id="joinQuestion">
+		<id property="cafeId" column="cafe_id"/>
+		<result property="cafeQuestionNum" column="cafe_question_num" />			
+		<result property="cafeQuestionContent" column="cafe_question_content" />			
+	</resultMap>
+	
+	<resultMap type="com.itbank.navercafe.admin.registergrade.dto.RegisterRequestDTO" id="registerRequest">
+		<id property="cafeId" column="cafe_id"/>
+		<result property="cafeRequestNum" column="cafe_request_num" />
+		<result property="userId" column="user_id" />			
+		<result property="regdate" column="regdate" />
+	</resultMap>
+	
 	
 	<!-- 가입 신청관리 테이블에서 신청(들) 삭제 -->
 	<delete id="deleteRequest" parameterType="Map">
-		delete from project_cafe_join_request where user_id = #{userId} and cafe_id = #{cafeId}
+		delete from project_cafe_join_request where cafe_request_num = #{cafeRequestNum} and cafe_id = #{cafeId}
 	</delete>
 	
 	<!-- 멤버 등급 관리 수정 -->
@@ -41,7 +68,7 @@
 	</update>
 	
 	<!-- 현재 가입 질문 개수 가져오기 -->
-	<select id="countQuestion" resultMap="membersGrade">
+	<select id="countQuestion" resultType="int">
 		select count(*) from project_join_question where cafe_id = #{cafeId} 
 	</select>
 	
@@ -60,7 +87,7 @@
 	<!-- 가입 안내 및 나이,성별제한 수정 -->
 	<update id="modifyRegisterInfo">
 		update project_cafe_info set cafe_join_information = #{explanation},
-		cafe_join_gender = #{cafeJoinGender}, cafe_join_age #{cafeJoinAge}
+		cafe_join_gender = #{cafeJoinGender}, cafe_join_age = #{cafeJoinAge}
 		where cafe_id = #{cafeId}
 	</update>
 	
@@ -102,6 +129,31 @@ left join
 on presentData.cafe_user_grade+1 = upData.up_cafe_user_grade
 order by presentData.board_num desc
 	</select>	
+	
+	<!-- 가입 불가 관리 리스트 가져오기 -->
+	<select id="getRegisterBanList" resultMap="registerBan" parameterType="String">
+		select * from project_blacklist where cafe_id = #{value}
+	</select>
+	
+	<delete id="unbanMembers" parameterType="Map">
+		delete from project_blacklist where cafe_id = #{cafeId} and user_id = #{userId}
+	</delete>
+	
+	<select id="getRegisterInfo" resultMap="registerInfo" parameterType="String">
+		select * from project_cafe_info where cafe_id = #{value}
+	</select>
+	
+	<select id="getJoinQuestion" resultMap="joinQuestion" parameterType="String">
+		select * from project_join_question where cafe_id = #{value}
+	</select>
+	
+	<delete id="deleteQuestion" parameterType="Map">
+		delete from project_join_question where cafe_question_num = #{cafeQuestionNum} and cafe_id = #{cafeId}
+	</delete>
+	
+	<select id="getRegisterRequestList" parameterType="String" resultMap="registerRequest">
+		select * from project_cafe_join_request where cafe_id = #{value}
+	</select>
 	
 </mapper>
 

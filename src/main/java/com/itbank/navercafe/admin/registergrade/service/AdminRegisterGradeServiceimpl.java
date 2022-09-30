@@ -14,7 +14,9 @@ import org.springframework.ui.Model;
 import com.itbank.navercafe.admin.registergrade.dto.GradeUpAppliesDTO;
 import com.itbank.navercafe.admin.registergrade.dto.JoinQuestionDTO;
 import com.itbank.navercafe.admin.registergrade.dto.MembersGradeDTO;
+import com.itbank.navercafe.admin.registergrade.dto.RegisterBanDTO;
 import com.itbank.navercafe.admin.registergrade.dto.RegisterInfoDTO;
+import com.itbank.navercafe.admin.registergrade.dto.RegisterRequestDTO;
 import com.itbank.navercafe.admin.registergrade.mapper.AdminRegisterGradeMapper;
 
 @Service
@@ -26,6 +28,7 @@ public class AdminRegisterGradeServiceimpl implements AdminRegisterGradeService 
 	
 		//idList 에 id들 정렬
 		ArrayList<String> idList = new ArrayList<>();
+		
 		if(ids.contains("/")) {
 			String[] idArr = ids.split("/");
 			for(int i = 0; i < idArr.length; i++) {
@@ -36,9 +39,9 @@ public class AdminRegisterGradeServiceimpl implements AdminRegisterGradeService 
 		}
 		
 		// mapList 생성 및 정렬 리턴
-		Map<String, String> map = new HashMap<>();
 		ArrayList< Map<String, String> > mapList = new ArrayList<>(); 
 		for(int i = 0; i < idList.size(); i++) {
+			Map<String, String> map = new HashMap<>();
 			map.put("userId", idList.get(i));
 			map.put("cafeId", cafeId);
 			mapList.add(map);
@@ -85,6 +88,7 @@ public class AdminRegisterGradeServiceimpl implements AdminRegisterGradeService 
 			Map<String, String> map = new HashMap<>();
 			map.put("userId", idList.get(i));
 			map.put("boardNum", boardNumList.get(i));
+			map.put("cafeRequestNum", boardNumList.get(i));
 			map.put("cafeId", cafeId);
 			mapList.add(map);
 		}
@@ -103,16 +107,34 @@ public class AdminRegisterGradeServiceimpl implements AdminRegisterGradeService 
 	
 	
 	@Override
-	public void unbanMembers2(String unbanMembers, String cafeId) {
+	public String unbanMembers2(String unbanMembers, String cafeId) {
 		ArrayList<Map<String, String>> mapList = nameSort(unbanMembers, cafeId);
+		
+		int result = 0;
+		
+		try {
+			for(int i = 0; i < mapList.size(); i++) {
+				result += mapper.unbanMembers(mapList.get(i));
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		String url, msg;
+		if(result == mapList.size()) {
+			msg = "성공적으로 반영되었습니다";
+			url = "manageRegisterBan?cafeId="+cafeId;
+		} else {
+			msg = "오류가 발생했습니다!";
+			url = "manageRegisterBan?cafeId="+cafeId;
+		}
+		return getMessage(msg,url);
 	}
 
 	@Override
 	// 자동회원가입x 일때 회원가입 시켜주기
 	public String acceptMembers(String cafeId, String acceptMembers) {
-		ArrayList<Map<String, String>> mapList = nameSort(acceptMembers, cafeId);
-		String url = "";
-		String msg = "";
+		ArrayList<Map<String, String>> mapList = nameBoardSort(acceptMembers, cafeId);
 		int result = 0;
 		
 		try {
@@ -123,20 +145,20 @@ public class AdminRegisterGradeServiceimpl implements AdminRegisterGradeService 
 			
 			// 카페 회원가입 매퍼 활용 가입시켜줘야됨
 			for(int i = 0; i< mapList.size(); i++) {
-				result += mapper.acceptMembers(mapList.get(i));
-			}
-			
-			
-			if(result == mapList.size()*2) {
-				msg = "가입이 승인 되었습니다";
-				url = "manageRegisterRequest";
-			} else {
-				msg = "오류가 발생했습니다!";
-				url = "manageRegisterRequest";
+				//result += mapper.acceptMembers(mapList.get(i));
 			}
 			
 		} catch(Exception e) {
 			e.printStackTrace();
+		}
+		
+		String msg, url;
+		if(result == mapList.size()*2) {
+			msg = "가입이 승인 되었습니다";
+			url = "manageRegisterRequest?cafeId="+cafeId;
+		} else {
+			msg = "오류가 발생했습니다!";
+			url = "manageRegisterRequest?cafeId="+cafeId;
 		}
 		
 		return getMessage(msg,url);
@@ -145,13 +167,13 @@ public class AdminRegisterGradeServiceimpl implements AdminRegisterGradeService 
 	@Override
 	// 자동회원가입x 일때 회원가입 거절
 	public String rejectMembers(String cafeId, String rejectMembers) {
-		ArrayList<Map<String, String>> mapList = nameSort(rejectMembers, cafeId);
+		ArrayList<Map<String, String>> mapList = nameBoardSort(rejectMembers, cafeId);
 		
 		int result = 0;
 		
 		try {
 			for(int i = 0; i < mapList.size(); i++) {
-					result += mapper.deleteRequest(mapList.get(i));
+				result += mapper.deleteRequest(mapList.get(i));
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -160,10 +182,10 @@ public class AdminRegisterGradeServiceimpl implements AdminRegisterGradeService 
 		String url, msg;
 		if(result == mapList.size()) {
 			msg = "가입이 거절 되었습니다";
-			url = "manageRegisterRequest";
+			url = "manageRegisterRequest?cafeId="+cafeId;
 		} else {
 			msg = "오류가 발생했습니다!";
-			url = "manageRegisterRequest";
+			url = "manageRegisterRequest?cafeId="+cafeId;
 		}
 		return getMessage(msg,url);
 		
@@ -181,16 +203,6 @@ public class AdminRegisterGradeServiceimpl implements AdminRegisterGradeService 
 				update.get(i).setCutType(1)	;
 				update.get(i).setCutVisit(0);
 			}
-			
-			System.out.println(update.get(i).getCafeId());
-			System.out.println(update.get(i).getCafeUserGrade());
-			System.out.println(update.get(i).getCutBoard());
-			System.out.println(update.get(i).getCutDesc());
-			System.out.println(update.get(i).getCutName());
-			System.out.println(update.get(i).getCutReply());
-			System.out.println(update.get(i).getCutType());
-			System.out.println(update.get(i).getCutVisit());
-			System.out.println(update.get(i).getCutRemoved());
 		}
 		
 		int result = 0;
@@ -214,42 +226,46 @@ public class AdminRegisterGradeServiceimpl implements AdminRegisterGradeService 
 	
 	@Override
 	public String modifyRegisterInfo(RegisterInfoDTO dto) {
-		settingJoinAge(dto);
+		dto = settingJoinAge(dto);
 		modifyQuestions(dto);
 		
 		int result = mapper.modifyRegisterInfo(dto);
-		
 		String url, msg;
 		if(result == 1) {
 			msg = "성공적으로 반영되었습니다";
-			url = "manageRegisterRequest";
+			url = "manageRegisterInfo?cafeId="+dto.getCafeId();
 		} else {
 			msg = "오류가 발생했습니다!";
-			url = "manageRegisterInfo";
+			url = "manageRegisterInfo?cafeId="+dto.getCafeId();
 		}
 		
 		return getMessage(msg,url);
 	}
 	
 	
-	public void settingJoinAge(RegisterInfoDTO dto) {
-		String yearCombine = "";
-		
-		if( dto.getSelectYear1() > dto.getSelectYear2()) {
-			int temp = dto.getSelectYear1();
-			dto.setSelectYear1(dto.getSelectYear2());
-			dto.setSelectYear2(temp);
+	public RegisterInfoDTO settingJoinAge(RegisterInfoDTO dto) {
+		if(dto.getAgeCondition().equals("true")) {
+			String yearCombine = "";
+			if( dto.getSelectYear1() > dto.getSelectYear2()) {
+				int temp = dto.getSelectYear1();
+				dto.setSelectYear1(dto.getSelectYear2());
+				dto.setSelectYear2(temp);
+			}
+			yearCombine += dto.getSelectYear1();
+			yearCombine += "~";
+			yearCombine += +dto.getSelectYear2();
+			
+			dto.setCafeJoinAge(yearCombine);
+		} else {
+			dto.setCafeJoinAge("-1~-1");
 		}
-		yearCombine += dto.getSelectYear1();
-		yearCombine += "~";
-		yearCombine += +dto.getSelectYear2();
-		
-		dto.setCafeJoinAge(yearCombine);
+		return dto;
 	}
 	
 	
 	public void modifyQuestions(RegisterInfoDTO dto) {
 		int questionQty = 0;
+		
 		if(dto.getQ3Content() != null ) {
 			questionQty = 3;
 		} else if(dto.getQ2Content() != null) {
@@ -273,8 +289,17 @@ public class AdminRegisterGradeServiceimpl implements AdminRegisterGradeService 
 		}
 		
 		int countQuestion = mapper.countQuestion(dto);
-		//count = select count(*) from project_join_question where cafe_id = #{cafeId} 
 		
+		if(countQuestion > qlist.size()) {
+			for(int i = countQuestion; i > qlist.size(); i--) {
+				Map<String, String> map = new HashMap<>();
+				String temp = ""+i;
+				map.put("cafeQuestionNum", temp);
+				map.put("cafeId", dto.getCafeId());
+				mapper.deleteQuestion(map);
+			}
+		}
+		//insert 인지 update 인지 구분할 switch문
 		switch(countQuestion) {
 			case 0 : // 등록된 질문 x, insert 3번
 				for( int i = 0; i < qlist.size() ; i++ ) {
@@ -388,6 +413,67 @@ public class AdminRegisterGradeServiceimpl implements AdminRegisterGradeService 
 	public ArrayList<GradeUpAppliesDTO> getGradeUpAppliesList(String cafeId) {
 		ArrayList<GradeUpAppliesDTO> list = mapper.getGradeUpAppliesList(cafeId);
 		return list;
+	}
+
+	@Override
+	public ArrayList<RegisterBanDTO> getRegisterBanList(String cafeId) {
+		ArrayList<RegisterBanDTO> list = mapper.getRegisterBanList(cafeId);
+		return list;
+	}
+
+
+	@Override
+	public RegisterInfoDTO getRegisterInfo(String cafeId) {
+		RegisterInfoDTO temp = new RegisterInfoDTO();
+		temp.setCafeId(cafeId);
+		int countQuestion = mapper.countQuestion(temp);
+		
+		RegisterInfoDTO dto = mapper.getRegisterInfo(cafeId);
+		
+		if(countQuestion == 0) {
+			dto.setJoin_question(false);
+			return dto;
+		} else {
+			ArrayList<JoinQuestionDTO> list = mapper.getJoinQuestion(cafeId);
+			dto.setJoin_question(true);
+			
+			switch (list.size()) {
+				case 1:
+					dto.setQ1Content(list.get(0).getCafeQuestionContent());
+					dto.setQuestionQty(1);
+					break;
+				case 2:
+					dto.setQ1Content(list.get(0).getCafeQuestionContent());
+					dto.setQ2Content(list.get(1).getCafeQuestionContent());
+					dto.setQuestionQty(2);
+					break;
+				case 3:
+					dto.setQ1Content(list.get(0).getCafeQuestionContent());
+					dto.setQ2Content(list.get(1).getCafeQuestionContent());					
+					dto.setQ3Content(list.get(2).getCafeQuestionContent());
+					dto.setQuestionQty(3);
+					break;
+			}
+			
+		}
+		
+		if (dto.getCafeJoinAge() != null) {
+			dto.setAgeCondition("true");
+			String[] ageArr = dto.getCafeJoinAge().split("~");
+			dto.setSelectYear1(Integer.parseInt(ageArr[0]));
+			dto.setSelectYear2(Integer.parseInt(ageArr[1]));
+			if(dto.getSelectYear1() == -1) {
+				dto.setAgeCondition("false");
+			}
+		} else {
+			dto.setAgeCondition("false");
+		}
+		return dto;
+	}
+
+	@Override
+	public ArrayList<RegisterRequestDTO> getRegisterRequestList(String cafeId) {
+		return mapper.getRegisterRequestList(cafeId);
 	}
 
 }

@@ -49,6 +49,31 @@
 			
 		} else {
 			$('#join_qt01').attr('checked', 'checked');
+			$('#question_option').hide();
+		}
+		
+		
+		// 페이지 로드당시 나이제한 정보 default값 
+		var year1 = ${regiInfo.selectYear1};
+		var year2 = ${regiInfo.selectYear2};
+		$('#selectYear1').val(year1)
+		$('#selectYear2').val(year2)
+		
+		var agecon = '${regiInfo.ageCondition}';
+		if ( agecon == 'true') {
+			$('#ageCondition02').prop('checked', 'checked');
+		} else {
+			$('#ageCondition01').prop('checked', 'checked');
+		}
+		
+		//성별값으로 radio default 선택
+		var gencon = '${regiInfo.cafeJoinGender}';
+		if(gencon == "both") {
+			$('#genderCondition01').prop('checked', 'checked');
+		} else if(gencon == 'male') {
+			$('#genderCondition02').prop('checked', 'checked');
+		} else if(gencon == 'female') {
+			$('#genderCondition03').prop('checked', 'checked');
 		}
 		
 		$(".checkC").change(function() {
@@ -152,8 +177,9 @@
                	
                	<!-- cstmContent1 -->
                	<div class="cstmContent1">
-               	
+               		
                		<form id="modifyRegisterInfo" method="post" action="modifyRegisterInfo">
+               		<input type="hidden" name="cafeId" value="${cafeId }">
                		<table>
                			<colgroup>
                				<col width="191">
@@ -167,7 +193,7 @@
                     		
                     		<td>
 		                    	<div class="form-group">
-		                    		 <textarea class="form-control" placeholder="" cols="150" rows="5" name="explanation"></textarea>
+		                    		 <textarea class="form-control" placeholder="" cols="150" rows="5" name="explanation">${regiInfo.explanation}</textarea>
 		                    		 <ul>
 		                    		 	<li>입력한 내용은 멤버의 카페 가입 시 안내 문구로 활용됩니다. </li>
 		                    		 	<li>HTML 태그는 사용하실 수 없습니다.</li>

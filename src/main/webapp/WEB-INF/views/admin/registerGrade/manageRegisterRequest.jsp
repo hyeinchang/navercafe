@@ -136,18 +136,12 @@ $(document).ready(function () {
         <tbody>
         <c:forEach var="dto" items="${list }">
             <tr>
-                <td align="center"><input type="checkbox" class="registerBan-cb-item" name="temp" value="${dto.userName }"></td>
-                <td>${dto.userName }</td>
-                <td>${dto.userLevel }</td>
-                <td>${dto.userPoint }</td>
+                <td align="center"><input type="checkbox" class="registerBan-cb-item" name="temp" value="${dto.userId }+${dto.cafeRequestNum}"></td>
+                <td>${dto.userId }</td>
+                <td>${dto.regdate }</td>
+                <td>가입질문 어케하지</td>
             </tr>
-        </c:forEach>
-            <tr>
-                <td align="center"><input type="checkbox" class="registerBan-cb-item" name="temp" value="aa"></td>
-                <td>aa</td>
-                <td>aa</td>
-                <td>aa</td>
-            </tr>
+	        </c:forEach>
         </tbody>
         
         <tfoot>
@@ -164,9 +158,11 @@ $(document).ready(function () {
     
 <form action="acceptMembers" id="f-accept" method="post">
 	<input type="hidden" value="" name="acceptMembers" id="acceptMembers">
+	<input type="hidden" value="${cafeId}" name="cafeId">
 </form>
 <form action="rejectMembers" id="f-reject" method="post">
 	<input type="hidden" value="" name="rejectMembers" id="rejectMembers">
+	<input type="hidden" value="${cafeId}" name="cafeId">
 </form>	
     	</div>
     </div>

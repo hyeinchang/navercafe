@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.itbank.navercafe.admin.cafemember.dto.AdminCafeMemberDTO;
 import com.itbank.navercafe.admin.registergrade.dto.GradeUpAppliesDTO;
 import com.itbank.navercafe.admin.registergrade.dto.MembersGradeDTO;
+import com.itbank.navercafe.admin.registergrade.dto.RegisterBanDTO;
 import com.itbank.navercafe.admin.registergrade.dto.RegisterInfoDTO;
+import com.itbank.navercafe.admin.registergrade.dto.RegisterRequestDTO;
 import com.itbank.navercafe.admin.registergrade.service.AdminRegisterGradeService;
 
 @Controller
@@ -48,57 +50,40 @@ public class AdminRegisterGradeController {
 	}
 	
 	@GetMapping("manageRegisterBan")
-	public String manageRegisterBan(Model model) {
+	public String manageRegisterBan(Model model, String cafeId, String userId) {
+		ArrayList<RegisterBanDTO> rbList = rgs.getRegisterBanList(cafeId);
 		
-		ArrayList<AdminCafeMemberDTO> list = new ArrayList<>();
-		for(int i = 0; i < 40; i++) {
-			AdminCafeMemberDTO pcm = new AdminCafeMemberDTO();
-			pcm.setUserName("응애"+i);
-			pcm.setUserId("ddd"+i);
-			pcm.setUserEmail("email"+i);
-			pcm.setUserLevel(i);
-			pcm.setUserPoint(i);
-			list.add(pcm);
-			
-		}
-		model.addAttribute("list", list);
+		model.addAttribute("list", rbList);
+		model.addAttribute("cafeId", cafeId);
 		return "admin/registerGrade/manageRegisterBan";
 	}
 	
 	@GetMapping("manageRegisterInfo")
 	public String manageRegisterInfo(Model model, String cafeId) {
-		RegisterInfoDTO dto = new RegisterInfoDTO();
-		dto.setExplanation("카페설명입니다");
-		dto.setJoin_question(true); // 컨트롤러/등에서 직접 설정 해줘야 질문 뿌리기 안뿌리기 설정함
-		dto.setQ1Content("1번질문 내용");
-		dto.setQ2Content("2번 질문내용입니다~");
-		dto.setQ3Content("3번내용입니다~");
-		
-		if(dto.getQ3Content() != null ) {
-			dto.setQuestionQty(3);
-		} else if(dto.getQ2Content() != null) {
-			dto.setQuestionQty(2);
-		} else if(dto.getQ1Content() != null) {
-			dto.setQuestionQty(1);
-		} else if(dto.getQ1Content() == null) {
-			dto.setQuestionQty(0);
-		}
+		RegisterInfoDTO dto = rgs.getRegisterInfo(cafeId);
 		
 		model.addAttribute("regiInfo", dto);
-		
-		// rgs.getCafeInfo(cafeId, model); 가입신청 넣을때 뿌려주는 인포 그대로 가져오면됨
+		model.addAttribute("cafeId", cafeId);
 		
 		return "admin/registerGrade/manageRegisterInfo";
 	}
 	
 	@GetMapping("manageRegisterRequest")
-	public String manageRegisterRequest() {
+	public String manageRegisterRequest(Model model, String cafeId) {
+		ArrayList<RegisterRequestDTO> rrList = rgs.getRegisterRequestList(cafeId);
+		
+		model.addAttribute("list", rrList);
+		model.addAttribute("cafeId", cafeId);
+		
 		return "admin/registerGrade/manageRegisterRequest";
 	}
 	
 	@PostMapping("unbanMembers2")
-	public String unbanMembers2(String unbanMembers, String cafeId) {
-		return "redirect:manageRegisterBan";
+	public void unbanMembers2(String unbanMembers, String cafeId, HttpServletResponse resp) throws Exception{
+		String msg = rgs.unbanMembers2(unbanMembers, cafeId);
+		resp.setContentType("text/html; charset=utf-8");
+		PrintWriter out = resp.getWriter();
+		out.print(msg);
 	}
 	
 	@PostMapping("acceptMembers")
@@ -138,6 +123,16 @@ public class AdminRegisterGradeController {
 		out.print(msg);
 	}
 	
+	//가입정보 수정
+	@PostMapping("modifyRegisterInfo")
+	public void modifyRegisterInfo(RegisterInfoDTO dto, HttpServletResponse resp) throws Exception {
+		String msg = rgs.modifyRegisterInfo(dto);
+		
+		resp.setContentType("text/html; charset=utf-8");
+		PrintWriter out = resp.getWriter();
+		out.print(msg);
+	}
+	
 	@PostMapping(value="modifyMembersGrade", produces="application/json; charset=utf-8")
 	@ResponseBody
 	public String modifyMembersGrade(@RequestBody Map<String, List<MembersGradeDTO>> dataList) {
@@ -145,10 +140,5 @@ public class AdminRegisterGradeController {
 		return rgs.modifyMembersGrade(update);
 	}
 	
-	@PostMapping("modifyRegisterInfo")
-	public String modifyRegisterInfo(RegisterInfoDTO dto) {
-		String msg = rgs.modifyRegisterInfo(dto);
-		return "redirect:manageRegisterInfo";
-	}
 	
 }

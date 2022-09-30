@@ -2,7 +2,7 @@ package com.itbank.navercafe.admin.memberstaff.dto;
 
 import java.util.Date;
 
-public class AdminDeportedMembersDTO {
+public class DeportedMembersDTO {
 	private String cafeId, userId, deportedReason;
 	private Date regDate;
 	private int banFlag;
