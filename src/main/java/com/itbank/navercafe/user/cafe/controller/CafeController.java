@@ -69,11 +69,11 @@ public class CafeController {
 	
 	@PostMapping(value="login", produces="application/json")
 	@ResponseBody
-	public int login(@RequestBody MemberDTO memberDTO, HttpSession session) {
-		int result = ms.loginChk(memberDTO);
+	public boolean login(@RequestBody MemberDTO memberDTO, HttpSession session) {
+		boolean result = ms.loginChk(memberDTO);
 		MemberDTO name = ms.getU(memberDTO.getId());
 		
-		if(result > 0) {
+		if(result) {
 			session.setAttribute("loginId",  memberDTO.getId());
 			session.setAttribute("loginName",  name.getName());
 		}

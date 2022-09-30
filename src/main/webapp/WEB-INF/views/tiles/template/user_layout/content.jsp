@@ -174,7 +174,7 @@
 		      <b><span class="text-primary">${loginName}</span>님</b>
 		      <div>${loginId}</div>
 		      <div class="cafeSetting">
-		        <a href="userInfo?id=${loginId}" class="info-cafe">
+		        <a href="${contextPath}/cafe/member/userInfo?id=${loginId}" class="info-cafe">
 			      <span class="ico_aside ico_setting"></span>회원정보수정
 			    </a>
 			    <a href="javascript:logout();" class="info-cafe">

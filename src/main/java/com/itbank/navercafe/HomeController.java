@@ -87,17 +87,17 @@ public class HomeController { //메인 로그인관련
 		return "cafe/member/signup";
 	}
 	
-	@PostMapping("register")
+	@PostMapping("/cafe/member/register")
 	public String register(MemberDTO dto) {
 		
 		int result = ms.signup(dto);
 		if(result==1) {
 			return "redirect:/";
 		}
-		return "redirect:signup";
+		return "redirect:/cafe/member/signup";
 	}
 	
-	@GetMapping("cafe/member/userInfo")
+	@GetMapping("/cafe/member/userInfo")
 	public String userUpdate(String id, Model model) {
 		MemberDTO dto = ms.getU(id);
 		model.addAttribute("id", dto.getId());
@@ -110,9 +110,9 @@ public class HomeController { //메인 로그인관련
 		return "cafe/member/userInfo";
 	}
 	
-	@PostMapping("/userUpdate")
+	@PostMapping("/cafe/member/userUpdate")
 	public String userUpdate(MemberDTO dto) {
-		String url = "http://localhost:8085/navercafe/";
+		String url = "/";
 		if(dto.getPassword()!="") {
 			int result = ms.update(dto);
 			if(result==1) {
@@ -122,9 +122,9 @@ public class HomeController { //메인 로그인관련
 		return "redirect:"+url;
 	}
 	
-	@GetMapping("delete")
+	@GetMapping("/cafe/member/delete")
 	public String delete(String id, HttpServletRequest request, HttpSession session) {
-		String url = "http://localhost:8085/navercafe/";
+		String url = "/";
 		cc.logout(request, session);
 		
 		int result = ms.delete(id);

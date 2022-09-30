@@ -144,7 +144,7 @@
 	  xhr.setRequestHeader('Content-Type', 'application/json');
 	  xhr.onreadystatechange = function() {
 		  if(xhr.readyState == 4 && xhr.status == 200) {
-			  if(Number(xhr.response) == 0) {
+			  if(xhr.response == 'false') {
 				  alert('등록되지 않은 회원입니다.');
 			  } else {
 				  location.reload();
