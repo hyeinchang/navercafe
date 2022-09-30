@@ -108,7 +108,7 @@
   <script src="${contextPath}/resources/MaxiBiz/js/main.js"></script>
   
   <form name="cafeForm" method="get">
-  	<input type="hidden" name="cafeId" value="${cafeDTO.cafeId}">
+  	<input type="hidden" name="cafeId" value="${_cafeDTO.cafeId}">
   </form>
 <script type="text/javascript">
   function changeCafeMenu(path) {
