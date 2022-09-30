@@ -11,9 +11,9 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.stereotype.Component;
 import org.springframework.ui.Model;
 
-@Component
-@Aspect
-@EnableAspectJAutoProxy
+//@Component
+//@Aspect
+//@EnableAspectJAutoProxy
 public class AOPConfig {
 	
 //	@Around("execution(* com.care.root.board.service.BoardServiceImpl.boardAllList(..))")
@@ -34,7 +34,7 @@ public class AOPConfig {
 	
 	@Before("execution(* com.itbank.navercafe..*(..))")
 	public void test() {
-		System.out.println("b4 test writeform");
+		//System.out.println("b4 test writeform");
 		//model.addAttribute("test", "안녕!!");
 	}
 	

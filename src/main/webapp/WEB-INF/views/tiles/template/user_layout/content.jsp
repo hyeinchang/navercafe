@@ -136,7 +136,7 @@
         <h4 class="title">
           <span>로그인</span>
         </h4>
-        <form id="loginForm" method="post" name="loginForm" action="${contextPath}/user/login">
+        <form id="loginForm" method="post" name="loginForm" action="${contextPath}/cafe/login">
           <div class="form-group">
             <div class="input-group">
               <span class="input-group-addon"><i class="fa fa-user"></i></span>
@@ -194,7 +194,7 @@
   
  <script type="text/javascript">
  	function logout() {
- 		location.href='${contextPath}/user/logout';
+ 		location.href='${contextPath}/cafe/logout';
  	}
  	
  	function searchCafe(page) {

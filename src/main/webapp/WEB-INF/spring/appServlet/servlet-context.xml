@@ -42,14 +42,13 @@
         <beans:property name="fileEncoding" value="UTF-8" />
     </beans:bean>
     
-	<beans:bean id="testIn" class="com.itbank.navercafe.common.TestInterceptor"/>
+	<beans:bean id="setCafeIn" class="com.itbank.navercafe.common.SetCafeInterceptor"/>
 	
 	<interceptors>
 		<interceptor>
-			<mapping path="/*"/>
-			<mapping path="/user/*"/>
-			<mapping path="user/*"/>
-			<beans:ref bean="testIn"/>
+			<mapping path="/user/**"/>
+			<mapping path="/admin/**"/>
+			<beans:ref bean="setCafeIn"/>
 		</interceptor>
 	
 	</interceptors>

@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -21,7 +20,6 @@ import com.itbank.navercafe.user.cafe.dto.CafeDTO;
 import com.itbank.navercafe.user.cafe.service.CafeService;
 import com.itbank.navercafe.user.cafemember.dto.CafeMemberDTO;
 import com.itbank.navercafe.user.cafemember.service.CafeMemberService;
-import com.itbank.navercafe.user.member.dto.MemberDTO;
 import com.itbank.navercafe.user.member.service.MemberService;
 import com.itbank.navercafe.user.menu.service.MenuService;
 
@@ -44,55 +42,8 @@ public class CafeController {
 	@Autowired CafeMemberService cms;
 	
 	@GetMapping("/main")
-	public String main(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes, 
-			CafeDTO cafeDTO, HttpSession session) {
-		
-		if(cafeDTO == null || cafeDTO.getCafeId() == null) {
-			redirectAttributes.addFlashAttribute("message", "존재하지 않는 카페입니다.");
-			return "redirect:/";
-		}
-		
-		try {
-			String loginId = (String) session.getAttribute("loginId");
-			cafeDTO.setLoginId(loginId);
-			cafeDTO = cafeService.selectCafe(cafeDTO);	
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		model.addAttribute("cafeDTO", cafeDTO);
-		
+	public String main(HttpServletRequest request, Model model, RedirectAttributes redirectAttributes, HttpSession session) {
 		return "user/main";
-	}
-	
-	
-	
-	@PostMapping(value="login", produces="application/json")
-	@ResponseBody
-	public boolean login(@RequestBody MemberDTO memberDTO, HttpSession session) {
-		boolean result = ms.loginChk(memberDTO);
-		MemberDTO name = ms.getU(memberDTO.getId());
-		
-		if(result) {
-			session.setAttribute("loginId",  memberDTO.getId());
-			session.setAttribute("loginName",  name.getName());
-		}
-		
-		return result;
-	}
-	
-	@GetMapping("logout")
-	public String logout(HttpServletRequest request,HttpSession session) {
-		String url = "/";
-		String referer = request.getHeader("referer");
-		
-		session.invalidate();
-		
-		if(referer != null) {
-			url = referer;
-		}
-
-		return "redirect:" + url;
 	}
 	
 	@GetMapping("cafeSignup")  //카페 회원가입 페이지 이동

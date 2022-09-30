@@ -140,7 +140,7 @@
 	  data.id = loginForm.id.value;
 	  data.password = loginForm.password.value;
 	  
-	  xhr.open('post', '${contextPath}/user/login');
+	  xhr.open('post', '${contextPath}/cafe/login');
 	  xhr.setRequestHeader('Content-Type', 'application/json');
 	  xhr.onreadystatechange = function() {
 		  if(xhr.readyState == 4 && xhr.status == 200) {
