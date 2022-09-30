@@ -573,6 +573,8 @@ li.bbp-topic-freshness-test{
 					  		method="post" enctype="multipart/form-data">
 					  		<input type="hidden" name="userId" value="${sessionUser.userId}">
 					  		<input type="hidden" name="boardNum" value="${userBoard.boardNum}">
+					  		<input type="hidden" name="boardMenuNum" value="${userBoard.boardMenuNum}">
+					  		<input type="hidden" name="cafeId" value="${boardMenuType.cafeId}">
 					    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 					    										
 					      <p><span style="font-weight:1000; font-size: 20pt;">${sessionUser.cafeUserNickname}</span></p>

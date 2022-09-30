@@ -94,8 +94,9 @@ public class BoardController {
 		@RequestParam(value="step",required=false,defaultValue="0")int step) {
 		replySer.saveReply(mul,step);
 		return "redirect:goBoardInside?boardNum="
-				+mul.getParameter("boardNum")+"&num="+1;
-							//댓글 작성시 조회수 오르는거 방지
+				+mul.getParameter("boardNum")+"&num="+1+
+				"&boardMenuNum="+mul.getParameter("boardMenuNum")+"&cafeId="+mul.getParameter("cafeId");
+	//댓글 작성시 조회수 오르는거 방지
 	}
 	
 	@GetMapping("likeChk")
