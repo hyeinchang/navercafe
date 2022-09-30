@@ -1,10 +1,12 @@
 package com.itbank.navercafe.admin.memberstaff.service;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.itbank.navercafe.admin.memberstaff.dto.AllMembersDTO;
 import com.itbank.navercafe.admin.memberstaff.mapper.AdminMemberStaffMapper;
 
 @Service
@@ -134,6 +136,16 @@ public class AdminMemberStaffServiceImpl implements AdminMemberStaffService{
 		}
 		
 		return getMessage(msg,url);
+	}
+
+	@Override
+	public ArrayList<AllMembersDTO> getAllMembersList(String cafeId) {
+		return mapper.getAllMembersList(cafeId);
+	}
+
+	@Override
+	public ArrayList<String> getCafeGradeNames(String cafeId) {
+		return mapper.getCafeGradeNames(cafeId); 
 	}
 
 }

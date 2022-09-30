@@ -4,13 +4,20 @@ public class MembersGradeDTO {
 	private String cutRemoved, // 삭제되었는지  
 	cafeUserGrade,  // 등급레벨 
 	cutName, 	// 등급명
-	cutDesc;	// 등급설명
+	cutDesc,	// 등급설명
+	cafeId;
 	
 	private int cutBoard, // 게시글 개수
 	cutReply, // 댓글 개수
 	cutVisit, // 방문수 제한
 	cutType; // 등업방식
 	
+	public String getCafeId() {
+		return cafeId;
+	}
+	public void setCafeId(String cafeId) {
+		this.cafeId = cafeId;
+	}
 	public String getCutName() {
 		return cutName;
 	}
