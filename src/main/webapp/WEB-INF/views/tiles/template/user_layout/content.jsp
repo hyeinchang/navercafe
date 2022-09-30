@@ -7,7 +7,7 @@
 </script>
 </c:if>
  
-  <section class="section1">
+  <section class="section1" style="display:none;">
     <div class="container clearfix">
       <!-- 주간 랭킹 카페는 일주일 동안 게시글, 댓글 수, 조회 수, 가입 맴버수가 가장 높은 카페 3개를 선정 -->
       <div class="title">

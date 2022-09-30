@@ -6,8 +6,8 @@ public class Pagination {
 	private int endRow;				// DB에서 가져올 마지막 줄
 	private int totalCount;			// 전체 행 개수
 	private int totalPage;			// 전체 페이지 수
-	private int rowNumber = 3;		// 화면에 보여줄 행 수
-	private int pageNumber = 3;		// 화면에 보여줄 페이지 개수
+	private int rowNumber = 5;		// 화면에 보여줄 행 수
+	private int pageNumber = 5;		// 화면에 보여줄 페이지 개수
 	private int startPage;			// 화면에서 보여줄 시작 페이지
 	private int endPage;			// 화면에서 보여줄 마지막 페이지
 	private boolean prevActive;		// 이전 버튼 활성화 여부
