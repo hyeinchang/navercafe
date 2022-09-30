@@ -1,12 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-${test}
-      <div class="content col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix cstmContent" ${cafeDTO.cafeLayout > 0 ? '' : 'style="float:right;"'}>
+      <div class="content col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix cstmContent" ${_cafeDTO.cafeLayout > 0 ? '' : 'style="float:right;"'}>
        	<!-- start 대문 -->
        	<div class="frontArea">
        	<c:choose>
-       	<c:when test="${cafeDTO.cafeFront eq null || cafeDTO.cafeFront.length() == 0}">
+       	<c:when test="${_cafeDTO.cafeFront eq null || _cafeDTO.cafeFront.length() == 0}">
           <div class="default_front">
 			<span class="text-primary">카페에 오신것을 환영합니다.</span><br><br>
 			  혼자보단 둘이, 둘보단 셋이 더 재미있을 거예요.<br><br>함께 재미있는 이야기 나누며 행복한 카페를 만들어가요!<br><br>
@@ -15,19 +14,19 @@ ${test}
 		 </c:when> 
 		 <c:otherwise>
 		   <div class="setting_front">
-		     ${cafeDTO.cafeFront}
+		     ${_cafeDTO.cafeFront}
 		   </div>
 		 </c:otherwise> 
 		 </c:choose> 
          </div>
          <!-- end 대문 -->
-       	 <h1>카페 아이디 : ${cafeDTO.cafeId}</h1>
+       	 <h1>카페 아이디 : ${_cafeDTO.cafeId}</h1>
        	 <!-- start 글 목록 -->
        	 <div class="mainBottom">
            <div class="widget component1">
              <h4 class="title">
                <span>전체글 목록</span>
-               <a href="javascript:changeCafeMenu('board/goBoardList?cafeId=${cafeDTO.cafeId}')">더보기</a>
+               <a href="javascript:changeCafeMenu('board/goBoardList?cafeId=${_cafeDTO.cafeId}')">더보기</a>
              </h4>
              <ul>            
                <li><a href="javascript:alert('전체글 보기 이동')">전체글 1</a></li>

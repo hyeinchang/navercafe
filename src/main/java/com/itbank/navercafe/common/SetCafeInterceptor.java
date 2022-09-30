@@ -18,27 +18,30 @@ public class SetCafeInterceptor extends HandlerInterceptorAdapter{
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
-		System.out.println("---------- preHandle 실행 ---------");
+		//System.out.println("---------- preHandle 실행 ---------");
 
 		CafeDTO cafeDTO = new CafeDTO();
+		
 		try {
 			
 			String cafeId = request.getParameter("cafeId");
 			if(cafeId != null && cafeId.length() > 0) {
 				cafeDTO.setCafeId(cafeId);
-				System.out.println("cafeId : " + cafeId);
+				//System.out.println("cafeId : " + cafeId);
+				
 				HttpSession session = request.getSession();
+				
 				String loginId = (String) session.getAttribute("loginId");
+				
 				cafeDTO.setLoginId(loginId);
 				cafeDTO = cafeService.selectCafe(cafeDTO);	
 				
-				System.out.println(cafeDTO.getCafeName());
+				//System.out.println(cafeDTO.getCafeName());
 			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}		
-		request.setAttribute("test", "....");
 		request.setAttribute("_cafeDTO", cafeDTO);
 		
 		return true;
@@ -48,7 +51,7 @@ public class SetCafeInterceptor extends HandlerInterceptorAdapter{
 	public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
 			ModelAndView modelAndView) throws Exception {
 		
-		System.out.println("-------------postHandle 실행 -------");
+		//System.out.println("-------------postHandle 실행 -------");
 		
 	}
 
