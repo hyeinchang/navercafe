@@ -40,17 +40,22 @@ public class BoardController {
 
 	@GetMapping("/goBoardInside")
 	public String goBoardInside(int boardNum, Model model,HttpSession session,String cafeId,int boardMenuNum,
-			@RequestParam(value="num",required=false,defaultValue="0")int num) {
-		System.out.println("넘어온 보드 값 : "+boardNum);
-		System.out.println("넘어온 boardMenuNum 값 :"+boardMenuNum);
+			@RequestParam(value="num",required=false,defaultValue="0")int num,
+			@RequestParam(value="next",required=false,defaultValue="0")int next,
+			@RequestParam(value="preview",required=false,defaultValue="0")int preview) {
+//		System.out.println("넘어온 보드 값 : "+boardNum);
+//		System.out.println("넘어온 boardMenuNum 값 :"+boardMenuNum);
+//		System.out.println("next 값 : "+next);
+//		System.out.println("preview 값 : "+preview);
 		
 		//System.out.println("boardInside실행");
-		System.out.println("cafeId:"+cafeId);
+		//System.out.println("cafeId:"+cafeId);
+		
 		//댓글 갯수 세오기
 		model.addAttribute("replyCount",replySer.getReplyCount(boardNum));
 		//System.out.println("댓글 갯수 세오기 컷");
 		//게시물 가져오기
-		BoardDTO dto= ser.getUserBoard(boardNum,boardMenuNum,model,num,cafeId);
+		BoardDTO dto= ser.getUserBoard(boardNum,boardMenuNum,model,num,cafeId,next,preview);
 		model.addAttribute("userBoard",dto);
 		//System.out.println("게시물 가져오기 컷");
 		//카페유저 정보 가져오기

@@ -64,7 +64,7 @@
 	</select>
 	<!-- 게시글에 닉네임,이미지 표시하기위해 따로 빼와주는애 -->
 	<select id="getCafeUserInfo" resultMap="project_cafe_member">
-		select user_id,cafe_user_nickname,cafe_user_image_num from project_cafe_member
+		select cafe_id,user_id,cafe_user_nickname,cafe_user_image_num from project_cafe_member
 		where user_id=#{userId} and cafe_id=#{cafeId}
 	</select>
 	<!-- 게시글 더보러가기  -->

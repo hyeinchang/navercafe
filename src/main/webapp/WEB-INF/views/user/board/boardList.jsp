@@ -95,15 +95,14 @@
 					</thead>
 					<c:forEach var="dto" items="${boardList}">
 						<tr>
-							<th>${dto.boardNum}</th>
-							<th><h1>${dto.boardNum}</h1></th>
+							<th>${dto.BOARD_NUM}</th>
 							<th>
-							<a href="goBoardInside?boardNum=${dto.boardNum }
-							&cafeId=${cafeId}&boardMenuNum=${dto.boardMenuNum}">
-							${dto.boardTitle} </a></th>
-							<th>${dto.userId}</th>
-							<th>${dto.boardSaveDate}</th>
-							<th>${dto.hit}</th>
+							<a href="goBoardInside?boardNum=${dto.BOARD_NUM }
+							&cafeId=${cafeId}&boardMenuNum=${dto.BOARD_MENU_NUM}">
+							${dto.BOARD_TITLE} </a></th>
+							<th>${dto.USER_Id}</th>
+							<th>${dto.BOARD_SAVEDATE}</th>
+							<th>${dto.HIT}</th>
 						</tr>
 					</c:forEach>
 				</table>

@@ -39,7 +39,7 @@
 	</resultMap>
 	
 	<!-- //전체목록인데 수영이형이랑 상의. -->
-	<select id="getBoardList" resultMap="project_board">
+	<select id="getBoardList" resultType="HashMap">
 		select boardMenu.cafe_id, board.* from 
 		(select * from project_boardType where cafe_id = #{cafeId}) boardMenu
 		inner join
@@ -57,6 +57,10 @@
 	<!-- 페이징 위해서 몇개인지 가져오기위한 용도-->
 	<select id="selectBoardCount" resultType="Integer">
 		select count(*) from project_board where board_menu_num=#{boardMenuNum}
+	</select>
+	
+	<select id="getBoardNumList" resultMap="project_board">
+		select * from project_board where board_menu_num=#{boardMenuNum}
 	</select>
 	
 	<!-- 조회수 올려주는애 -->

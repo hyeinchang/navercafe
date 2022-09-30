@@ -16,10 +16,10 @@ import com.itbank.navercafe.user.boardmenu.dto.BoardMenuDTO;
 
 public interface BoardService {
 	//전체목록인데 수영이형이랑 상의.
-	public ArrayList<BoardDTO> getBoardList(String cafeId);
+	public List<HashMap<String, Object>> getBoardList(String cafeId);
 	
 	//게시글 가져오기
-	public BoardDTO getUserBoard(int boardNum,int boardMenuNum, Model model,int pageNum, String cafeId);
+	public BoardDTO getUserBoard(int boardNum,int boardMenuNum, Model model,int pageNum, String cafeId,int next,int preview);
 	
 	//조회수
 	public void hit(int boardNum,int num);

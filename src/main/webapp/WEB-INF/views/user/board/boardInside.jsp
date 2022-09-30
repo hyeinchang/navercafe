@@ -36,7 +36,10 @@
 .page{display:flex;}
 .page-one{width:55%; text-align:right;}
 .page-two{width:45%; text-align:right;}
-.before-next-nav{text-align:right;}
+.before-next-nav{text-align:right; width:50%;}
+.modify_delete{
+	text-align:left;width:50%;
+}
 
 /* /////////////////////////////////////////    게시판    //////////////////////////////////////// */
 
@@ -129,6 +132,11 @@ li.bbp-topic-freshness-test{
 }
 .board-board{border:1px solid silver; padding:10px;}
 
+
+#del_next{
+	display: flex;
+}
+
 </style>
 
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
@@ -169,6 +177,31 @@ li.bbp-topic-freshness-test{
 	function back(obj){
 		document.getElementById(-obj.id).style="display:none";
 	}
+	
+	
+	function replyModifyClick(obj){
+		console.log(document.getElementByClassName(-obj.value))
+		document.getElementByClassName(-obj.value).style="display:block";
+	}
+	function replyModifyBack(){
+		console.log(document.getElementByClassName(-obj.value))
+		document.getElementByClassName(-obj.value).style="display:none";
+	}
+	
+	
+	
+	function test(){
+		const result=confirm('삭제하시겠습니까?');
+		if (result) {
+	    	console.log('삭제')
+	    } else {
+	    	console.log('대기')
+		}
+	}
+
+	</script>
+	
+	
 
 </script>
 
@@ -177,24 +210,44 @@ li.bbp-topic-freshness-test{
     <div class="container clearfix">
 	      <div class="content col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix">
 			
+			<div id="del_next">
+			<!--      loginId == 관리자 계정 ||   -->
+			<!--location.href='deleteBoard?boardNum=${userBoard.boardNum}  -->
+			
+			<div class="modify_delete">
+				<c:choose>
+					<c:when test="${loginId == userBoard.userId}">
+						<button onclick="test()">
+							삭제 
+						</button>
+					</c:when>
+					<c:when test="${loginId == userBoard.userId}">
+						<button onclick="location.href='modifyBoard?boardNum=${userBoard.boardNum}'">
+							수정
+						</button>
+					</c:when>
+				</c:choose>
+			</div>
+						<h5>들어온 쒜끼${sessionUser.userId} 게시물 주인쒜끼${userBoard.userId}</h5>
+			
+			
 			<div class="before-next-nav">
 				<c:choose>
 					<c:when test="${Preview == false}">
-						<button onclick="location.href='goBoardInside?boardNum=${userBoard.boardNum+1}'">∨다음글</button>
+						<button onclick="location.href='goBoardInside?boardNum=${userBoard.boardNum}&cafeId=${boardMenuType.cafeId}&boardMenuNum=${boardMenuType.boardMenuNum}&next=1'">∨다음글</button>
 					</c:when>
 					<c:when test="${Next == false}">
-						<button onclick="location.href='goBoardInside?boardNum=${userBoard.boardNum-1}'">∧이전글</button>
+						<button onclick="location.href='goBoardInside?boardNum=${userBoard.boardNum}&cafeId=${boardMenuType.cafeId}&boardMenuNum=${boardMenuType.boardMenuNum}&preview=1'">∧이전글</button>
 					</c:when>
 					<c:otherwise>
-						<button onclick="location.href='goBoardInside?boardNum=${userBoard.boardNum-1}'">∧이전글</button>
-						<button onclick="location.href='goBoardInside?boardNum=${userBoard.boardNum+1}'">∨다음글</button>
+						<button onclick="location.href='goBoardInside?boardNum=${userBoard.boardNum}&cafeId=${boardMenuType.cafeId}&boardMenuNum=${boardMenuType.boardMenuNum}&preview=1'">∧이전글</button>
+						<button onclick="location.href='goBoardInside?boardNum=${userBoard.boardNum}&cafeId=${boardMenuType.cafeId}&boardMenuNum=${boardMenuType.boardMenuNum}&next=1'">∨다음글</button>
 					</c:otherwise>
 				</c:choose>
 				
-				<button onclick="location.href='goBoardList'">목록</button>
+				<button onclick="location.href='goBoardList?cafeId=${boardMenuType.cafeId}'">목록</button>
 			</div>
-			
-			
+		</div>
 		        <!-- SLIDE POST -->
 		        <article class="blog-wrap-test">
 		         
@@ -293,6 +346,43 @@ li.bbp-topic-freshness-test{
 		          		<c:if test="${reply.REPLY_STEP == 0}"><!--댓글 이라면-->
 			            <li>
 			              <article class="comment">
+			              
+			              <!-- 수정 클릭시 생성되는 div  --><!-- 얘도 article로? -->
+		                      	<div class="${-reply.REPLY_NUM}" style="display:none;">
+		                      		<form id="comments_form" action="saveReply?groupNum=${reply.REPLY_NUM}" class="row" 
+									  		method="post" enctype="multipart/form-data">
+									  		<input type="hidden" name="userId" value="${sessionUser.userId}">
+									  		<input type="hidden" name="boardNum" value="${userBoard.boardNum}">
+									    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									    										
+									      <p><span style="font-weight:1000; font-size: 20pt;">${sessionUser.cafeUserNickname}</span></p>
+									      <textarea class="form-control" name="replyContent" id="comments" rows="6">
+									      	${reply.REPLY_CONTENT}
+					                   		<c:if test="${reply.CAFE_USER_IMAGE_NUM != 0}">
+					                   			<img src="download?fileNum=${reply.CAFE_USER_IMAGE_NUM}" 
+												width="30%">
+			                   				</c:if>
+									      </textarea>
+									      
+										  <div class="post-meta-test">
+										  	<div class="reply-one">
+												<input type="file" name="replyImgName">
+												<!--사진 아이콘을 누르면 input type file을 누른 효과를 준다?  -->
+												<!-- <img id="preview" src="#" width=100 height=100 alt="선택된 이미지가 없습니다"> -->
+										  		<!-- 여기가 범인 두번 실행됨  -->
+										  	</div>
+										  	<div class="reply-two"> 
+										  		<input type="button" value="취소" onclick="back(this)" class="${reply.REPLY_NUM}" class="button small">
+										  		<input type="submit" value="등록" id="submit" class="button small">
+										  	</div>
+										  </div>
+									      
+									      <hr>
+									    </div>
+									  </form>
+		                      	</div>
+			              
+
 			              	<a href="#">
 			              		<c:if test="${ reply.CAFE_USER_IMAGE_NUM== 0}">
 			              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
@@ -308,6 +398,23 @@ li.bbp-topic-freshness-test{
 			                <div class="comment-content">
 			                  <h4 class="comment-author">
 		                        ${reply.CAFE_USER_NICKNAME} <small class="comment-meta">${reply.REPLY_SAVEDATE}</small>
+		                        <!-- loginId == 관리자 계정 ||  -->
+		                        <c:choose>		
+									<c:when test="${loginId == reply.USER_ID}">
+										<a href="deleteBoardReply?replyNum=${reply.REPLY_NUM}">
+											삭제 
+										</a>
+										<h5>들어온 쒜끼${sessionUser.userId} 게시물 주인쒜끼${reply.USER_ID}</h5>
+									</c:when>
+									<c:when test="${sessionUser.userId == reply.USER_ID}">		
+										<a>수정</a>
+										<%-- onclick="replyModifyClick(this)" class="${reply.REPLY_NUM}" style="cursor:pointer" --%>
+										<h5>들어온 쒜끼${sessionUser.userId} 게시물 주인쒜끼${reply.USER_ID}</h5>
+									</c:when>
+								</c:choose>
+		                        <%-- <a href="modifyBoardReply?replyNum=${reply.REPLY_NUM}">
+											수정
+										</a> --%>
 		                       
 		                  	  </h4>
 		                   		${reply.REPLY_CONTENT}<br>
@@ -321,6 +428,7 @@ li.bbp-topic-freshness-test{
 		                      		<a onclick="replyClick(this)" id="${reply.REPLY_NUM}" style="cursor:pointer">
 		                      		<b>답글 쓰기</b> <!--그룹:${reply.REPLY_GROUP}  --></a>
 		                      	</p>
+
 		                      	
 		                      			<!-- 답글 쓰기 클릭시 생성되는 div  -->
 		                      	<div id="${-reply.REPLY_NUM}" style="display:none;">
@@ -373,6 +481,24 @@ li.bbp-topic-freshness-test{
 						                <div class="comment-content">
 						                  <h4 class="comment-author">
 					                        ${replyreply.CAFE_USER_NICKNAME} <small class="comment-meta">${replyreply.REPLY_SAVEDATE}</small>
+					                       <!-- loginId == 관리자 계정 ||  -->
+					                       	<c:choose>			
+												<c:when test="${loginId == replyreply.USER_ID}">
+													<a href="deleteBoardReply?replyNum=${replyreply.REPLY_NUM}">
+														삭제 
+													</a>
+													<h5>들어온 쒜끼${loginId} 게시물 주인쒜끼${replyreply.USER_ID}</h5>
+												</c:when>
+												<c:when test="${loginId == replyreply.USER_ID}">
+													<a href="modifyBoardReply?replyNum=${replyreply.REPLY_NUM}">
+														수정
+													</a>
+													<h5>들어온 쒜끼${loginId} 게시물 주인쒜끼${replyreply.USER_ID}</h5>
+												</c:when>
+											</c:choose>
+					                       
+					                       
+					                       
 					                       
 					                  	  </h4>
 					                   		${replyreply.REPLY_CONTENT}<br>
