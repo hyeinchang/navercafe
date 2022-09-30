@@ -6,7 +6,7 @@
   <section class="section1" style="padding: 30px 0 0 0;">
     <div class="container clearfix">
     <c:choose>
-    <c:when test="${cafeDTO.titleNum eq null || cafeDTO.titleNum <= 0}">
+    <c:when test="${cafeDTO.cafeTitleNum eq null || cafeDTO.cafeTitleNum <= 0}">
       <div class="default-title">
 	  	<div class="site-title">
             <a href="${contextPath}" title="">
@@ -20,7 +20,7 @@
 	<c:otherwise>
 	  <div class="setting-title">
 		<a href="${contextPath}/user/main?cafeId=${cafeDTO.cafeId}">
-		  <img src="${contextPath}/file/download?titleNum=${cafeDTO.titleNum}">
+		  <img src="${contextPath}/file/download?cafeTitleNum=${cafeDTO.cafeTitleNum}">
 		</a>
 	  </div>
 	</c:otherwise>

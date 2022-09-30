@@ -84,10 +84,9 @@
  		
  	 	xhr.onreadystatechange = function() {
  	 		if(xhr.readyState == 4 && xhr.status == 200) {
- 	 			var data = JSON.parse(xhr.response);
  	 			var message = '';
  	 			
- 	 			if(data.result == 1) {
+ 	 			if(Number(xhr.response) == 1) {
  	 				message = '저장되었습니다.';
  	 			} else {
  	 				message = '저장에 실패했습니다.';

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itbank.navercafe.user.menu.mapper.MenuMapper">
+	<resultMap type="com.itbank.navercafe.user.menu.dto.MenuDTO" id="menu">
+        <id column="BOARD_MENU_NUM" property="boardMenuNum"/>
+        <result column="BOARD_MENU_NAME" property="boardMenuName"/>
+        <result column="BOARD_MENU_DESC" property="boardMenuDesc"/>
+       	<result column="BOARD_MENU_TYPE" property="boardMenuType"/>
+        <result column="BOARD_WRITE_AUTH" property="boardWriteAuth"/>
+        <result column="BOARD_REPLY_AUTH" property="boardReplyAuth"/>
+        <result column="BOARD_READ_AUTH" property="boardReadAuth"/>
+        <result column="CAFE_ID" property="cafeId"/>
+        <result column="BOARD_ORDER" property="boardOrder"/>
+        <result column="BOARD_LIKES_FLAG" property="boardLikesFlag"/>
+        <result column="BOARD_REPLY_FLAG" property="boardReplyFlag"/>
+        <result column="BOARD_PREFIXES_FLAG" property="boardPrefixesFlag"/>
+        <result column="BOARD_PUBLIC_FLAG" property="boardPublicFlag"/>
+    </resultMap>
+    
+    <select id="selectBoardMenuList" resultMap="menu">
+    	<![CDATA[
+    		SELECT * FROM PROJECT_BOARD_TYPE WHERE CAFE_ID = #{cafeId} ORDER BY BOARD_ORDER
+    	]]>
+    </select>
+    
+    <select id="selectBoardMenu" resultMap="menu">
+    	<![CDATA[
+    		SELECT * FROM PROJECT_BOARD_TYPE WHERE BOARD_MENU_NUM = #{boardMenuNum}
+    	]]>
+    </select>
+</mapper>
+

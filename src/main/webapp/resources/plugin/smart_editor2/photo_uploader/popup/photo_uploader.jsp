@@ -240,7 +240,7 @@
 			fileReader.onload = function() {
 				var orgPage = window.opener.parent;
 				var src = fileReader.result;
-				var sHTML = '<img src="'+ src + '" class="' + tempEditorImageClass + '" data-index="' + index + '" style="max-width:100%">';
+				var sHTML = '<img src="'+ src + '" class="' + tempEditorImageClass + '" data-index="' + index + '">';
 				
 				orgPage.pasteHTML_custom(sHTML);
 			}
