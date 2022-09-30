@@ -17,8 +17,7 @@
                	
                		<!-- menuFormArea -->
                		<div class="menuFormArea">
-               			<input type="hidden" name="cafeId" value="${cafeDTO.cafeId}">
-         				
+               			
          				<!-- menuFormArea > menuChoice  -->
                			<div class="card mb-4 menuChoice">
 							<div class="card-header">
@@ -62,10 +61,14 @@
 		                    			<input type="hidden" name="boardMenuNum" value="">
 		                    			<input type="hidden" name="boardMenuDesc" value="${menuType.boardMenuDesc}">
 		                    			<input type="hidden" name="boardMenuType" value="${menuType.boardMenuType}">
-		                    			<input type="hidden" name="boardWriteAuth" value="${menuType.boardWriteAuth}">
-		                    			<input type="hidden" name="boardReplyAuth" value="${menuType.boardReplyAuth}">
-		                    			<input type="hidden" name="boardReadAuth" value="${menuType.boardReadAuth}">
+		                    			<input type="hidden" name="boardWriteAuth" value="0">
+		                    			<input type="hidden" name="boardReplyAuth" value="0">
+		                    			<input type="hidden" name="boardReadAuth" value="0">
 		                    			<input type="hidden" name="boardOrder" value="">
+		                    			<input type="hidden" name="boardLikesFlag" value="Y">
+		                    			<input type="hidden" name="boardReplyFlag" value="Y">
+		                    			<input type="hidden" name="boardPrefixesFlag" value="N">
+		                    			<input type="hidden" name="boardPublicFlag" value="Y">
 		                    			<input type="hidden" name="delFlag" value="N">
 		                    		</li>
 		                    	</c:forEach>
@@ -81,6 +84,7 @@
 							
 								<!--  menuForm -->
 								<form name="menuForm">
+									<input type="hidden" name="cafeId" value="${cafeDTO.cafeId}">
 									<ul id="rightMenuUl">
 									<c:forEach var="menu" items="${menuList}" varStatus="status">
 			                    		<c:set var="typeClass"/>
@@ -122,6 +126,10 @@
 			                    			<input type="hidden" name="boardReplyAuth" value="${menu.boardReplyAuth}">
 			                    			<input type="hidden" name="boardReadAuth" value="${menu.boardReadAuth}">
 			                    			<input type="hidden" name="boardOrder" value="${order}">
+			                    			<input type="hidden" name="boardLikesFlag" value="${menu.boardLikesFlag}">
+			                    			<input type="hidden" name="boardReplyFlag" value="${menu.boardReplyFlag}">
+			                    			<input type="hidden" name="boardPrefixesFlag" value="${menu.boardPrefixesFlag}">
+			                    			<input type="hidden" name="boardPublicFlag" value="${menu.boardPublicFlag}">
 			                    			<input type="hidden" name="delFlag" value="N">
 			                    		</li>
 			                    	</c:forEach>
@@ -194,7 +202,7 @@
        				<!-- end menuFormArea -->
        				
        				<div class="btnArea">
-             			<a href="javascript:saveTitle()" class="btn btn-primary btn-icon-split">
+             			<a href="javascript:saveBoardMenu()" class="btn btn-primary btn-icon-split">
                               <span class="icon text-white-50">
                                    <i class="fas fa-check"></i>
                               </span>
@@ -209,6 +217,13 @@
             <!-- End of Main Content -->
       		
 <script type="text/javascript">
+// 저장하기
+function saveBoardMenu() {
+	var form = document.menuForm;
+	form.action = '${contextPath}/admin/menu/saveBoardMenu';
+	form.method = 'post';
+	form.submit();
+}
 // 메뉴 삭제 버튼 생성
 function createMenuDelBtn(order) {
 	var a = document.createElement('a');
@@ -536,10 +551,22 @@ function changeMenuValue() {
 	var index = Number(form.id.replace(/\D/gi, ''))-1;
 	var target = rightMenuUl.children[index].children[thisElement.name];
 	
-	target.value = thisElement.value;
-	
 	if(target.name == 'boardMenuName') {
 		target.parentElement.children[0].innerText = target.value;
+	}
+	
+	if(thisElement.type == 'checkbox') {
+		var checkFlag = '';
+		
+		if(thisElement.value == 'Y') {
+			checkFlag = thisElement.checked ? 'Y' : 'N';
+		} else {
+			checkFlag = thisElement.checked ? 'N' : 'Y';
+		}
+		
+		target.value = checkFlag;
+	} else {
+		target.value = thisElement.value;
 	}
 }
 </script>           

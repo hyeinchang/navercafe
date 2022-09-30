@@ -3,9 +3,10 @@ package com.itbank.navercafe.admin.cafemember.dto;
 import java.sql.Date;
 
 public class AdminCafeMemberDTO {
-	private String userId, userPw, userName, userPhone, userEmail, postalCode, roadAddr, jibunAddr, certAddr;
-	private int userPoint, userLevel;
+	private String userId, userPw, userName, userPhone, userEmail, userPostalCode, userAddr, userDetailAddr, userGender;
 	private Date userRegDate;
+	private int userBirthdate, userPoint, userLevel;
+	
 	public String getUserId() {
 		return userId;
 	}
@@ -36,29 +37,41 @@ public class AdminCafeMemberDTO {
 	public void setUserEmail(String userEmail) {
 		this.userEmail = userEmail;
 	}
-	public String getPostalCode() {
-		return postalCode;
+	public String getUserPostalCode() {
+		return userPostalCode;
 	}
-	public void setPostalCode(String postalCode) {
-		this.postalCode = postalCode;
+	public void setUserPostalCode(String userPostalCode) {
+		this.userPostalCode = userPostalCode;
 	}
-	public String getRoadAddr() {
-		return roadAddr;
+	public String getUserAddr() {
+		return userAddr;
 	}
-	public void setRoadAddr(String roadAddr) {
-		this.roadAddr = roadAddr;
+	public void setUserAddr(String userAddr) {
+		this.userAddr = userAddr;
 	}
-	public String getJibunAddr() {
-		return jibunAddr;
+	public String getUserDetailAddr() {
+		return userDetailAddr;
 	}
-	public void setJibunAddr(String jibunAddr) {
-		this.jibunAddr = jibunAddr;
+	public void setUserDetailAddr(String userDetailAddr) {
+		this.userDetailAddr = userDetailAddr;
 	}
-	public String getCertAddr() {
-		return certAddr;
+	public String getUserGender() {
+		return userGender;
 	}
-	public void setCertAddr(String certAddr) {
-		this.certAddr = certAddr;
+	public void setUserGender(String userGender) {
+		this.userGender = userGender;
+	}
+	public Date getUserRegDate() {
+		return userRegDate;
+	}
+	public void setUserRegDate(Date userRegDate) {
+		this.userRegDate = userRegDate;
+	}
+	public int getUserBirthdate() {
+		return userBirthdate;
+	}
+	public void setUserBirthdate(int userBirthdate) {
+		this.userBirthdate = userBirthdate;
 	}
 	public int getUserPoint() {
 		return userPoint;
@@ -72,12 +85,8 @@ public class AdminCafeMemberDTO {
 	public void setUserLevel(int userLevel) {
 		this.userLevel = userLevel;
 	}
-	public Date getUserRegDate() {
-		return userRegDate;
-	}
-	public void setUserRegDate(Date userRegDate) {
-		this.userRegDate = userRegDate;
-	}
+	
+	
 	
 	
 }

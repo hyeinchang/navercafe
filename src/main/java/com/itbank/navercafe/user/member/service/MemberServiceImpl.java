@@ -61,14 +61,8 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	@Override
-	public int loginChk(HttpServletRequest request) {
-		MemberDTO dto = mm.getUser(request.getParameter("id"));
-		if(dto != null) {
-			if(en.matches(request.getParameter("password"), dto.getPassword()) || dto.getPassword().equals(request.getParameter("password"))) {
-				return 0;
-			}
-		}
-		return 1;
+	public int loginChk(MemberDTO dto) {
+		return mm.loginChk(dto);
 	}
 	
 }

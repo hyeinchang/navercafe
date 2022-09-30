@@ -6,17 +6,6 @@
 	alert('${message}');
 </script>
 </c:if>
-  <section id="intro">
-    <div class="container">
-      <div class="ror">
-        <div class="col-md-8 col-md-offset-2">
-          <h1>네이버 카페</h1>
-          <p>원하는 주제로 다양한 카페를 만들 수 있습니다.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
  
   <section class="section1">
     <div class="container clearfix">
@@ -36,7 +25,7 @@
                 <i class="dm-icon fa fa-exclamation fa-3x" style="cursor:default;"></i>
               </div>
             </div>
-            <h4>등록된 카페가 없습니다.</h4>
+            <h4>랭킹 카페가 없습니다.</h4>
           </div>
         </div>
         <!-- end dmbox -->
@@ -47,11 +36,11 @@
           <div class="dmbox" style="padding:18px;">
             <div class="service-icon">
               <div class="dm-icon-effect-1 effect-slide-bottom in" data-effect="slide-bottom" style="transition: all 0.7s ease-in-out 0s;">
-                <a href="${contextPath}/user/main?cafeId=${ranking.cafeId}"><img src="$${contextPath}/file/download?titleNum=${ranking.titleNum}" alt="${ranking.cafeName}" style="width:300px;height:300px;"></a>
+                <a href="${contextPath}/user/main?cafeId=${ranking.cafeId}"><img src="$${contextPath}/file/download?cafeTitleNum=${ranking.cafeTitleNum}" alt="${ranking.cafeName}" style="width:300px;height:300px;"></a>
               </div>
             </div>
             <h4><a href="${contextPath}/user/main?cafeId=${ranking.cafeId}">${ranking.cafeName}</a></h4>
-            <p>${ranking.cafeIntroduce}</p>
+            <p>${ranking.cafeExplanation}</p>
           </div>
         </div>
         <!-- end dmbox -->
@@ -73,10 +62,13 @@
           </h4>
         </div>
         <div>
-          <form id="bbsearch" class="form-inline">
-          	<input type="text" class="form-control" placeholder="검색할 카페명을 입력해주십시오." style="height:auto;margin-top:0;">
+          <form id="searchCafeForm" name="searchCafeForm" class="form-inline" action="./">
+          	<input type="hidden" name="page" value="1">
+          	<input type="text" name="cafeName" class="form-control" placeholder="검색할 카페명을 입력해주십시오." value="${cafeDTO.cafeName}" 
+          		style="width:300px;height:auto;margin-top:0;" onkeypress="if(event.keyCode == 13)searchCafe(1)">
           	<button type="button" class="btn btn-primary" 
-          		style="font-size:14px;padding: 8px 18px 5px;;margin-top:0;vertical-align:top;border:none;border-radius:2px;">검색</button>
+          		style="font-size:14px;padding: 8px 18px 5px;;margin-top:0;vertical-align:top;border:none;border-radius:2px;"
+          		onclick="searchCafe(1)">검색</button>
           </form>
         </div>
         <div class="title">
@@ -106,7 +98,16 @@
           	<c:forEach var="cafe" items="${cafeList}">
           	<tr>
               <td onclick="changeCafe('${cafe.cafeId}')">${cafe.cafeName}</td>
-              <td onclick="changeCafe('${cafe.cafeId}')">${cafe.cafeIntroduce}</td>
+              <td onclick="changeCafe('${cafe.cafeId}')">
+              <c:choose>
+              	<c:when test="${cafe.cafeExplanation eq null || cafe.cafeExplanation.length() == 0}">
+              	등록된 카페 소개가 없습니다.
+              	</c:when>	
+              	<c:otherwise>
+              	${cafe.cafeExplanation}
+              	</c:otherwise>
+              </c:choose>
+              </td>
             </tr>
             </c:forEach>
           	</c:otherwise>
@@ -115,11 +116,15 @@
         </table>
         <div class=" text-center">
           <ul class="pagination">
-            <li><a href="#">«</a></li>
-            <li><a href="#">1</a></li>
-            <li><a href="#">2</a></li>
-            <li><a href="#">3</a></li>
-            <li><a href="#">»</a></li>
+          <c:if test="${pagination.prevActive}">
+          	<li><a href="#">«</a></li>
+          </c:if>
+          <c:forEach var="page" begin="${pagination.startPage}" end="${pagination.endPage}">
+            <li${pagination.page eq page ? ' class="active"' : ''}><a href="javascript:searchCafe(${page})">${page}</a></li>
+          </c:forEach>
+          <c:if test="${pagination.nextActive}">
+          	<li><a href="#">»</a></li>
+          </c:if>
           </ul>
         </div>
       </div>
@@ -135,13 +140,13 @@
           <div class="form-group">
             <div class="input-group">
               <span class="input-group-addon"><i class="fa fa-user"></i></span>
-              <input type="text" class="form-control" name="id" placeholder="아이디를 입력해주십시오." >
+              <input type="text" class="form-control" name="id" placeholder="아이디를 입력해주십시오." onkeypress="if(event.keyCode == 13)checkLoginForm()">
             </div>
           </div>
           <div class="form-group">
             <div class="input-group">
               <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-              <input type="password" class="form-control" name="password" placeholder="비밀번호를 입력해주십시오." >
+              <input type="password" class="form-control" name="password" placeholder="비밀번호를 입력해주십시오." onkeypress="if(event.keyCode == 13)checkLoginForm()">
             </div>
           </div>
           <div class="form-group">
@@ -153,7 +158,7 @@
           </div>
           <div class="form-group">
             <button type="button" class="button" onclick="checkLoginForm()">로그인</button>
-            <button type="button" class="button" onclick="location.href='signup'">회원가입</button>
+            <button type="button" class="button" onclick="location.href='cafe/member/signup'">회원가입</button>
           </div>
         </form>
 	  </c:when>
@@ -186,76 +191,16 @@
     </div>
     <!-- end container -->
   </section>
- <section class="section1" style="display:none;">
-    <div class="container clearfix">
-      <div class="col-lg-12 col-md-12 col-sm-12 clearfix">
-        <div class="clearfix"></div>
-      	<h4 class="title">
-          <span>최근 방문한 카페</span>
-        </h4>
-
-        <div class="col-lg-2 col-md-2 col-sm-2">
-          <div class="servicetitle">
-            <h5><a href="#">IT뱅크 산업기사 평가과정B</a></h5>
-            <hr>
-            <p>카페소개</p>
-           </div>
-        </div>
-        <!-- large-2 -->
-
-        <div class="col-lg-2 col-md-2 col-sm-2">
-          <div class="servicetitle">
-            <h5><a href="#">IT뱅크 산업기사 평가과정B</a></h5>
-            <hr>
-            <p>카페소개</p>
-           </div>
-        </div>
-        <!-- large-2 -->
-
-        <div class="col-lg-2 col-md-2 col-sm-2">
-          <div class="servicetitle">
-            <h5><a href="#">IT뱅크 산업기사 평가과정B</a></h5>
-            <hr>
-            <p>카페소개</p>
-           </div>
-        </div>
-        <!-- large-2 -->
-
-         <div class="col-lg-2 col-md-2 col-sm-2">
-          <div class="servicetitle">
-            <h5><a href="#">IT뱅크 산업기사 평가과정B</a></h5>
-            <hr>
-            <p>카페소개</p>
-           </div>
-        </div>
-        <!-- large-2 -->
-        
-        <div class="col-lg-2 col-md-2 col-sm-2">
-          <div class="servicetitle">
-            <h5><a href="#">IT뱅크 산업기사 평가과정B</a></h5>
-            <hr>
-            <p>카페소개</p>
-           </div>
-        </div>
-        <!-- large-2 -->
-        
-        <div class="col-lg-2 col-md-2 col-sm-2">
-          <div class="servicetitle">
-            <h5><a href="#">IT뱅크 산업기사 평가과정B</a></h5>
-            <hr>
-            <p>카페소개</p>
-           </div>
-        </div>
-        <!-- large-2 -->
-        
-      </div>
-      <!-- end content -->
-    </div>
-    <!-- end container -->
-  </section>
   
  <script type="text/javascript">
  	function logout() {
  		location.href='${contextPath}/user/logout';
- 	} 
+ 	}
+ 	
+ 	function searchCafe(page) {
+ 		var form = document.searchCafeForm;
+ 		
+ 		form.page.value = page;
+ 		form.submit();
+ 	}
  </script>

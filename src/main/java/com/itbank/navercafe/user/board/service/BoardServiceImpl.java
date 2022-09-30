@@ -4,20 +4,17 @@ package com.itbank.navercafe.user.board.service;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 
-import com.itbank.navercafe.comon.file.dto.FileDTO;
-import com.itbank.navercafe.comon.file.mapper.FileMapper;
+import com.itbank.navercafe.common.file.dto.FileDTO;
+import com.itbank.navercafe.common.file.mapper.FileMapper;
 import com.itbank.navercafe.user.board.dto.BoardDTO;
 import com.itbank.navercafe.user.board.mapper.BoardMapper;
+import com.itbank.navercafe.user.menu.dto.MenuDTO;
 
 
 
@@ -34,56 +31,6 @@ public class BoardServiceImpl implements BoardService{
 		return bm.getBoardList(cafeId);
 	}
 
-	@Override
-	public BoardDTO getUserBoard(int boardNum,Model model,int pageNum,String cafeId) {
-		
-		//System.out.println("페이지넘버 : " + pageNum);
-		if(pageNum == 0) {
-			pageNum++;
-		}
-		// 이전글 다음글 
-		ArrayList<BoardDTO> listChk= bm.getBoardList(cafeId);
-		int j = 0;
-		for(j=0; j<listChk.size();j++) {
-			//System.out.println("j 마지막 값 구하기");
-		}
-		if(boardNum==listChk.get(j-1).getBoardNum()) {
-			model.addAttribute("Next",false);
-		}else if(boardNum==listChk.get(0).getBoardNum()){
-			model.addAttribute("Preview",false);
-		}
-
-		
-		BoardDTO dto = bm.getUserBoard(boardNum);
-		SimpleDateFormat date = new SimpleDateFormat("YYYY.MM.dd");
-		//말머리 이용해서 날짜 형식 포멧 후 리스트 출력
-		
-		int pageLetter = 5;
-		int allCount = bm.selectBoardCount(dto.getBoardPrefix());
-		//System.out.println("머리말별 게시글수 : "+allCount);
-		int repeat = allCount / pageLetter;
-		if(allCount % pageLetter !=0) {
-			repeat +=1;
-		}
-		int end = pageNum * pageLetter;
-		int start = end + 1 - pageLetter;
-		model.addAttribute("repeat",repeat);
-		
-		//System.out.println("start 값 : "+start );
-		//System.out.println("end 값 : "+end );
-		List<HashMap<String,Object>> list = bm.getPrefixList(dto.getBoardPrefix(),start,end);
-		for(int i=0;i<list.size();i++) {
-			String d= date.format(list.get(i).get("BOARD_SAVEDATE"));
-			list.get(i).put("BOARD_SAVEDATE", d);
-			//System.out.println(i+"번째"+list.get(i).get("BOARD_SAVEDATE"));
-			//System.out.println(i+"번째"+list.get(i).get("BOARD_TITLE"));
-		}
-		model.addAttribute("prefixList",list);
-		//System.out.println("prefixList란 이름으로 넘겨주는 값들 : "+list);
-		
-		//유저에 따른 좋아요 여부
-		return dto;
-	}
 
 	@Override
 	public void hit(int boardNum,int num) {
@@ -109,7 +56,7 @@ public class BoardServiceImpl implements BoardService{
 			model.addAttribute("like","F");
 		}
 	}
-
+	//유저에 따른 좋아요 여부
 	@Override
 	public void likeViewChk(int boardNum, String userId,Model model) {
 		if(bm.getLikesList(boardNum,userId)==null) {
@@ -129,20 +76,74 @@ public class BoardServiceImpl implements BoardService{
 	public void getFileList(Model model) {
 		ArrayList<FileDTO> list=fm.getFileList();
 		for(int i=0 ; i<list.size();i++) {
-			System.out.println("파일 고유 번호 :"+list.get(i).getFileNum());
-			System.out.println("사진 정보 :"+list.get(i).getFileOrgName());
-			System.out.println("replyNum :"+list.get(i).getReplyNum());
-			System.out.println("userImageNum :"+list.get(i).getCafeUserImageNum());
+//			System.out.println("파일 고유 번호 :"+list.get(i).getFileNum());
+//			System.out.println("사진 정보 :"+list.get(i).getFileOrgName());
+//			System.out.println("replyNum :"+list.get(i).getReplyNum());
+//			System.out.println("userImageNum :"+list.get(i).getCafeUserImageNum());
 		}
 		model.addAttribute("fileList",fm.getFileList());
 	}
 	
 	@Override
-	public int write(BoardDTO dto) {
-		int result = bm.write(dto);
-		System.out.println("result : "+result);
-		return result;
+	public BoardDTO getUserBoard(int boardNum,int boardMenuNum,Model model,int pageNum,String cafeId) {
+		
+		//System.out.println("페이지넘버 : " + pageNum);
+		if(pageNum == 0) {
+			pageNum++;
+		}
+		// 이전글 다음글 
+		ArrayList<BoardDTO> listChk= bm.getBoardList(cafeId);
+		int j = 0;
+		for(j=0; j<listChk.size();j++) {
+			//System.out.println("j 마지막 값 구하기");
+		}
+		if(boardNum==listChk.get(j-1).getBoardNum()) {
+			model.addAttribute("Next",false);
+		}else if(boardNum==listChk.get(0).getBoardNum()){
+			model.addAttribute("Preview",false);
+		}
+
+		
+		BoardDTO dto = bm.getUserBoard(boardNum);
+		SimpleDateFormat date = new SimpleDateFormat("YYYY.MM.dd");
+		//말머리 이용해서 날짜 형식 포멧 후 리스트 출력
+		
+		//보드 넘버에 따른 보드 정보 가져오기
+		MenuDTO menudto = bm.getBoardMenuType(boardMenuNum);
+		model.addAttribute("boardMenuType",bm.getBoardMenuType(boardMenuNum));
+
+		
+		int pageLetter = 5;
+		
+		//BoardMenuNum 을 가지고 있는 보드 갯수 세오기
+		int allCount = bm.selectBoardCount(dto.getBoardMenuNum());
+		//System.out.println("머리말별 게시글수 : "+allCount);
+		int repeat = allCount / pageLetter;
+		if(allCount % pageLetter !=0) {
+			repeat +=1;
+		}
+		int end = pageNum * pageLetter;
+		int start = end + 1 - pageLetter;
+		model.addAttribute("repeat",repeat);
+		
+		//System.out.println("start 값 : "+start );
+		//System.out.println("end 값 : "+end );
+		
+		//보드타입에따른 리스트 가져오기
+		List<HashMap<String,Object>> list = 
+				bm.getBoardMenuTypeList(menudto.getBoardMenuNum(),menudto.getCafeId(),start,end);
+		for(int i=0;i<list.size();i++) {
+			String d= date.format(list.get(i).get("BOARD_SAVEDATE"));
+			list.get(i).put("BOARD_SAVEDATE", d);
+			//System.out.println(i+"번째"+list.get(i).get("BOARD_SAVEDATE"));
+			//System.out.println(i+"번째"+list.get(i).get("BOARD_TITLE"));
+		}
+		model.addAttribute("boardMenuTypeList",list);
+		//System.out.println("prefixList란 이름으로 넘겨주는 값들 : "+list);
+
+		return dto;
 	}
+
 }
 
 	

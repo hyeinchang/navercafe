@@ -5,6 +5,48 @@ public class RegisterInfoDTO {
 	private int questionQty;
 	private boolean join_question;
 	
+	private String cafeId;
+	private String ageCondition;
+	private int selectYear1, selectYear2;
+	private String cafeJoinAge;
+	private String cafeJoinGender;
+	
+	public String getCafeId() {
+		return cafeId;
+	}
+	public void setCafeId(String cafeId) {
+		this.cafeId = cafeId;
+	}
+	public String getCafeJoinAge() {
+		return cafeJoinAge;
+	}
+	public void setCafeJoinAge(String cafeJoinAge) {
+		this.cafeJoinAge = cafeJoinAge;
+	}
+	public String getCafeJoinGender() {
+		return cafeJoinGender;
+	}
+	public void setCafeJoinGender(String cafeJoinGender) {
+		this.cafeJoinGender = cafeJoinGender;
+	}
+	public int getSelectYear1() {
+		return selectYear1;
+	}
+	public void setSelectYear1(int selectYear1) {
+		this.selectYear1 = selectYear1;
+	}
+	public int getSelectYear2() {
+		return selectYear2;
+	}
+	public void setSelectYear2(int selectYear2) {
+		this.selectYear2 = selectYear2;
+	}
+	public String getAgeCondition() {
+		return ageCondition;
+	}
+	public void setAgeCondition(String ageCondition) {
+		this.ageCondition = ageCondition;
+	}
 	public int getQuestionQty() {
 		return questionQty;
 	}

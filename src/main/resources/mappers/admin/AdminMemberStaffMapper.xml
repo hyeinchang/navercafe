@@ -1,6 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.itbank.navercafe.admin.memberstaff.mapper.AdminMemberStaffMapper">
+    <resultMap type="com.itbank.navercafe.admin.memberstaff.dto.AllMembersDTO" id="allMembers">
+        <id column="CAFE_ID" property="cafeId"/>
+        <result column="USER_ID" property="userId"/>
+        <result column="CAFE_USER_NICKNAME" property="cafeUserNickname"/>
+        <result column="CAFE_USER_IMAGE_NUM" property="cafeUserImageNum"/>
+        <result column="CAFE_USER_GRADE" property="cafeUserGrade"/>
+        <result column="CAFE_USER_VISIT" property="cafeUserVisit"/>
+        <result column="CAFE_USER_WRITE" property="cafeUserWrite"/>
+        <result column="CAFE_USER_REPLY" property="cafeUserReply"/>
+        <result column="CAFE_USER_VISIT_CHECK" property="cafeUserVisitCheck"/>
+        <result column="CAFE_USER_REGDATE" property="cafeUserRegdate"/>
+        <result column="CAFE_USER_APPLYDATE" property="cafeUserApplydate"/>
+        <result column="CAFE_USER_STATUS" property="cafeUserStatus"/>
+        <result column="CAFE_USER_EMAIL_RECEIEVE" property="cafeUserEmailReceieve"/>
+        <result column="CAFE_USER_GENDER_REVEAL" property="cafeUserGenderReveal"/>
+    </resultMap>
 	
+	<select id="getAllMembersList" resultMap="allMembers" parameterType="String">
+		select * from project_cafe_member where cafe_id = #{value}
+	</select>
+	
+	<select id="getCafeGradeNames" parameterType="String" resultType="String">
+		select cut_name from project_member_grade where cafe_id = #{value} order by cafe_user_grade asc
+	</select>
 </mapper>
 

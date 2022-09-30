@@ -21,12 +21,13 @@
 		 </c:choose> 
          </div>
          <!-- end 대문 -->
-       	 
+       	 <h1>카페 아이디 : ${cafeDTO.cafeId}</h1>
        	 <!-- start 글 목록 -->
        	 <div class="mainBottom">
            <div class="widget component1">
              <h4 class="title">
-               <span>전체글 목록</span><a href="javascript:alert('더보기 이동')">더보기</a>
+               <span>전체글 목록</span>
+               <a href="javascript:changeCafeMenu('board/goBoardList?cafeId=${cafeDTO.cafeId}')">더보기</a>
              </h4>
              <ul>            
                <li><a href="javascript:alert('전체글 보기 이동')">전체글 1</a></li>

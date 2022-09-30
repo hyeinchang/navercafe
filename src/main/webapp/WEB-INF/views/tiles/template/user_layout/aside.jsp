@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
 <!-- SIDEBAR -->
       <div id="sidebar" class="col-lg-4 col-md-4 col-sm-4 col-xs-12 cstmAside" ${cafeDTO.cafeLayout > 0 ? 'style="float:right;"' : ''}>
         <div class="widget">
@@ -15,20 +17,28 @@
                   <li>
                   	<span>
                   	  <a href="#">
-                  	    <img class="profileImg" src="${contextPath}/resources/img/cafe_thumb_noimg_55.png" alt="카페 아이콘 없음">
+                  	  <c:choose>
+                  	  	<c:when test="${cafeDTO.cafeIconNum eq null || cafeDTO.cafeIconNum == 0}">
+                  	  	<img class="profileImg" src="${contextPath}/resources/img/cafe_thumb_noimg_55.png" alt="카페 아이콘 없음">
+                  	  	</c:when>
+                  	  	<c:otherwise>
+                  	  	<img class="profileImg" src="${contextPath}/file/download?cafeIconNum=${cafeDTO.cafeIconNum}" alt="카페 아이콘 없음">
+                  	  	</c:otherwise>
+                  	  </c:choose>
+                  	  
                       </a>
-                      <c:if test="${cafeDTO.isCafeManager()}"> 
+                      <c:if test="${cafeDTO.isCafeManager eq 'true'}"> 
                       <a href="javascript:alert('카페 프로필 변경하기')" class="lab_thmb">카페 프로필 변경하기</a>
                       </c:if>
                   	</span>
                   	<div class="mananger_info">
                       <span class="gradeText">매니저</span>                   
-                      <b title="${cafeDTO.cafeManagerNickName}">${cafeDTO.cafeManagerNickName}</b>
+                      <b title="${cafeDTO.userId}">${cafeDTO.userId}</b>
                     </div>
-                    <div>since 2022.08.19.</div>    
+                    <div>since <fmt:formatDate value="${cafeDTO.cafeRegdate}" pattern="YYYY.MM.dd"/> </div>    
                     <div class="cafeSetting">
                     <c:choose>
-                    <c:when test="${cafeDTO.isCafeManager()}">
+                    <c:when test="${cafeDTO.isCafeManager eq 'true'}">
 	                  <a href="javascript:changeCafeMenu('${contextPath}/admin')" class="info-cafe">
 					    <span class="ico_aside ico_setting"></span>카페관리
 					  </a>
@@ -63,11 +73,12 @@
                     </div>
                   </li>
                   <li>
-                    <c:if test="${cafemem==1}">
-                  		<input type="button" class="button" value="카페 글쓰기" onclick="changeCafeMenu('${contextPath}/user/board/writeForm')" style="width:100%;">
+
+                    <c:if test="${cafeDTO.isCafeManager eq 'true' || cafeDTO.isCafeMember eq 'true'}">
+                  	<input type="button" class="button" value="카페 글쓰기" onclick="changeCafeMenu('${contextPath}/user/board/writeForm')" style="width:100%;">
                   	</c:if>
-                  	<c:if test="${cafemem!=1}">
-                  		<input type="button" class="button" value="카페 가입하기" onclick="changeCafeMenu('${contextPath}/user/cafeSignup?cafeId=${cafeDTO.cafeId }')" style="width:100%;">
+                  	<c:if test="${cafeDTO.isCafeMember eq 'false'}">
+                  	<input type="button" class="button" value="카페 가입하기" onclick="changeCafeMenu('${contextPath}/user/cafeSignup?cafeId=${cafeDTO.cafeId }')" style="width:100%;">
                   	</c:if>
                   </li>
                 </ul>
@@ -107,8 +118,9 @@
 		        </c:if>
 		      
                 <ul class="recent_posts">
+               
                   <!-- start 카페 가입 회원 정보 -->
-                  <c:if test="${cafemem==1}">
+                  <c:if test="${cafeDTO.isCafeMember eq 'true'}">
                   <li>
                   	<span>
                   	  <a href="#">
@@ -164,8 +176,9 @@
                   <!-- end 카페 가입 회원 정보 -->
                   <li>
                   <c:choose>
-                  <c:when test="${cafemem==1}">
-                    <input type="button" class="button" value="카페 글쓰기" onclick="changeCafeMenu('${contextPath}/user/board/writeForm')" style="width:100%;">
+
+                  <c:when test="${cafeDTO.isCafeManager eq 'true' || cafeDTO.isCafeMember eq 'true'}">
+                    <input type="button" class="button" value="카페 글쓰기" onclick="alert('카페 글쓰기 이동')" style="width:100%;">
                   </c:when>
                   <c:otherwise>
                     <c:if test="${loginId ne null}">
@@ -187,11 +200,19 @@
           <h4 class="title">
             <span>전체글보기</span>
           </h4>
-          <ul class="categories">            
-            <li>
+
+          <ul class="categories">
+          <c:choose>
+          	<c:when test="${cafeDTO.cafeMenuList eq null || cafeDTO.cafeMenuList.size() == 0}">
+          	<li>등록된 게시판이 없습니다.</li>
+          	</c:when>
+          	<c:otherwise>
+          	<li>
             	<a href="javascript:changeCafeMenu('${contextPath}/user/board/goBoardList')">전체글보기</a>
             	<span class="text-primary">3</span>
             </li>
+          	</c:otherwise>	
+          </c:choose>          
           </ul>
         </div>
 
@@ -201,33 +222,13 @@
             <span>Categories</span>
           </h4>
           <ul class="categories">            
-            <c:forEach var="category" items="${categoryList}">
-            <li><a href="${category.categoryLink}">${category.categoryName}</a></li>
+            <c:forEach var="cafeMenu" items="${cafeDTO.cafeMenuList}">
+            <li><a href="javascript:alert('${cafeMenu.boardMenuNum} 번 게시판으로 이동');">${cafeMenu.boardMenuName}</a></li>
             </c:forEach>
+            <c:if test="${cafeDTO.cafeMenuList eq null || cafeDTO.cafeMenuList.size() == 0}">
+            <li>등록된 게시판이 없습니다.</li>
+            </c:if>
           </ul>
-        </div>
-        
-
-        <div class="widget" style="display:none;">
-          <h4 class="title">
-            <span>Tags</span>
-          </h4>
-
-          <div class="tagcloud">
-            <a href="#" class="" title="12 topics">advice</a>
-            <a href="#" class="" title="2 topics">wordpress</a>
-            <a href="#" class="" title="21 topics">joomla</a>
-            <a href="#" class="" title="5 topics">blog</a>
-            <a href="#" class="" title="62 topics">cms</a>
-            <a href="#" class="" title="12 topics">drupal</a>
-            <a href="#" class="" title="88 topics">html5</a>
-            <a href="#" class="" title="15 topics">css3</a>
-            <a href="#" class="" title="31 topics">orange</a>
-            <a href="#" class="" title="16 topics">love to</a>
-            <a href="#" class="" title="32 topics">tutorials</a>
-            <a href="#" class="" title="12 topics">how to</a>
-            <a href="#" class="" title="44 topics">advice</a>
-          </div>
         </div>
 
       </div>

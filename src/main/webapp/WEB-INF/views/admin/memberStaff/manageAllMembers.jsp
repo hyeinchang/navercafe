@@ -144,14 +144,14 @@ $(document).ready(function () {
         <tbody>
         <c:forEach var="dto" items="${list }">
             <tr>
-                <td align="center"><input type="checkbox" class="registerBan-cb-item" name="temp" value="${dto.userName }"></td>
-                <td>${dto.userName }</td>
-                <td>${dto.userLevel }</td>
-                <td>${dto.userPoint }</td>
-                <td>${dto.userEmail }</td>
-                <td>${dto.userId }</td>
-                <td>2121212</td>
-                <td>${dto.userLevel }</td>
+                <td align="center"><input type="checkbox" class="registerBan-cb-item" name="temp" value="${dto.userId }"></td>
+                <td>${dto.userId} (${dto.cafeUserNickname})</td>
+                <td>${dto.cafeUserGrade }</td>
+                <td>${dto.cafeUserRegdate }</td>
+                <td>최종방문일..?</td>
+                <td>${dto.cafeUserVisit }</td>
+                <td>${dto.cafeUserWrite} </td>
+                <td>${dto.cafeUserReply }</td>
             </tr>
         </c:forEach>
         </tbody>
@@ -161,11 +161,9 @@ $(document).ready(function () {
             	<th> &nbsp;&nbsp; <input type="checkbox" class="registerBan-cb-all"> </th>
                 <th colspan="7">
 					선택 멤버를 
-					<select>
-							<option>응애멤버1</option>
-							<option>응애멤버2</option>
-							<option>응애멤버3</option>
-						<c:forEach var="gradeList" items=""> 
+					<select id="cafeUserGrade">
+						<c:forEach var="grades" items="${gradeList }" varStatus="loop">
+							<option value="${loop.count}">${grades}</option>
 						</c:forEach>
 					</select>
 					(으)로
@@ -181,12 +179,15 @@ $(document).ready(function () {
     
 <form action="deportMembers" id="f-deport" method="post">
 	<input type="hidden" value="" name="deportMembers" id="deportMembers">
+	<input type="hidden" value=${cafeId } name="cafeId">
 </form>
 <form action="emailMembers" id="f-email" method="post">
 	<input type="hidden" value="" name="emailMembers" id="emailMembers">
+	<input type="hidden" value=${cafeId } name="cafeId">
 </form>
 <form action="modifyMembers" id="f-modify" method="post">
 	<input type="hidden" value="" name="modifyMembers" id="modifyMembers">
+	<input type="hidden" value=${cafeId } name="cafeId">
 </form>
     	</div>
     </div>

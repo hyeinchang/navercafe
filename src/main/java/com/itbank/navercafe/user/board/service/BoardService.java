@@ -2,10 +2,6 @@ package com.itbank.navercafe.user.board.service;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.Map;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.ui.Model;
 
@@ -17,7 +13,7 @@ public interface BoardService {
 	public ArrayList<BoardDTO> getBoardList(String cafeId);
 	
 	//게시글 가져오기
-	public BoardDTO getUserBoard(int boardNum, Model model,int pageNum, String cafeId);
+	public BoardDTO getUserBoard(int boardNum,int boardMenuNum, Model model,int pageNum, String cafeId);
 	
 	//조회수
 	public void hit(int boardNum,int num);
@@ -33,11 +29,6 @@ public interface BoardService {
 	
 	//파일테이블리스트
 	public void getFileList(Model model);
-
-	//글쓰기
-	public int write(BoardDTO dto);
-
-	
 	
 
 }

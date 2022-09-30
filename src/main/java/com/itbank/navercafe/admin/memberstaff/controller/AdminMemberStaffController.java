@@ -1,6 +1,7 @@
 package com.itbank.navercafe.admin.memberstaff.controller;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -10,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import com.itbank.navercafe.admin.cafemember.dto.AdminCafeMemberDTO;
+import com.itbank.navercafe.admin.memberstaff.dto.AllMembersDTO;
 import com.itbank.navercafe.admin.memberstaff.service.AdminMemberStaffService;
 
 @Controller
@@ -18,19 +20,14 @@ public class AdminMemberStaffController {
 	@Autowired AdminMemberStaffService amss;
 
 	@GetMapping("manageAllMembers")
-	public String manageAllMembers(Model model) {
+	public String manageAllMembers(Model model, String cafeId) {
+		ArrayList<AllMembersDTO> amList = amss.getAllMembersList(cafeId);
+		ArrayList<String> gradeNameList = amss.getCafeGradeNames(cafeId);
+		System.out.println("리스트 사이즈 : " + gradeNameList.size());
 		
-		ArrayList<AdminCafeMemberDTO> list = new ArrayList<>();
-		for(int i = 0; i < 40; i++) {
-			AdminCafeMemberDTO pcm = new AdminCafeMemberDTO();
-			pcm.setUserName("응애"+i);
-			pcm.setUserId("ddd"+i);
-			pcm.setUserEmail("email"+i);
-			pcm.setUserLevel(i);
-			pcm.setUserPoint(i);
-			list.add(pcm);
-		}
-		model.addAttribute("list", list);
+		model.addAttribute("list", amList);
+		model.addAttribute("cafeId", cafeId);
+		model.addAttribute("gradeList", gradeNameList);
 		
 		return "admin/memberStaff/manageAllMembers";
 	}

@@ -47,6 +47,8 @@
   
   <!-- 2022-08-26 chi9148 custom css 추가 -->
   <link href="${contextPath}/resources/css/custom_user.css" rel="stylesheet">
+  <!-- 2022-09-28 chi9148 common js 추가 -->
+  <script type="text/javascript" src="${contextPath}/resources/js/common.js"></script>
 </head>
 
 <body>

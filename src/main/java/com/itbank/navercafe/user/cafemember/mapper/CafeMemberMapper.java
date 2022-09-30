@@ -1,21 +1,10 @@
 package com.itbank.navercafe.user.cafemember.mapper;
 
-import java.util.ArrayList;
-
-
-import com.itbank.navercafe.comon.file.dto.FileDTO;
-
 import org.apache.ibatis.annotations.Param;
 
-import com.itbank.navercafe.user.cafejoin.dto.CafeJoinDTO;
-
 import com.itbank.navercafe.user.cafemember.dto.CafeMemberDTO;
-import com.itbank.navercafe.user.cafemember.dto.TestFileDTO;
-
-
 
 public interface CafeMemberMapper {
-
 
 	//게시글 더보기 용도
 	public CafeMemberDTO getUserViewList(@Param("cafeId")String cafeId, @Param("userId")String userId);
@@ -25,10 +14,8 @@ public interface CafeMemberMapper {
 	public CafeMemberDTO getCafeUserInfo(@Param("cafeId")String cafeId, @Param("userId")String userId);
 	//댓글 작성시 세션값 넘겨주기
 	public CafeMemberDTO getSessionUserInfo(@Param("cafeId")String cafeId, @Param("userId")String userId);
-	
 
 	public int signup(CafeMemberDTO dto);
-
 
 	public Integer cafeMembers(@Param("cafeId")String cafeId, @Param("userId")String userId);
 
