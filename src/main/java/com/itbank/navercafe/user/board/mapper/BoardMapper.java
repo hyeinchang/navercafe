@@ -42,4 +42,7 @@ public interface BoardMapper {
 	//인기글
 	public List<HashMap<String, Object>> topList();
 	
+	//글쓰기
+	public int write(BoardDTO dto);
+	
 }

@@ -98,7 +98,10 @@
 		order by B.board_likes desc
 	</select>
 	
-	
+	<insert id="write">
+		insert into project_board(board_num, board_title, board_content, user_id,board_menu_num,cafe_id)
+		values(project_board_seq.nextval, #{boardTitle}, #{boardContent}, #{userId}, #{boardMenuNum} ,#{cafeId})
+	</insert>
 	
 </mapper>
 

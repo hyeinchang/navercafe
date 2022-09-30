@@ -136,6 +136,13 @@ public class BoardServiceImpl implements BoardService{
 		}
 		model.addAttribute("fileList",fm.getFileList());
 	}
+	
+	@Override
+	public int write(BoardDTO dto) {
+		int result = bm.write(dto);
+		System.out.println("result : "+result);
+		return result;
+	}
 }
 
 	

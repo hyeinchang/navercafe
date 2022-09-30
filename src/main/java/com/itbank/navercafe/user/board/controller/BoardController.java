@@ -14,6 +14,7 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 import com.itbank.navercafe.user.board.dto.BoardDTO;
 import com.itbank.navercafe.user.board.service.BoardService;
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
+import com.itbank.navercafe.user.cafemember.dto.CafeMemberDTO;
 import com.itbank.navercafe.user.cafemember.service.CafeMemberService;
 import com.itbank.navercafe.user.reply.service.ReplyService;
 
@@ -25,10 +26,28 @@ public class BoardController {
 	@Autowired CafeMemberService boardCafeSer;
 	
 	@RequestMapping("/writeForm")
-	public String writeForm(CafeDTO cafeDTO, Model model) {
+	public String writeForm(String cafeId, HttpSession session, CafeDTO cafeDTO, Model model) {
+		System.out.println("글쓰기 이동");
+		
+		String userId = (String) session.getAttribute("loginId");
+		System.out.println("아이디 :  "+userId);
+		CafeMemberDTO dto = boardCafeSer.getCafeMember(cafeId,userId);
+		model.addAttribute("cafeMember",dto);
 		model.addAttribute("cafeDTO", cafeDTO);
 		return "user/board/writeForm";
 	}
+	
+	@PostMapping("write")
+	public String write(String cafeId, BoardDTO dto ) {
+		
+		int result = ser.write(dto);
+		if(result==1) {
+			System.out.println("글쓰기 성공");
+		}
+		return "";
+	}
+	
+	
 	//전체목록인데 수영이형이랑 상의.
 	@GetMapping("/goBoardList")
 	public String goBoardList(Model model, String cafeId){

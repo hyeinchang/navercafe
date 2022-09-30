@@ -34,6 +34,9 @@ public interface BoardService {
 	//파일테이블리스트
 	public void getFileList(Model model);
 
+	//글쓰기
+	public int write(BoardDTO dto);
+
 	
 	
 
