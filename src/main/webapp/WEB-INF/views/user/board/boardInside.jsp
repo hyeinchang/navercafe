@@ -318,20 +318,23 @@ li.bbp-topic-freshness-test{
 		        </div>
 		        
 			
-				
+				<!-- 여기서 값들 넘겨줘서 좋아요도 우선 동작되게하자  -->
 		        <div id="comments_wrapper">
 		        	
 		          <h4 class="title">
+		          <a href="likeChk?boardNum=${userBoard.boardNum}&userId=${sessionUser.userId}">
 		          	<c:if test="${like=='F'}">
-		        		<a href="likeChk?boardNum=${userBoard.boardNum}&userId=${sessionUser.userId}">
+		        		
 		       		 		<img src="<%=request.getContextPath()%>/resources/img/빨간하트.jpg" width="25px" alt="">
-		       		 	</a> 
+		       		 	
 		        	</c:if>
 		        	<c:if test="${like=='T'}">
-		        		<a href="likeChk?boardNum=${userBoard.boardNum}&userId=${sessionUser.userId}">
+	
 		       		 		<img src="<%=request.getContextPath()%>/resources/img/빈하트.jpg" width="25px" alt="">
-		       			 </a> 
+		       			
 		        	</c:if>
+		        	</a> 
+		        	
 		         	좋아요 ${userBoard.boardLikes}  
 		          	<img src="<%=request.getContextPath() %>/resources/img/댓글아이콘.png" width="25px" alt=""> 
 		          	댓글 ${replyCount}</h4>
