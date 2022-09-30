@@ -1,4 +1,4 @@
-package com.itbank.navercafe.user.cafejoin.dto;
+package com.itbank.navercafe.user.cafeJoin.dto;
 
 public class CafeJoinDTO {
 	private String cafeId; 		
