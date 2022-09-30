@@ -58,6 +58,9 @@ public class CafeController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+		
+		model.addAttribute("cafeDTO", cafeDTO);
+		
 		return "user/main";
 	}
 	
