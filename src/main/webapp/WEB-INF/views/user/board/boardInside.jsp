@@ -201,7 +201,8 @@ li.bbp-topic-freshness-test{
 		         <div class="board-board">
 				
 			          <header class="page-header blog-title">
-			          	<a href="#"><h5 style="color:green;">${userBoard.boardPrefix} ></h5></a>
+			          	<a href="#"><h5 style="color:green;">${boardMenuType.boardMenuName} ></h5></a>
+			          	
 			            <h3 class="general-title">${userBoard.boardTitle}</h3>
 			            
 			            <div class="post-meta-test">
@@ -476,7 +477,7 @@ li.bbp-topic-freshness-test{
 
          
 		       
-		          					<!-- 말머리 기준 관련 게시판   -->
+		          					<!-- 새로운자유게시판1 등 기준 관련 게시판   -->
 		          				
 		<div class="content col-lg-12 col-md-12 col-sm-12 clearfix">   
 			<!--전체게시판은 제목 50 작성자20 나머지 10  -->
@@ -487,7 +488,7 @@ li.bbp-topic-freshness-test{
 	                <li class="bbp-forum-info-allBoard">
 	                <!-- 여기서 카페아이디랑 카페유저 아이디 비교해서  if문으로   처리?
 	                	안된다 애초에 리스트 가져올때 처리해야 페이징도 되고 원래 그게 맞다-->
-	                '${userBoard.boardPrefix}' 게시판 글</li>
+	                '${boardMenuType.boardMenuName}' 게시판 글</li>
 
 	              </ul>
 	            </li>
@@ -499,16 +500,16 @@ li.bbp-topic-freshness-test{
 			<div id="bbpress-forums">
 	          <ul class="bbp-forums">
 	          
-	          	<c:forEach var="prefixList" items="${prefixList}"> 	
+	          	<c:forEach var="typeList" items="${boardMenuTypeList}"> 	
 		            <li class="bbp-header-content">
 		              <ul class="forum-titles-test">
 		
 		                <li class="board-title" class="name-prefixList">
-		                <a href="goBoardInside?boardNum=${prefixList.BOARD_NUM}&userId=${prefixList.USER_ID}">
-		                ${prefixList.BOARD_TITLE }</a>
+		                <a href="goBoardInside?boardNum=${typeList.BOARD_NUM}&userId=${typeList.USER_ID}">
+		                ${typeList.BOARD_TITLE }</a>
 		                </li>
-		                <li class="board-nickname">${prefixList.CAFE_USER_NICKNAME }</li>
-		                <li class="board-date">${prefixList.BOARD_SAVEDATE}</li>
+		                <li class="board-nickname">${typeList.CAFE_USER_NICKNAME }</li>
+		                <li class="board-date">${typeList.BOARD_SAVEDATE}</li>
 		
 		              </ul>
 		            </li>

@@ -98,7 +98,8 @@
 							<th>${dto.boardNum}</th>
 							<th><h1>${dto.boardNum}</h1></th>
 							<th>
-							<a href="goBoardInside?boardNum=${dto.boardNum }&cafeId=${cafeId}">
+							<a href="goBoardInside?boardNum=${dto.boardNum }
+							&cafeId=${cafeId}&boardMenuNum=${dto.boardMenuNum}">
 							${dto.boardTitle} </a></th>
 							<th>${dto.userId}</th>
 							<th>${dto.boardSaveDate}</th>

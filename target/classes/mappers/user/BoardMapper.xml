@@ -19,6 +19,20 @@
 		<result property="cafeId" column="cafe_id"/>
 	</resultMap>
 	
+	<resultMap type="com.itbank.navercafe.user.boardmenu.dto.BoardMenuDTO" id="project_boardType">
+		<id property="boardMenuNum" column="board_menu_num"/>
+		<result property="boardMenuDesc" column="board_menu_desc"/>
+		<result property="boardWriteAuth" column="board_write_auth"/>
+		<result property="boardReplyAuth" column="board_reply_auth"/>
+		<result property="boardReadAuth" column="board_read_auth"/>
+		<result property="boardMenuName" column="board_menu_name"/>
+		<result property="cafeId" column="cafe_id"/>
+		<result property="boardOrder" column="board_order"/>
+		<result property="boardMenuType" column="board_menu_type"/>
+	</resultMap>
+
+
+
 	<resultMap type="com.itbank.navercafe.user.board.dto.LikesDTO" id="project_likes">
 		<id property="boardNum" column="board_num"/>
 		<id property="userId" column="user_id"/>
@@ -33,27 +47,16 @@
 		on boardMenu.board_menu_num = board.board_menu_num
 	</select>
 	
-	
-	
+
 	<!-- 보드넘에 따른 게시물 하나 -->
 	<select id="getUserBoard" resultMap="project_board">
 		select * from project_board where board_num=#{boardNum}
 	</select>
 	
-	
-	<!-- 말머리에 따른 리스트 -->
-	<select id="getPrefixList" resultType="HashMap">
-		select J.* from(select rownum rn, I.* from
-		(select B.board_title,B.board_saveDate,B.board_num,B.user_id,C.cafe_user_nickname 
-		from project_board B inner join project_cafe_member C 
-		on B.user_id = C.user_id where board_prefix=#{boardPrefix} 
-		order by board_num desc)I)J 
-		where rn between #{start} and #{end}
-	</select>
-	
+
 	<!-- 페이징 위해서 몇개인지 가져오기위한 용도-->
 	<select id="selectBoardCount" resultType="Integer">
-		select count(*) from project_board where board_prefix =#{getBoardPrefix}
+		select count(*) from project_board where board_menu_num=#{boardMenuNum}
 	</select>
 	
 	<!-- 조회수 올려주는애 -->
@@ -90,6 +93,19 @@
 		order by B.board_likes desc
 	</select>
 	
+	<!--보드 타입 정보 가져오기  -->
+	<select id="getBoardMenuType" resultMap="project_boardType">
+		select * from project_boardType where board_menu_num=#{boardMenuNum}
+	</select>
+	
+	<!-- 보드 타입에 따른 리스트 가져오기 -->
+	<select id="getBoardMenuTypeList" resultType="HashMap">
+		select J.* from(select rownum rn, I.* from
+		(select B.*,C.cafe_user_nickname from project_board B inner join project_cafe_member C
+		on B.user_id = C.user_id where B.board_menu_num=#{boardMenuNum} and C.cafe_id=#{cafeId}
+		order by board_num desc)I)J 
+		where rn between #{start} and #{end}
+	</select>
 	
 	
 </mapper>

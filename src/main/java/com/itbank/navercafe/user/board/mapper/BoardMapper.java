@@ -10,6 +10,7 @@ import org.apache.ibatis.annotations.Param;
 
 import com.itbank.navercafe.user.board.dto.BoardDTO;
 import com.itbank.navercafe.user.board.dto.LikesDTO;
+import com.itbank.navercafe.user.boardmenu.dto.BoardMenuDTO;
 
 
 
@@ -18,13 +19,9 @@ public interface BoardMapper {
 	public ArrayList<BoardDTO> getBoardList(String cafeId);
 	//보드 넘에 따른 게시물
 	public BoardDTO getUserBoard(int boardNum);
-	//페이징 사용 안하면.
-	//public List<HashMap<String,Object>> getPrefixList(String boardPrefix);
-	//페이징 사용시 말머리에 관한 리스트
-	public List<HashMap<String,Object>> getPrefixList(@Param("boardPrefix") String boardPrefix,
-					@Param("start") int start,@Param("end")int end);
+
 	//말머리에 따른 게시물들이 몇개인지
-	public int selectBoardCount(String getBoardPrefix);
+	public int selectBoardCount(int boardMenuNum);
 	//조회수 
 	public void hitUp(int boardNum);
 	
@@ -41,5 +38,14 @@ public interface BoardMapper {
 	
 	//인기글
 	public List<HashMap<String, Object>> topList();
+	
+	//보드 타입 가져오기
+	public BoardMenuDTO getBoardMenuType(int boardMenuNum);
+	
+
+	//보드 타입에 따른 리스트
+	public List<HashMap<String, Object>>getBoardMenuTypeList
+	(@Param("boardMenuNum")int boardMenuNum,@Param("cafeId")String cafeId,
+			@Param("start") int start,@Param("end")int end);
 	
 }

@@ -95,7 +95,12 @@ public class CafeMemberServiceImpl implements CafeMemberService{
 	
 	@Override
 	public CafeMemberDTO getCafeUserInfo(String cafeId,String userId) {
-		return mapper.getCafeUserInfo(cafeId,userId);
+		CafeMemberDTO dto= mapper.getCafeUserInfo(cafeId,userId);
+		System.out.println("카페 회원 정보 :"+dto);
+		System.out.println("카페회원 카페아이디: "+dto.getCafeId());
+		System.out.println("카페회원 유저 아이디 : "+dto.getUserId());
+		System.out.println("카페회원 이미지 : "+dto.getCafeUserImageNum());
+		return dto;
 	}
 	@Override
 	public CafeMemberDTO getSessionUserInfo(String cafeId,String userId) {
