@@ -243,7 +243,13 @@ function createCafe() {
 	xhr.open('post', '${contextPath}/cafe/createCafe', true);
 	xhr.onreadystatechange = function() {
 		if(xhr.readyState == 4 && xhr.status == 200) {
-			console.log(xhr.response);
+			var result = JSON.parse(xhr.response);
+			
+			if(Number(result.resultCode) == 1) {
+				location.href ='${contextPath}/user/main?cafeId='+result.cafeId;
+			} else {
+				alert(result.message);
+			}
 		}
 	}
 	xhr.send(new FormData(form));

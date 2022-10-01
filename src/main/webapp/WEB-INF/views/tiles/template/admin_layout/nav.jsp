@@ -142,7 +142,7 @@
         </ul>
         <!-- End of Sidebar -->
 <form name="cafeForm">
-	<input type="hidden" name="cafeId" value="${cafeDTO.cafeId}">
+	<input type="hidden" name="cafeId" value="${_cafeDTO.cafeId}">
 </form>        
 <script type="text/javascript">
 	function changeMenu(path) {

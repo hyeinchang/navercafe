@@ -22,7 +22,7 @@
                   	  	<img class="profileImg" src="${contextPath}/resources/img/cafe_thumb_noimg_55.png" alt="카페 아이콘 없음">
                   	  	</c:when>
                   	  	<c:otherwise>
-                  	  	<img class="profileImg" src="${contextPath}/file/download?cafeIconNum=${_cafeDTO.cafeIconNum}" alt="카페 아이콘 없음">
+                  	  	<img class="profileImg" src="${contextPath}/file/download?cafeIconNum=${_cafeDTO.cafeIconNum}" alt="카페 아이콘">
                   	  	</c:otherwise>
                   	  </c:choose>
                   	  

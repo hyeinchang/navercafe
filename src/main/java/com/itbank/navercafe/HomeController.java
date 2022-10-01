@@ -1,7 +1,9 @@
 package com.itbank.navercafe;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -26,7 +28,6 @@ import com.itbank.navercafe.common.file.dto.FileDTO;
 import com.itbank.navercafe.common.file.dto.FileResult;
 import com.itbank.navercafe.common.file.service.FileService;
 import com.itbank.navercafe.common.pagination.Pagination;
-import com.itbank.navercafe.user.cafe.controller.CafeController;
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
 import com.itbank.navercafe.user.cafe.service.CafeService;
 import com.itbank.navercafe.user.cafeJoin.CafeJoinQuestionDTO;
@@ -142,24 +143,31 @@ public class HomeController { //메인 로그인관련
 	
 	@PostMapping(value="/cafe/createCafe", produces="application/json")
 	@ResponseBody
-	public int createCafe(MultipartHttpServletRequest multiRequest) {
-		int result = 0;
+	public Map<String, Object> createCafe(MultipartHttpServletRequest multiRequest) {
+		Map<String, Object> result = new HashMap<>();
 		
 		try {
 			CommonUtils commonUtils = new CommonUtils();
 			CafeDTO cafeDTO = new CafeDTO();
 			String cafeId = null;
 			MultipartFile iconImage = multiRequest.getFile("iconImage");
+			int insertResult = 0;
 			
 			commonUtils.setDTO(multiRequest, cafeDTO);
 			
 			cafeId = cafeDTO.getCafeId();
 			
 			if(cafeId == null) {
+				result.put("resultCode", -1);
+				result.put("message", "카페 아이디가 없습니다.");
 				return result;
 			}
 			
-			if(iconImage != null) {
+			result.put("cafeId", cafeId);
+			
+			String orgFileName = iconImage.getOriginalFilename();
+			
+			if(iconImage != null && orgFileName != null && orgFileName.length() > 0) {
 				FileResult fileResult = fileUtils.uploadFile(iconImage, "icon/" + cafeId);
 				FileDTO fileDTO = fileResult.getFileDTO();
 				int cafeIconNum = cafeService.getIconSeq();
@@ -170,10 +178,17 @@ public class HomeController { //메인 로그인관련
 				fileService.insertAttachFile(fileDTO);
 			}
 
-			result = cafeService.InsertCafe(cafeDTO);
+			insertResult = cafeService.InsertCafe(cafeDTO);
 			
-			if(result == 0) {
+			if(insertResult == 0) {
+				result.put("resultCode", 0);
+				result.put("cafeId", cafeId);
+				result.put("message", "카페 생성에 실패했습니다.");
 				return result;
+			} else {
+				result.put("resultCode", 1);
+				result.put("cafeId", cafeId);
+				result.put("message", "카페가 생성되었습니다.");
 			}
 			
 			// 카페가입질문 설정
