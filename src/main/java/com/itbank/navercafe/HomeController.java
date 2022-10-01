@@ -29,8 +29,10 @@ import com.itbank.navercafe.common.file.dto.FileResult;
 import com.itbank.navercafe.common.file.service.FileService;
 import com.itbank.navercafe.common.pagination.Pagination;
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
+import com.itbank.navercafe.user.cafe.dto.CafeJoinQuestionDTO;
 import com.itbank.navercafe.user.cafe.service.CafeService;
-import com.itbank.navercafe.user.cafeJoin.CafeJoinQuestionDTO;
+import com.itbank.navercafe.user.cafemember.dto.CafeMemberDTO;
+import com.itbank.navercafe.user.cafemember.service.CafeMemberService;
 import com.itbank.navercafe.user.member.dto.MemberDTO;
 import com.itbank.navercafe.user.member.service.MemberService;
 
@@ -53,6 +55,12 @@ public class HomeController { //메인 로그인관련
 	
 	@Autowired
 	private FileService fileService;
+	
+	@Autowired
+	private CafeMemberService cafeMemberService;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(HttpServletRequest request, CafeDTO cafeDTO, Pagination pagination, Model model) {
@@ -135,27 +143,27 @@ public class HomeController { //메인 로그인관련
 		return "redirect:"+url;
 
 	}
+	
+	// 카페 만들기로 이동
 	@GetMapping("/cafe/createCafeForm")
 	public String createCafeForm() {
 		return "cafe/createCafeForm";
 
 	}
 	
+	// 카페 만들기
 	@PostMapping(value="/cafe/createCafe", produces="application/json")
 	@ResponseBody
-	public Map<String, Object> createCafe(MultipartHttpServletRequest multiRequest) {
+	public Map<String, Object> createCafe(MultipartHttpServletRequest multiRequest, HttpSession session) {
 		Map<String, Object> result = new HashMap<>();
 		
 		try {
 			CommonUtils commonUtils = new CommonUtils();
 			CafeDTO cafeDTO = new CafeDTO();
-			String cafeId = null;
+			String cafeId = multiRequest.getParameter("cafeId");
+			String loginId = (String) session.getAttribute("loginId");
 			MultipartFile iconImage = multiRequest.getFile("iconImage");
 			int insertResult = 0;
-			
-			commonUtils.setDTO(multiRequest, cafeDTO);
-			
-			cafeId = cafeDTO.getCafeId();
 			
 			if(cafeId == null) {
 				result.put("resultCode", -1);
@@ -163,6 +171,14 @@ public class HomeController { //메인 로그인관련
 				return result;
 			}
 			
+			if(loginId == null) {
+				result.put("resultCode", -1);
+				result.put("message", "로그인 정보가 없습니다.");
+				return result;
+			}
+			
+			commonUtils.setDTO(multiRequest, cafeDTO);
+				
 			result.put("cafeId", cafeId);
 			
 			String orgFileName = iconImage.getOriginalFilename();
@@ -178,17 +194,13 @@ public class HomeController { //메인 로그인관련
 				fileService.insertAttachFile(fileDTO);
 			}
 
-			insertResult = cafeService.InsertCafe(cafeDTO);
+			insertResult = cafeService.insertCafe(cafeDTO);
 			
 			if(insertResult == 0) {
 				result.put("resultCode", 0);
 				result.put("cafeId", cafeId);
 				result.put("message", "카페 생성에 실패했습니다.");
 				return result;
-			} else {
-				result.put("resultCode", 1);
-				result.put("cafeId", cafeId);
-				result.put("message", "카페가 생성되었습니다.");
 			}
 			
 			// 카페가입질문 설정
@@ -196,10 +208,13 @@ public class HomeController { //메인 로그인관련
 			String questions[] = multiRequest.getParameterValues("cafeQuestionContent");
 			
 			if(questionFlag != null && questionFlag.equals("Y") && questions != null) {
+				int insertQuestionResult = 0;
+				
 				for(int i=0;i<questions.length;i++) {
 					CafeJoinQuestionDTO questionDTO = new CafeJoinQuestionDTO();
 					String question = questions[i];
 					int order = i+1;
+					
 					
 					if(question.length() == 0) {
 						continue;
@@ -208,9 +223,37 @@ public class HomeController { //메인 로그인관련
 					questionDTO.setCafeId(cafeId);
 					questionDTO.setCafeQuestionNum(order);
 					questionDTO.setCafeQuestionContent(question);
+					insertQuestionResult = cafeService.insertCafeJoinQuestion(questionDTO);
+				}
+				
+				if(insertQuestionResult == 0) {
+					result.put("resultCode", 0);
+					result.put("cafeId", cafeId);
+					result.put("message", "카페 가입질문 설정에 실패했습니다.");
+					return result;
 				}
 			}
 			
+			// 카페 가입
+			CafeMemberDTO cafeMemberDTO = new CafeMemberDTO();
+			int cafeSignUpResult = 0;
+			
+			cafeMemberDTO.setCafeId(cafeId);
+			cafeMemberDTO.setUserId(loginId);
+			cafeMemberDTO.setCafeUserGrade(999);
+			cafeMemberDTO.setCafeUserNickname("카페 매니저");
+			cafeSignUpResult = cafeMemberService.signup(cafeMemberDTO);
+			
+			if(cafeSignUpResult == 0) {
+				result.put("resultCode", 0);
+				result.put("cafeId", cafeId);
+				result.put("message", "카페 매니저의 카페 가입에 실패했습니다.");
+				return result;
+			}
+			
+			result.put("resultCode", 1);
+			result.put("cafeId", cafeId);
+			result.put("message", "카페가 생성되었습니다.");
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

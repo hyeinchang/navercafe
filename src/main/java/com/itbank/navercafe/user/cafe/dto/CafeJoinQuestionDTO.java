@@ -1,4 +1,4 @@
-package com.itbank.navercafe.user.cafeJoin;
+package com.itbank.navercafe.user.cafe.dto;
 
 public class CafeJoinQuestionDTO {
 	private int cafeQuestionNum;

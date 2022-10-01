@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
 <c:if test="${message ne null}">
 <script type="text/javascript">
 	alert('${message}');
@@ -158,7 +159,7 @@
           </div>
           <div class="form-group">
             <button type="button" class="button" onclick="checkLoginForm()">로그인</button>
-            <button type="button" class="button" onclick="location.href='cafe/member/signup'">회원가입</button>
+            <button type="button" class="button" onclick="location.href='${contextPath}/cafe/member/signup'">회원가입</button>
           </div>
         </form>
 	  </c:when>

@@ -20,7 +20,7 @@
           		<input type="text" name="id" id="id" class="form-control-inline" placeholder="아이디를 입력해주십시오.">
           		<input type="button" value="중복확인" class="button" style="margin-left:10px;"
           			onclick="alert('아이디 중복확인')">
-          		<div style="margin:5px 0 0 205px;">
+          		<div style="margin:5px 0 0 205px;display:none;">
           			<label style="color: red;" id="idlabel"></label>	
           		</div>
         	</div>
@@ -28,7 +28,7 @@
         	<div class="infoLine">
         		<label for="password" class="infoLabel">비밀번호 <span class="required">*</span></label>
           		<input type="password" name="password" id="password" class="form-control-inline" placeholder="비밀번호를 입력해주십시오.">
-          		<div style="margin:5px 0 0 205px;">
+          		<div style="margin:5px 0 0 205px;display:none;">
           			<label style="color: red;" id="pwlabel"></label>
           		</div>
         	</div>
@@ -36,7 +36,7 @@
         	<div class="infoLine">
         		<label for="password2" class="infoLabel">비밀번호 확인 <span class="required">*</span></label>
           		<input type="password" name="password2" id="password2" class="form-control-inline" placeholder="비밀번호 확인을 입력해주십시오.">
-          		<div style="margin:5px 0 0 205px;">
+          		<div style="margin:5px 0 0 205px;display:none;">
           			<label style="color: red;" id="pw2label"></label>
           		</div>
         	</div>
@@ -44,7 +44,7 @@
         	<div class="infoLine">
         		<label for="name" class="infoLabel">이름 <span class="required">*</span></label>
           		<input type="text" name="name" id="name" class="form-control-inline" placeholder="이름을 입력해주십시오.">
-          		<div style="margin:5px 0 0 205px;">
+          		<div style="margin:5px 0 0 205px;display:none;">
           			<label style="color: red;" id="namelabel"></label>
           		</div>
         	</div>
@@ -56,7 +56,7 @@
         	<div class="infoLine">
         		<label for="phone" class="infoLabel">휴대폰 번호</label>
           		<input type="tel" id="phone" name="phone" class="form-control-inline" placeholder="###-####-####">
-          		<div style="margin:5px 0 0 205px;">
+          		<div style="margin:5px 0 0 205px;display:none;">
           			<label style="color: red;" id="phlabel"></label>
           		</div>
         	</div>
@@ -95,7 +95,7 @@
         	<div class="infoLine">
         		<label for="email" class="infoLabel">이메일</label>
           		<input type="email" id="email" name="mail" class="form-control-inline" placeholder="이메일을 입력해주십시오.">
-          		<div style="margin:5px 0 0 205px;">
+          		<div style="margin:5px 0 0 205px;display:none;">
           			<label style="color: red;" id="emaillabel"></label>
           		</div>
         	</div>
@@ -116,7 +116,20 @@
   
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 <script type="text/javascript">
-	function reg(){
+	document.body.onload = function() {
+		var form = document.signupForm;
+		
+		for(var i=0;i<form.length;i++) {
+			var element = form[i];
+			
+			if(element.name && element.name.length > 0) {
+				element.onchange = formCheck;
+				//element.onkeyup = formCheck;
+			}
+		}
+	}
+	
+	function formCheck() {
 		var id = document.getElementById("id");	
 		var pw = document.getElementById("password");	
 		var pw2 = document.getElementById("password2");	
@@ -135,54 +148,78 @@
 		var pwck = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[#?!@$%^&*-])[\w#?!@$%^&*-]{8,15}$/g;
 		var emck = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/g;
 		
+		
+		if(!idck.test(id.value)){ //아이디 체크
+			showLabel("idlabel", "red", "아이디는 5~20자의 영문소문자, 숫자, (-), (_)만 사용가능합니다.");
+			id.focus();
+			return false;
+		}else{
+			showLabel("idlabel", "green", "사용가능합니다");
+			//pw.focus();
+		}
+		
+		if(!pwck.test(pw.value)){ //비밀번호 체크
+			showLabel("pwlabel", "red", "비밀번호는 영문자+숫자+특수문자 조합으로 8~15자리 입력해주세요");
+			pw.focus();
+			return false;
+		}else{
+			showLabel("pwlabel", "green", "사용가능합니다");
+			//pw2.focus();
+		}
+		
+		if(pw.value !== pw2.value){ // 비밀번호 일치 체크
+			showLabel("pw2label", "red", "비밀번호가 일치하지 않습니다.");
+			pw2.focus();
+			return false;
+		}else{
+			showLabel("pw2label", "green", "비밀번호가 일치합니다.");
+			//name.focus();
+		}
+		
+		if(!nameck.test(name.value)){ //이름 체크
+			showLabel("namelabel", "red", "한글이름만 가입가능합니다.");
+			name.focus();
+			return false;
+		}else{
+			showLabel("namelabel", "green", "사용가능합니다");
+		}
+
+		if(!phck.test(phone.value)){ // 폰번호체크
+			showLabel("phlabel", "red", "숫자만 입력해주세요");
+			phone.focus();
+			return false;
+		}else{
+			showLabel("phlabel", "phlabel", "사용가능합니다");
+		}
+		
+		if(!emck.test(email.value)){ //이메일정규식 체크
+			showLabel("emaillabel", "red", "이메일형식으로 작성해주세요");
+			email.focus();
+			return false;
+		}else{
+			showLabel("emaillabel", "green", "사용가능합니다");
+		}
+		
+		return true;
+	}
+
+	function reg(){
 		if(id.value==""){
 			alert("아이디를 입력하세요.");
 			id.focus();
 			return false;
 		}
 
-		if(!idck.test(id.value)){ //아이디 체크
-			document.getElementById("idlabel").innerHTML = "아이디는 5~20자의 영문소문자, 숫자, (-), (_)만 사용가능합니다."
-			document.getElementById("idlabel").style.color = "red"
-			id.focus();
-			return false;
-		}else{
-			document.getElementById("idlabel").innerHTML = "사용가능합니다."
-			document.getElementById("idlabel").style.color = "green"
-			pw.focus();
-			//return false;
-		}
-		
 		if(pw.value==""){
 			alert("비밀번호를 입력하세요.");
 			pw.focus();
 			return false;
 		}
 		
-		if(!pwck.test(pw.value)){ //비밀번호 체크
-			document.getElementById("pwlabel").innerHTML = "비밀번호는 영문자+숫자+특수문자 조합으로 8~15자리 입력해주세요"
-			document.getElementById("pwlabel").style.color = "red"
-			pw.focus();
-			return false;
-		}else{
-			document.getElementById("pwlabel").innerHTML = "사용가능합니다."
-			document.getElementById("pwlabel").style.color = "green"
-			pw2.focus();
-		}
 		if(pw2.value==""){
 			alert("비밀번호를 확인해주세요.");
 			pw2.focus();
 			return false;
-		}
-		if(pw.value !== pw2.value){ // 비밀번호 일치 체크
-			document.getElementById("pw2label").innerHTML = "비밀번호가 일치하지 않습니다."
-			document.getElementById("pw2label").style.color = "red"
-			pw2.focus();
-			return false;
-		}else{
-			document.getElementById("pw2label").innerHTML = "비밀번호가 일치합니다."
-			document.getElementById("pw2label").style.color = "green"
-			name.focus();
 		}
 		
 		if(name.value==""){
@@ -190,68 +227,59 @@
 			name.focus();
 			return false;
 		}
-		if(!nameck.test(name.value)){ //이름 체크
-			document.getElementById("namelabel").innerHTML = "한글이름만 가입가능합니다."
-			document.getElementById("namelabel").style.color = "red"
-			name.focus();
-			return false;
-		}else{
-			document.getElementById("namelabel").innerHTML = "사용가능합니다."
-			document.getElementById("namelabel").style.color = "green"
-		}
+		
 		if(phone.value==""){
 			alert("핸드폰번호를 입력해 주세요.");
 			phone.focus();
 			return false;
 		}
-		if(!phck.test(phone.value)){ // 폰번호체크
-			document.getElementById("phlabel").innerHTML = "숫자만 입력해주세요"
-			document.getElementById("phlabel").style.color = "red"
-			phone.focus();
-			return false;
-		}else{
-			document.getElementById("phlabel").innerHTML = "사용가능합니다."
-			document.getElementById("phlabel").style.color = "green"
-		}
+		
 		if(birthdate.value==""){
 			alert("태어난 년도를 입력해 주세요.");
 			birthdate.focus();
 			return false;
 		}
+		
 		for (var i=0;i<gender.length;i++) {
 	        if (gender[i].checked==true) {
 	            boo = true;
 	            break;
 	        }
 	    }
+		
 	    if (boo == false) {
 	        alert("성별을 선택해 주세요.");
 	        return;
 	    }
+	    
 		if(addr1.value==""){
 			alert("주소를 검색해 입력해주세요");
 			addr1.focus();
 			return false;
 		}
+		
 		if(addr3.value==""){
 			alert("상세주소를 입력해주세요");
 			addr3.focus();
 			return false;
 		}
+		
 		if(email.value==""){
 			alert("이메일을 입력해 주세요.");
 			email.focus();
 			return false;
 		}
-		if(!emck.test(email.value)){ //이메일정규식 체크
-			document.getElementById("emaillabel").innerHTML = "이메일형식으로 작성해주세요."
-			email.focus();
-			return false;
-		}else{
-			document.getElementById("emaillabel").innerHTML = "사용가능합니다."
+		
+		if(formCheck()) {
+			document.signupForm.submit();
 		}
-		
-		
-		document.signupForm.submit();
+	}
+	
+	function showLabel(id, color, message) {
+		var label = document.getElementById(id);
+
+		label.innerText = message;
+		label.style.color = color;
+		label.parentElement.style.display = '';
 	}
 </script>

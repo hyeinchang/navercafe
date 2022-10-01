@@ -43,6 +43,7 @@
     </beans:bean>
     
 	<beans:bean id="setCafeIn" class="com.itbank.navercafe.common.SetCafeInterceptor"/>
+	<beans:bean id="checkLoginIn" class="com.itbank.navercafe.common.CheckLoginInterceptor"/>
 	
 	<interceptors>
 		<interceptor>
@@ -50,7 +51,16 @@
 			<mapping path="/admin/**"/>
 			<beans:ref bean="setCafeIn"/>
 		</interceptor>
-	
+		
+		<interceptor>
+			<mapping path="/cafe/member/userInfo"/>
+			<mapping path="/cafe/member/userUpdate"/>
+			<mapping path="/cafe/member/delete"/>
+			<mapping path="/cafe/createCafeForm"/>
+			<mapping path="/cafe/createCafe"/>
+			<mapping path="/admin/**"/>
+			<beans:ref bean="checkLoginIn"/>
+		</interceptor>
 	</interceptors>
 	
 	

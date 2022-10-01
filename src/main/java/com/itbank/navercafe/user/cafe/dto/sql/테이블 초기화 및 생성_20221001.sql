@@ -37,6 +37,8 @@ drop sequence PROJECT_MEMO_REPLY_SEQ;
 drop sequence PROJECT_PREFIXES_SEQ;
 drop sequence PROJECT_REPLY_SEQ;
 */
+
+-- create table
 CREATE TABLE project_members (
     user_id    varchar2(20)    NOT NULL,
     user_pw    varchar2(100)    NOT NULL,
@@ -48,9 +50,9 @@ CREATE TABLE project_members (
     user_detail_addr    varchar2(20)    NULL,
     user_regDate    Date        DEFAULT sysdate,
     user_point    number(5)        DEFAULT 0,
-    user_level    number(2)        DEFAULT 1,
-    user_gender    char(1)    NULL,
-    user_birthdate    int    NULL
+    user_gender    varchar2(20)    NULL,
+    user_birthdate    int    NULL,
+    user_level    number(2)        DEFAULT 1
 );
 
 CREATE TABLE project_board (
@@ -104,8 +106,8 @@ CREATE TABLE project_member_grade (
     cut_visit    number(4)    NULL,
     cut_reply    number(4)    NULL,
     cut_board    number(4)    NULL,
-    cut_desc    varchar2(100)    NOT NULL,
-    cut_name    varchar2(20)    NOT NULL,
+    cut_desc    varchar2(100)    NULL,
+    cut_name    varchar2(20)    NULL,
     cut_type    number(1)    NULL,
     cut_removed    varchar2(15)    NULL
 );
@@ -171,7 +173,8 @@ CREATE TABLE project_blacklist (
     cafe_id    varchar2(20)    NOT NULL,
     user_id    varchar2(20)    NOT NULL,
     blacklist_regDate    Date        DEFAULT sysdate,
-    reason    varchar2(100)    NULL
+    reason    varchar2(100)    NULL,
+    manager_id    varchar2(20)    NULL
 );
 
 CREATE TABLE project_join_question (
@@ -199,7 +202,9 @@ CREATE TABLE project_cafe_deported (
     deported_num    number(5)    NOT NULL,
     user_id    varchar2(20)    NOT NULL,
     deported_reason    varchar2(100)    NULL,
-    regDate    Date        DEFAULT sysdate
+    regDate    Date        DEFAULT sysdate,
+    cafe_id    varchar2(20)    NULL,
+    manager_id    varchar2(20)    NULL
 );
 
 CREATE TABLE project_file (

@@ -20,7 +20,7 @@
         <result column="IS_CAFE_MANAGER" property="isCafeManager"/>
 	</resultMap>
 	
-	<insert id="InsertCafe">
+	<insert id="insertCafe">
 		<![CDATA[
 			INSERT INTO PROJECT_CAFE_INFO
 				(CAFE_ID, CAFE_NAME, USER_ID, CAFE_EXPLANATION, 
@@ -83,5 +83,14 @@
 			ON CAFE.CAFE_ID = CAFE_MEMBER.CAFE_ID
 		]]>
 	</select>
+	
+	<insert id="insertCafeJoinQuestion">
+		<![CDATA[
+			INSERT INTO PROJECT_JOIN_QUESTION
+				(CAFE_QUESTION_NUM, CAFE_ID, CAFE_QUESTION_CONTENT)
+			VALUES
+				(#{cafeQuestionNum}, #{cafeId}, #{cafeQuestionContent})
+		]]>
+	</insert>
 
 </mapper>

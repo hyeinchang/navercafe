@@ -16,6 +16,7 @@
         <form id="createCafeForm" class="main_form" action="./createCafe" name="createCafeForm" method="post" enctype="multipart/form-data">
         	<input type="hidden" name="cafeIdCheck" value="N">
         	<input type="hidden" name="userId" value="${loginId}">
+        	
         	<h5 class="title">카페 기본 정보</h5>
         	<div class="infoLine">
         		<label for="cafeId" class="infoLabel">카페 아이디 <span class="required">*</span></label>
@@ -257,6 +258,8 @@ function createCafe() {
 
 function formCheck() {
 	var form = document.createCafeForm;
+	
+	if(cafeId)
 	
 	for(var i=0;i<form.length;i++) {
 		var element = form[i];

@@ -8,6 +8,7 @@ import org.springframework.stereotype.Service;
 
 import com.itbank.navercafe.common.pagination.Pagination;
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
+import com.itbank.navercafe.user.cafe.dto.CafeJoinQuestionDTO;
 import com.itbank.navercafe.user.cafe.mapper.CafeMapper;
 import com.itbank.navercafe.user.menu.dto.MenuDTO;
 import com.itbank.navercafe.user.menu.service.MenuService;
@@ -49,7 +50,7 @@ public class CafeServiceImpl implements CafeService {
 			cafeDTO = cafeMapper.selectCafe(cafeDTO);
 			cafeMenuList = menuService.selectBoardMenuList(cafeId);
 			
-			if(cafeMenuList != null) {
+			if(cafeDTO != null && cafeMenuList != null) {
 				cafeDTO.setCafeMenuList(cafeMenuList);
 			}
 		} catch(Exception e) {
@@ -64,8 +65,8 @@ public class CafeServiceImpl implements CafeService {
 	}
 
 	@Override
-	public int InsertCafe(CafeDTO cafeDTO) throws Exception {
-		return cafeMapper.InsertCafe(cafeDTO);
+	public int insertCafe(CafeDTO cafeDTO) throws Exception {
+		return cafeMapper.insertCafe(cafeDTO);
 	}
 
 	@Override
@@ -76,5 +77,10 @@ public class CafeServiceImpl implements CafeService {
 	@Override
 	public int getTitleSeq() throws Exception {
 		return cafeMapper.getTitleSeq();
+	}
+
+	@Override
+	public int insertCafeJoinQuestion(CafeJoinQuestionDTO cafeJoinQuestionDTO) throws Exception {
+		return cafeMapper.insertCafeJoinQuestion(cafeJoinQuestionDTO);
 	}
 }
