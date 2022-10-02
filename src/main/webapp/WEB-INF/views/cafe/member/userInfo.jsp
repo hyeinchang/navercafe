@@ -18,33 +18,25 @@
         	<div class="infoLine">
         		<label for="id" class="infoLabel">아이디 <span class="required">*</span></label>
           		<input type="text" name="id" id="id" class="form-control-inline" readonly  value="${id}">
-          		<div style="margin:5px 0 0 205px;">
-          			<label style="color: red;" id="idlabel"></label>	
-          		</div>
+          		<label class="infoText" style="color: red;" id="idlabel"></label>	
         	</div>
         	
         	<div class="infoLine">
         		<label for="password" class="infoLabel">비밀번호 <span class="required">*</span></label>
           		<input type="password" name="password" id="password" class="form-control-inline" placeholder="비밀번호를 입력해주십시오.">
-          		<div style="margin:5px 0 0 205px;">
-          			<label style="color: red;" id="pwlabel"></label>
-          		</div>
+          		<label class="infoText" style="color: red;" id="pwlabel"></label>
         	</div>
         	
         	<div class="infoLine">
         		<label for="password2" class="infoLabel">비밀번호 확인 <span class="required">*</span></label>
           		<input type="password" name="password2" id="password2" class="form-control-inline" placeholder="비밀번호 확인을 입력해주십시오.">
-          		<div style="margin:5px 0 0 205px;">
-          			<label style="color: red;" id="pw2label"></label>
-          		</div>
+          		<label class="infoText" style="color: red;" id="pw2label"></label>
         	</div>
         	
         	<div class="infoLine">
         		<label for="name" class="infoLabel">이름 <span class="required">*</span></label>
           		<input type="text" name="name" id="name" class="form-control-inline" placeholder="이름을 입력해주십시오." value="${name}">
-          		<div style="margin:5px 0 0 205px;">
-          			<label style="color: red;" id="namelabel"></label>
-          		</div>
+          		<label class="infoText" style="color: red;" id="namelabel"></label>
         	</div>
         	
           	<div class="clearfix"></div>
@@ -54,9 +46,7 @@
         	<div class="infoLine">
         		<label for="phone" class="infoLabel">휴대폰 번호</label>
           		<input type="tel" id="phone" name="phone" class="form-control-inline" placeholder="###-####-####" oninput="onlyNumber()" value="${phone }">
-          		<div style="margin:5px 0 0 205px;">
-          			<label style="color: red;" id="phlabel"></label>
-          		</div>
+          		<label class="infoText" style="color: red;" id="phlabel"></label>
         	</div>
       		
         	<div class="infoLine">
@@ -76,9 +66,7 @@
         	<div class="infoLine">
         		<label for="email" class="infoLabel">이메일</label>
           		<input type="email" id="email" name="mail" class="form-control-inline" placeholder="이메일을 입력해주십시오." value="${email}">
-          		<div style="margin:5px 0 0 205px;">
-          			<label style="color: red;" id="emaillabel"></label>
-          		</div>
+          		<label class="infoText" style="color: red;" id="emaillabel"></label>
         	</div>
 
           	<br><br>

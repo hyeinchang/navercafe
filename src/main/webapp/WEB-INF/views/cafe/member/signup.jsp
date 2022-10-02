@@ -20,33 +20,25 @@
           		<input type="text" name="id" id="id" class="form-control-inline" placeholder="아이디를 입력해주십시오.">
           		<input type="button" value="중복확인" class="button" style="margin-left:10px;"
           			onclick="alert('아이디 중복확인')">
-          		<div style="margin:5px 0 0 205px;">
-          			<label style="color: red;" id="idlabel"></label>	
-          		</div>
+          		<label class="infoText" style="color: red;" id="idlabel"></label>
         	</div>
         	
         	<div class="infoLine">
         		<label for="password" class="infoLabel">비밀번호 <span class="required">*</span></label>
           		<input type="password" name="password" id="password" class="form-control-inline" placeholder="비밀번호를 입력해주십시오.">
-          		<div style="margin:5px 0 0 205px;">
-          			<label style="color: red;" id="pwlabel"></label>
-          		</div>
+          		<label class="infoText" style="color: red;" id="pwlabel"></label>
         	</div>
         	
         	<div class="infoLine">
         		<label for="password2" class="infoLabel">비밀번호 확인 <span class="required">*</span></label>
           		<input type="password" name="password2" id="password2" class="form-control-inline" placeholder="비밀번호 확인을 입력해주십시오.">
-          		<div style="margin:5px 0 0 205px;">
-          			<label style="color: red;" id="pw2label"></label>
-          		</div>
+          		<label class="infoText" style="color: red;" id="pw2label"></label>
         	</div>
         	
         	<div class="infoLine">
         		<label for="name" class="infoLabel">이름 <span class="required">*</span></label>
           		<input type="text" name="name" id="name" class="form-control-inline" placeholder="이름을 입력해주십시오.">
-          		<div style="margin:5px 0 0 205px;">
-          			<label style="color: red;" id="namelabel"></label>
-          		</div>
+          		<label class="infoText" style="color: red;" id="namelabel"></label>
         	</div>
         	
           	<div class="clearfix"></div>
@@ -56,9 +48,7 @@
         	<div class="infoLine">
         		<label for="phone" class="infoLabel">휴대폰 번호</label>
           		<input type="tel" id="phone" name="phone" class="form-control-inline" placeholder="###-####-####">
-          		<div style="margin:5px 0 0 205px;">
-          			<label style="color: red;" id="phlabel"></label>
-          		</div>
+          		<label class="infoText" style="color: red;" id="phlabel"></label>
         	</div>
         	
         	<div class="infoLine">
@@ -95,9 +85,7 @@
         	<div class="infoLine">
         		<label for="email" class="infoLabel">이메일</label>
           		<input type="email" id="email" name="mail" class="form-control-inline" placeholder="이메일을 입력해주십시오.">
-          		<div style="margin:5px 0 0 205px;">
-          			<label style="color: red;" id="emaillabel"></label>
-          		</div>
+          		<br><label class="infoText" style="color: red;" id="emaillabel"></label>
         	</div>
 
           	<br><br>
@@ -142,13 +130,15 @@
 		}
 
 		if(!idck.test(id.value)){ //아이디 체크
-			document.getElementById("idlabel").innerHTML = "아이디는 5~20자의 영문소문자, 숫자, (-), (_)만 사용가능합니다."
-			document.getElementById("idlabel").style.color = "red"
+			document.getElementById("idlabel").innerHTML = "아이디는 5~20자의 영문소문자, 숫자, (-), (_)만 사용가능합니다.";
+			document.getElementById("idlabel").style.color = "red";
+			document.getElementById("idlabel").style.display = "block";
 			id.focus();
 			return false;
 		}else{
-			document.getElementById("idlabel").innerHTML = "사용가능합니다."
-			document.getElementById("idlabel").style.color = "green"
+			document.getElementById("idlabel").innerHTML = "사용가능합니다.";
+			document.getElementById("idlabel").style.color = "green";
+			document.getElementById("idlabel").style.display = "block";
 			pw.focus();
 			//return false;
 		}
@@ -160,13 +150,15 @@
 		}
 		
 		if(!pwck.test(pw.value)){ //비밀번호 체크
-			document.getElementById("pwlabel").innerHTML = "비밀번호는 영문자+숫자+특수문자 조합으로 8~15자리 입력해주세요"
-			document.getElementById("pwlabel").style.color = "red"
+			document.getElementById("pwlabel").innerHTML = "비밀번호는 영문자+숫자+특수문자 조합으로 8~15자리 입력해주세요";
+			document.getElementById("pwlabel").style.color = "red";
+			document.getElementById("pwlabel").style.display = "block";
 			pw.focus();
 			return false;
 		}else{
-			document.getElementById("pwlabel").innerHTML = "사용가능합니다."
-			document.getElementById("pwlabel").style.color = "green"
+			document.getElementById("pwlabel").innerHTML = "사용가능합니다.";
+			document.getElementById("pwlabel").style.color = "green";
+			document.getElementById("pwlabel").style.display = "block";
 			pw2.focus();
 		}
 		if(pw2.value==""){
@@ -175,13 +167,15 @@
 			return false;
 		}
 		if(pw.value !== pw2.value){ // 비밀번호 일치 체크
-			document.getElementById("pw2label").innerHTML = "비밀번호가 일치하지 않습니다."
-			document.getElementById("pw2label").style.color = "red"
+			document.getElementById("pw2label").innerHTML = "비밀번호가 일치하지 않습니다.";
+			document.getElementById("pw2label").style.color = "red";
+			document.getElementById("pw2label").style.display = "block";
 			pw2.focus();
 			return false;
 		}else{
-			document.getElementById("pw2label").innerHTML = "비밀번호가 일치합니다."
-			document.getElementById("pw2label").style.color = "green"
+			document.getElementById("pw2label").innerHTML = "비밀번호가 일치합니다.";
+			document.getElementById("pw2label").style.color = "green";
+			document.getElementById("pw2label").style.display = "block";
 			name.focus();
 		}
 		
@@ -191,13 +185,15 @@
 			return false;
 		}
 		if(!nameck.test(name.value)){ //이름 체크
-			document.getElementById("namelabel").innerHTML = "한글이름만 가입가능합니다."
-			document.getElementById("namelabel").style.color = "red"
+			document.getElementById("namelabel").innerHTML = "한글이름만 가입가능합니다.";
+			document.getElementById("namelabel").style.color = "red";
+			document.getElementById("namelabel").style.display = "block";
 			name.focus();
 			return false;
 		}else{
-			document.getElementById("namelabel").innerHTML = "사용가능합니다."
-			document.getElementById("namelabel").style.color = "green"
+			document.getElementById("namelabel").innerHTML = "사용가능합니다.";
+			document.getElementById("namelabel").style.color = "green";
+			document.getElementById("namelabel").style.display = "block";
 		}
 		if(phone.value==""){
 			alert("핸드폰번호를 입력해 주세요.");
@@ -205,13 +201,15 @@
 			return false;
 		}
 		if(!phck.test(phone.value)){ // 폰번호체크
-			document.getElementById("phlabel").innerHTML = "숫자만 입력해주세요"
-			document.getElementById("phlabel").style.color = "red"
+			document.getElementById("phlabel").innerHTML = "숫자만 입력해주세요";
+			document.getElementById("phlabel").style.color = "red";
+			document.getElementById("phlabel").style.display = "block";
 			phone.focus();
 			return false;
 		}else{
-			document.getElementById("phlabel").innerHTML = "사용가능합니다."
-			document.getElementById("phlabel").style.color = "green"
+			document.getElementById("phlabel").innerHTML = "사용가능합니다.";
+			document.getElementById("phlabel").style.color = "green";
+			document.getElementById("phlabel").style.display = "block";
 		}
 		if(birthdate.value==""){
 			alert("태어난 년도를 입력해 주세요.");
@@ -244,11 +242,14 @@
 			return false;
 		}
 		if(!emck.test(email.value)){ //이메일정규식 체크
-			document.getElementById("emaillabel").innerHTML = "이메일형식으로 작성해주세요."
+			document.getElementById("emaillabel").innerHTML = "이메일형식으로 작성해주세요.";
+			document.getElementById("emaillabel").style.display = "block";
 			email.focus();
 			return false;
 		}else{
-			document.getElementById("emaillabel").innerHTML = "사용가능합니다."
+			document.getElementById("emaillabel").innerHTML = "사용가능합니다.";
+			document.getElementById("emaillabel").style.color = "green";
+			document.getElementById("emaillabel").style.display = "block";
 		}
 		
 		
