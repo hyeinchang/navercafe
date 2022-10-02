@@ -7,6 +7,7 @@ table.cstmTbl1 td {border-top: 1px solid #eee !important;}
 table.cstmTbl1 td:not(:first-child) {border-left: 1px solid #eee;}
 table.cstmTbl1 td:hover {text-decoration:underline; cursor:pointer;}
 table.cstmTbl1 th, table.cstmTbl1 td {padding: 10px !important;}
+table.cstmTbl1 th, table.cstmTbl1 td > div {white-space: nowrap; overflow: hidden;width: 300px;text-overflow: ellipsis;}
 
 /* 느낌표(!) 아이콘 정의 */
 .fa-exclamation::before {content: "\0021";}

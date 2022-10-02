@@ -61,6 +61,7 @@
 			<mapping path="/admin/**"/>
 			<beans:ref bean="checkLoginIn"/>
 		</interceptor>
+		
 	</interceptors>
 	
 	

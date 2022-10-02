@@ -47,7 +47,7 @@
 					  </a>
 					</c:when>
 					<c:otherwise>
-					  <a href="javascript:alert('카페소개로 이동')" class="info-cafe">
+					  <a href="javascript:changeCafeMenu('goBoardInside)" class="info-cafe">
 					      카페소개
 					  </a>
 					</c:otherwise>	

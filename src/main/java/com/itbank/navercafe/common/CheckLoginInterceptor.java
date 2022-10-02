@@ -20,6 +20,12 @@ public class CheckLoginInterceptor extends HandlerInterceptorAdapter{
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
 		try {
+			String xrw = request.getHeader("X-Requested-With");
+	
+			if("XMLHttpRequest".equals(xrw)) {
+				return true;
+			}
+			
 			HttpSession session = request.getSession();
 			String loginId = (String) session.getAttribute("loginId");
 			String message = "";
@@ -46,15 +52,21 @@ public class CheckLoginInterceptor extends HandlerInterceptorAdapter{
 					String cafeId = request.getParameter("cafeId");
 					String managerId = "";
 					
-					
 					if(cafeDTO != null) {
+						CafeDTO checkCafeDTO = new CafeDTO();
 						cafeDTO.setCafeId(cafeId);
-						cafeDTO = cafeService.selectCafe(cafeDTO);
-						managerId = cafeDTO.getUserId();
+						checkCafeDTO = cafeService.selectCafe(cafeDTO);
 						
-						// 로그인 유저가 관리자가 아닐 경우
-						if(!loginId.equals(managerId)) {
-							message = "관리자 권한이 없습니다";
+						if(checkCafeDTO != null) {
+							managerId = checkCafeDTO.getUserId();
+							
+							// 로그인 유저가 관리자가 아닐 경우
+							if(!loginId.equals(managerId)) {
+								message = "관리자 권한이 없습니다";
+								forward = true;
+							}
+						} else {
+							message = "해당 카페가 존재하지 않습니다.";
 							forward = true;
 						}
 					} else {
@@ -64,7 +76,7 @@ public class CheckLoginInterceptor extends HandlerInterceptorAdapter{
 				}
 				
 			}
-			
+
 			if(forward) {
 				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/");
 				

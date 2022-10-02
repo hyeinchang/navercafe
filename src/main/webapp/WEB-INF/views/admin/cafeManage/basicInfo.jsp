@@ -59,17 +59,16 @@
 			       		<div class="infoLine">
 			       			<label for="cafeExplanation" class="infoLabel">카페 소개 </label>
 			       			<textarea id="cafeExplanation" name="cafeExplanation" class="form-control" placeholder="카페 소개를 입력해주십시오." style="width:100%;"
-			       				data-length="0~2000" data-format="" data-text="카페 소개"></textarea>
+			       				data-length="0~2000" data-format="" data-text="카페 소개">${_cafeDTO.cafeExplanation}</textarea>
 			       			<p>입력한 내용이 카페 메인, 검색결과등의 카페리스트에 반영 됩니다.</p>
 			       		</div>	
-			          		
 			          	
 			        	
 			          	<br><br>
 			        </form>
                		
              		<div class="btnArea">
-             			<a href="#" class="btn btn-primary btn-icon-split">
+             			<a href="javascript:save()" class="btn btn-primary btn-icon-split">
                               <span class="icon text-white-50">
                                    <i class="fas fa-check"></i>
                               </span>
@@ -82,55 +81,7 @@
             </div>
             <!-- End of Main Content -->
 <script type="text/javascript">
-document.body.onload = function() {
-	setJoinAgeSelect();
-}
-
-// 가입조건 연령 select 최소와 최대 출생년도 설정
-function setJoinAgeSelect() {
-	var joinAgeList = document.getElementsByClassName('joinAge');
-
-	for(var i=0;i<joinAgeList.length;i++) {
-		var joinAge = joinAgeList[i];
-		
-		if(joinAge.length <= 1) {
-			var minYear = 1950; 
-			var maxYear = new Date().getFullYear();
-			
-			for(var y=maxYear;y>=minYear;y--) {
-				var option = document.createElement('option');
-				
-				option.innerText = y;
-				option.value =y;
-				
-				joinAge.appendChild(option);
-			}
-		}
-	}
-}
-
-function setJoinAgeValue() {
-	var joinAgeNotAll = document.getElementById('joinAgeNotAll');
-	
-	if(joinAgeNotAll.checked) { 
-		var joinAgeList = document.getElementsByClassName('joinAge');
-		var joinAgeMin = joinAgeList[0];
-		var joinAgeMax = joinAgeList[1];
-		var min = joinAgeMin.value;
-		var max = joinAgeMax.value;
-		
-		if(min != '' && max != '') {
-			if(Number(min) > Number(max)) {
-				alert('가입조건 연령 최소 연도가 최대 연도보다 큽니다.');
-				joinAgeMin.focus();
-				return;
-			}
-			joinAgeNotAll.value = joinAgeMin.value + '~' + joinAgeMax.value;
-		}
-	}
-}
-
-function createCafe() {
+function save() {
 	var form = document.basicCafeForm;
 	
 	if(!formCheck()) {
@@ -230,111 +181,8 @@ function formCheck() {
 		
 	} // for
 	
-	// 가입 질문
-	if(cafeJoinQuestion.value == 'N') {
-		var joinQuestionUl = document.getElementById('joinQuestionUl');
-		
-		while(joinQuestionUl.children.length != 0) {
-			var li = joinQuestionUl.children[i];
-			var targetLi = joinQuestionUl.children[0];
-			
-			joinQuestionUl.removeChild(targetLi);
-		}
-	} else {
-		var joinQuestionUl = document.getElementById('joinQuestionUl');
-		
-		if(joinQuestionUl.children.length == 0) {
-			alert('가입 질문을 등록해주십시오.');
-			document.getElementById('joinQuestionY').focus();
-			return false;
-		}
-			
-	}
-	
-	// 가입 연령
-	if(joinAgeNotAll.checked) {
-		var joinAgeList = document.getElementsByClassName('joinAge');
-		var joinAgeMin = joinAgeList[0];
-		var joinAgeMax = joinAgeList[1];
-		var min = joinAgeMin.value;
-		var max = joinAgeMax.value;
-		
-		if(min != '' && max != '') {
-			if(Number(min) > Number(max)) {
-				alert('가입조건 연령 최소 연도가 최대 연도보다 큽니다.');
-				joinAgeMin.focus();
-				return false;
-			}
-		} else {
-			if(min == '') {
-				alert('가입조건 연령 최소 연도를 선택해주십시오.');
-				joinAgeMin.focus();
-				return false;
-			}
-			
-			if(max == '') {
-				alert('가입조건 연령 최대 연도를 선택해주십시오.');
-				joinAgeMax.focus();
-				return false;
-			}
-		}
-		
-		joinAgeNotAll.value = joinAgeMin.value + '~' + joinAgeMax.value;
-	}
-	
-	if(!agreeCheck.checked) {
-		alert('카페 개인정보보호정책에 동의해주십시오.');
-		agreeCheck.focus();
-		return;
-	}
-	
 	return true;
 	
-}
-
-// 카페 아이디 중복 확인
-function checkCafeId() {
-	var form = document.basicCafeForm;
-	var cafeId = form.cafeId;
-	var xhr = new XMLHttpRequest();
-	
-	if(cafeId.value == '') {
-		alert('카페 아이디를 입력해주십시오.');
-		cafeId.focus();
-		return;
-	}
-	
-	if(!cafeId.value.isNumAndEng()) {
-		alert('카페 아이디는 영문, 숫자로만 등록가능합니다.');
-		cafeId.focus();
-		return;
-	}
-	
-	if(cafeId.value.getBytes() > 200) {
-		alert('카페 아이디는 200자 이하로 등록가능합니다.');
-		cafeId.focus();
-		return;
-	}
-	
-	xhr.open('get', '${contextPath}/cafe/checkCafeId?cafeId=' + cafeId.value);
-	xhr.setRequestHeader('Content-Type', 'text/plain');
-	xhr.onreadystatechange = function() {
-		if(xhr.readyState == 4 && xhr.status == 200) {
-			if(Number(xhr.response) > 0) {
-				alert('사용할 수 없는 아이디입니다.');
-				cafeId.focus();
-				form.cafeIdCheck.value = 'N';
-			} else {
-				alert('사용가능한 아이디입니다.');
-				form.cafeIdCheck.value = 'Y';
-			}
-		}
-	}
-	xhr.send();
-}
-
-function changeCafeIdCheckFlag() {
-	document.basicCafeForm.cafeIdCheck.value = 'N';
 }
 
 function previewIcon() {
@@ -365,78 +213,5 @@ function deleteIcon() {
 	iconImg.src = orgSrc;
 	fileInput.files = null;
 	fileInput.value = '';
-}
-
-function showJoinQuestionInput() {
-	var form = document.basicCafeForm;
-	var cafeJoinQuestion = form.cafeJoinQuestion;
-	var joinQuestionArea = document.getElementById('joinQuestionArea');
-	
-	if(cafeJoinQuestion.value == 'Y') {
-		joinQuestionArea.style.display = '';
-	} else {
-		joinQuestionArea.style.display = 'none';
-	}
-	
-}
-
-function addQuestion() {
-	var joinQuestionUl = document.getElementById('joinQuestionUl');
-	var length = joinQuestionUl.children.length;
-	var maxQuestion = 3;
-	var newLi = null;
-	var newLabel = null;
-	var newInput = null;
-	var newButton = null;
-	var text = '';
-	
-	joinQuestionUl.style.display = '';
-	
-	if(length == maxQuestion) {
-		return;
-	}
-	
-	newLi = document.createElement('li');
-	newLabel = document.createElement('label');
-	newInput = document.createElement('input');
-	newButton = document.createElement('button');
-	
-	text = '가입 질문 ' + ++length;
-	newLabel.innerText = text +'. ';
-	newInput.type = 'text';
-	newInput.name = 'cafeQuestionContent';
-	newInput.className = 'form-control-inline';
-	newInput.placeholder = text + '의 내용을 입력해주십시오.'
-	newInput.dataset.text = text;
-	newInput.dataset.length = '1~200';
-	newInput.dataset.format = '';
-	newButton.type = 'button';
-	newButton.className = 'btn btn-danger';
-	newButton.onclick = deleteQuestion;
-	newButton.innerText = '삭제';
-	
-	newLi.appendChild(newLabel);
-	newLi.appendChild(newInput);
-	newLi.appendChild(newButton);
-	
-	joinQuestionUl.appendChild(newLi);
-}
-
-function deleteQuestion() {
-	var joinQuestionUl = document.getElementById('joinQuestionUl');
-	var targetLi = this.parentElement;
-	
-	joinQuestionUl.removeChild(targetLi);
-	
-	for(var i=0;i<joinQuestionUl.children.length;i++) {
-		var li = joinQuestionUl.children[i];
-		var text = li.children[0];
-		var input = li.children[1];
-		var order = i+1;
-		
-		text.innerText = text.innerText.replace(/\d/gi, order);
-		input.placeholder = input.placeholder.replace(/\d/gi, order);
-		input.dataset.text = input.dataset.text.replace(/\d/gi, order);
-	}
 }
 </script>

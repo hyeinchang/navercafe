@@ -87,7 +87,7 @@ function saveTitle() {
 	}
 	
 	xhr.open('post', '${contextPath}/admin/deco/saveTitle', true);
-	
+	xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 	xhr.onreadystatechange = function() {
 		if(xhr.readyState == 4 && xhr.status == 200) {
  			var message = '';

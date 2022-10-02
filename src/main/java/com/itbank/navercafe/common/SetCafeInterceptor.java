@@ -23,6 +23,12 @@ public class SetCafeInterceptor extends HandlerInterceptorAdapter{
 		boolean forward = false;
 		
 		try {
+			String xrw = request.getHeader("X-Requested-With");
+	
+			if("XMLHttpRequest".equals(xrw)) {
+				return true;
+			}
+			
 			String cafeId = request.getParameter("cafeId");
 			
 			if(cafeId != null && cafeId.length() > 0) {

@@ -10,7 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.itbank.navercafe.admin.menu.dto.AdminMenuDTO;
@@ -59,7 +58,7 @@ public class AdminMenuController {
 			if(boardMenuNum != 0) {
 				menuDTO = adminMenuService.selectBoardMenu(boardMenuNum);
 			} 
-			
+		
 			model.addAttribute("noLayout", true);
 			model.addAttribute("cafeDTO", cafeDTO);
 			model.addAttribute("menuDTO", menuDTO);

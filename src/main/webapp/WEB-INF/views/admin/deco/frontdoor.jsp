@@ -84,6 +84,7 @@
 		data.cafeFront = frontForm.cafeFront.value;
 		
 		xhr.open('post', '${contextPath}/admin/deco/saveFront', false);
+		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 		xhr.setRequestHeader('Content-Type', 'application/json');
 		
 		xhr.onreadystatechange = function() {
