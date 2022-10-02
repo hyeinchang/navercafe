@@ -48,7 +48,7 @@
 	                (SELECT cafe_id, board_menu_num, board_menu_name, board_menu_type FROM project_board_type
 	                WHERE cafe_id = #{cafeId}
 		]]>
-	    <if test="boardMenuNum != null">AND board_menu_num = #{boardMenuNum}</if>
+	    <if test="boardMenuNum != null and boardMenuNum > 0">AND board_menu_num = #{boardMenuNum}</if>
 		<![CDATA[
 	                ) boardMenu,
 			        (SELECT * FROM project_board WHERE board_title LIKE '%' || '' || '%') board,
