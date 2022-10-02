@@ -6,4 +6,5 @@ public interface AdminDecoService {
 	public int saveFront(CafeDTO cafeDTO) throws Exception;
 	public int saveSkin(CafeDTO cafeDTO) throws Exception;
 	public int saveTitle(CafeDTO cafeDTO) throws Exception;
+	public int saveLayout(CafeDTO cafeDTO) throws Exception;
 }

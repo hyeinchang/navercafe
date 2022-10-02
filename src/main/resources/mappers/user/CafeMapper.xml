@@ -92,5 +92,53 @@
 				(#{cafeQuestionNum}, #{cafeId}, #{cafeQuestionContent})
 		]]>
 	</insert>
-
+	
+	<select id="getDayTotalBoardCount" resultType="Integer">
+		<![CDATA[
+			SELECT COUNT(*) count
+			FROM 
+			(SELECT * FROM project_board_type WHERE cafe_id = #{cafeId}) boardMenu
+			INNER JOIN
+			(SELECT * FROM project_board  WHERE  TO_CHAR(board_savedate, 'YYYYMMDD') =  TO_CHAR(sysdate, 'YYYYMMDD')) board
+			ON boardMenu.board_menu_num = board.board_menu_num
+		]]>
+	</select>
+	
+	<select id="getDayTotalBoardHit" resultType="Integer">
+		<![CDATA[
+			SELECT NVL(SUM(hit), 0) count
+			FROM 
+			(SELECT * FROM project_board_type WHERE cafe_id = #{cafeId}) boardMenu
+			INNER JOIN
+			(SELECT * FROM project_board WHERE TO_CHAR(board_savedate, 'YYYYMMDD') =  TO_CHAR(sysdate, 'YYYYMMDD')) board
+			ON boardMenu.board_menu_num = board.board_menu_num
+		]]>
+	</select>
+	
+	<select id="getDayTotalReplyCount" resultType="Integer">
+		<![CDATA[
+			SELECT COUNT(*) count
+			FROM 
+			(SELECT * FROM project_board_type  WHERE cafe_id = #{cafeId}) boardMenu
+			INNER JOIN
+			(SELECT * FROM project_board WHERE TO_CHAR(board_savedate, 'YYYYMMDD') =  TO_CHAR(sysdate, 'YYYYMMDD')) board
+			ON boardMenu.board_menu_num = board.board_menu_num
+			INNER JOIN project_reply reply
+			ON board.board_num = reply.board_num
+		]]>
+	</select>
+	
+	<select id="getTotalCafeMemberCount" resultType="Integer">
+		<![CDATA[
+			SELECT COUNT(*) count FROM project_cafe_member WHERE cafe_id = #{cafeId}
+		]]>
+	</select>
+	
+	<insert id="insertMemberGrade">
+		<![CDATA[
+			INSERT INTO project_member_grade
+				(CAFE_ID, CAFE_USER_GRADE, CUT_NAME, CUT_DESC, CUT_TYPE)
+			VALUES(#{cafeId}, #{cafeUserGrade}, #{cutName}, #{cutDesc}, #{cutType})
+		]]>
+	</insert>
 </mapper>

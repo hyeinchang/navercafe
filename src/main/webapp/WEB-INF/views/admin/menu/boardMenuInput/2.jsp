@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <!-- 간편게시판 > 사용 안함 -->
 <form name="menuInfoForm" id="menuInfoForm_${menuDTO.boardOrder}">
 <table border="1" cellspacing="0" width="100%" summary="메뉴관리 설정">
@@ -30,39 +31,28 @@
 					<p class="">
 						<strong>글쓰기</strong>
 						<select style="width: 145px;" name="boardWriteAuth" onchange="changeMenuValue()">
-							<option	value="0"${menuDTO.boardWriteAuth eq 0 ? ' selected' : ''}>새싹멤버</option>
-							<option value="1"${menuDTO.boardWriteAuth eq 1 ? ' selected' : ''}>일반멤버</option>
-							<option value="2"${menuDTO.boardWriteAuth eq 2 ? ' selected' : ''}>성실멤버</option>
-							<option value="3"${menuDTO.boardWriteAuth eq 3 ? ' selected' : ''}>열심멤버</option>
-							<option value="4"${menuDTO.boardWriteAuth eq 4 ? ' selected' : ''}>우수멤버</option>
-							<option value="5"${menuDTO.boardWriteAuth eq 5 ? ' selected' : ''}>감사멤버</option>
-							<option value="888">카페스탭</option>
-							<option value="999">카페매니저</option>
+							<c:forEach var="grade" items="${gradeList}">
+							<option	value="${grade.cafeUserGrade}"${menuDTO.boardWriteAuth eq grade.cafeUserGrade ? ' selected' : ''}>${grade.cutName}</option>
+							</c:forEach>
+							<option value="999"${menuDTO.boardWriteAuth eq 999 ? ' selected' : ''}>카페매니저</option>
 						</select> 이상
 					</p>
 					<p>
 						<strong>댓글쓰기</strong>
 						<select style="width: 145px;" name="boardReplyAuth" onchange="changeMenuValue()">
-							<option	value="0"${menuDTO.boardReplyAuth eq 0 ? ' selected' : ''}>새싹멤버</option>
-							<option value="1"${menuDTO.boardReplyAuth eq 1 ? ' selected' : ''}>일반멤버</option>
-							<option value="2"${menuDTO.boardReplyAuth eq 2 ? ' selected' : ''}>성실멤버</option>
-							<option value="3"${menuDTO.boardReplyAuth eq 3 ? ' selected' : ''}>열심멤버</option>
-							<option value="4"${menuDTO.boardReplyAuth eq 4 ? ' selected' : ''}>우수멤버</option>
-							<option value="5"${menuDTO.boardReplyAuth eq 5 ? ' selected' : ''}>감사멤버</option>
-							<option value="888">카페스탭</option>
-							<option value="999">카페매니저</option></select> 이상
+							<c:forEach var="grade" items="${gradeList}">
+							<option	value="${grade.cafeUserGrade}"${menuDTO.boardReplyAuth eq grade.cafeUserGrade ? ' selected' : ''}>${grade.cutName}</option>
+							</c:forEach>
+							<option value="999"${menuDTO.boardWriteAuth eq 999 ? ' selected' : ''}>카페매니저</option>
+						</select> 이상
 					</p>
 					<p class="p_last">
 						<strong>읽기</strong>
 						<select style="width: 145px;" name="boardReadAuth" onchange="changeMenuValue()">
-							<option	value="0"${menuDTO.boardReadAuth eq 0 ? ' selected' : ''}>새싹멤버</option>
-							<option value="1"${menuDTO.boardReadAuth eq 1 ? ' selected' : ''}>일반멤버</option>
-							<option value="2"${menuDTO.boardReadAuth eq 2 ? ' selected' : ''}>성실멤버</option>
-							<option value="3"${menuDTO.boardReadAuth eq 3 ? ' selected' : ''}>열심멤버</option>
-							<option value="4"${menuDTO.boardReadAuth eq 4 ? ' selected' : ''}>우수멤버</option>
-							<option value="5"${menuDTO.boardReadAuth eq 5 ? ' selected' : ''}>감사멤버</option>
-							<option value="888">카페스탭</option>
-							<option value="999">카페매니저</option>
+							<c:forEach var="grade" items="${gradeList}">
+							<option	value="${grade.cafeUserGrade}"${menuDTO.boardReadAuth eq grade.cafeUserGrade ? ' selected' : ''}>${grade.cutName}</option>
+							</c:forEach>
+							<option value="999"${menuDTO.boardWriteAuth eq 999 ? ' selected' : ''}>카페매니저</option>
 						</select> 이상
 					</p>
 				</div>

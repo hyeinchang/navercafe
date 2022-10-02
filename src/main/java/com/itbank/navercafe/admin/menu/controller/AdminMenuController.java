@@ -1,5 +1,6 @@
 package com.itbank.navercafe.admin.menu.controller;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,8 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.itbank.navercafe.admin.menu.dto.AdminMenuDTO;
 import com.itbank.navercafe.admin.menu.service.AdminMenuService;
+import com.itbank.navercafe.admin.registergrade.dto.MembersGradeDTO;
+import com.itbank.navercafe.admin.registergrade.service.AdminRegisterGradeService;
 import com.itbank.navercafe.common.CommonUtils;
 import com.itbank.navercafe.common.menu.BoardMenuType;
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
@@ -23,7 +26,10 @@ import com.itbank.navercafe.user.menu.dto.MenuDTO;
 @RequestMapping("admin/menu")
 public class AdminMenuController {
 	@Autowired
-	AdminMenuService adminMenuService;
+	private AdminMenuService adminMenuService;
+	
+	@Autowired 
+	private AdminRegisterGradeService adminRegisterGradeService;
 	
 	// BoardMenuType class로 게시판 메뉴 타입 설정
 	private BoardMenuType boardMenuType = new BoardMenuType();
@@ -34,7 +40,7 @@ public class AdminMenuController {
 		try {
 			String cafeId = cafeDTO.getCafeId();
 			List<AdminMenuDTO> boardMenuList = adminMenuService.selectBoardMenuList(cafeId);
-			
+		
 			model.addAttribute("cafeDTO", cafeDTO);
 			model.addAttribute("menuDTO", menuDTO);
 			model.addAttribute("menuTypeList", boardMenuTypeList);
@@ -51,7 +57,9 @@ public class AdminMenuController {
 		String inputFileUrl = "admin/menu/boardMenuInput/";
 		
 		try {
+			String cafeId = menuDTO.getCafeId();
 			int boardMenuNum = menuDTO.getBoardMenuNum();
+			ArrayList<MembersGradeDTO> gradeList = adminRegisterGradeService.getMembersGradeList(cafeId);
 			
 			inputFileUrl = inputFileUrl + menuDTO.getBoardMenuType();
 			
@@ -62,6 +70,7 @@ public class AdminMenuController {
 			model.addAttribute("noLayout", true);
 			model.addAttribute("cafeDTO", cafeDTO);
 			model.addAttribute("menuDTO", menuDTO);
+			model.addAttribute("gradeList", gradeList);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

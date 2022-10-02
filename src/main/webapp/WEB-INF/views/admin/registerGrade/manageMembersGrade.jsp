@@ -64,12 +64,16 @@
 		var removedArr = ['cutRemoved2','cutRemoved3','cutRemoved4','cutRemoved5','cutRemoved6']
 		var btnArr = []
 		for(i = 0; i<removedArr.length; i++) {
-			var flag = document.getElementById(removedArr[i]).value;
-			if(flag == 'true') {
-				let btnName = 'delbtn'+(i+2);
-				let btnElement = document.getElementById(btnName);
-				changetoAdd(btnElement);
+			var flag = document.getElementById(removedArr[i]);
+			if(flag) {
+				flag = flag.value;
+				if(flag == 'true') {
+					let btnName = 'delbtn'+(i+2);
+					let btnElement = document.getElementById(btnName);
+					changetoAdd(btnElement);
+				}
 			}
+			
 		}
 		
 	})

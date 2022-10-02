@@ -531,6 +531,8 @@ function getMenuObject(li) {
 		return obj;
 	}
 	
+	obj.cafeId = document.menuForm.cafeId.value;
+	
 	childrenList = li.children;
 	
 	for(var i=0;i<childrenList.length;i++) {

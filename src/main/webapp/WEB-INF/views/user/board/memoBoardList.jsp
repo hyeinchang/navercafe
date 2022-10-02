@@ -66,7 +66,7 @@ function back(obj){
 </script>
 
 
-<div class="content pull-right col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix cstmContent" ${cafeDTO.cafeLayout > 0 ? '' : 'style="float:right;"'}>
+<div class="content col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix cstmContent" ${_cafeDTO.cafeLayout eq 'left' ? '' : 'style="float:right;"'}>
 <div class="container clearfix" style="list-style: none;">
 	      <div class="content col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix">
 				<h1>메모 게시판입니다</h1>

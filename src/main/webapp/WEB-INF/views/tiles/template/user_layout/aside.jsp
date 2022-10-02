@@ -3,8 +3,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
-<!-- SIDEBAR -->
-      <div id="sidebar" class="col-lg-4 col-md-4 col-sm-4 col-xs-12 cstmAside" ${_cafeDTO.cafeLayout > 0 ? 'style="float:right;"' : ''}>
+	  <!-- SIDEBAR -->
+      <div id="sidebar" class="col-lg-4 col-md-4 col-sm-4 col-xs-12 cstmAside" ${_cafeDTO.cafeLayout ne 'left' ? '' : 'style="float:right;"'}>
         <div class="widget">
           <div class="tabbable">
             <ul class="nav nav-tabs">
@@ -57,19 +57,19 @@
                   <li class="cafeInfo">
                   	<div>
                   	  <span class="ico_wrt"></span>
-                      <b>일간 게시글 수 :</b> 0
+                      <b>일간 게시글 수 :</b> ${_cafeDTO.dayCountMap.dayBoardCount}
                     </div>
                     <div>
                       <span class="ico_wrt"></span>
-                      <b>일간 조회 수 :</b> 0
+                      <b>일간 조회 수 :</b> ${_cafeDTO.dayCountMap.dayBoardHit}
                     </div>
                     <div>
                       <span class="ico_cmt"></span>
-                      <b>일간 댓글 수 :</b> 0
+                      <b>일간 댓글 수 :</b> ${_cafeDTO.dayCountMap.dayReplyCount}
                     </div>
                     <div>
                       <span class="ico"></span>
-                      0
+                      <b>총 회원 수 :</b> ${_cafeDTO.dayCountMap.totalCafeMember}
                     </div>
                   </li>
                   <li>
@@ -208,7 +208,7 @@
           	</c:when>
           	<c:otherwise>
           	<li>
-            	<a href="javascript:changeCafeMenu('${contextPath}/user/board/goBoardList')">전체글보기</a>
+            	<a href="${contextPath}/user/board/goBoardList?cafeId=${_cafeDTO.cafeId}">전체글보기</a>
             	<span class="text-primary">3</span>
             </li>
           	</c:otherwise>	
@@ -223,7 +223,10 @@
           </h4>
           <ul class="categories">            
             <c:forEach var="cafeMenu" items="${_cafeDTO.cafeMenuList}">
-            <li><a href="javascript:alert('${cafeMenu.boardMenuNum} 번 게시판으로 이동');">${cafeMenu.boardMenuName}</a></li>
+            <!-- 공개 게시판이이거나 카페 회원일 때 공개 -->
+            <c:if test="${cafeMenu.boardPublicFlag eq 'Y' || _cafeDTO.isCafeMember eq 'true'}">
+              <li><a href="${contextPath}/user/board/goBoardList?cafeId=${_cafeDTO.cafeId}&boardMenuNum=${cafeMenu.boardMenuNum}">${cafeMenu.boardMenuName}</a></li>
+            </c:if>
             </c:forEach>
             <c:if test="${_cafeDTO.cafeMenuList eq null || _cafeDTO.cafeMenuList.size() == 0}">
             <li>등록된 게시판이 없습니다.</li>

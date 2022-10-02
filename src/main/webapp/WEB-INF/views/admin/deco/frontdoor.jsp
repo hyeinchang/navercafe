@@ -15,7 +15,7 @@
                	<h1 class="h3 text-gray-800 cstmTitle">카페 대문</h1>
                	
                	<!-- cstmContent1 -->
-               	<div class="cstmContent1" style="width:800px;">
+               	<div class="cstmContent1" style="width:900px;">
                	
                		<form class="user" name="frontForm">
                			<input type="hidden" name="cafeId" value="${cafeDTO.cafeId}">

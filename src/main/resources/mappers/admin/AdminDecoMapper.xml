@@ -18,5 +18,11 @@
 			UPDATE PROJECT_CAFE_INFO SET CAFE_TITLE_NUM = #{cafeTitleNum} WHERE CAFE_ID = #{cafeId}
 		]]>
 	</update>
+	
+	<update id="saveLayout">
+		<![CDATA[
+			UPDATE PROJECT_CAFE_INFO SET CAFE_LAYOUT = #{cafeLayout} WHERE CAFE_ID = #{cafeId}
+		]]>
+	</update>
 </mapper>
 

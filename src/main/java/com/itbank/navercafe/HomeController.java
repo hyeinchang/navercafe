@@ -28,8 +28,10 @@ import com.itbank.navercafe.common.file.dto.FileDTO;
 import com.itbank.navercafe.common.file.dto.FileResult;
 import com.itbank.navercafe.common.file.service.FileService;
 import com.itbank.navercafe.common.pagination.Pagination;
+import com.itbank.navercafe.user.cafe.dto.BasicMemberGrade;
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
 import com.itbank.navercafe.user.cafe.dto.CafeJoinQuestionDTO;
+import com.itbank.navercafe.user.cafe.dto.CafeMemberGradeDTO;
 import com.itbank.navercafe.user.cafe.service.CafeService;
 import com.itbank.navercafe.user.cafemember.dto.CafeMemberDTO;
 import com.itbank.navercafe.user.cafemember.service.CafeMemberService;
@@ -248,6 +250,24 @@ public class HomeController { //메인 로그인관련
 				result.put("resultCode", 0);
 				result.put("cafeId", cafeId);
 				result.put("message", "카페 매니저의 카페 가입에 실패했습니다.");
+				return result;
+			}
+			
+			
+			// 기본 카페 등급 설정
+			BasicMemberGrade basicMemberGrade =  new BasicMemberGrade();
+			List<CafeMemberGradeDTO> basicMemberGradeList = basicMemberGrade.basicMemberGradeList;
+			int insertGradeResult = 0;
+			
+			for(CafeMemberGradeDTO cafeMemberGradeDTO : basicMemberGradeList) {
+				cafeMemberGradeDTO.setCafeId(cafeId);
+				insertGradeResult = cafeService.insertMemberGrade(cafeMemberGradeDTO);
+			}
+			
+			if(insertGradeResult == 0) {
+				result.put("resultCode", 0);
+				result.put("cafeId", cafeId);
+				result.put("message", "등급 설정에 실패했습니다.");
 				return result;
 			}
 			

@@ -14,7 +14,7 @@ import com.itbank.navercafe.user.menu.dto.MenuDTO;
 
 public interface BoardMapper {
 	//전체목록인데 수영이형이랑 상의.
-	public ArrayList<BoardDTO> getBoardList(String cafeId);
+	public ArrayList<BoardDTO> getBoardList(MenuDTO menuDTO);
 	//보드 넘에 따른 게시물
 	public BoardDTO getUserBoard(int boardNum);
 

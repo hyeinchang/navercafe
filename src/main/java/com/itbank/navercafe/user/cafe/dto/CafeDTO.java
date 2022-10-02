@@ -2,6 +2,7 @@ package com.itbank.navercafe.user.cafe.dto;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.itbank.navercafe.user.menu.dto.MenuDTO;
 
@@ -24,6 +25,7 @@ public class CafeDTO {
 	private String isCafeManager;
 	private String loginId;
 	private List<MenuDTO> cafeMenuList;
+	private Map<String, Integer> dayCountMap;
 
 	public String getCafeId() {
 		return cafeId;
@@ -132,5 +134,11 @@ public class CafeDTO {
 	}
 	public void setCafeMenuList(List<MenuDTO> cafeMenuList) {
 		this.cafeMenuList = cafeMenuList;
+	}
+	public Map<String, Integer> getDayCountMap() {
+		return dayCountMap;
+	}
+	public void setDayCountMap(Map<String, Integer> dayCountMap) {
+		this.dayCountMap = dayCountMap;
 	}
 }

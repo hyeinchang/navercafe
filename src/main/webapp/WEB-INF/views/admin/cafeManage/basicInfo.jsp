@@ -18,9 +18,11 @@
                	<div class="cstmContent1 cafe_layout_area">
                		<form id="basicCafeForm" class="main_form" action="./createCafe" name="basicCafeForm" method="post" enctype="multipart/form-data">
 			        	<input type="hidden" name="cafeId" value="${_cafeDTO.cafeId}">
+			        	<input type="hidden" name="cafeIconNum" value="${_cafeDTO.cafeIconNum}">
+			        	<input type="hidden" name="iconDelete" value="N">
 			        	
 			        	<div class="infoLine">
-			        		<label for="cafeId" class="infoLabel">카페 주소 <span class="required">*</span></label>
+			        		<label for="cafeId" class="infoLabel">카페 주소</label>
 			          		${address}/main?cafeId=<span id="cafeIdTxt">${_cafeDTO.cafeId}</span>
 			        	</div>
 			        	<div class="infoLine">
@@ -68,7 +70,7 @@
 			        </form>
                		
              		<div class="btnArea">
-             			<a href="javascript:save()" class="btn btn-primary btn-icon-split">
+             			<a href="javascript:saveCafeBasic()" class="btn btn-primary btn-icon-split">
                               <span class="icon text-white-50">
                                    <i class="fas fa-check"></i>
                               </span>
@@ -81,7 +83,7 @@
             </div>
             <!-- End of Main Content -->
 <script type="text/javascript">
-function save() {
+function saveCafeBasic() {
 	var form = document.basicCafeForm;
 	
 	if(!formCheck()) {
@@ -90,15 +92,14 @@ function save() {
 	
 	var xhr = new XMLHttpRequest();
 	
-	xhr.open('post', '${contextPath}/cafe/createCafe', true);
+	xhr.open('post', '${contextPath}/admin/saveCafeBasic', true);
+	xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 	xhr.onreadystatechange = function() {
 		if(xhr.readyState == 4 && xhr.status == 200) {
-			var result = JSON.parse(xhr.response);
-			
-			if(Number(result.resultCode) == 1) {
-				location.href ='${contextPath}/user/main?cafeId='+result.cafeId;
+			if(Number(xhr.response) == 1) {
+				alert('저장되었습니다.');
 			} else {
-				alert(result.message);
+				alert('저장에 실패했습니다.');
 			}
 		}
 	}
@@ -107,16 +108,6 @@ function save() {
 
 function formCheck() {
 	var form = document.basicCafeForm;
-	var cafeIdCheck = form.cafeIdCheck;
-	var joinAgeNotAll = document.getElementById('joinAgeNotAll');
-	var cafeJoinQuestion = form.cafeJoinQuestion;
-	var agreeCheck = document.getElementById('agreeCheck');
-	
-	if(cafeIdCheck.value != 'Y') {
-		alert('카페 아이디 중복확인을 해주십시오.');
-		form.cafeId.focus();
-		return false;
-	}
 	
 	for(var i=0;i<form.length;i++) {
 		var element = form[i];
@@ -202,6 +193,7 @@ function previewIcon() {
 		fileReader.onload = function() {
 			iconImg.src = fileReader.result;
 		}
+		document.basicCafeForm.iconDelete.value = 'N';
 	}	
 }
 
@@ -213,5 +205,6 @@ function deleteIcon() {
 	iconImg.src = orgSrc;
 	fileInput.files = null;
 	fileInput.value = '';
+	document.basicCafeForm.iconDelete.value = 'Y';
 }
 </script>

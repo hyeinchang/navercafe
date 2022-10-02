@@ -30,8 +30,8 @@
 	</select>
 	<!-- 카페 회원가입 -->
 	<insert id="signup">
-		insert into project_cafe_member(cafe_id,user_id,cafe_user_nickname)
-		values(#{cafeId},#{userId},#{cafeUserNickname})
+		insert into project_cafe_member(cafe_id,user_id,cafe_user_nickname,cafe_user_grade)
+		values(#{cafeId},#{userId},#{cafeUserNickname},#{cafeUserGrade})
 	</insert>
 	
 	<select id="cafeMembers" resultType="Integer">

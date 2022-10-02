@@ -67,7 +67,7 @@
 	}
 </style>
 <div	class="content col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix cstmContent"
-	${cafeDTO.cafeLayout > 0 ? '' : 'style="float:right;"'} >
+	${_cafeDTO.cafeLayout eq 'left' ? '' : 'style="float:right;"'} >
 	
 	<h2>
 		<b>카페 가입하기</b>

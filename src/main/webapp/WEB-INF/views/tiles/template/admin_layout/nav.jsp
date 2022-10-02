@@ -111,6 +111,7 @@
                         <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/deco/frontdoor')">카페 대문</a>
                         <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/deco/skin')">스킨</a>
                         <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/deco/title')">타이틀</a>
+                        <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/deco/layout')">레이아웃</a>
                     </div>
                 </div>
             </li>

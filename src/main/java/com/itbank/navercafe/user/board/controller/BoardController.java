@@ -1,5 +1,6 @@
 package com.itbank.navercafe.user.board.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,11 +11,16 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.itbank.navercafe.user.board.dto.BoardDTO;
 import com.itbank.navercafe.user.board.service.BoardService;
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
 import com.itbank.navercafe.user.cafemember.service.CafeMemberService;
+import com.itbank.navercafe.user.grade.service.GradeService;
+import com.itbank.navercafe.user.memo.service.MemoService;
+import com.itbank.navercafe.user.menu.dto.MenuDTO;
+import com.itbank.navercafe.user.menu.service.MenuService;
 import com.itbank.navercafe.user.reply.service.ReplyService;
 
 @Controller
@@ -23,6 +29,10 @@ public class BoardController {
 	@Autowired BoardService ser;
 	@Autowired ReplyService replySer;
 	@Autowired CafeMemberService boardCafeSer;
+	@Autowired MenuService menuService;
+	@Autowired GradeService upSer;
+	@Autowired MemoService memoSer;
+	@Autowired CafeMemberService cafeMemberService;
 	
 	@RequestMapping("/writeForm")
 	public String writeForm(CafeDTO cafeDTO, Model model) {
@@ -31,16 +41,48 @@ public class BoardController {
 	}
 	//전체목록인데 수영이형이랑 상의.
 	@GetMapping("/goBoardList")	
-	public String goBoardList(Model model, String cafeId){
+	public String goBoardList(Model model, String cafeId, MenuDTO menuDTO, RedirectAttributes ra) throws Exception{
+		int boardMenuNum = menuDTO.getBoardMenuNum();
+		int boardMenuType = 1;
+		String returnUrl = "user/board/boardList";
+		
 		System.out.println("보드 리스트 cafeId:"+cafeId);
-		model.addAttribute("boardList",ser.getBoardList(cafeId));
+		
+		if(cafeId != null) {
+			menuDTO.setCafeId(cafeId);
+		}
+		
+		if(boardMenuNum > 0) {
+			menuDTO = menuService.selectBoardMenu(boardMenuNum);
+			boardMenuType = menuDTO.getBoardMenuType();
+		}
+		
+		// 게시판 타입에 따라 다른 view 설정
+		switch(boardMenuType) {
+		case 4 :
+			ra.addFlashAttribute("cafeId", cafeId);
+			ra.addFlashAttribute("menuDTO", menuDTO);
+			returnUrl = "redirect:/user/board/goGradeBoardList";
+			break;
+		case 5 :
+			returnUrl = "user/board/memoBoardList";
+			break;
+		}
+		
+		model.addAttribute("boardList",ser.getBoardList(menuDTO));
 		model.addAttribute("cafeId",cafeId);
-		return "user/board/boardList";
+		
+		return returnUrl;
 	}
+	
 
 	@GetMapping("/goBoardInside")
-	public String goBoardInside(int boardNum, Model model,HttpSession session,String cafeId,int boardMenuNum,
+	public String goBoardInside(MenuDTO menuDTO, BoardDTO boardDTO, Model model,HttpSession session,String cafeId,
 			@RequestParam(value="num",required=false,defaultValue="0")int num) {
+		
+		int boardNum = boardDTO.getBoardNum();
+		int boardMenuNum = menuDTO.getBoardMenuNum();
+		
 		System.out.println("넘어온 보드 값 : "+boardNum);
 		System.out.println("넘어온 boardMenuNum 값 :"+boardMenuNum);
 		
@@ -50,7 +92,7 @@ public class BoardController {
 		model.addAttribute("replyCount",replySer.getReplyCount(boardNum));
 		//System.out.println("댓글 갯수 세오기 컷");
 		//게시물 가져오기
-		BoardDTO dto= ser.getUserBoard(boardNum,boardMenuNum,model,num,cafeId);
+		BoardDTO dto= ser.getUserBoard(boardNum,menuDTO,model,num);
 		model.addAttribute("userBoard",dto);
 		//System.out.println("게시물 가져오기 컷");
 		//카페유저 정보 가져오기
@@ -100,6 +142,41 @@ public class BoardController {
 		return "redirect:goBoardInside?boardNum="+boardNum+"&num="+1;
 	}
 	
+	@GetMapping("/goGradeBoardList")
+	public String goGradeBoardList(String cafeId, MenuDTO menuDTO, Model model) {
+		upSer.getGradeList(model);
+		return "user/board/gradeBoardList";
+	}
 	
+	//@RequestParam(value="num",required=false,defaultValue="0")int num)
+	//boardInside 방식참고해서 num 도 넣어주고
+	@GetMapping("/goMemoBoardList")
+	public String goMemoBoardList(String cafeId,Model model,HttpSession sesison){
+		//메모 게시글들
+		model.addAttribute("mapList",memoSer.getMemoList());
+		//System.out.println("메모 게시물들 키 :"+memoSer.getMemoList());
+		//메모 댓글들
+		model.addAttribute("memoReplyList",memoSer.getReplyList());
+		//System.out.println("메모 댓글 키 :"+memoSer.getReplyList());
+		//세션 아이디 줘서 정보 가져오기
+		model.addAttribute("sessionUser",cafeMemberService.getSessionUserInfo(cafeId,(String) sesison.getAttribute("loginId")));
+		return "user/board/memoBoardList";
+	}
 	
+
+	@PostMapping("saveMemoReply")
+	public String saveReply(MultipartHttpServletRequest mul) {
+		System.out.println("그룹번호:"+mul.getParameter("groupNum"));
+		System.out.println("작성하고있는쉐끼:"+mul.getParameter("userId"));
+		System.out.println("내용:"+mul.getParameter("memoReplyContent"));
+		System.out.println("파일명:"+mul.getFile("replyImageName"));
+		memoSer.saveMemoReply(mul);
+		return "redirect:goMemoBoardList";
+	}
+	
+	@PostMapping("memoSave")
+	public String memoSave(HttpServletRequest res) {
+		memoSer.memoSave(res);
+		return "redirect:goMemoBoardList";
+	}
 }

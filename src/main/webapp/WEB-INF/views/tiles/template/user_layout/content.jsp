@@ -99,14 +99,14 @@
           	<c:forEach var="cafe" items="${cafeList}">
           	<tr>
               <td onclick="changeCafe('${cafe.cafeId}')">
-	              <div>
-	               <span style="display:inline-block;border-radius:45%;margin-right:5px;">
+	              <div title="${cafe.cafeName}">
+	               <span class="cafeListIcon">
 		              <c:choose>
 		   	  			<c:when test="${cafe.cafeIconNum eq null || cafe.cafeIconNum == 0}">
-		   	  			<img src="${contextPath}/resources/img/cafeicon_default_112x112.png" width="20" height="20" alt="카페 아이콘" id="" style="border-radius:45%;">
+		   	  			<img src="${contextPath}/resources/img/cafeicon_default_112x112.png" alt="카페 아이콘 없음">
 		   	  			</c:when>
 		   	  			<c:otherwise>
-		   	  			<img src="${contextPath}/file/download?cafeIconNum=${cafe.cafeIconNum}" width="20" height="20" alt="카페 아이콘" id="" style="border-radius:45%;">
+		   	  			<img src="${contextPath}/file/download?cafeIconNum=${cafe.cafeIconNum}" alt="카페 아이콘">
 		   	  			</c:otherwise>
 		   	  		</c:choose>
 		   	  		</span>
@@ -114,7 +114,7 @@
               	</div>
               </td>
               <td onclick="changeCafe('${cafe.cafeId}')">
-	          	<div>
+	          	<div title="${cafe.cafeExplanation}">
 	          	<c:choose>
 	              	<c:when test="${cafe.cafeExplanation eq null || cafe.cafeExplanation.length() == 0}">
 	              	등록된 카페 소개가 없습니다.
