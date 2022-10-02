@@ -34,6 +34,7 @@
 				{ orderable: false, targets: 2, width: 5 },// 3번째 항목 넓이를 30px로 설정
 				{ orderable: false, targets: 3, width: 5 },// 4번째 항목 넓이를 30px로 설정
 				{ orderable: true, targets: 4, width: 5 },// 5번째 항목 넓이를 30px로 설정
+				{ orderable: true, targets: 5, width: 5 }// 5번째 항목 넓이를 30px로 설정
 			],
 			lengthMenu: [ 5, 10, 15, 20, 30, 40, 50 ],// 표시 건수 단위 설정
 			// 기본 표시 건수를 15건으로 설정
