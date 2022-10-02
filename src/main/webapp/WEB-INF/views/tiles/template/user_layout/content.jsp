@@ -98,7 +98,19 @@
           	<c:otherwise>
           	<c:forEach var="cafe" items="${cafeList}">
           	<tr>
-              <td onclick="changeCafe('${cafe.cafeId}')">${cafe.cafeName}</td>
+              <td onclick="changeCafe('${cafe.cafeId}')">
+              <span style="display:inline-block;border-radius:45%;margin-right:5px;">
+              <c:choose>
+   	  			<c:when test="${cafe.cafeIconNum eq null || cafe.cafeIconNum == 0}">
+   	  			<img src="${contextPath}/resources/img/cafeicon_default_112x112.png" width="20" height="20" alt="카페 아이콘" id="" style="border-radius:45%;">
+   	  			</c:when>
+   	  			<c:otherwise>
+   	  			<img src="${contextPath}/file/download?cafeIconNum=${cafe.cafeIconNum}" width="20" height="20" alt="카페 아이콘" id="" style="border-radius:45%;">
+   	  			</c:otherwise>
+   	  		</c:choose>
+   	  		</span>
+ 			 ${cafe.cafeName}
+              </td>
               <td onclick="changeCafe('${cafe.cafeId}')">
               <c:choose>
               	<c:when test="${cafe.cafeExplanation eq null || cafe.cafeExplanation.length() == 0}">
