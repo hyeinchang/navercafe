@@ -322,7 +322,7 @@ function formCheck() {
 					}
 					
 					element.focus();
-					return;s
+					return;
 				}
 			}
 		}
