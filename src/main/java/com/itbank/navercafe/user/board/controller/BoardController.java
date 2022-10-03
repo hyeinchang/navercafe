@@ -50,9 +50,9 @@ public class BoardController {
 	public String goBoardList(Model model, String cafeId, MenuDTO menuDTO, RedirectAttributes ra) throws Exception{
 		int boardMenuNum = menuDTO.getBoardMenuNum();
 		int boardMenuType = 1;
-		String returnUrl = "user/board/boardList";
+		String boardMenuName = "전체 게시판";
 		
-		System.out.println("보드 리스트 cafeId:"+cafeId);
+		String returnUrl = "user/board/boardList";
 		
 		if(cafeId != null) {
 			menuDTO.setCafeId(cafeId);
@@ -61,6 +61,7 @@ public class BoardController {
 		if(boardMenuNum > 0) {
 			menuDTO = menuService.selectBoardMenu(boardMenuNum);
 			boardMenuType = menuDTO.getBoardMenuType();
+			boardMenuName = menuDTO.getBoardMenuName();
 		}
 		
 		// 게시판 타입에 따라 다른 view 설정
@@ -75,6 +76,7 @@ public class BoardController {
 			break;
 		}
 		
+		model.addAttribute("boardMenuName",boardMenuName);
 		model.addAttribute("boardList",ser.getBoardList(menuDTO));
 		model.addAttribute("cafeId",cafeId);
 		

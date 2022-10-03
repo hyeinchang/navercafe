@@ -1,6 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
 <style type="text/css">
 	/* 필터링 (검색) */
 	div.dataTables_filter {
@@ -29,12 +31,11 @@
 			// 열 넓이 설정
 			columnDefs: [
 				// visible 숨김, orderable 정렬기능
-				{ visible: false, orderable: true, targets: 0, width: 0 },// 1번째 항목 넓이를 10px로 설정
-				{ orderable: false, targets: 1, width: 180 },// 2번째 항목 넓이를 30px로 설정
-				{ orderable: false, targets: 2, width: 5 },// 3번째 항목 넓이를 30px로 설정
-				{ orderable: false, targets: 3, width: 5 },// 4번째 항목 넓이를 30px로 설정
-				{ orderable: true, targets: 4, width: 5 },// 5번째 항목 넓이를 30px로 설정
-				{ orderable: true, targets: 5, width: 5 }// 5번째 항목 넓이를 30px로 설정
+				{ orderable: true, 	visible: true,  targets: 0, width: 50 },
+				{ orderable: true, visible: true, targets: 1, width: 200 },
+				{ orderable: true, visible: true, targets: 2, width: 100 },
+				{ orderable: true, visible: true, targets: 3, width: 100 },
+				{ orderable: true, 	visible: true, targets: 4, width: 50 }
 			],
 			lengthMenu: [ 5, 10, 15, 20, 30, 40, 50 ],// 표시 건수 단위 설정
 			// 기본 표시 건수를 15건으로 설정
@@ -42,7 +43,7 @@
 			stateSave: false,// 현재 상태를 보존
 			dom : '<"col-sm-11"f><"col-sm-11"l><"col-sm-6"r><"col-sm-11"t><"col-sm-6"i><"col-sm-11"p>',// 위치 설정값
 			language : { // datatables가 우리나라거 아니라서 한글로 convert해줘야한다.
-				search : '검색',
+				search : '',
 				paginate : {
 					previous : '이전',
 					next : '다음',
@@ -61,30 +62,36 @@
 		});
 		
 		var table = $('#myTable').DataTable();
+		
 		$('#myInput').on( 'keyup', function () {
 		    table.search( this.value ).draw();
 		} );
-		
-		$('#myTable_filter').prepend('<select id="select"></select>');
+		$('#myTable_filter label').prepend('<select id="select" class="form-control-inline" style="vertical-align:middle;margin-rigth:5px;"></select>');
 		$('#myTable > thead > tr').children().each(function (indexInArray, valueOfElement) { 
-	        $('#select').append('<option>'+valueOfElement.innerHTML+'</option>');
+			var seleced = valueOfElement.innerText == '제목' ? ' selected' : '';
+	        $('#select').append('<option' + seleced + '>'+valueOfElement.innerHTML+'</option>');
 	    });
-		
+		$('#myTable_filter input').addClass('form-control-inline');
+		$('#myTable_length select').attr('class','form-control-inline');
 		$('.dataTables_filter input').unbind().bind('keyup', function () {
 	        var colIndex = document.querySelector('#select').selectedIndex;
-	        table.column(colIndex+1).search(this.value).draw(); // 컬럼 숨기면 검색 인덱스 +1
-	    });
-		console.log();
+	        
+	        table.column(colIndex).search(this.value).draw(); // 컬럼 숨기면 검색 인덱스 +1
+	    });	
+		$('#myTable_length label').prepend($('#myTable_filter label'));
 	});
 	
 </script>
-
-<div class="content col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix cstmContent" ${_cafeDTO.cafeLayout eq 'left' ? '' : 'style="float:right;"'}>
-	<div class="container clearfix">
-		<div class="content col-lg-12 col-md-12 col-sm-12 clearfix">
-			<div class="col-lg-10 col-md-12 col-sm-8">
-				<h1>전체 게시판</h1>
-				<table class="table table-bordered" id="myTable">
+	<div class="content col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix cstmContent" ${_cafeDTO.cafeLayout eq 'left' ? '' : 'style="float:right;"'}>
+       	<section class="section1">
+		    <div class="container clearfix">
+		      <div class="title">
+		       	<h4>
+		          <span>${boardMenuName}</span>
+		        </h4>
+		      </div>
+		      <div class="col-lg-10 col-md-8 col-sm-8 clearfix">
+		      	<table class="table table-bordered" id="myTable">
 					<thead>
 						<tr>
 							<th>글번호</th>
@@ -96,20 +103,26 @@
 					</thead>
 					<c:forEach var="dto" items="${boardList}">
 						<tr>
-							<th>${dto.boardNum}</th>
-							<th><h1>${dto.boardNum}</h1></th>
-							<th>
-							<a href="goBoardInside?boardNum=${dto.boardNum }
-							&cafeId=${cafeId}&boardMenuNum=${dto.boardMenuNum}">
-							${dto.boardTitle} </a></th>
-							<th>${dto.userId}</th>
-							<th>${dto.boardSaveDate}</th>
-							<th>${dto.hit}</th>
+							<td>${dto.boardNum}</td>
+							<td>
+								<a href="${contextPath}/user/board/goBoardInside?boardNum=${dto.boardNum}
+								&cafeId=${cafeId}&boardMenuNum=${dto.boardMenuNum}">
+								${dto.boardTitle}</a>
+							</td>
+							<td>${dto.userId}</td>
+							<td>${dto.boardSaveDate}</td>
+							<td>${dto.hit}</td>
 						</tr>
 					</c:forEach>
 				</table>
-			</div>
-		</div>
-	</div>
-</div>
+				
+		      </div>
+		      <!-- end content -->
+		    </div>
+		    <!-- end container -->
+		  </section>
+      </div>
+      <!-- end content -->
+<script type="text/javascript">
 
+</script>	      

@@ -6,7 +6,7 @@
 	<div class="content col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix cstmContent" ${_cafeDTO.cafeLayout eq 'left' ? '' : 'style="float:right;"'}>
        	<section class="section1">
 		    <div class="container clearfix">
-		      <div class="">
+		      <div class="title">
 		       	<h4>
 		          <span>카페 글쓰기</span>
 		        </h4>
@@ -23,7 +23,8 @@
 		              	onchange="checkBoardType()">
 		              	<option value="">게시판을 선택해주세요.</option>
 		              	<c:forEach var="boardType" items="${_cafeDTO.cafeMenuList}">
-		              	<c:if test="${boardType.boardWriteAuth <= _cafeDTO.loginUser.cafeUserGrade}">
+		              	<c:if test="${boardType.boardWriteAuth <= _cafeDTO.loginUser.cafeUserGrade 
+		              		&& boardType.boardMenuType ne 4}">
 		              	<option value="${boardType.boardMenuNum}" 
 		              		data-board-type="${boardType.boardMenuType}">${boardType.boardMenuName}</option>
 		              	</c:if>

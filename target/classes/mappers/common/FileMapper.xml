@@ -57,5 +57,14 @@
 			DELETE FROM PROJECT_FILE SET WHERE FILE_NUM = #{fileNum}
 		]]>
 	</delete>
+	
+	<select id="getFileList" resultMap="file">
+		<![CDATA[
+			SELECT * FROM PROJECT_FILE WHERE 
+			NVL(CAFE_ICON_NUM, 0) = #{cafeIconNum} AND NVL(CAFE_TITLE_NUM, 0) = #{cafeTitleNum} AND
+			NVL(CAFE_USER_IMAGE_NUM, 0) = #{cafeUserImageNum} AND NVL(BOARD_NUM, 0) = #{boardNum} AND
+			NVL(REPLY_NUM, 0) = #{replyNum} AND NVL(MEMO_REPLY_NUM, 0) = #{memoReplyNum}
+		]]>
+	</select>
 </mapper>
 
