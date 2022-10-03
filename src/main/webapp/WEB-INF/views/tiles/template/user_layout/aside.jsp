@@ -16,7 +16,9 @@
                 <ul class="recent_posts">
                   <li>
                   	<span>
-                  	  <a href="#">
+                  	  <c:if test="${_cafeDTO.isCafeManager eq 'true'}">
+                  	  <a href="${contextPath}/admin/basicInfo?cafeId=${_cafeDTO.cafeId}">
+                  	  </c:if>
                   	  <c:choose>
                   	  	<c:when test="${_cafeDTO.cafeIconNum eq null || _cafeDTO.cafeIconNum == 0}">
                   	  	<img class="profileImg" src="${contextPath}/resources/img/cafe_thumb_noimg_55.png" alt="카페 아이콘 없음">
@@ -25,10 +27,8 @@
                   	  	<img class="profileImg" src="${contextPath}/file/download?cafeIconNum=${_cafeDTO.cafeIconNum}" alt="카페 아이콘">
                   	  	</c:otherwise>
                   	  </c:choose>
-                  	  
+          			  <c:if test="${_cafeDTO.isCafeManager eq 'true'}">
                       </a>
-                      <c:if test="${_cafeDTO.isCafeManager eq 'true'}"> 
-                      <a href="javascript:alert('카페 프로필 변경하기')" class="lab_thmb">카페 프로필 변경하기</a>
                       </c:if>
                   	</span>
                   	<div class="mananger_info">
@@ -123,7 +123,7 @@
                   <c:if test="${_cafeDTO.isCafeMember eq 'true'}">
                   <li>
                   	<span>
-                  	  <a href="#">
+                  	  <a href="${contextPath}/user/profileUpdate?cafeId=${_cafeDTO.cafeId}" title="프로필 변경하기">
                   	  	<c:choose>
                   	  		<c:when test="${_cafeDTO.loginUser.cafeUserImageNum == 0}">
                   	  			<!-- 프로필 기본사진 -->
@@ -134,9 +134,8 @@
                   	  		</c:otherwise>
                   	  	</c:choose>
                       </a>
-                      <a href="profileUpdate?cafeId=${cafeMember.cafeId}" class="lab_thmb">프로필 변경하기</a>
                   	</span>
-                    <b>${_cafeDTO.loginUser.cafeUserNickname }</b>
+                    <b>${_cafeDTO.loginUser.cafeUserNickname}</b>
                     <div>가입
                     	<fmt:formatDate value="${_cafeDTO.loginUser.cafeUserRegdate}" pattern="YYYY.MM.dd."/></div>
                     <div class="gradeInfo">
@@ -177,7 +176,7 @@
                   <c:choose>
 
                   <c:when test="${_cafeDTO.isCafeManager eq 'true' || _cafeDTO.isCafeMember eq 'true'}">
-                    <input type="button" class="button" value="카페 글쓰기" onclick="alert('카페 글쓰기 이동')" style="width:100%;">
+                    <input type="button" class="button" value="카페 글쓰기" onclick="changeCafeMenu('/navercafe/user/board/writeForm')" style="width:100%;">
                   </c:when>
                   <c:otherwise>
                     <c:if test="${loginId ne null}">
@@ -214,7 +213,6 @@
           </c:choose>          
           </ul>
         </div>
-
 
         <div class="widget">
           <h4 class="title">

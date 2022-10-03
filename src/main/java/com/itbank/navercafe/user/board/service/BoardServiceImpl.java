@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import com.itbank.navercafe.common.file.dto.FileDTO;
 import com.itbank.navercafe.common.file.mapper.FileMapper;
 import com.itbank.navercafe.user.board.dto.BoardDTO;
+import com.itbank.navercafe.user.board.dto.BoardExtendDTO;
 import com.itbank.navercafe.user.board.mapper.BoardMapper;
 import com.itbank.navercafe.user.menu.dto.MenuDTO;
 
@@ -26,7 +27,7 @@ public class BoardServiceImpl implements BoardService{
 	
 	//전체목록인데 수영이형이랑 상의.
 	@Override
-	public ArrayList<BoardDTO> getBoardList(MenuDTO menuDTO) {
+	public ArrayList<BoardExtendDTO> getBoardList(MenuDTO menuDTO) {
 	
 		return bm.getBoardList(menuDTO);
 	}

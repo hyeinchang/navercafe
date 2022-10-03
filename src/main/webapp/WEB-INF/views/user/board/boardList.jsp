@@ -16,6 +16,7 @@
 	div.dataTables_paginate {
 		text-align : center !important;
 	}
+	.grade-button{background-color: white;color:black; border:1px solid black;}
 </style>
 <script	src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script>
 <script>

@@ -6,12 +6,13 @@ import java.util.ArrayList;
 import org.springframework.ui.Model;
 
 import com.itbank.navercafe.user.board.dto.BoardDTO;
+import com.itbank.navercafe.user.board.dto.BoardExtendDTO;
 import com.itbank.navercafe.user.menu.dto.MenuDTO;
 
 
 public interface BoardService {
 	//전체목록인데 수영이형이랑 상의.
-	public ArrayList<BoardDTO> getBoardList(MenuDTO menuDTO);
+	public ArrayList<BoardExtendDTO> getBoardList(MenuDTO menuDTO);
 	
 	//게시글 가져오기
 	public BoardDTO getUserBoard(int boardNum, MenuDTO menuDTO, Model model,int pageNum);

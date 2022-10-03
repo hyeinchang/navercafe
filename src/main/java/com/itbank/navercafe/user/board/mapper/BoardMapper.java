@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Param;
 
 import com.itbank.navercafe.user.board.dto.BoardDTO;
+import com.itbank.navercafe.user.board.dto.BoardExtendDTO;
 import com.itbank.navercafe.user.board.dto.LikesDTO;
 import com.itbank.navercafe.user.menu.dto.MenuDTO;
 
@@ -14,7 +15,7 @@ import com.itbank.navercafe.user.menu.dto.MenuDTO;
 
 public interface BoardMapper {
 	//전체목록인데 수영이형이랑 상의.
-	public ArrayList<BoardDTO> getBoardList(MenuDTO menuDTO);
+	public ArrayList<BoardExtendDTO> getBoardList(MenuDTO menuDTO);
 	//보드 넘에 따른 게시물
 	public BoardDTO getUserBoard(int boardNum);
 

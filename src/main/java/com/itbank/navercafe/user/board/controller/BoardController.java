@@ -47,7 +47,7 @@ public class BoardController {
 	}
 	//전체목록인데 수영이형이랑 상의.
 	@GetMapping("/goBoardList")	
-	public String goBoardList(Model model, String cafeId, MenuDTO menuDTO, RedirectAttributes ra) throws Exception{
+	public String goBoardList(Model model, String cafeId, MenuDTO menuDTO) throws Exception{
 		int boardMenuNum = menuDTO.getBoardMenuNum();
 		int boardMenuType = 1;
 		String boardMenuName = "전체 게시판";
@@ -67,9 +67,7 @@ public class BoardController {
 		// 게시판 타입에 따라 다른 view 설정
 		switch(boardMenuType) {
 		case 4 :
-			ra.addFlashAttribute("cafeId", cafeId);
-			ra.addFlashAttribute("menuDTO", menuDTO);
-			returnUrl = "redirect:/user/board/goGradeBoardList";
+			returnUrl = "user/board/gradeBoardList";
 			break;
 		case 5 :
 			returnUrl = "user/board/memoBoardList";
