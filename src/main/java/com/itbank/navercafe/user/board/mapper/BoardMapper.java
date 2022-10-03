@@ -46,4 +46,6 @@ public interface BoardMapper {
 	(@Param("boardMenuNum")int boardMenuNum,@Param("cafeId")String cafeId,
 			@Param("start") int start,@Param("end")int end);
 	
+	public int insertBoard(BoardDTO boardDTO) throws Exception;
+	
 }

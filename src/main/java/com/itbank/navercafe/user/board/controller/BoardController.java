@@ -1,5 +1,8 @@
 package com.itbank.navercafe.user.board.controller;
 
+import java.util.Map;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -8,11 +11,14 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.itbank.navercafe.common.CommonUtils;
 import com.itbank.navercafe.user.board.dto.BoardDTO;
 import com.itbank.navercafe.user.board.service.BoardService;
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
@@ -178,5 +184,22 @@ public class BoardController {
 	public String memoSave(HttpServletRequest res) {
 		memoSer.memoSave(res);
 		return "redirect:goMemoBoardList";
+	}
+	
+	@PostMapping(value="writeBoard", produces="application/json; charset=utf-8")
+	@ResponseBody
+	public int writeBoard(@RequestBody Map<String, Object> map) {
+		int result = 0;
+		CommonUtils commonUtils = new CommonUtils();
+		BoardDTO boardDTO = new BoardDTO();
+		
+		try {
+			boardDTO = (BoardDTO) commonUtils.setDTO(map, boardDTO);
+			result = ser.insertBoard(boardDTO);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 }

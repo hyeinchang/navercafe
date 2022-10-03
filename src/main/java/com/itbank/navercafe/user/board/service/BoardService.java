@@ -31,6 +31,6 @@ public interface BoardService {
 	//파일테이블리스트
 	public void getFileList(Model model);
 	
-
+	public int insertBoard(BoardDTO boardDTO) throws Exception;
 
 }

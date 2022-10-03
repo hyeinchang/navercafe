@@ -127,6 +127,17 @@
 		where rn between #{start} and #{end}
 	</select>
 	
-	
+	<insert id="insertBoard">
+		<![CDATA[
+			INSERT INTO PROJECT_BOARD
+				(BOARD_NUM, BOARD_TITLE, BOARD_CONTENT, BOARD_LIKES, 
+				BOARD_NOTICE, BOARD_REPLY_ALLOW, BOARD_PREFIX,
+				USER_ID, BOARD_MENU_NUM, HIT, BOARD_SAVEDATE)
+			VALUES
+				(PROJECT_BOARD_SEQ.NEXTVAL, #{boardTitle}, #{boardContent}, #{boardLikes},
+				#{boardNotice}, #{boardReplyAllow}, #{boardPrefix},
+				#{userId}, #{boardMenuNum}, #{hit}, SYSDATE)
+		]]>
+	</insert>
 </mapper>
 

@@ -42,7 +42,7 @@
 	                  <a href="javascript:changeCafeMenu('${contextPath}/admin')" class="info-cafe">
 					    <span class="ico_aside ico_setting"></span>카페관리
 					  </a>
-				      <a href="javascript:alert('통계로 이동')" class="info-cafe">
+				      <a href="javascript:alert('통계로 이동')" class="info-cafe" style="display:none;">
 					    <span class="ico_stat"></span>통계
 					  </a>
 					</c:when>
@@ -208,7 +208,7 @@
           	<c:otherwise>
           	<li>
             	<a href="${contextPath}/user/board/goBoardList?cafeId=${_cafeDTO.cafeId}">전체글보기</a>
-            	<span class="text-primary">3</span>
+            	<span class="text-primary">${_cafeDTO.countMap.totalBoardCount}</span>
             </li>
           	</c:otherwise>	
           </c:choose>          
