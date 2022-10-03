@@ -20,6 +20,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.itbank.navercafe.common.CommonUtils;
 import com.itbank.navercafe.user.board.dto.BoardDTO;
+import com.itbank.navercafe.user.board.dto.BoardExtendDTO;
 import com.itbank.navercafe.user.board.service.BoardService;
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
 import com.itbank.navercafe.user.cafemember.service.CafeMemberService;
@@ -195,6 +196,23 @@ public class BoardController {
 		try {
 			boardDTO = (BoardDTO) commonUtils.setDTO(map, boardDTO);
 			result = ser.insertBoard(boardDTO);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	@PostMapping(value="checkGradeBoard", produces="application/json; charset=utf-8")
+	@ResponseBody
+	public int checkBoard(@RequestBody Map<String, Object> map) {
+		int result = 0;
+		CommonUtils commonUtils = new CommonUtils();
+		BoardExtendDTO boardExtDTO = new BoardExtendDTO();
+		
+		try {
+			boardExtDTO = (BoardExtendDTO) commonUtils.setDTO(map, boardExtDTO);
+			result = ser.checkGradeBoard(boardExtDTO);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

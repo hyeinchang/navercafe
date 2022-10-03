@@ -33,5 +33,6 @@ public interface BoardService {
 	public void getFileList(Model model);
 	
 	public int insertBoard(BoardDTO boardDTO) throws Exception;
-
+	
+	public int checkGradeBoard(BoardExtendDTO boardExtDTO) throws Exception;
 }

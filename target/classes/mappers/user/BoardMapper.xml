@@ -172,5 +172,16 @@
 				#{userId}, #{boardMenuNum}, #{hit}, SYSDATE)
 		]]>
 	</insert>
+	
+	<select id="checkGradeBoard" resultType="Integer">
+		<![CDATA[
+			SELECT COUNT(*) boardCount 
+			FROM
+				(SELECT * FROM PROJECT_BOARD_TYPE WHERE CAFE_ID = #{cafeId} AND BOARD_MENU_TYPE = 4) boardMenu
+			INNER JOIN
+				(SELECT * FROM PROJECT_BOARD WHERE USER_ID = #{userId}) board
+			ON boardMenu.BOARD_MENU_NUM = board.BOARD_MENU_NUM
+		]]>
+	</select>
 </mapper>
 

@@ -148,10 +148,14 @@ public class BoardServiceImpl implements BoardService{
 		return dto;
 	}
 
-
 	@Override
 	public int insertBoard(BoardDTO boardDTO) throws Exception {
 		return bm.insertBoard(boardDTO);
+	}
+
+	@Override
+	public int checkGradeBoard(BoardExtendDTO boardExtDTO) throws Exception {
+		return bm.checkGradeBoard(boardExtDTO);
 	}
 
 

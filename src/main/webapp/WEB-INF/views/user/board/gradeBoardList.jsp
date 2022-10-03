@@ -16,6 +16,9 @@
 	div.dataTables_paginate {
 		text-align : center !important;
 	}
+	#myTable th, #myTable td {
+		text-align : center !important;
+	}
 </style>
 <script	src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script>
 <script>
@@ -86,8 +89,9 @@
 		var form = document.writeBoardForm;
 		var maxGrade = 5;
 		var cafeUserGrade = form.cafeUserGrade.value;
+		var isCafeMember = '${_cafeDTO.isCafeMember}';
 		
-		if(maxGrade > Number(cafeUserGrade)) {
+		if(maxGrade > Number(cafeUserGrade) && isCafeMember == 'true') {
 			$('#myTable_length').prepend('<button type="button" id="gradeBtn" class="boardBtn">등업 신청하기</button>');
 			var gradeBtn = document.getElementById('gradeBtn');
 			gradeBtn.onclick = writeBoard;
@@ -122,14 +126,12 @@
 						<tr>
 							<td>
 								<c:if test="${ board.cafeUesrImageNum == 0}">
-			              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
-			              			width="40px" class="img-circle alignleft" alt="">
+			              			<img src="${contextPath}/resources/img/cafe_profile.png" class="profileImg" alt="프로필 이미지  없음">
 			              		</c:if>
-								<c:if test="${ board.cafeUesrImageNum  != 0 }">
-									<img src="test_download?fileImageNum=${board.cafeUesrImageNum}" 
-									width="40px" class="img-circle alignleft" alt="">
+								<c:if test="${ board.cafeUesrImageNum > 0 }">
+									<img src="${contextPath}/file/download?cafeUserImageNum=${board.cafeUesrImageNum}" class="profileImg" alt="프로필 이미지">
 								</c:if>
-								<br>
+								<br><br>
 								${board.cafeUserNickname}
 							</td>
 							<td>${board.upCutName}</td>
@@ -156,33 +158,25 @@
 	<input type="hidden" name="boardMenuNum" value="${_cafeDTO.menuDTO.boardMenuNum}">
     <input type="hidden" name="boardTitle" value="등업게시글">
     <input type="hidden" name="cafeUserGrade" value="${_cafeDTO.loginUser.cafeUserGrade}">
-</form>	     
+</form>
+
 <script type="text/javascript">
 function writeBoard() {
 	var form = document.writeBoardForm;
-	var maxGrade = 5;
-	var cafeUserGrade = form.cafeUserGrade.value;
 	
-	if(Number(cafeUserGrade) >= maxGrade) {
-		alert('카페 회원 최고 등급은 등업신청이 불가능합니다.');
+	if(!checkGradeBoard()) {
 		return;
 	}
 	
 	if(confirm('등업신청 하시겠습니까?')) {
 		var xhr = new XMLHttpRequest();
-		var cafeId = form.cafeId.value;
-		var userId = form.userId.value;
-		var editorDirectory = 'board';
 		var data = getData();
 		
 		xhr.open('post', '${contextPath}/user/board/writeBoard', false);
 		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 		xhr.setRequestHeader('Content-Type', 'application/json');
-		
 		xhr.onreadystatechange = function() {
 			if(xhr.readyState == 4 && xhr.status == 200) {
-	 			var message = '';
-	 			
 	 			if(Number(xhr.response) == 1) {
 	 				location.reload();
 	 			} else {
@@ -193,6 +187,32 @@ function writeBoard() {
 		
 		xhr.send(JSON.stringify(data));
 	}
+}
+
+function checkGradeBoard() {
+	var form = document.writeBoardForm;
+	var xhr = new XMLHttpRequest();
+	var data = getData();
+	var result = false;
+	
+	xhr.open('post', '${contextPath}/user/board/checkGradeBoard', false);
+	xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+	xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.onreadystatechange = function() {
+		if(xhr.readyState == 4 && xhr.status == 200) {
+ 			var message = '';
+ 			
+ 			if(Number(xhr.response) > 0) {
+ 				alert('등업 신청중입니다.')
+ 			} else {
+ 				result = true;
+ 			}
+		}
+	}
+	
+	xhr.send(JSON.stringify(data));
+	
+	return result;
 }
 
 function getData() {

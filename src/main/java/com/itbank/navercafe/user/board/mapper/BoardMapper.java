@@ -49,4 +49,6 @@ public interface BoardMapper {
 	
 	public int insertBoard(BoardDTO boardDTO) throws Exception;
 	
+	public int checkGradeBoard(BoardExtendDTO boardExtDTO) throws Exception;
+	
 }
