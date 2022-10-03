@@ -81,8 +81,11 @@
 	    });	
 		$('#myTable_length label').prepend($('#myTable_filter label'));
 		$('#myTable_length').prepend('<button type="button" id="writeBtn" class="boardBtn">글쓰기</button>');
+		
+		var writeBtn = document.getElementById('writeBtn');
+
+		writeBtn.onclick = goWriteForm;
 	});
-	
 </script>
 	<div class="content col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix cstmContent" ${_cafeDTO.cafeLayout eq 'left' ? '' : 'style="float:right;"'}>
        	<section class="section1">
@@ -125,6 +128,15 @@
 		  </section>
       </div>
       <!-- end content -->
+<form name="boardListForm">
+	<input type="hidden" name="cafeId" value="${_cafeDTO.cafeId}">
+	<input type="hidden" name="boardMenuNum" value="${_cafeDTO.menuDTO.boardMenuNum}">
+</form>      
 <script type="text/javascript">
-
+	function goWriteForm() {
+		var form = document.boardListForm;
+		
+		form.action = '${contextPath}/user/board/writeForm';
+		form.submit();
+	}
 </script>	      

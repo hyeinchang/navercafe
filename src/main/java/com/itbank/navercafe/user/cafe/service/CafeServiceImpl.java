@@ -51,6 +51,7 @@ public class CafeServiceImpl implements CafeService {
 	
 	@Override
 	public CafeDTO selectCafe(CafeDTO cafeDTO) throws Exception {
+		MenuDTO menuDTO = new MenuDTO();
 		List<MenuDTO> cafeMenuList = null;
 		Map<String, Integer> countMap = null;
 		List<CafeJoinQuestionDTO> questionList = null;
@@ -59,13 +60,18 @@ public class CafeServiceImpl implements CafeService {
 		try {
 			String cafeId = cafeDTO.getCafeId();
 			String loginId = cafeDTO.getLoginId();
+			int boardMenuNum = cafeDTO.getBoardMenuNum();
 			
 			cafeDTO = cafeMapper.selectCafe(cafeDTO);
+			menuDTO = menuService.selectBoardMenu(boardMenuNum);
 			cafeMenuList = menuService.selectBoardMenuList(cafeId);
 			countMap = this.getCafeCount(cafeId);
 			questionList = this.selectQuestionList(cafeId);
 			loginUser = cafeMemberService.getCafeMember(cafeId, loginId);
 			
+			if(cafeDTO != null && menuDTO != null) {
+				cafeDTO.setMenuDTO(menuDTO);
+			}
 			if(cafeDTO != null && cafeMenuList != null) {
 				cafeDTO.setCafeMenuList(cafeMenuList);
 			}

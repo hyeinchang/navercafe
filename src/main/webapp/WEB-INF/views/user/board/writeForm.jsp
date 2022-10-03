@@ -18,6 +18,8 @@
 					<input type="hidden" name="userId" value="${_cafeDTO.loginId}">
 					
 		            <div class="form-group">
+		            <c:choose>
+		              <c:when test="${_cafeDTO.menuDTO.boardMenuNum eq null ||  _cafeDTO.menuDTO.boardMenuNum == 0}">
 		              <select class="form-control" name="boardMenuNum" 
 		              	style="padding: 10px 12px;height: auto;cursor:pointer;"
 		              	onchange="checkBoardType()">
@@ -30,6 +32,14 @@
 		              	</c:if>
 		              	</c:forEach>
 		              </select>
+		              </c:when>
+		              <c:otherwise>
+		               <input type="hidden" name="boardMenuNum" value="${_cafeDTO.menuDTO.boardMenuNum}">
+		               <input type="text" name="boardMenuName" class="form-control" placeholder="제목을 입력해주세요."
+		              	data-length="1~200" data-format="" readonly value="${_cafeDTO.menuDTO.boardMenuName}">
+		              </c:otherwise>
+		            </c:choose>
+		             
 		              <div class="validate"></div>
 		            </div>
 		           

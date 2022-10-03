@@ -26,6 +26,8 @@ public class CafeDTO {
 	private String isCafeManager;
 	private String loginId;
 	
+	int boardMenuNum;
+	private MenuDTO menuDTO;
 	private List<MenuDTO> cafeMenuList;
 	private Map<String, Integer> countMap;
 	private List<CafeJoinQuestionDTO> questionList;
@@ -132,6 +134,20 @@ public class CafeDTO {
 	}
 	public void setLoginId(String loginId) {
 		this.loginId = loginId;
+	}
+	
+	
+	public int getBoardMenuNum() {
+		return boardMenuNum;
+	}
+	public void setBoardMenuNum(int boardMenuNum) {
+		this.boardMenuNum = boardMenuNum;
+	}
+	public MenuDTO getMenuDTO() {
+		return menuDTO;
+	}
+	public void setMenuDTO(MenuDTO menuDTO) {
+		this.menuDTO = menuDTO;
 	}
 	public List<MenuDTO> getCafeMenuList() {
 		return cafeMenuList;

@@ -41,8 +41,7 @@ public class BoardController {
 	@Autowired CafeMemberService cafeMemberService;
 	
 	@RequestMapping("/writeForm")
-	public String writeForm(CafeDTO cafeDTO, Model model) {
-		model.addAttribute("cafeDTO", cafeDTO);
+	public String writeForm() {
 		return "user/board/writeForm";
 	}
 	//전체목록인데 수영이형이랑 상의.

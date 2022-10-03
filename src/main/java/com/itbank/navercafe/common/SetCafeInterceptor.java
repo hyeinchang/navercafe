@@ -35,8 +35,22 @@ public class SetCafeInterceptor extends HandlerInterceptorAdapter{
 				cafeDTO.setCafeId(cafeId);
 				HttpSession session = request.getSession();
 				String loginId = (String) session.getAttribute("loginId");
+				String boardMenuNumStr = request.getParameter("boardMenuNum");
 				
-				cafeDTO.setLoginId(loginId);
+				if(loginId != null) {
+					cafeDTO.setLoginId(loginId);
+				}
+				
+				if(boardMenuNumStr != null && boardMenuNumStr.length() > 0) {
+					boardMenuNumStr = boardMenuNumStr.replaceAll("\\D", "");
+					
+					if(boardMenuNumStr.length() > 0) {
+						int boardMenuNum = Integer.parseInt(boardMenuNumStr);
+						
+						cafeDTO.setBoardMenuNum(boardMenuNum);
+					}
+				}
+				
 				cafeDTO = cafeService.selectCafe(cafeDTO);
 				
 				if(cafeDTO == null) {
