@@ -300,7 +300,7 @@ function formCheck() {
 				if(min > 0 && length == 0) {
 					alert(dataText.appendER() + ' 입력해주십시오.');
 					element.focus();
-					return;
+					return false;
 				}
 				
 				if(length < min) {
@@ -311,7 +311,7 @@ function formCheck() {
 					}
 					
 					element.focus();
-					return;
+					return false;
 				}
 				
 				if(length > max) {
@@ -322,7 +322,7 @@ function formCheck() {
 					}
 					
 					element.focus();
-					return;
+					return false;
 				}
 			}
 		}
@@ -333,7 +333,7 @@ function formCheck() {
 				if(!value.isNumAndEng()) {
 					alert(dataText.appendER() + ' 영문/숫자 형식으로 입력해주십시오.');
 					element.focus();
-					return;
+					return false;
 				}
 			}
 		}
@@ -395,11 +395,10 @@ function formCheck() {
 	if(!agreeCheck.checked) {
 		alert('카페 개인정보보호정책에 동의해주십시오.');
 		agreeCheck.focus();
-		return;
+		return false;
 	}
 	
 	return true;
-	
 }
 
 // 카페 아이디 중복 확인
