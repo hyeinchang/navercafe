@@ -311,7 +311,7 @@ function formCheck() {
 					}
 					
 					element.focus();
-					return;s
+					return;
 				}
 				
 				if(length > max) {
