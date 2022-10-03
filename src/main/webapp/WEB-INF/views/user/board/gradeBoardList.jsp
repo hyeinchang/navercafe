@@ -16,7 +16,6 @@
 	div.dataTables_paginate {
 		text-align : center !important;
 	}
-	#gradeBtn {vertical-align: middle; float: left;}
 </style>
 <script	src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script>
 <script>
@@ -83,7 +82,7 @@
 	        table.column(colIndex).search(this.value).draw(); // 컬럼 숨기면 검색 인덱스 +1
 	    });	
 		$('#myTable_length label').prepend($('#myTable_filter label'));
-		$('#myTable_length').prepend('<button type="button" id="gradeBtn">등업 신청하기</button>');
+		$('#myTable_length').prepend('<button type="button" id="gradeBtn" class="boardBtn">등업 신청하기</button>');
 	});
 	
 </script>

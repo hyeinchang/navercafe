@@ -80,6 +80,7 @@
 	        table.column(colIndex).search(this.value).draw(); // 컬럼 숨기면 검색 인덱스 +1
 	    });	
 		$('#myTable_length label').prepend($('#myTable_filter label'));
+		$('#myTable_length').prepend('<button type="button" id="writeBtn" class="boardBtn">글쓰기</button>');
 	});
 	
 </script>
