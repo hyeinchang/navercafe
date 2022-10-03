@@ -88,7 +88,6 @@
 		oEditors.getById[contentAreaId].exec("PASTE_HTML", [sHTML]);
 	}
 	
-	
 	function writeBoard() {
 		var form = document.writeBoardForm;
 		

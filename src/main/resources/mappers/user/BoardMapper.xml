@@ -70,7 +70,7 @@
 	<!-- //전체목록인데 수영이형이랑 상의. -->
 	<select id="getBoardList" resultMap="boardExtend">
 		<![CDATA[
-	        SELECT ROWNUM rn, boardData.*, grade.cut_name, upData.* FROM
+	        SELECT ROWNUM rn, boardData.*, grade.cut_name, upData.up_cut_name, upData.up_cafe_user_grade FROM
 	            (select boardMenu.cafe_id, boardMenu.board_menu_name, boardMenu.board_menu_type, board.*, 
 	            cafeMember.cafe_user_nickname, cafeMember.cafe_user_image_num, cafeMember.cafe_user_grade, 
 	            cafeMember.cafe_user_visit, cafeMember.cafe_user_write, cafeMember.cafe_user_reply, cafeMember.cafe_user_visit_check, 
@@ -94,8 +94,8 @@
 	            (SELECT cafe_id, cafe_user_grade, cut_name from project_member_grade) grade
 	        ON boardData.cafe_id = grade.cafe_id and boardData.cafe_user_grade = grade.cafe_user_grade 
 			LEFT JOIN
-			    (SELECT cafe_user_grade up_cafe_user_grade, cut_name up_cut_name FROM project_member_grade) upData
-			ON boardData.cafe_user_grade+1 = upData.up_cafe_user_grade
+			    (SELECT cafe_user_grade up_cafe_user_grade, cut_name up_cut_name, cafe_id FROM project_member_grade) upData
+			ON boardData.cafe_user_grade+1 = upData.up_cafe_user_grade AND boardData.cafe_id = upData.cafe_id
 			ORDER BY boardData.board_num DESC
 		]]>		
 	</select>

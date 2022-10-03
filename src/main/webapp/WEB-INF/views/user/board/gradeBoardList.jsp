@@ -82,7 +82,17 @@
 	        table.column(colIndex).search(this.value).draw(); // 컬럼 숨기면 검색 인덱스 +1
 	    });	
 		$('#myTable_length label').prepend($('#myTable_filter label'));
-		$('#myTable_length').prepend('<button type="button" id="gradeBtn" class="boardBtn">등업 신청하기</button>');
+		
+		var form = document.writeBoardForm;
+		var maxGrade = 5;
+		var cafeUserGrade = form.cafeUserGrade.value;
+		
+		if(maxGrade > Number(cafeUserGrade)) {
+			$('#myTable_length').prepend('<button type="button" id="gradeBtn" class="boardBtn">등업 신청하기</button>');
+			var gradeBtn = document.getElementById('gradeBtn');
+			gradeBtn.onclick = writeBoard;
+		}
+			
 	});
 	
 </script>
@@ -108,7 +118,7 @@
 							<th>신청일</th>
 						</tr>
 					</thead>
-					<c:forEach var="dto" items="${boardList}">
+					<c:forEach var="board" items="${boardList}">
 						<tr>
 							<td>
 								<c:if test="${ board.cafeUesrImageNum == 0}">
@@ -140,6 +150,63 @@
 		  </section>
       </div>
       <!-- end content -->
+<form name="writeBoardForm" method="post">
+	<input type="hidden" name="cafeId" value="${_cafeDTO.cafeId}">
+	<input type="hidden" name="userId" value="${_cafeDTO.loginId}"> 
+	<input type="hidden" name="boardMenuNum" value="${_cafeDTO.menuDTO.boardMenuNum}">
+    <input type="hidden" name="boardTitle" value="등업게시글">
+    <input type="hidden" name="cafeUserGrade" value="${_cafeDTO.loginUser.cafeUserGrade}">
+</form>	     
 <script type="text/javascript">
+function writeBoard() {
+	var form = document.writeBoardForm;
+	var maxGrade = 5;
+	var cafeUserGrade = form.cafeUserGrade.value;
+	
+	if(Number(cafeUserGrade) >= maxGrade) {
+		alert('카페 회원 최고 등급은 등업신청이 불가능합니다.');
+		return;
+	}
+	
+	if(confirm('등업신청 하시겠습니까?')) {
+		var xhr = new XMLHttpRequest();
+		var cafeId = form.cafeId.value;
+		var userId = form.userId.value;
+		var editorDirectory = 'board';
+		var data = getData();
+		
+		xhr.open('post', '${contextPath}/user/board/writeBoard', false);
+		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		xhr.setRequestHeader('Content-Type', 'application/json');
+		
+		xhr.onreadystatechange = function() {
+			if(xhr.readyState == 4 && xhr.status == 200) {
+	 			var message = '';
+	 			
+	 			if(Number(xhr.response) == 1) {
+	 				location.reload();
+	 			} else {
+	 				alert('저장에 실패했습니다.');
+	 			}
+			}
+		}
+		
+		xhr.send(JSON.stringify(data));
+	}
+}
 
+function getData() {
+	var form = document.writeBoardForm;
+	var data = new Object();
+	
+	for(var i=0;i<form.length;i++) {
+		var element = form[i];
+		
+		if(element.name && element.value) {
+			data[element.name] = element.value;
+		}
+	}
+	
+	return data;
+}
 </script>	      
