@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -222,7 +223,7 @@
             <c:forEach var="cafeMenu" items="${_cafeDTO.cafeMenuList}">
             <!-- 공개 게시판이이거나 카페 회원일 때 공개 -->
             <c:if test="${cafeMenu.boardPublicFlag eq 'Y' || _cafeDTO.isCafeMember eq 'true'}">
-              <li><a href="${contextPath}/user/board/goBoardList?cafeId=${_cafeDTO.cafeId}&boardMenuNum=${cafeMenu.boardMenuNum}">${cafeMenu.boardMenuName}</a></li>
+              <li><a href="javascript:changeCafeMenu('${contextPath}/user/board/goBoardList', ${cafeMenu.boardMenuNum})">${cafeMenu.boardMenuName}</a></li>
             </c:if>
             </c:forEach>
             <c:if test="${_cafeDTO.cafeMenuList eq null || _cafeDTO.cafeMenuList.size() == 0}">

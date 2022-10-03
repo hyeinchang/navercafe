@@ -26,7 +26,7 @@ public class CafeDTO {
 	private String isCafeManager;
 	private String loginId;
 	
-	int boardMenuNum;
+	private int boardMenuNum;
 	private MenuDTO menuDTO;
 	private List<MenuDTO> cafeMenuList;
 	private Map<String, Integer> countMap;

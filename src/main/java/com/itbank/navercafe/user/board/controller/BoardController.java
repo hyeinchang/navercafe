@@ -49,7 +49,7 @@ public class BoardController {
 	public String goBoardList(Model model, String cafeId, MenuDTO menuDTO) throws Exception{
 		int boardMenuNum = menuDTO.getBoardMenuNum();
 		int boardMenuType = 1;
-		String boardMenuName = "전체 게시판";
+		String boardMenuName = "전체글보기";
 		
 		String returnUrl = "user/board/boardList";
 		
