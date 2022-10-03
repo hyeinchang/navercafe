@@ -87,6 +87,8 @@
 			    WHERE
 			    boardMenu.board_menu_num = board.board_menu_num
 			    AND
+                board.user_id = cafeMember.user_id
+			    AND
 			    boardMenu.cafe_id = cafeMember.cafe_id) boardData
 	        LEFT JOIN   
 	            (SELECT cafe_id, cafe_user_grade, cut_name from project_member_grade) grade
