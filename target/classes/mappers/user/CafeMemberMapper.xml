@@ -19,8 +19,8 @@
 		<result property="cafeUserStatus" column="cafe_user_status"/>
 		<result property="cafeUserEmailReceieve" column="cafe_user_email_receieve"/>
 		<result property="cafeUserGenderReveal" column="cafe_user_gender_reveal"/>
+		<result property="cutName" column="cut_name"/>
 	</resultMap>
-	
 
 
 	<!-- 카페 닉네임 중복검사 -->
@@ -39,7 +39,11 @@
 	</select>
 	
 	<select id="getCafeMember" resultMap="project_cafe_member">
-		select * from project_cafe_member where cafe_id = #{cafeId} and user_id = #{userId}
+		select cafeMember.*, memberGrade.cut_name from 
+			(select * from project_cafe_member where cafe_id = #{cafeId} and user_id = #{userId}) cafeMember
+		left join
+			(select cafe_id, cafe_user_grade, cut_name from project_member_grade) memberGrade
+		on cafeMember.cafe_id = memberGrade.cafe_id and cafeMember.cafe_user_grade = memberGrade.cafe_user_grade
 	</select>
 	
 	<update id="cafeMemberUpdate">

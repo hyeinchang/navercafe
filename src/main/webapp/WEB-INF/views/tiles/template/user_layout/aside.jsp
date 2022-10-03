@@ -125,7 +125,8 @@
                   	<span>
                   	  <a href="#">
                   	  	<c:choose>
-                  	  		<c:when test="${_cafeDTO.loginUser.cafeUserImageNum == 0}"> <!-- 프로필 기본사진 -->
+                  	  		<c:when test="${_cafeDTO.loginUser.cafeUserImageNum == 0}">
+                  	  			<!-- 프로필 기본사진 -->
                   	  			<img class="profileImg" src="${contextPath}/resources/img/cafe_profile.png" alt="프로필 이미지">
                   	  		</c:when>
                   	  		<c:otherwise>
@@ -139,26 +140,21 @@
                     <div>가입
                     	<fmt:formatDate value="${_cafeDTO.loginUser.cafeUserRegdate}" pattern="YYYY.MM.dd."/></div>
                     <div class="gradeInfo">
-                    	<c:choose>
-                    		<c:when test="${_cafeDTO.loginUser.cafeUserGrade eq 0}">
-                    		<span>카페등급1 <img src="${contextPath}/resources/img/grade_manager.gif" alt=""></span>
-                    		</c:when>
-                    		<c:when test="${_cafeDTO.loginUser.cafeUserGrade eq 1}">
-                    		<span>카페등급2 <img src="${contextPath}/resources/img/grade_manager.gif" alt=""></span>
-                    		</c:when>
-                    		<c:when test="${_cafeDTO.loginUser.cafeUserGrade eq 2}">
-                    		<span>카페등급3 <img src="${contextPath}/resources/img/grade_manager.gif" alt=""></span>
-                    		</c:when>
-                    		<c:when test="${_cafeDTO.loginUser.cafeUserGrade eq 999}">
-                    		<span>카페 매니저 <img src="${contextPath}/resources/img/grade_manager.gif" alt=""></span>
-                    		</c:when>
-                    		<c:otherwise>
-                    		아니야
-                    		</c:otherwise>
-                    	</c:choose>
-                    	<!--  
-	                   	<a href="javscript:alert('멤버등급 안내')">등급 안내</a>
-	                   	-->
+                    <c:choose>
+                   		<c:when test="${_cafeDTO.loginUser.cafeUserGrade eq 999}">
+                   		<span>카페 매니저
+                   			<img src="${contextPath}/resources/img/grade_manager.gif" alt="">
+                   		</span>
+                   		</c:when>
+                   		<c:otherwise>
+                   		<span>${_cafeDTO.loginUser.cutName}
+                   			<img src="${contextPath}/resources/img/grade/icon/level${_cafeDTO.loginUser.cafeUserGrade}.gif" alt="${_cafeDTO.loginUser.cutName}">
+                   		</span>
+                   		</c:otherwise>
+                    </c:choose>
+                   	<!--  
+                   	<a href="javscript:alert('멤버등급 안내')">등급 안내</a>
+                   	-->
                     </div>
                   </li>
                   <li class="cafeInfo">

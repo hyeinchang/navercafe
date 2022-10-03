@@ -13,14 +13,17 @@
 		      <div class="col-lg-8 col-md-8 col-sm-8 clearfix">
 				<div style="margin-top: 30px; padding: 8px 32px 32px; border: 1px solid #ebecef; line-height: 20px; border-radius: 10px;">
 					<form action="cafeRegApp" method="post" name="signupForm" id="signupForm">
-						<input type="hidden" value="${cafeId}" name="cafeId" id="cafeId">
-						<input type="hidden" value="${loginId}" name="userId">
+						<input type="hidden" value="${_cafeDTO.cafeId}" name="cafeId" id="cafeId">
+						<input type="hidden" value="${_cafeDTO.loginId}" name="userId">
 						<input type="hidden" name="status" id="status" value="OK">
 						<div class="join_info">
 							<div class="join_info_head">
-								<strong style="line-height: 20px;">카페설명</strong>
+								<strong style="line-height: 20px;">카페소개</strong>
 							</div>
 							<div class="join_info_body">
+							<c:if test="${_cafeDTO.cafeExplanation eq null || _cafeDTO.cafeExplanation.length() == 0}">
+								등록된 카페소개 없습니다.
+							</c:if>
 								${_cafeDTO.cafeExplanation}
 							</div>
 						</div>
@@ -29,6 +32,9 @@
 								<strong style="line-height: 20px;">가입안내</strong>
 							</div>
 							<div class="join_info_body">
+							<c:if test="${_cafeDTO.cafeJoinInformation eq null || _cafeDTO.cafeJoinInformation.length() == 0}">
+								등록된 가입안내가 없습니다.
+							</c:if>
 								${_cafeDTO.cafeJoinInformation}
 							</div>
 						</div>
@@ -75,3 +81,46 @@
 		  </section>
       </div>
       <!-- end content -->
+
+<script type="text/javascript" src="resources/js/jquery3.6.0.js"></script>
+<script type="text/javascript">
+function idOverlap(){
+	let idCheck = document.getElementById("cafeUserNickname").value;
+	/*  let oldNick = document.getElementById("oldNick").value; */
+	let cafeId = document.getElementById("cafeId").value;
+	let confirm = document.getElementById("confirm");
+	let status = document.getElementById("status");
+	
+	$.ajax({
+		type : "POST",
+		url : "nickCheck2",
+		data : {"id" : idCheck,"cafeId":cafeId},
+		dataType : "text",
+		success : function(data){
+			if(data=="OK"){
+				confirm.style.color="#0000ff";
+				confirm.innerHTML = "사용 가능한 닉네임 입니다.";
+				$('input[name=status]').attr('value',"OK");
+				
+			}else{
+				confirm.style.color="#ff0000";
+				confirm.innerHTML = "사용 불가능한 닉네임 입니다.";
+				$('input[name=status]').attr('value',"NO");
+			}
+		},
+		error : function(){
+			alert("에러ㅓㅓ")
+		}
+	});
+}
+function update(){
+	let confirm = document.getElementById("confirm");
+	let status = document.getElementById("status").value;
+	console.log(status)
+	if(status == "OK"){
+		document.getElementById("signupForm").submit();
+	}else{
+		alert('수정 정보를 다시 확인해주세요')
+	}
+}
+</script>    

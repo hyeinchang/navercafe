@@ -18,6 +18,7 @@ public class CafeMemberDTO {
 	private String cafeUserStatus;
 	private String cafeUserEmailReceieve;
 	private String cafeUserGenderReveal;
+	private String cutName;
 	
 	public String getCafeId() {
 		return cafeId;
@@ -102,5 +103,11 @@ public class CafeMemberDTO {
 	}
 	public void setCafeUserGenderReveal(String cafeUserGenderReveal) {
 		this.cafeUserGenderReveal = cafeUserGenderReveal;
+	}
+	public String getCutName() {
+		return cutName;
+	}
+	public void setCutName(String cutName) {
+		this.cutName = cutName;
 	}
 }

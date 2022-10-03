@@ -18,6 +18,7 @@
         <result column="CAFE_REGDATE" property="cafeRegdate"/>
         <result column="IS_CAFE_MEMBER" property="isCafeMember"/>
         <result column="IS_CAFE_MANAGER" property="isCafeManager"/>
+        <result column="LOGIN_ID" property="loginId"/>
 	</resultMap>
 	
 	<resultMap type="com.itbank.navercafe.user.cafe.dto.CafeJoinQuestionDTO" id="cafeQuestion">
@@ -81,7 +82,8 @@
 		<![CDATA[
 			SELECT CAFE.*,
 				NVL2(CAFE_MEMBER.USER_ID, 'true', 'false') IS_CAFE_MEMBER,
-				(CASE WHEN CAFE.USER_ID = #{loginId} THEN 'true' ELSE 'false' END) IS_CAFE_MANAGER
+				(CASE WHEN CAFE.USER_ID = #{loginId} THEN 'true' ELSE 'false' END) IS_CAFE_MANAGER,
+				#{loginId} LOGIN_ID
 			FROM 
 				(SELECT * FROM PROJECT_CAFE_INFO WHERE CAFE_ID = #{cafeId}) CAFE
 			LEFT JOIN
