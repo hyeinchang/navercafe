@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
+import com.itbank.navercafe.user.cafemember.dto.CafeJoinAnswerDTO;
 import com.itbank.navercafe.user.cafemember.dto.CafeMemberDTO;
 import com.itbank.navercafe.user.cafemember.mapper.CafeMemberMapper;
 
@@ -112,6 +113,24 @@ public class CafeMemberServiceImpl implements CafeMemberService{
 	@Override
 	public void getUserViewList(String cafeId,String userId,Model model) {
 		model.addAttribute("getUserViewList",mapper.getUserViewList(cafeId,userId));
+	}
+
+	@Override
+	public int getUserImageSeq() throws Exception {
+		return mapper.getUserImageSeq();
+	}
+
+	@Override
+	public int insertJoinAnswer(CafeJoinAnswerDTO cafeJoinAnswerDTO) throws Exception {
+		int result = 0;
+		
+		try {
+			
+			result = mapper.insertJoinAnswer(cafeJoinAnswerDTO);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 	
 	

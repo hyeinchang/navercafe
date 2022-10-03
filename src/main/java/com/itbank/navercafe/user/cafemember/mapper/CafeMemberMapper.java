@@ -2,6 +2,7 @@ package com.itbank.navercafe.user.cafemember.mapper;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.itbank.navercafe.user.cafemember.dto.CafeJoinAnswerDTO;
 import com.itbank.navercafe.user.cafemember.dto.CafeMemberDTO;
 
 public interface CafeMemberMapper {
@@ -24,5 +25,8 @@ public interface CafeMemberMapper {
 	public int cafeMemberUpdate(CafeMemberDTO dto);
 
 	public Integer idOverlap(@Param("cafeUserNickname")String cafeUserNickname, @Param("cafeId")String cafeId);
-
+	
+	public int getUserImageSeq() throws Exception;
+	
+	public int insertJoinAnswer(CafeJoinAnswerDTO cafeJoinAnswerDTO) throws Exception;
 }

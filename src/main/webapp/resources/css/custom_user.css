@@ -208,9 +208,7 @@ input[type=file] {
 	display: inline-block;
 	width: 16px; height: 16px;
 	background: none;
-	
 	background-image: url(https://ca-fe.pstatic.net/web-pc/static/img/sprite_icon_354827.svg#icon_search_delete-usage);
-	
 }
 .qna_area{
 	display: block; width: 100%; height: 60px;
@@ -250,3 +248,4 @@ input[type=file] {
     transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;vertical-align:middle;
 }
 .boardBtn {vertical-align: middle; float: left;}
+.formProfileImg {width:58px;height:58px;border-radius:100%;margin-right:10px;}

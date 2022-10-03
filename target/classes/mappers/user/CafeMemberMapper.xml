@@ -30,8 +30,8 @@
 	</select>
 	<!-- 카페 회원가입 -->
 	<insert id="signup">
-		insert into project_cafe_member(cafe_id,user_id,cafe_user_nickname,cafe_user_grade)
-		values(#{cafeId},#{userId},#{cafeUserNickname},#{cafeUserGrade})
+		insert into project_cafe_member(cafe_id,user_id,cafe_user_nickname,cafe_user_grade, cafe_user_image_num)
+		values(#{cafeId},#{userId},#{cafeUserNickname},#{cafeUserGrade},#{cafeUserImageNum})
 	</insert>
 	
 	<select id="cafeMembers" resultType="Integer">
@@ -75,5 +75,15 @@
 	<select id="getUserViewList" resultMap="project_cafe_member">
 		select * from project_cafe_member where user_id=#{userId} and cafe_id=#{cafeId}
 	</select>
+	
+	<select id="getUserImageSeq" resultType="Integer">
+		select CAFE_USER_IMAGE_NUM_SEQ.nextval from dual
+	</select>
 
+	<insert id="insertJoinAnswer">
+		insert into project_join_answers
+			(CAFE_ANSWER_NUM, USER_ID, CAFE_ANSWER_CONTENT, CAFE_ID, CAFE_QUESTION_NUM)
+		values
+			(project_join_answers_seq.nextval, #{userId}, #{cafeAnswerContent}, #{cafeId}, #{cafeQuestionNum})	
+	</insert>
 </mapper>

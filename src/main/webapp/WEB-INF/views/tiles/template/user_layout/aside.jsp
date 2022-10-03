@@ -127,10 +127,10 @@
                   	  	<c:choose>
                   	  		<c:when test="${_cafeDTO.loginUser.cafeUserImageNum == 0}">
                   	  			<!-- 프로필 기본사진 -->
-                  	  			<img class="profileImg" src="${contextPath}/resources/img/cafe_profile.png" alt="프로필 이미지">
+                  	  			<img class="profileImg" src="${contextPath}/resources/img/cafe_profile.png" alt="프로필 이미지 없음">
                   	  		</c:when>
                   	  		<c:otherwise>
-                  	  			<img class="profileImg" src="${contextPath}/resources/img/profileImage.jpg" alt="프로필 이미지">
+                  	  			<img class="profileImg" src="${contextPath}/file/download?cafeUserImageNum=${_cafeDTO.loginUser.cafeUserImageNum}" alt="프로필 이미지">
                   	  		</c:otherwise>
                   	  	</c:choose>
                       </a>

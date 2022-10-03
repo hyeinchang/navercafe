@@ -11,13 +11,18 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.itbank.navercafe.common.CommonUtils;
 import com.itbank.navercafe.common.file.FileUtils;
+import com.itbank.navercafe.common.file.dto.FileDTO;
+import com.itbank.navercafe.common.file.dto.FileResult;
 import com.itbank.navercafe.common.file.service.FileService;
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
 import com.itbank.navercafe.user.cafe.service.CafeService;
+import com.itbank.navercafe.user.cafemember.dto.CafeJoinAnswerDTO;
 import com.itbank.navercafe.user.cafemember.dto.CafeMemberDTO;
 import com.itbank.navercafe.user.cafemember.service.CafeMemberService;
 import com.itbank.navercafe.user.member.service.MemberService;
@@ -53,37 +58,74 @@ public class CafeController {
 	}
 	
 	@GetMapping("cafeSignup")  //카페 회원가입 페이지 이동
-	public String cafeSignup(Model model, CafeDTO cafeDTO, HttpSession session) {
+	public String cafeSignup() {
 		try {
-			String loginId = (String) session.getAttribute("loginId");
-			cafeDTO.setLoginId(loginId);
-			cafeDTO = cafeService.selectCafe(cafeDTO);	
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		
-		model.addAttribute("cafeDTO", cafeDTO);
-		
 		return "user/cafeSignup";
 	}
 	
-	@PostMapping("cafeRegApp") //카페 회원가입
-	public String cafeReg(CafeMemberDTO dto, String cafeId, Model model) {
-		int result = cms.signup(dto);
-		if(result==1) {
-			//model.addAttribute("",1);
-			return "redirect:/user/main?cafeId="+cafeId;
+	@PostMapping(value="cafeRegApp", produces="application/json") //카페 회원가입
+	@ResponseBody
+	public int cafeReg(MultipartHttpServletRequest multiRequest) {
+		int result = 0;
+		
+		try {
+			MultipartFile profileImage = multiRequest.getFile("profileImage");
+			CommonUtils commonUtils = new CommonUtils();
+			CafeMemberDTO cafeMemberDTO = new CafeMemberDTO();
+			String[] cafeAnswerContents = multiRequest.getParameterValues("cafeAnswerContent");
+			String cafeId = "";
+			String userId = "";
+			
+			cafeMemberDTO = (CafeMemberDTO) commonUtils.setDTO(multiRequest, cafeMemberDTO);
+			cafeId = cafeMemberDTO.getCafeId();
+			userId = cafeMemberDTO.getUserId();
+			
+			if(profileImage != null && profileImage.getSize() > 0) {
+			
+				
+				String directory = "profile/" +  cafeId + "/" + userId;
+				FileResult fileResult = fileUtils.uploadFile(profileImage, directory);
+				
+				if(fileResult.getState() == fileResult.SUCCESS) {
+					FileDTO fileDTO = fileResult.getFileDTO();
+					int cafeUserImageNum = cms.getUserImageSeq();
+					
+					cafeMemberDTO.setCafeUserImageNum(cafeUserImageNum);
+					fileDTO.setCafeUserImageNum(cafeUserImageNum);
+					
+					fileService.insertAttachFile(fileDTO);
+				}
+			}
+			
+			result = cms.signup(cafeMemberDTO);
+			
+			if(cafeAnswerContents != null && cafeAnswerContents.length > 0) {
+				for(int i=0;i<cafeAnswerContents.length;i++) {
+					CafeJoinAnswerDTO cafeJoinAnswerDTO = new CafeJoinAnswerDTO();
+					int order = i+1;
+					
+					cafeJoinAnswerDTO.setCafeId(cafeId);
+					cafeJoinAnswerDTO.setUserId(userId);
+					cafeJoinAnswerDTO.setCafeQuestionNum(order);
+					cafeJoinAnswerDTO.setCafeAnswerContent(cafeAnswerContents[i]);
+					
+					cms.insertJoinAnswer(cafeJoinAnswerDTO);
+				}
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
-		return "redirect:/user/main?cafeId="+cafeId;
+	
+		return result;
 	}
 	
 	@GetMapping("profileUpdate") // 회원정보수정창 이동 + 개인정보
-	public String profileUpdate(String cafeId, Model model, HttpSession session) {
-		String userId = (String) session.getAttribute("loginId");
-		CafeMemberDTO dto = cms.getCafeMember(cafeId,userId);
-		
-		model.addAttribute("cafeMember",dto);
-		model.addAttribute("cafeId",cafeId);
+	public String profileUpdate() {
 		return "user/profileUpdate";
 	}
 	
