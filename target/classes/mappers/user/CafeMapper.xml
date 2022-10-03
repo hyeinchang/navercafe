@@ -20,6 +20,12 @@
         <result column="IS_CAFE_MANAGER" property="isCafeManager"/>
 	</resultMap>
 	
+	<resultMap type="com.itbank.navercafe.user.cafe.dto.CafeJoinQuestionDTO" id="cafeQuestion">
+        <id column="CAFE_QUESTION_NUM" property="cafeQuestionNum"/>
+        <result column="CAFE_ID" property="cafeId"/>
+        <result column="CAFE_QUESTION_CONTENT" property="cafeQuestionContent"/>
+    </resultMap>
+    
 	<insert id="insertCafe">
 		<![CDATA[
 			INSERT INTO PROJECT_CAFE_INFO
@@ -134,6 +140,41 @@
 		]]>
 	</select>
 	
+	<select id="getTotalBoardCount" resultType="Integer">
+		<![CDATA[
+			SELECT COUNT(*) count
+			FROM 
+			(SELECT * FROM project_board_type WHERE cafe_id = #{cafeId}) boardMenu
+			INNER JOIN
+			(SELECT * FROM project_board) board
+			ON boardMenu.board_menu_num = board.board_menu_num
+		]]>
+	</select>
+	
+	<select id="getTotalBoardHit" resultType="Integer">
+		<![CDATA[
+			SELECT NVL(SUM(hit), 0) count
+			FROM 
+			(SELECT * FROM project_board_type WHERE cafe_id = #{cafeId}) boardMenu
+			INNER JOIN
+			(SELECT * FROM project_board) board
+			ON boardMenu.board_menu_num = board.board_menu_num
+		]]>
+	</select>
+	
+	<select id="getTotalReplyCount" resultType="Integer">
+		<![CDATA[
+			SELECT COUNT(*) count
+			FROM 
+			(SELECT * FROM project_board_type  WHERE cafe_id = #{cafeId}) boardMenu
+			INNER JOIN
+			(SELECT * FROM project_board) board
+			ON boardMenu.board_menu_num = board.board_menu_num
+			INNER JOIN project_reply reply
+			ON board.board_num = reply.board_num
+		]]>
+	</select>
+	
 	<insert id="insertMemberGrade">
 		<![CDATA[
 			INSERT INTO project_member_grade
@@ -141,4 +182,10 @@
 			VALUES(#{cafeId}, #{cafeUserGrade}, #{cutName}, #{cutDesc}, #{cutType})
 		]]>
 	</insert>
+	
+	<select id="selectQuestionList" resultMap="cafeQuestion">
+		<![CDATA[
+			SELECT * FROM project_join_question WHERE cafe_id = #{cafeId} ORDER BY cafe_question_num
+		]]>
+	</select>
 </mapper>

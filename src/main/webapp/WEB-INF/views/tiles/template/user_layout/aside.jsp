@@ -47,7 +47,7 @@
 					  </a>
 					</c:when>
 					<c:otherwise>
-					  <a href="javascript:changeCafeMenu('goBoardInside)" class="info-cafe">
+					  <a href="${contextPath}/user/cafeInformation?cafeId=${_cafeDTO.cafeId}" class="info-cafe">
 					      카페소개
 					  </a>
 					</c:otherwise>	
@@ -57,19 +57,19 @@
                   <li class="cafeInfo">
                   	<div>
                   	  <span class="ico_wrt"></span>
-                      <b>일간 게시글 수 :</b> ${_cafeDTO.dayCountMap.dayBoardCount}
+                      <b>일간 게시글 수 :</b> ${_cafeDTO.countMap.dayBoardCount}
                     </div>
                     <div>
                       <span class="ico_wrt"></span>
-                      <b>일간 조회 수 :</b> ${_cafeDTO.dayCountMap.dayBoardHit}
+                      <b>일간 조회 수 :</b> ${_cafeDTO.countMap.dayBoardHit}
                     </div>
                     <div>
                       <span class="ico_cmt"></span>
-                      <b>일간 댓글 수 :</b> ${_cafeDTO.dayCountMap.dayReplyCount}
+                      <b>일간 댓글 수 :</b> ${_cafeDTO.countMap.dayReplyCount}
                     </div>
                     <div>
                       <span class="ico"></span>
-                      <b>총 회원 수 :</b> ${_cafeDTO.dayCountMap.totalCafeMember}
+                      <b>총 회원 수 :</b> ${_cafeDTO.countMap.totalCafeMember}
                     </div>
                   </li>
                   <li>
@@ -125,7 +125,7 @@
                   	<span>
                   	  <a href="#">
                   	  	<c:choose>
-                  	  		<c:when test="${cafeMember.cafeUserImageNum == 0}"> <!-- 프로필 기본사진 -->
+                  	  		<c:when test="${_cafeDTO.loginUser.cafeUserImageNum == 0}"> <!-- 프로필 기본사진 -->
                   	  			<img class="profileImg" src="${contextPath}/resources/img/cafe_profile.png" alt="프로필 이미지">
                   	  		</c:when>
                   	  		<c:otherwise>
@@ -133,27 +133,30 @@
                   	  		</c:otherwise>
                   	  	</c:choose>
                       </a>
-                      <a href="profileUpdate?cafeId=${cafeMember.cafeId }" class="lab_thmb">프로필 변경하기</a>
+                      <a href="profileUpdate?cafeId=${cafeMember.cafeId}" class="lab_thmb">프로필 변경하기</a>
                   	</span>
-                    <b>${cafeMember.cafeUserNickname }</b>
-                    <div>가입 ${cafeMember.cafeUserRegdate}</div>
+                    <b>${_cafeDTO.loginUser.cafeUserNickname }</b>
+                    <div>가입
+                    	<fmt:formatDate value="${_cafeDTO.loginUser.cafeUserRegdate}" pattern="YYYY.MM.dd."/></div>
                     <div class="gradeInfo">
                     	<c:choose>
-                    		<c:when test="${cafeMember.cafeUserGrade eq 1}">
+                    		<c:when test="${_cafeDTO.loginUser.cafeUserGrade eq 0}">
                     		<span>카페등급1 <img src="${contextPath}/resources/img/grade_manager.gif" alt=""></span>
                     		</c:when>
-                    		<c:when test="${cafeMember.cafeUserGrade eq 2}">
+                    		<c:when test="${_cafeDTO.loginUser.cafeUserGrade eq 1}">
                     		<span>카페등급2 <img src="${contextPath}/resources/img/grade_manager.gif" alt=""></span>
                     		</c:when>
-                    		<c:when test="${cafeMember.cafeUserGrade eq 3}">
+                    		<c:when test="${_cafeDTO.loginUser.cafeUserGrade eq 2}">
                     		<span>카페등급3 <img src="${contextPath}/resources/img/grade_manager.gif" alt=""></span>
+                    		</c:when>
+                    		<c:when test="${_cafeDTO.loginUser.cafeUserGrade eq 999}">
+                    		<span>카페 매니저 <img src="${contextPath}/resources/img/grade_manager.gif" alt=""></span>
                     		</c:when>
                     		<c:otherwise>
                     		아니야
                     		</c:otherwise>
                     	</c:choose>
                     	<!--  
-	                   	<span>카페 매니저 <img src="${contextPath}/resources/img/grade_manager.gif" alt=""></span>
 	                   	<a href="javscript:alert('멤버등급 안내')">등급 안내</a>
 	                   	-->
                     </div>
@@ -161,15 +164,15 @@
                   <li class="cafeInfo">
                     <div>
                       <span class="ico_vst"></span>
-                      <b>방문 :</b> ${cafeMember.cafeUserVisit}회
+                      <b>방문 :</b> ${_cafeDTO.loginUser.cafeUserVisit}회
                     </div>
                     <div>
                       <span class="ico_wrt"></span>
-                      <b>내가 쓴 글 보기 :</b> ${cafeMember.cafeUserWrite}개
+                      <b>내가 쓴 글 보기 :</b> ${_cafeDTO.loginUser.cafeUserWrite}개
                     </div>
                     <div>
                       <span class="ico_cmt"></span>
-                      <b>내가 쓴 댓글보기 :</b> ${cafeMember.cafeUserReply}개
+                      <b>내가 쓴 댓글보기 :</b> ${_cafeDTO.loginUser.cafeUserReply}개
                     </div>
                   </li>
                   </c:if>

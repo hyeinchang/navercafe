@@ -14,12 +14,14 @@
       <div class="col-lg-12 col-md-12 col-sm-12 clearfix">
 
         <form class="main_form" action="register" method="post" name="signupForm">
+        	<input type="hidden" name="userIdCheck" value="N">
         	<h5 class="title">회원 기본 정보</h5>
         	<div class="infoLine">
         		<label for="id" class="infoLabel">아이디 <span class="required">*</span></label>
-          		<input type="text" name="id" id="id" class="form-control-inline" placeholder="아이디를 입력해주십시오.">
+          		<input type="text" name="id" id="id" class="form-control-inline" placeholder="아이디를 입력해주십시오."
+          			onchange="changeUserIdCheckFlag()" onkeypress="if(event.keyCode == 13)checkUserId()">
           		<input type="button" value="중복확인" class="button" style="margin-left:10px;"
-          			onclick="alert('아이디 중복확인')">
+          			onclick="checkUserId()">
           		<label class="infoText" style="color: red;" id="idlabel"></label>
         	</div>
         	
@@ -122,6 +124,14 @@
 		var phck = /^\d{3}-\d{3,4}-\d{4}$/;
 		var pwck = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[#?!@$%^&*-])[\w#?!@$%^&*-]{8,15}$/g;
 		var emck = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/g;
+		
+		var userIdCheckVal = document.signupForm.userIdCheck.value;
+		
+		if(userIdCheckVal != 'Y') {
+			alert('아이디 중복확인을 해주세요.');
+			id.focus();
+			return false;
+		}
 		
 		if(id.value==""){
 			alert("아이디를 입력하세요.");
@@ -252,7 +262,46 @@
 			document.getElementById("emaillabel").style.display = "block";
 		}
 		
-		
 		document.signupForm.submit();
+	}
+	
+	// 아이디 중복 확인
+	function checkUserId() {
+		var form = document.signupForm;
+		var userId = form.id;
+		var xhr = new XMLHttpRequest();
+		var idck = /^[a-z]+[a-z0-9-_]{4,20}$/g;
+		
+		if(userId.value == '') {
+			userId('아이디를 입력해주십시오.');
+			userId.focus();
+			return;
+		}
+		
+		if(!idck.test(userId.value)) {
+			alert('아이디는 5~20자의 영문소문자, 숫자, (-), (_)만 사용가능합니다.');
+			userId.focus();
+			return;
+		}
+		
+		xhr.open('get', '${contextPath}/cafe/member/checkUserId?userId=' + userId.value);
+		xhr.setRequestHeader('Content-Type', 'text/plain');
+		xhr.onreadystatechange = function() {
+			if(xhr.readyState == 4 && xhr.status == 200) {
+				if(Number(xhr.response) > 0) {
+					alert('사용할 수 없는 아이디입니다.');
+					userId.focus();
+					form.userIdCheck.value = 'N';
+				} else {
+					alert('사용가능한 아이디입니다.');
+					form.userIdCheck.value = 'Y';
+				}
+			}
+		}
+		xhr.send();
+	}
+	
+	function changeUserIdCheckFlag() {
+		document.signupForm.userIdCheck.value = 'N';
 	}
 </script>

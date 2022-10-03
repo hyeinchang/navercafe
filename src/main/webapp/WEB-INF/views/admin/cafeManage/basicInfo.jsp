@@ -65,8 +65,23 @@
 			       			<p>입력한 내용이 카페 메인, 검색결과등의 카페리스트에 반영 됩니다.</p>
 			       		</div>	
 			          	
-			        	
-			          	<br><br>
+			        	<div class="infoLine">
+			      			<label class="infoLabel">가입 방식</label>
+			      			<div class="checkArea">
+			      				<div>
+			      					<label  for="joinApplyY" >
+						          		<input type="radio" id="joinApplyY" name="cafeJoinApply" value="N"${_cafeDTO.cafeJoinApply eq 'N' ? ' checked' : ''}>
+						            	<span>가입 신청 시 바로 가입할 수 있습니다.</span>
+						       		</label>
+			      				</div>
+			      				<div>
+			      					<label for="joinApplyN">
+						          		<input type="radio" id="joinApplyN" name="cafeJoinApply" value="Y"${_cafeDTO.cafeJoinApply eq 'N' ? ' checked' : ''}>
+						            	<span>가입 신청 시 운영진 승인을 거쳐 가입할 수 있습니다.</span>
+						       		</label>
+			      				</div>
+			      			</div>
+			      		</div>
 			        </form>
                		
              		<div class="btnArea">

@@ -17,6 +17,7 @@ public interface CafeService {
 	public int getIconSeq() throws Exception;
 	public int getTitleSeq() throws Exception;
 	public int insertCafeJoinQuestion(CafeJoinQuestionDTO cafeJoinQuestionDTO) throws Exception;
-	public Map<String, Integer> getCafeDayCount(String cafeId) throws Exception;
+	public Map<String, Integer> getCafeCount(String cafeId) throws Exception;
 	public int insertMemberGrade(CafeMemberGradeDTO cafeMemberGradeDTO) throws Exception;
+	public List<CafeJoinQuestionDTO> selectQuestionList(String cafeId) throws Exception;
 }

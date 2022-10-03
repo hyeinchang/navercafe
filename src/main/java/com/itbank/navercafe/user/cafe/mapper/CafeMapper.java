@@ -20,5 +20,9 @@ public interface CafeMapper {
 	public int getDayTotalBoardHit(String cafeId) throws Exception;
 	public int getDayTotalReplyCount(String cafeId) throws Exception;
 	public int getTotalCafeMemberCount(String cafeId) throws Exception;
+	public int getTotalBoardCount(String cafeId) throws Exception;
+	public int getTotalBoardHit(String cafeId) throws Exception;
+	public int getTotalReplyCount(String cafeId) throws Exception;
 	public int insertMemberGrade(CafeMemberGradeDTO cafeMemberGradeDTO) throws Exception;
+	public List<CafeJoinQuestionDTO> selectQuestionList(String cafeId) throws Exception;
 }

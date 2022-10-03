@@ -92,6 +92,21 @@ public class HomeController { //메인 로그인관련
 		return url;
 	}
 	
+	@GetMapping(value="/cafe/member/checkUserId", produces="application/json")
+	@ResponseBody
+	public int checkUserId(String userId) {
+		int idCount = 0;
+
+		try {
+			if(memberService.getU(userId) != null) {
+				idCount = 1;
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return idCount;
+	}
 
 	@GetMapping("/cafe/member/signup")
 	public String signup() {

@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
+import com.itbank.navercafe.user.cafemember.dto.CafeMemberDTO;
 import com.itbank.navercafe.user.menu.dto.MenuDTO;
 
 public class CafeDTO {
@@ -24,8 +25,11 @@ public class CafeDTO {
 	private String isCafeMember;
 	private String isCafeManager;
 	private String loginId;
+	
 	private List<MenuDTO> cafeMenuList;
-	private Map<String, Integer> dayCountMap;
+	private Map<String, Integer> countMap;
+	private List<CafeJoinQuestionDTO> questionList;
+	private CafeMemberDTO loginUser;
 
 	public String getCafeId() {
 		return cafeId;
@@ -135,10 +139,22 @@ public class CafeDTO {
 	public void setCafeMenuList(List<MenuDTO> cafeMenuList) {
 		this.cafeMenuList = cafeMenuList;
 	}
-	public Map<String, Integer> getDayCountMap() {
-		return dayCountMap;
+	public Map<String, Integer> getCountMap() {
+		return countMap;
 	}
-	public void setDayCountMap(Map<String, Integer> dayCountMap) {
-		this.dayCountMap = dayCountMap;
+	public void setCountMap(Map<String, Integer> countMap) {
+		this.countMap = countMap;
+	}
+	public List<CafeJoinQuestionDTO> getQuestionList() {
+		return questionList;
+	}
+	public void setQuestionList(List<CafeJoinQuestionDTO> questionList) {
+		this.questionList = questionList;
+	}
+	public CafeMemberDTO getLoginUser() {
+		return loginUser;
+	}
+	public void setLoginUser(CafeMemberDTO loginUser) {
+		this.loginUser = loginUser;
 	}
 }

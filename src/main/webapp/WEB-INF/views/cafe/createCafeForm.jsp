@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<c:set var="address" value="${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}"/>
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
   <section class="section1 cafe_layout_area">
     <div class="container clearfix">
@@ -21,7 +19,8 @@
         	<div class="infoLine">
         		<label for="cafeId" class="infoLabel">카페 아이디 <span class="required">*</span></label>
           		<input type="text" name="cafeId" id="cafeId" class="form-control-inline" placeholder="카페 아이디를 입력해주십시오."
-          			data-length="3~100" data-format="numAndEng" data-text="카페 아이디" onchange="changeCafeIdCheckFlag()">
+          			data-length="3~100" data-format="numAndEng" data-text="카페 아이디" 
+          			onchange="changeCafeIdCheckFlag()" onkeypress="if(event.keyCode == 13)checkCafeId()">
           		<input type="button" value="중복확인" class="button" style="margin-left:10px;"
           			onclick="checkCafeId()">
         	</div>
@@ -69,8 +68,8 @@
         	<h5 class="title">카페 가입 정보</h5>
         	
       		<div class="infoLine">
-       			<label for="cafeJoinInfomation" class="infoLabel">카페 가입 안내</label>
-       			<textarea id="cafeJoinInfomation" name="cafeJoinInformation" class="form-control" placeholder="카페 가입 안내를 입력해주십시오." style="width:100%;"
+       			<label for="cafeJoinInformation" class="infoLabel">카페 가입 안내</label>
+       			<textarea id="cafeJoinInformation" name="cafeJoinInformation" class="form-control" placeholder="카페 가입 안내를 입력해주십시오." style="width:100%;"
        				data-length="0~2000" data-format="" data-text="카페 가입 정보"></textarea>
        			<ul class="infoUl">
        				<li>입력한 내용은 멤버의 카페 가입 시 안내 문구로 활용됩니다.</li>

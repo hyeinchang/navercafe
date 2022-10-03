@@ -131,4 +131,8 @@ public class CafeController {
 		return "board/userViewList";
 	}
 	
+	@GetMapping("cafeInformation")
+	public String cafeInformation() {
+		return "user/cafeInformation";
+	}
 }
