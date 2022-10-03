@@ -23,7 +23,7 @@
 							</div>
 							<div class="join_info_body">
 								<div style="position: relative; display: inline-block; margin: 0; padding: 0;">
-									<input class="input_text" type="text" placeholder="닉네임" name="cafeUserNickname" id="cafeUserNickname" value="${cafeMember.cafeUserNickname }" onkeyup="idOverlap()">
+									<input class="input_text" type="text" placeholder="닉네임" name="cafeUserNickname" id="cafeUserNickname" value="${_cafeDTO.loginUser.cafeUserNickname }" onkeyup="idOverlap()">
 									<span id="confirm"></span>
 									<p style="font-size: 13px;">한글 1~10자, 영문 대소문자 2~20자, 숫자를 사용할 수 있습니다.(혼용가능)</p>
 									<p style="font-size: 13px;">중복되지 않은 별명으로 변경해주세요.</p>
@@ -47,13 +47,14 @@
 							</div>
 							<div class="join_info_body">
 								<div>
-									<c:if test="${cafeMember.cafeUserGenderReveal eq 'Y' }">
+									<c:if test="${_cafeDTO.loginUser.cafeUserGenderReveal eq 'Y' 
+										|| _cafeDTO.loginUser.cafeUserGenderReveal eq null}">
 										<input type="radio" name="cafeUserGenderReveal" checked="checked" value="Y">
 										<label>허용</label>
 										<input type="radio" name="cafeUserGenderReveal" value="N">
 										<label>비허용</label>
 									</c:if>
-									<c:if test="${cafeMember.cafeUserGenderReveal eq 'N' }">
+									<c:if test="${_cafeDTO.loginUser.cafeUserGenderReveal eq 'N' }">
 										<input type="radio" name="cafeUserGenderReveal"  value="Y">
 										<label>허용</label>
 										<input type="radio" name=cafeUserGenderReveal  checked="checked" value="N">
@@ -69,13 +70,13 @@
 							</div>
 							<div class="join_info_body">
 								<div>
-									<c:if test="${cafeMember.cafeUserEmailReceieve eq 'Y' }">
+									<c:if test="${_cafeDTO.loginUser.cafeUserEmailReceieve eq 'Y' }">
 										<input type="radio" name="cafeUserEmailReceieve" checked="checked" value="Y">
 										<label>허용</label>
 										<input type="radio" name="cafeUserEmailReceieve"  value="N">
 										<label>비허용</label>
 									</c:if>
-									<c:if test="${cafeMember.cafeUserEmailReceieve eq 'N' }">
+									<c:if test="${_cafeDTO.loginUser.cafeUserEmailReceieve eq 'N' }">
 										<input type="radio" name="cafeUserEmailReceieve"  value="Y">
 										<label>허용</label>
 										<input type="radio" name=cafeUserEmailReceieve  checked="checked" value="N">
@@ -139,6 +140,14 @@
 	function update(){
 		let confirm = document.getElementById("confirm");
 		let status = document.getElementById("status").value;
+		let cafeUserNickname = document.getElementById('cafeUserNickname');
+		
+		if(cafeUserNickname.value == '') {
+			alert('카페 닉네임을 입력해주십시오.');
+			cafeUserNickname.focus();
+			return;
+		}
+		
 		console.log(status)
 		if(status == "OK"){
 			document.getElementById("profilForm").submit();

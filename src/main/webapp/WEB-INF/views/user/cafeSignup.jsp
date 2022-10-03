@@ -121,7 +121,7 @@ function idOverlap(){
 			}
 		},
 		error : function(){
-			alert("에러ㅓㅓ")
+			//alert("에러ㅓㅓ")
 		}
 	});
 }

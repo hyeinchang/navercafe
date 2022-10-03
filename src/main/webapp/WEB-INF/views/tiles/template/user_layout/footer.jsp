@@ -118,16 +118,18 @@
 	  
 	  if(menuNum) {
 		  boardMenuNum.value = menuNum;
-	  }
-	  
-	  if(boardMenuNum.value != '') {
-		  var boardReadAuth = '${_cafeDTO.menuDTO.boardReadAuth}';
-		  var cafeUserGrade = '${_cafeDTO.loginUser.cafeUserGrade}';
+		  
+		  if(boardMenuNum.value != '') {
+			  var boardReadAuth = '${_cafeDTO.menuDTO.boardReadAuth}';
+			  var cafeUserGrade = '${_cafeDTO.loginUser.cafeUserGrade}';
 
-		  if(Number(boardReadAuth) > Number(cafeUserGrade)) {
-			  alert('권한이 없습니다.');
-			  return;
+			  if(Number(boardReadAuth) > Number(cafeUserGrade)) {
+				  alert('권한이 없습니다.');
+				  return;
+			  }
 		  }
+	  } else {
+		  form.removeChild(boardMenuNum);
 	  }
 	  
 	  form.action = path;
