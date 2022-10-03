@@ -96,7 +96,7 @@ public class BoardServiceImpl implements BoardService{
 			pageNum++;
 		}
 		// 이전글 다음글 
-		ArrayList<BoardDTO> listChk= bm.getBoardList(menuDTO);
+		ArrayList<BoardExtendDTO> listChk= bm.getBoardList(menuDTO);
 		int j = 0;
 		for(j=0; j<listChk.size();j++) {
 			//System.out.println("j 마지막 값 구하기");
