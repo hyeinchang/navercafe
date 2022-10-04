@@ -1,6 +1,8 @@
 package com.itbank.navercafe.admin.deco.controller;
 
 import java.util.ArrayList;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -181,14 +183,21 @@ public class AdminDecoController {
 		return result;
 	}
 
-	@GetMapping("deleteTitle")
+	@PostMapping("deleteTitle")
 	public String deleteTitle(HttpServletRequest request, CafeDTO cafeDTO) {
 		String cafeId ="";
 		
 		try {
 			if(cafeDTO != null && cafeDTO.getCafeId() != null) {
-				int titleNum = cafeDTO.getCafeTitleNum();		
+				cafeId = cafeDTO.getCafeId();
+				int cafeTitleNum = cafeDTO.getCafeTitleNum();
+				FileDTO fileDTO = new FileDTO();
 				
+				cafeDTO.setCafeTitleNum(0);
+				fileDTO.setCafeTitleNum(cafeTitleNum);
+			
+				fileUtils.deleteFile(fileDTO);
+				adminDecoService.saveTitle(cafeDTO);
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -196,6 +205,29 @@ public class AdminDecoController {
 		
 		return "redirect:/admin/deco/title?cafeId="+cafeId;
 	}
+	
+	@PostMapping(value="deleteFront", produces="application/json")
+	@ResponseBody
+	public int deleteFront(@RequestBody Map<String, String> paramMap) {
+		int result = 0;
+
+		try {
+			CafeDTO cafeDTO = new CafeDTO();
+			String editorDirectory = (String) paramMap.get("editorDirectory");
+			
+			cafeDTO.setCafeId(paramMap.get("cafeId"));
+
+			fileUtils.deleteDirectory(editorDirectory);
+			result = adminDecoService.saveFront(cafeDTO);
+			System.out.println( " editorDirectory :" + editorDirectory);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	
 	
 	// 레이아웃 설정 페이지로 이동
 	@GetMapping("/layout")

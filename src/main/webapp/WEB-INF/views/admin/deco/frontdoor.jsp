@@ -93,6 +93,7 @@
 	 			
 	 			if(Number(xhr.response) == 1) {
 	 				message = '저장되었습니다.';
+	 				location.reload();
 	 			} else {
 	 				message = '저장에 실패했습니다.';
 	 			}
@@ -105,6 +106,39 @@
 	}
 	
 	function deleteFront() {
+		var frontForm = document.frontForm;
+		var xhr = new XMLHttpRequest();
+		var data = new Object();
+		var cafeId = frontForm.cafeId.value;
+		var editorDirectory = 'front';
 		
+		if(cafeId && cafeId.length > 0) {
+			editorDirectory += '/' + cafeId;
+		}
+		
+		data.cafeId = cafeId;
+		data.cafeFront = '';
+		data.editorDirectory = editorDirectory;
+		
+		xhr.open('post', '${contextPath}/admin/deco/deleteFront', false);
+		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		xhr.setRequestHeader('Content-Type', 'application/json');
+		
+		xhr.onreadystatechange = function() {
+			if(xhr.readyState == 4 && xhr.status == 200) {
+	 			var message = '';
+	 			
+	 			if(Number(xhr.response) == 1) {
+	 				message = '삭제되었습니다.';
+	 				location.reload();
+	 			} else {
+	 				message = '삭제에 실패했습니다.';
+	 			}
+	 			
+	 			alert(message);
+			}
+		}
+		
+		xhr.send(JSON.stringify(data));
 	}
 </script>

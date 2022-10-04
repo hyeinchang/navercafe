@@ -94,6 +94,7 @@ function saveTitle() {
  			
  			if(Number(xhr.response) == 1) {
  				message = '저장되었습니다.';
+ 				location.reload();
  			} else {
  				message = '저장에 실패했습니다.';
  			}
@@ -106,10 +107,10 @@ function saveTitle() {
 }
 
 //카페 타이틀 삭제
-function deletTitle() {
+function deleteTitle() {
 	var titleForm = document.titleForm;
 	
-	titleForm.action = '${contextPath}/deco/deleteTitle';
+	titleForm.action = '${contextPath}/admin/deco/deleteTitle';
 	titleForm.method = 'post';
 	titleForm.submit();
 }

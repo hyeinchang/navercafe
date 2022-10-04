@@ -54,7 +54,7 @@
 	
 	<delete id="deleteAttachFile">
 		<![CDATA[
-			DELETE FROM PROJECT_FILE SET WHERE FILE_NUM = #{fileNum}
+			DELETE FROM PROJECT_FILE WHERE FILE_NUM = #{fileNum}
 		]]>
 	</delete>
 	
