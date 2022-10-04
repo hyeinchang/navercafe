@@ -1,6 +1,8 @@
 package com.itbank.navercafe.admin.deco.controller;
 
 import java.util.ArrayList;
+import java.util.Map;
+
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -204,24 +206,25 @@ public class AdminDecoController {
 		return "redirect:/admin/deco/title?cafeId="+cafeId;
 	}
 	
-	@PostMapping("deleteFront")
-	public String deleteFront(HttpServletRequest request, CafeDTO cafeDTO) {
-		String cafeId ="";
-		
+	@PostMapping(value="deleteFront", produces="application/json")
+	@ResponseBody
+	public int deleteFront(@RequestBody Map<String, String> paramMap) {
+		int result = 0;
+
 		try {
- 			if(cafeDTO != null && cafeDTO.getCafeId() != null) {
-				cafeId = cafeDTO.getCafeId();
-				String editorDirectory = request.getParameter("editorDirectory");
-				FileDTO fileDTO = new FileDTO();
+			CafeDTO cafeDTO = new CafeDTO();
+			String editorDirectory = (String) paramMap.get("editorDirectory");
 			
-				fileUtils.deleteFile(fileDTO);
-				adminDecoService.saveFront(cafeDTO);
-			}
+			cafeDTO.setCafeId(paramMap.get("cafeId"));
+
+			fileUtils.deleteDirectory(editorDirectory);
+			result = adminDecoService.saveFront(cafeDTO);
+			System.out.println( " editorDirectory :" + editorDirectory);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		
-		return "redirect:/admin/deco/title?cafeId="+cafeId;
+		return result;
 	}
 	
 	
