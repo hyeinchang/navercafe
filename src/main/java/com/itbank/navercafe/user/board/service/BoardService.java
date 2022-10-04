@@ -38,4 +38,8 @@ public interface BoardService {
 	public int insertBoard(BoardDTO boardDTO) throws Exception;
 	
 	public int checkGradeBoard(BoardExtendDTO boardExtDTO) throws Exception;
+	
+	public void deleteBoard(int boardNum);
+	
+	public void deleteReply(int replyNum);
 }

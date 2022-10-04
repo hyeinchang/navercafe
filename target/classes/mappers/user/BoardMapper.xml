@@ -189,5 +189,15 @@
 			ON boardMenu.BOARD_MENU_NUM = board.BOARD_MENU_NUM
 		]]>
 	</select>
+	
+	<delete id="deleteBoard">
+		delete project_board where board_num=#{boardNum}
+	</delete>
+	
+	
+	<delete id="deleteReply">
+		delete project_reply where reply_num=#{replyNum}
+	</delete>
+	
 </mapper>
 
