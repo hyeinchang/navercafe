@@ -1,5 +1,6 @@
 package com.itbank.navercafe.user.board.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,7 +64,7 @@ public class BoardController {
 		//위에있는거 2개 맵으로 가져와서 합쳐 줄 라고 했는데 clob이 문제가 생기네?
 		//System.out.println("카페 유저 정보 가져오기 컷");
 		//댓글 리스트 가져오기
-		model.addAttribute("replyList",replySer.getReplyList(boardNum));
+		model.addAttribute("replyList",replySer.getReplyList(boardNum,cafeId));
 		//System.out.println(replySer.getReplyList(boardNum));
 		//System.out.println("댓글 리스트 가져오기 컷");
 		
@@ -100,10 +101,13 @@ public class BoardController {
 	}
 	
 	@GetMapping("likeChk")
-	public String likeChk(int boardNum,String userId,Model model) {
+	public String likeChk(int boardNum,String userId,Model model,HttpServletRequest res) {
 		System.out.println("컨트롤러 : "+boardNum+" - "+userId);
+		System.out.println("좋아요 클릭시 넘어오는 :"+res.getParameter("boardMenuNum"));
+		System.out.println("좋아요 클릭시 넘어오는:"+res.getParameter("cafeId"));
 		ser.likeChk(boardNum,userId,model);
-		return "redirect:goBoardInside?boardNum="+boardNum+"&num="+1;
+		return "redirect:goBoardInside?boardNum="+boardNum+"&num="+1+
+				"&boardMenuNum="+res.getParameter("boardMenuNum")+"&cafeId="+res.getParameter("cafeId");
 	}
 	
 	

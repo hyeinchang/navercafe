@@ -26,22 +26,28 @@
 	
 	<!-- 메모리스트  -->
 	<select id="getMemoList" resultType="HashMap">
-		select M.memo_num,M.user_id,M.memo_content,M.memo_saveDate,
-		n.cafe_user_image_num,n.cafe_user_nickname from project_memo_board M
-		inner join project_cafe_member N on M.user_id=N.user_id order by memo_num desc
+		select boardMenu.cafe_id, board.* from 
+		(select * from project_boardType where cafe_id = #{cafeId}) boardMenu
+		inner join
+		(select * from project_memo_board B inner join project_cafe_member C
+        on B.user_id = C.user_id where C.cafe_id=#{cafeId}) board
+		on boardMenu.board_menu_num = board.board_menu_num order by memo_num desc
 	</select>
+	
 	
 	<!-- 메모글 작성 -->
 	<insert id="memoSave">
 		insert into project_memo_board (memo_num,user_id,memo_content,memo_step_only,board_menu_num) 
 		values(memo_num_seq.nextval,#{userId},#{memoContent},#{memoStepOnly},board_menu_num_seq.nextval)
 	</insert>
+	<!--board_menu_num 끌어와서 넣어줘야함  -->
 
 	<!-- 메모 댓글 리스트 -->
 	<select id="getReplyList" resultType="HashMap">
 		select R.memo_reply_num,R.memo_reply_content,R.memo_reply_saveDate,R.user_id,
 		R.memo_reply_group,C.cafe_user_nickname,C.cafe_user_image_num
 		from project_memo_reply R inner join project_cafe_member C on R.user_id=C.user_id
+		where C.cafe_id=#{cafeId}
 	</select>
 	
 	<!-- 메모 댓글 작성 -->

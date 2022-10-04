@@ -38,13 +38,14 @@ public class MemoController {
 	@GetMapping("/goMemoBoardList")
 	public String goMemoBoardList(String cafeId,Model model,HttpSession sesison){
 		//메모 게시글들
-		model.addAttribute("mapList",memoSer.getMemoList());
+		model.addAttribute("mapList",memoSer.getMemoList(cafeId));
 		//System.out.println("메모 게시물들 키 :"+memoSer.getMemoList());
 		//메모 댓글들
-		model.addAttribute("memoReplyList",memoSer.getReplyList());
+		model.addAttribute("memoReplyList",memoSer.getReplyList(cafeId));
 		//System.out.println("메모 댓글 키 :"+memoSer.getReplyList());
 		//세션 아이디 줘서 정보 가져오기
 		model.addAttribute("sessionUser",cafeMemberService.getSessionUserInfo(cafeId,(String) sesison.getAttribute("loginId")));
+		model.addAttribute("cafeId",cafeId);
 		return "user/board/memoBoardList";
 	}
 	
@@ -55,8 +56,10 @@ public class MemoController {
 		System.out.println("작성하고있는쉐끼:"+mul.getParameter("userId"));
 		System.out.println("내용:"+mul.getParameter("memoReplyContent"));
 		System.out.println("파일명:"+mul.getFile("replyImageName"));
+		System.out.println("cafeId : "+mul.getParameter("cafeId"));
 		memoSer.saveMemoReply(mul);
-		return "redirect:goMemoBoardList";
+		
+		return "redirect:goMemoBoardList?cafeId="+mul.getParameter("cafeId");
 	}
 	
 	@PostMapping("memoSave")

@@ -52,6 +52,8 @@ public class BoardServiceImpl implements BoardService{
 		//우선 좋아요 리스트 받아오기
 		if(bm.getLikesList(boardNum,userId)==null) {
 			bm.likeUp(boardNum);
+			System.out.println("좋아요 테이블에 추가 :"+ boardNum);
+			System.out.println("좋아요 테이블에 추가 :"+ userId);
 			bm.insertLike(boardNum, userId);
 			model.addAttribute("like","T");
 		}else {
@@ -64,8 +66,10 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public void likeViewChk(int boardNum, String userId,Model model) {
 		if(bm.getLikesList(boardNum,userId)==null) {
+			//System.out.println("좋아요 테이블 조회 결과 T :"+bm.getLikesList(boardNum,userId));
 			model.addAttribute("like","T");
 		}else {
+			//System.out.println("좋아요 테이블 조회 결과 F :"+bm.getLikesList(boardNum,userId));
 			model.addAttribute("like","F");
 		}
 	}
@@ -139,25 +143,25 @@ public class BoardServiceImpl implements BoardService{
 		ArrayList<BoardDTO> boardNumList = bm.getBoardNumList(boardMenuNum);
 		int j=0;
 		for(j = 0;j<boardNumList.size();j++) {
-			System.out.println(j+"번째 게시물 번호 : "+boardNumList.get(j).getBoardNum());
+			//System.out.println(j+"번째 게시물 번호 : "+boardNumList.get(j).getBoardNum());
 		}
 		if(boardNum==boardNumList.get(j-1).getBoardNum()) {
-			System.out.println("다음은없어");
+			//System.out.println("다음은없어");
 			model.addAttribute("Next",false);
 		}
 		if(boardNum==boardNumList.get(0).getBoardNum()) {
-			System.out.println("이전글은없어");
+			//System.out.println("이전글은없어");
 			model.addAttribute("Preview",false);
 		}
 		
-		System.out.println("들어온 boardNum : "+boardNum);
+		//System.out.println("들어온 boardNum : "+boardNum);
 
 		if(next==1) {
 			System.out.println("다음 클릭");
 			for(int i= 0 ; i<boardNumList.size();i++) {
 				if(boardNum==boardNumList.get(i).getBoardNum()) {
 					dto.setBoardNum(boardNumList.get(i+1).getBoardNum());
-					System.out.println("다음 눌러서 바뀐보드넘:"+dto.getBoardNum());
+					//System.out.println("다음 눌러서 바뀐보드넘:"+dto.getBoardNum());
 				}
 			}
 			
@@ -168,12 +172,12 @@ public class BoardServiceImpl implements BoardService{
 			for(int i=0 ; i<boardNumList.size();i++) {
 				if(boardNum==boardNumList.get(i).getBoardNum()) {
 					dto.setBoardNum(boardNumList.get(i-1).getBoardNum());
-					System.out.println("이전 눌러서 바꿔줄 보드넘:"+dto.getBoardNum());
+					//System.out.println("이전 눌러서 바꿔줄 보드넘:"+dto.getBoardNum());
 
 				}
 			}
 		}
-		System.out.println("그래서 최종 보드넘:"+dto.getBoardNum());
+		//System.out.println("그래서 최종 보드넘:"+dto.getBoardNum());
 		return dto;
 	}
 

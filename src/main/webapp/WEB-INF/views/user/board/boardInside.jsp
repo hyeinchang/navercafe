@@ -228,7 +228,7 @@ li.bbp-topic-freshness-test{
 					</c:when>
 				</c:choose>
 			</div>
-						<h5>들어온 쒜끼${sessionUser.userId} 게시물 주인쒜끼${userBoard.userId}</h5>
+						<%-- <h5>들어온 쒜끼${sessionUser.userId} 게시물 주인쒜끼${userBoard.userId}</h5> --%>
 			
 			
 			<div class="before-next-nav">
@@ -317,23 +317,22 @@ li.bbp-topic-freshness-test{
 		          </div>
 		        </div>
 		        
-			
-				<!-- 여기서 값들 넘겨줘서 좋아요도 우선 동작되게하자  -->
+				
 		        <div id="comments_wrapper">
 		        	
 		          <h4 class="title">
-		          <a href="likeChk?boardNum=${userBoard.boardNum}&userId=${sessionUser.userId}">
 		          	<c:if test="${like=='F'}">
-		        		
+		          		<a href="likeChk?boardNum=${userBoard.boardNum}&userId=${sessionUser.userId}&cafeId=${boardMenuType.cafeId}&boardMenuNum=${boardMenuType.boardMenuNum}">
 		       		 		<img src="<%=request.getContextPath()%>/resources/img/빨간하트.jpg" width="25px" alt="">
-		       		 	
+		       		 	</a> 
 		        	</c:if>
 		        	<c:if test="${like=='T'}">
-	
+		        		<a href="likeChk?boardNum=${userBoard.boardNum}&userId=${sessionUser.userId}&cafeId=${boardMenuType.cafeId}&boardMenuNum=${boardMenuType.boardMenuNum}">
 		       		 		<img src="<%=request.getContextPath()%>/resources/img/빈하트.jpg" width="25px" alt="">
-		       			
+		       		 	</a> 
 		        	</c:if>
-		        	</a> 
+		        	
+		       
 		        	
 		         	좋아요 ${userBoard.boardLikes}  
 		          	<img src="<%=request.getContextPath() %>/resources/img/댓글아이콘.png" width="25px" alt=""> 
@@ -407,12 +406,12 @@ li.bbp-topic-freshness-test{
 										<a href="deleteBoardReply?replyNum=${reply.REPLY_NUM}">
 											삭제 
 										</a>
-										<h5>들어온 쒜끼${sessionUser.userId} 게시물 주인쒜끼${reply.USER_ID}</h5>
+										<%-- <h5>들어온 쒜끼${sessionUser.userId} 게시물 주인쒜끼${reply.USER_ID}</h5> --%>
 									</c:when>
 									<c:when test="${sessionUser.userId == reply.USER_ID}">		
 										<a>수정</a>
 										<%-- onclick="replyModifyClick(this)" class="${reply.REPLY_NUM}" style="cursor:pointer" --%>
-										<h5>들어온 쒜끼${sessionUser.userId} 게시물 주인쒜끼${reply.USER_ID}</h5>
+										<%-- <h5>들어온 쒜끼${sessionUser.userId} 게시물 주인쒜끼${reply.USER_ID}</h5> --%>
 									</c:when>
 								</c:choose>
 		                        <%-- <a href="modifyBoardReply?replyNum=${reply.REPLY_NUM}">
@@ -439,6 +438,8 @@ li.bbp-topic-freshness-test{
 									  		method="post" enctype="multipart/form-data">
 									  		<input type="hidden" name="userId" value="${sessionUser.userId}">
 									  		<input type="hidden" name="boardNum" value="${userBoard.boardNum}">
+									  		<input type="hidden" name="boardMenuNum" value="${userBoard.boardMenuNum}">
+											<input type="hidden" name="cafeId" value="${boardMenuType.cafeId}">
 									    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 									    										
 									      <p><span style="font-weight:1000; font-size: 20pt;">${sessionUser.cafeUserNickname}</span></p>
@@ -490,13 +491,13 @@ li.bbp-topic-freshness-test{
 													<a href="deleteBoardReply?replyNum=${replyreply.REPLY_NUM}">
 														삭제 
 													</a>
-													<h5>들어온 쒜끼${loginId} 게시물 주인쒜끼${replyreply.USER_ID}</h5>
+													<%-- <h5>들어온 쒜끼${loginId} 게시물 주인쒜끼${replyreply.USER_ID}</h5> --%>
 												</c:when>
 												<c:when test="${loginId == replyreply.USER_ID}">
 													<a href="modifyBoardReply?replyNum=${replyreply.REPLY_NUM}">
 														수정
 													</a>
-													<h5>들어온 쒜끼${loginId} 게시물 주인쒜끼${replyreply.USER_ID}</h5>
+													<%-- <h5>들어온 쒜끼${loginId} 게시물 주인쒜끼${replyreply.USER_ID}</h5> --%>
 												</c:when>
 											</c:choose>
 					                       
@@ -524,6 +525,8 @@ li.bbp-topic-freshness-test{
 												  		method="post" enctype="multipart/form-data">
 												  		<input type="hidden" name="userId" value="${sessionUser.userId}">
 												  		<input type="hidden" name="boardNum" value="${userBoard.boardNum}">
+												  		<input type="hidden" name="boardMenuNum" value="${userBoard.boardMenuNum}">
+												  		<input type="hidden" name="cafeId" value="${boardMenuType.cafeId}">
 												    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 												    										
 												      <p><span style="font-weight:1000; font-size: 20pt;">${sessionUser.cafeUserNickname}</span></p>
@@ -605,7 +608,7 @@ li.bbp-topic-freshness-test{
 			    
 			  </article>
 			  
-
+	<h1><a href="goMemoBoardList?cafeId=${boardMenuType.cafeId}">메모로</a></h1>
          
 		       
 		          					<!-- 새로운자유게시판1 등 기준 관련 게시판   -->
@@ -617,8 +620,6 @@ li.bbp-topic-freshness-test{
 	            <li class="bbp-header-header">
 	              <ul class="forum-titles">
 	                <li class="bbp-forum-info-allBoard">
-	                <!-- 여기서 카페아이디랑 카페유저 아이디 비교해서  if문으로   처리?
-	                	안된다 애초에 리스트 가져올때 처리해야 페이징도 되고 원래 그게 맞다-->
 	                '${boardMenuType.boardMenuName}' 게시판 글</li>
 
 	              </ul>
@@ -636,7 +637,7 @@ li.bbp-topic-freshness-test{
 		              <ul class="forum-titles-test">
 		
 		                <li class="board-title" class="name-prefixList">
-		                <a href="goBoardInside?boardNum=${typeList.BOARD_NUM}&userId=${typeList.USER_ID}">
+		                <a href="goBoardInside?boardNum=${typeList.BOARD_NUM}&userId=${typeList.USER_ID}&cafeId=${boardMenuType.cafeId}&boardMenuNum=${boardMenuType.boardMenuNum}">
 		                ${typeList.BOARD_TITLE }</a>
 		                </li>
 		                <li class="board-nickname">${typeList.CAFE_USER_NICKNAME }</li>
@@ -656,7 +657,8 @@ li.bbp-topic-freshness-test{
 			          <ul class="pagination">
 			         	<c:forEach var="num" begin="1" end="${repeat}">
 							<li><a href="goBoardInside?boardNum=${userBoard.boardNum}
-							&num=${num}">${num}</a></li>
+							&num=${num}&cafeId=${boardMenuType.cafeId}
+							&boardMenuNum=${boardMenuType.boardMenuNum}">${num}</a></li>
 						</c:forEach>
 			          </ul>
 		           </div>
@@ -701,7 +703,7 @@ li.bbp-topic-freshness-test{
 		                <div class="bg a0" data-animate="fadeIn">
 		                  <h3 class="a1" data-animate="fadeInDown">
 		                  	작성자 <br><Br> ${top6.CAFE_USER_NICKNAME}</h3>
-		                  <a href="goBoardInside?boardNum=${top6.BOARD_NUM}&userId=${top6.USER_ID}"
+		                  <a href="goBoardInside?boardNum=${top6.BOARD_NUM}&userId=${top6.USER_ID}&cafeId=${boardMenuType.cafeId}&boardMenuNum=${boardMenuType.boardMenuNum}"
 		                  class="dmbutton a2" data-animate="fadeIn">게시글 보러가기</a>
 		                </div>
 		              </div>

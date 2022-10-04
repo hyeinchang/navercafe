@@ -39,8 +39,8 @@ public class MemoServiceImpl implements MemoService{
 	
 	//메모 리스트
 	@Override
-	public List<HashMap<String, Object>> getMemoList() {
-		List<HashMap<String, Object>>map=memoMap.getMemoList();
+	public List<HashMap<String, Object>> getMemoList(String cafeId) {
+		List<HashMap<String, Object>>map=memoMap.getMemoList(cafeId);
 
 		for(int i=0; i<map.size();i++) {//댓글 갯수 구해와서 새로운 key 값에 값 부여
 			map.get(i).put("REPLY_COUNT",memoMap.getReplyCount(map.get(i).get("MEMO_NUM")));
@@ -54,8 +54,8 @@ public class MemoServiceImpl implements MemoService{
 	
 	//메모 댓글 리스트
 	@Override
-	public List<HashMap<String, Object>> getReplyList() {
-		return memoMap.getReplyList();
+	public List<HashMap<String, Object>> getReplyList(String cafeId) {
+		return memoMap.getReplyList(cafeId);
 	}
 
 	//메모 댓글 작성
