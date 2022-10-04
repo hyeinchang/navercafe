@@ -1,8 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-<c:set var="address" value="${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}"/>
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
   <section class="section1 cafe_layout_area">
     <div class="container clearfix">
@@ -16,11 +14,13 @@
         <form id="createCafeForm" class="main_form" action="./createCafe" name="createCafeForm" method="post" enctype="multipart/form-data">
         	<input type="hidden" name="cafeIdCheck" value="N">
         	<input type="hidden" name="userId" value="${loginId}">
+        	
         	<h5 class="title">카페 기본 정보</h5>
         	<div class="infoLine">
         		<label for="cafeId" class="infoLabel">카페 아이디 <span class="required">*</span></label>
           		<input type="text" name="cafeId" id="cafeId" class="form-control-inline" placeholder="카페 아이디를 입력해주십시오."
-          			data-length="1~100" data-format="numAndEng" data-text="카페 아이디" onchange="changeCafeIdCheckFlag()">
+          			data-length="3~100" data-format="numAndEng" data-text="카페 아이디" 
+          			onchange="changeCafeIdCheckFlag()" onkeypress="if(event.keyCode == 13)checkCafeId()">
           		<input type="button" value="중복확인" class="button" style="margin-left:10px;"
           			onclick="checkCafeId()">
         	</div>
@@ -68,8 +68,8 @@
         	<h5 class="title">카페 가입 정보</h5>
         	
       		<div class="infoLine">
-       			<label for="cafeJoinInfomation" class="infoLabel">카페 가입 안내</label>
-       			<textarea id="cafeJoinInfomation" name="cafeJoinInformation" class="form-control" placeholder="카페 가입 안내를 입력해주십시오." style="width:100%;"
+       			<label for="cafeJoinInformation" class="infoLabel">카페 가입 안내</label>
+       			<textarea id="cafeJoinInformation" name="cafeJoinInformation" class="form-control" placeholder="카페 가입 안내를 입력해주십시오." style="width:100%;"
        				data-length="0~2000" data-format="" data-text="카페 가입 정보"></textarea>
        			<ul class="infoUl">
        				<li>입력한 내용은 멤버의 카페 가입 시 안내 문구로 활용됩니다.</li>
@@ -81,13 +81,13 @@
       			<div class="checkArea">
       				<div>
       					<label  for="joinApplyY" >
-			          		<input type="radio" id="joinApplyY" name=cafeJoinApply value="Y" checked="">
+			          		<input type="radio" id="joinApplyY" name="cafeJoinApply" value="N" checked="">
 			            	<strong>가입 신청 시 바로 가입할 수 있습니다.</strong>
 			       		</label>
       				</div>
       				<div>
       					<label for="joinApplyN">
-			          		<input type="radio" id="joinApplyN" name="cafeJoinApply" value="N">
+			          		<input type="radio" id="joinApplyN" name="cafeJoinApply" value="Y">
 			            	<strong>가입 신청 시 운영진 승인을 거쳐 가입할 수 있습니다.</strong>
 			       		</label>
       				</div>
@@ -136,11 +136,11 @@
 		            	<strong>모두</strong>
 		       		</label>
 		       		<label for="joinGenderM" class="checkLable-inline">
-		          		<input type="radio" id="joinGenderM" name="cafeJoinGender" value="M">
+		          		<input type="radio" id="joinGenderM" name="cafeJoinGender" value="male">
 		            	<strong>남자만</strong>
 		       		</label>
 		       		<label for="joinGenderF" class="checkLable-inline">
-		          		<input type="radio" id="joinGenderF" name="cafeJoinGender" value="F">
+		          		<input type="radio" id="joinGenderF" name="cafeJoinGender" value="female">
 		            	<strong>여자만</strong>
 		       		</label>
       			</div>
@@ -220,30 +220,44 @@ function setJoinAgeSelect() {
 
 function setJoinAgeValue() {
 	var joinAgeNotAll = document.getElementById('joinAgeNotAll');
-	var joinAgeList = document.getElementsByClassName('joinAge');
-	var joinAgeMin = joinAgeList[0];
-	var joinAgeMax = joinAgeList[1];
-	var min = joinAgeMin.value;
-	var max = joinAgeMax.value;
 	
-	if(min != '' && max != '') {
-		if(Number(min) > Number(max)) {
-			alert('최소 연도가 최대 연도보다 큽니다.');
-			joinAgeMin.focus();
-			return;
+	if(joinAgeNotAll.checked) { 
+		var joinAgeList = document.getElementsByClassName('joinAge');
+		var joinAgeMin = joinAgeList[0];
+		var joinAgeMax = joinAgeList[1];
+		var min = joinAgeMin.value;
+		var max = joinAgeMax.value;
+		
+		if(min != '' && max != '') {
+			if(Number(min) > Number(max)) {
+				alert('가입조건 연령 최소 연도가 최대 연도보다 큽니다.');
+				joinAgeMin.focus();
+				return;
+			}
+			joinAgeNotAll.value = joinAgeMin.value + '~' + joinAgeMax.value;
 		}
-		joinAgeNotAll.value = joinAgeMin.value + '~' + joinAgeMax.value;
 	}
 }
 
 function createCafe() {
 	var form = document.createCafeForm;
+	
+	if(!formCheck()) {
+		return;
+	}
+	
 	var xhr = new XMLHttpRequest();
 	
 	xhr.open('post', '${contextPath}/cafe/createCafe', true);
 	xhr.onreadystatechange = function() {
 		if(xhr.readyState == 4 && xhr.status == 200) {
-			console.log(xhr.response);
+			var result = JSON.parse(xhr.response);
+			
+			if(Number(result.resultCode) == 1) {
+				location.href ='${contextPath}/user/main?cafeId='+result.cafeId;
+			} else {
+				alert(result.message);
+			}
 		}
 	}
 	xhr.send(new FormData(form));
@@ -251,6 +265,16 @@ function createCafe() {
 
 function formCheck() {
 	var form = document.createCafeForm;
+	var cafeIdCheck = form.cafeIdCheck;
+	var joinAgeNotAll = document.getElementById('joinAgeNotAll');
+	var cafeJoinQuestion = form.cafeJoinQuestion;
+	var agreeCheck = document.getElementById('agreeCheck');
+	
+	if(cafeIdCheck.value != 'Y') {
+		alert('카페 아이디 중복확인을 해주십시오.');
+		form.cafeId.focus();
+		return false;
+	}
 	
 	for(var i=0;i<form.length;i++) {
 		var element = form[i];
@@ -260,31 +284,120 @@ function formCheck() {
 		}
 		
 		var value = element.value;
+		var dataLength = element.dataset.length;
+		var dataText = element.dataset.text;
+		var dataFormat = element.dataset.format;
 		
-		if(element.dataset.length) {
-			var length = element.dataset.length;
-			
-			if(length.indexOf('~') > -1) {
-				var range = length.split('~');
+		// 입력 값 문자 길이 확인
+		if(dataLength && dataLength.length > 0) {
+			if(dataLength.indexOf('~') > -1) {
+				var range = dataLength.split('~');
 				var min = Number(range[0]);
 				var max = Number(range[1]);
-				
-				if(min > 0) {
-					if(value == '') {
-						alert(element.placeholder);
-						element.focus();
-						return;
-					}
+				var length = value.getBytes();
 	
-				} else {
+				if(min > 0 && length == 0) {
+					alert(dataText.appendER() + ' 입력해주십시오.');
+					element.focus();
+					return false;
+				}
+				
+				if(length < min) {
+					if(dataFormat == 'numAndEng') {
+						alert(dataText.appendER() + ' ' + min + '자 이상으로 입력해주십시오.');
+					} else {
+						alert(dataText.appendER() + ' '+ min + ' byte 이상으로 입력해주십시오.\n * 현재 ' + length + ' byte');
+					}
 					
+					element.focus();
+					return false;
+				}
+				
+				if(length > max) {
+					if(dataFormat == 'numAndEng') {
+						alert(dataText.appendER() + ' ' + max + '자 이하로 입력해주십시오.');
+					} else {
+						alert(dataText.appendER() + ' ' + max + '  byte 이하로 입력해주십시오.\n * 현재 ' + length + ' byte');
+					}
+					
+					element.focus();
+					return false;
 				}
 			}
-			
-			
 		}
+		
+		// 입력 값 형식 확인
+		if(dataFormat && dataFormat.length > 0) {
+			if(dataFormat == 'numAndEng') {
+				if(!value.isNumAndEng()) {
+					alert(dataText.appendER() + ' 영문/숫자 형식으로 입력해주십시오.');
+					element.focus();
+					return false;
+				}
+			}
+		}
+		
+	} // for
+	
+	// 가입 질문
+	if(cafeJoinQuestion.value == 'N') {
+		var joinQuestionUl = document.getElementById('joinQuestionUl');
+		
+		while(joinQuestionUl.children.length != 0) {
+			var li = joinQuestionUl.children[i];
+			var targetLi = joinQuestionUl.children[0];
+			
+			joinQuestionUl.removeChild(targetLi);
+		}
+	} else {
+		var joinQuestionUl = document.getElementById('joinQuestionUl');
+		
+		if(joinQuestionUl.children.length == 0) {
+			alert('가입 질문을 등록해주십시오.');
+			document.getElementById('joinQuestionY').focus();
+			return false;
+		}
+			
 	}
 	
+	// 가입 연령
+	if(joinAgeNotAll.checked) {
+		var joinAgeList = document.getElementsByClassName('joinAge');
+		var joinAgeMin = joinAgeList[0];
+		var joinAgeMax = joinAgeList[1];
+		var min = joinAgeMin.value;
+		var max = joinAgeMax.value;
+		
+		if(min != '' && max != '') {
+			if(Number(min) > Number(max)) {
+				alert('가입조건 연령 최소 연도가 최대 연도보다 큽니다.');
+				joinAgeMin.focus();
+				return false;
+			}
+		} else {
+			if(min == '') {
+				alert('가입조건 연령 최소 연도를 선택해주십시오.');
+				joinAgeMin.focus();
+				return false;
+			}
+			
+			if(max == '') {
+				alert('가입조건 연령 최대 연도를 선택해주십시오.');
+				joinAgeMax.focus();
+				return false;
+			}
+		}
+		
+		joinAgeNotAll.value = joinAgeMin.value + '~' + joinAgeMax.value;
+	}
+	
+	if(!agreeCheck.checked) {
+		alert('카페 개인정보보호정책에 동의해주십시오.');
+		agreeCheck.focus();
+		return false;
+	}
+	
+	return true;
 }
 
 // 카페 아이디 중복 확인

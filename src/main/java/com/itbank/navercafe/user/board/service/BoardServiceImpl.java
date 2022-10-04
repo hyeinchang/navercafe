@@ -13,6 +13,7 @@ import org.springframework.ui.Model;
 import com.itbank.navercafe.common.file.dto.FileDTO;
 import com.itbank.navercafe.common.file.mapper.FileMapper;
 import com.itbank.navercafe.user.board.dto.BoardDTO;
+import com.itbank.navercafe.user.board.dto.BoardExtendDTO;
 import com.itbank.navercafe.user.board.mapper.BoardMapper;
 import com.itbank.navercafe.user.menu.dto.MenuDTO;
 
@@ -26,9 +27,8 @@ public class BoardServiceImpl implements BoardService{
 	
 	//전체목록인데 수영이형이랑 상의.
 	@Override
-	public List<HashMap<String, Object>> getBoardList(String cafeId) {
-		//System.out.println("service 보드 리스트 cafeId:"+cafeId);
-		return bm.getBoardList(cafeId);
+	public ArrayList<BoardExtendDTO> getBoardList(MenuDTO menuDTO) {
+		return bm.getBoardList(menuDTO);
 	}
 
 
@@ -90,12 +90,12 @@ public class BoardServiceImpl implements BoardService{
 	
 	@Override
 	public BoardDTO getUserBoard(int boardNum,int boardMenuNum,Model model,int pageNum,String cafeId,int next,int preview) {
-		
+
+
 		//System.out.println("페이지넘버 : " + pageNum);
 		if(pageNum == 0) {
 			pageNum++;
 		}
-		
 		
 		BoardDTO dto = bm.getUserBoard(boardNum);
 		SimpleDateFormat date = new SimpleDateFormat("YYYY.MM.dd");
@@ -174,6 +174,16 @@ public class BoardServiceImpl implements BoardService{
 		}
 		//System.out.println("그래서 최종 보드넘:"+dto.getBoardNum());
 		return dto;
+	}
+
+	@Override
+	public int insertBoard(BoardDTO boardDTO) throws Exception {
+		return bm.insertBoard(boardDTO);
+	}
+
+	@Override
+	public int checkGradeBoard(BoardExtendDTO boardExtDTO) throws Exception {
+		return bm.checkGradeBoard(boardExtDTO);
 	}
 
 }

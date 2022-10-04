@@ -84,7 +84,7 @@
 							
 								<!--  menuForm -->
 								<form name="menuForm">
-									<input type="hidden" name="cafeId" value="${cafeDTO.cafeId}">
+									<input type="hidden" name="cafeId" value="${_cafeDTO.cafeId}">
 									<ul id="rightMenuUl">
 									<c:forEach var="menu" items="${menuList}" varStatus="status">
 			                    		<c:set var="typeClass"/>
@@ -498,6 +498,7 @@ function showMenuInfoForm() {
 	
 	xhr.open('post', '${contextPath}/admin/menu/boardInput');
 	xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 	xhr.onreadystatechange = function() {
 		if(this.readyState == 4 && this.status == 200) {
 			var typeInput = document.getElementById('typeInput_' + data.boardMenuType);
@@ -529,6 +530,8 @@ function getMenuObject(li) {
 	if(!li) {
 		return obj;
 	}
+	
+	obj.cafeId = document.menuForm.cafeId.value;
 	
 	childrenList = li.children;
 	

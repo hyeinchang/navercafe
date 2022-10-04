@@ -1,5 +1,9 @@
 package com.itbank.navercafe.user.board.controller;
 
+
+import java.util.Map;
+import java.util.Set;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -8,15 +12,24 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.itbank.navercafe.common.CommonUtils;
 import com.itbank.navercafe.user.board.dto.BoardDTO;
+import com.itbank.navercafe.user.board.dto.BoardExtendDTO;
 import com.itbank.navercafe.user.board.service.BoardService;
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
 import com.itbank.navercafe.user.cafemember.dto.CafeMemberDTO;
 import com.itbank.navercafe.user.cafemember.service.CafeMemberService;
+import com.itbank.navercafe.user.grade.service.GradeService;
+import com.itbank.navercafe.user.memo.service.MemoService;
+import com.itbank.navercafe.user.menu.dto.MenuDTO;
+import com.itbank.navercafe.user.menu.service.MenuService;
 import com.itbank.navercafe.user.reply.service.ReplyService;
 
 @Controller
@@ -25,6 +38,10 @@ public class BoardController {
 	@Autowired BoardService ser;
 	@Autowired ReplyService replySer;
 	@Autowired CafeMemberService boardCafeSer;
+	@Autowired MenuService menuService;
+	@Autowired GradeService upSer;
+	@Autowired MemoService memoSer;
+	@Autowired CafeMemberService cafeMemberService;
 	
 	@RequestMapping("/writeForm")
 	public String writeForm(String cafeId, HttpSession session, CafeDTO cafeDTO, Model model) {
@@ -41,23 +58,55 @@ public class BoardController {
 	
 	//전체목록인데 수영이형이랑 상의.
 	@GetMapping("/goBoardList")	
-	public String goBoardList(Model model, String cafeId){
-		System.out.println("보드 리스트 cafeId:"+cafeId);
-		model.addAttribute("boardList",ser.getBoardList(cafeId));
+	public String goBoardList(Model model, String cafeId, MenuDTO menuDTO) throws Exception{
+		int boardMenuNum = menuDTO.getBoardMenuNum();
+		int boardMenuType = 1;
+		String boardMenuName = "전체글보기";
+		
+		String returnUrl = "user/board/boardList";
+		
+		if(cafeId != null) {
+			menuDTO.setCafeId(cafeId);
+		}
+		
+		if(boardMenuNum > 0) {
+			menuDTO = menuService.selectBoardMenu(boardMenuNum);
+			boardMenuType = menuDTO.getBoardMenuType();
+			boardMenuName = menuDTO.getBoardMenuName();
+		}
+		
+		// 게시판 타입에 따라 다른 view 설정
+		switch(boardMenuType) {
+		case 4 :
+			returnUrl = "user/board/gradeBoardList";
+			break;
+		case 5 :
+			returnUrl = "user/board/memoBoardList";
+			break;
+		}
+		
+		model.addAttribute("boardMenuName",boardMenuName);
+		model.addAttribute("boardList",ser.getBoardList(menuDTO));
 		model.addAttribute("cafeId",cafeId);
-		return "user/board/boardList";
+		
+		return returnUrl;
 	}
+	
 
 	@GetMapping("/goBoardInside")
+
+	
+
+
 	public String goBoardInside(int boardNum, Model model,HttpSession session,String cafeId,int boardMenuNum,
 			@RequestParam(value="num",required=false,defaultValue="0")int num,
 			@RequestParam(value="next",required=false,defaultValue="0")int next,
 			@RequestParam(value="preview",required=false,defaultValue="0")int preview) {
-//		System.out.println("넘어온 보드 값 : "+boardNum);
-//		System.out.println("넘어온 boardMenuNum 값 :"+boardMenuNum);
-//		System.out.println("next 값 : "+next);
-//		System.out.println("preview 값 : "+preview);
+
 		
+		System.out.println("넘어온 보드 값 : "+boardNum);
+		System.out.println("넘어온 boardMenuNum 값 :"+boardMenuNum);
+
 		//System.out.println("boardInside실행");
 		//System.out.println("cafeId:"+cafeId);
 		
@@ -119,6 +168,45 @@ public class BoardController {
 				"&boardMenuNum="+res.getParameter("boardMenuNum")+"&cafeId="+res.getParameter("cafeId");
 	}
 	
+	@GetMapping("/goGradeBoardList")
+	public String goGradeBoardList(String cafeId, MenuDTO menuDTO, Model model) {
+		upSer.getGradeList(model);
+		return "user/board/gradeBoardList";
+	}
 	
+
 	
+	@PostMapping(value="writeBoard", produces="application/json; charset=utf-8")
+	@ResponseBody
+	public int writeBoard(@RequestBody Map<String, Object> map) {
+		int result = 0;
+		CommonUtils commonUtils = new CommonUtils();
+		BoardDTO boardDTO = new BoardDTO();
+		
+		try {
+			boardDTO = (BoardDTO) commonUtils.setDTO(map, boardDTO);
+			result = ser.insertBoard(boardDTO);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	@PostMapping(value="checkGradeBoard", produces="application/json; charset=utf-8")
+	@ResponseBody
+	public int checkBoard(@RequestBody Map<String, Object> map) {
+		int result = 0;
+		CommonUtils commonUtils = new CommonUtils();
+		BoardExtendDTO boardExtDTO = new BoardExtendDTO();
+		
+		try {
+			boardExtDTO = (BoardExtendDTO) commonUtils.setDTO(map, boardExtDTO);
+			result = ser.checkGradeBoard(boardExtDTO);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 }

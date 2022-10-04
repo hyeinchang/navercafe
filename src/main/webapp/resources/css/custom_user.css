@@ -7,6 +7,11 @@ table.cstmTbl1 td {border-top: 1px solid #eee !important;}
 table.cstmTbl1 td:not(:first-child) {border-left: 1px solid #eee;}
 table.cstmTbl1 td:hover {text-decoration:underline; cursor:pointer;}
 table.cstmTbl1 th, table.cstmTbl1 td {padding: 10px !important;}
+table.cstmTbl1 th, table.cstmTbl1 td > div {white-space: nowrap; overflow: hidden;text-overflow: ellipsis;}
+table.cstmTbl1 th, table.cstmTbl1 td:nth-child(1) > div {width:234px;}
+table.cstmTbl1 th, table.cstmTbl1 td:nth-child(2) > div {width:452px;}
+.cafeListIcon {display:inline-block;margin-right:5px;}
+.cafeListIcon img {width:20px;height:20px;border-radius:45%;}
 
 /* 느낌표(!) 아이콘 정의 */
 .fa-exclamation::before {content: "\0021";}
@@ -128,13 +133,11 @@ img.profileImg {border:none !important;border-radius:100%;width:58px;height:58px
 .cafe_layout_area .main_form {padding: 10px 20px;}
 .cafe_layout_area input[type="checkout"], #createCafeForm input[type="radio"]{cursor:pointer;margin-right:5px;}
 .cafe_layout_area .checkArea label {cursor:pointer;}
-.form-control-inline {display: inline-block;  height: 34px; padding: 6px 12px;font-size: 14px; line-height: 1.42857143;  color: #555;background-color: #fff;background-image: none;   border: 1px solid #ccc;  border-radius: 4px;
-    -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%); box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);  -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;-o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s; transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;
-}
 .cafe_layout_area .infoLine{padding: 0 20px;margin-bottom:20px;}
 .cafe_layout_area .infoLine > input[type="text"], 
 .cafe_layout_area .infoLine > input[type="password"],
 .cafe_layout_area .infoLine > input[type="email"] {width:300px;margin:0;}
+.cafe_layout_area .infoLine > input[type="tel"] {margin:0;}
 .cafe_layout_area .infoLabel{width:200px;}
 .cafe_layout_area .checkArea {padding:0 20px;}
 .cafe_layout_area .checkLable-inline {width:100px;}
@@ -149,3 +152,100 @@ img.profileImg {border:none !important;border-radius:100%;width:58px;height:58px
 .cafe_layout_area .btns button:not(:last-child){margin-right: 5px;}
 .cafe_layout_area button.danger{background-color: #d9534f;}
 .form-control-inline[disabled], .form-control-inline[readonly], fieldset[disabled] .form-control-inline { background-color: #eee; opacity: 1;}
+.cafe_layout_area .infoText {display:none;margin:5px 0 0 205px;width:100%;}
+
+input[type=file] {
+    display: inline-block;
+}
+
+/* 카페 소개  */
+.infoCafeIcon {width:100px; height:100px;border-radius:45%;}
+.tbl_cafe_info {
+    width: 100%;
+    margin-top: 30px;
+    border-top: 1px solid #e5e5e5;
+}
+.tbl_cafe_info th {
+    padding: 10px 0 10px 20px;
+    border-bottom: 1px solid #e5e5e5;
+    line-height: 20px;
+    background-color: #f9f9f9;
+    text-align: left;
+}
+.tbl_cafe_info td {
+    position: relative;
+    padding: 10px 0 10px 20px;
+    border-bottom: 1px solid #e5e5e5;
+    line-height: 20px;
+}
+
+/* 카페 회원 가입 */
+.join_info{
+	display: table;
+	width: 100%;
+	table-layout: fixed; padding: 20px 0;
+	border-bottom: 1px solid #ebecef;
+}
+.join_info_head{
+	display: table-cell; width: 108px; vertical-align: top;
+}
+.join_info_body{
+	display: table-cell;
+}
+.input_text{
+	width: 256px;
+	height: 36px;
+	border-radius: 6px;
+	padding: 0 38px 0 12px;
+	border: 0;
+	font-size: 14px;
+	color: #000000;
+	background-color: #f5f6f8;
+}
+.btn_close{
+	position: absolute;
+	top: 10px; right: 10px;
+	display: inline-block;
+	width: 16px; height: 16px;
+	background: none;
+	background-image: url(https://ca-fe.pstatic.net/web-pc/static/img/sprite_icon_354827.svg#icon_search_delete-usage);
+}
+.qna_area{
+	display: block; width: 100%; height: 60px;
+	margin-top: 9px;
+	padding: 9px 18px 11px 12px;
+	box-sizing: border-box;
+	border-radius: 6px;
+	border: 0;
+	font-size: 13px;
+	line-height: 20px;
+	color: #000000;
+	background-color: #f5f6f8;
+	resize: vertical;
+}
+.wqe{
+	word-wrap : break-word;
+	word-break : keep-all;
+}
+.signbutton{
+	display: inline-block;
+	border-radius: 6px;
+	box-sizing: border-box;
+	font-weight: 700;
+	text-align: center;
+	vertical-align: top;
+	background: rgba(3,199,90,0.12);
+	text-decoration: none;
+	cursor: pointer;
+	min-width: 46px;
+	height: 36px; padding: 0 12px;
+	font-size: 13px;
+	line-height: 36px;
+}
+
+.form-control-inline {display: inline-block;  height: 34px; padding: 6px 12px;font-size: 14px; line-height: 1.42857143;  color: #555;background-color: #fff;background-image: none;   border: 1px solid #ccc;  border-radius: 4px;
+    -webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%); box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);  -webkit-transition: border-color ease-in-out .15s,-webkit-box-shadow ease-in-out .15s;-o-transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s; 
+    transition: border-color ease-in-out .15s,box-shadow ease-in-out .15s;vertical-align:middle;
+}
+.boardBtn {vertical-align: middle; float: left;}
+.formProfileImg {width:58px;height:58px;border-radius:100%;margin-right:10px;}

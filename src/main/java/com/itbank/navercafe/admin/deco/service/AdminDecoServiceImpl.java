@@ -25,4 +25,9 @@ public class AdminDecoServiceImpl implements AdminDecoService {
 	public int saveTitle(CafeDTO cafeDTO) throws Exception {
 		return decoMapper.saveTitle(cafeDTO);
 	}
+
+	@Override
+	public int saveLayout(CafeDTO cafeDTO) throws Exception {
+		return decoMapper.saveLayout(cafeDTO);
+	}
 }

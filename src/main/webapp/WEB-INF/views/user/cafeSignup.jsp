@@ -1,141 +1,100 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<style>
-	.join_info{
-		display: table;
-		width: 100%;
-		table-layout: fixed; padding: 20px 0;
-		border-bottom: 1px solid #ebecef;
-	}
-	.join_info_head{
-		display: table-cell; width: 108px; vertical-align: top;
-	}
-	.join_info_body{
-		display: table-cell;
-	}
-	.input_text{
-		width: 256px;
-		height: 36px;
-		border-radius: 6px;
-		padding: 0 38px 0 12px;
-		border: 0;
-		font-size: 14px;
-		color: #000000;
-		background-color: #f5f6f8;
-	}
-	.btn_close{
-		position: absolute;
-		top: 10px; right: 10px;
-		display: inline-block;
-		width: 16px; height: 16px;
-		background: none;
-		
-		background-image: url(https://ca-fe.pstatic.net/web-pc/static/img/sprite_icon_354827.svg#icon_search_delete-usage);
-		
-	}
-	.qna_area{
-		display: block; width: 100%; height: 60px;
-		margin-top: 9px;
-		padding: 9px 18px 11px 12px;
-		box-sizing: border-box;
-		border-radius: 6px;
-		border: 0;
-		font-size: 13px;
-		line-height: 20px;
-		color: #000000;
-		background-color: #f5f6f8;
-		resize: vertical;
-	}
-	.wqe{
-		word-wrap : break-word;
-		word-break : keep-all;
-	}
-	.signbutton{
-		display: inline-block;
-		border-radius: 6px;
-		box-sizing: border-box;
-		font-weight: 700;
-		text-align: center;
-		vertical-align: top;
-		background: rgba(3,199,90,0.12);
-		text-decoration: none;
-		cursor: pointer;
-		min-width: 46px;
-		height: 36px; padding: 0 12px;
-		font-size: 13px;
-		line-height: 36px;
-	}
-</style>
-<div	class="content col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix cstmContent"
-	${cafeDTO.cafeLayout > 0 ? '' : 'style="float:right;"'} >
-	
-	<h2>
-		<b>카페 가입하기</b>
-	</h2>
-	<p>카페 가입을 위한 정보를 입력해주세요.</p>
-	<div style="margin-top: 30px; padding: 8px 32px 32px; border: 1px solid #ebecef; line-height: 20px; border-radius: 10px;">
-		<form action="cafeRegApp" method="post" name="signupForm" id="signupForm">
-			<input type="hidden" value="${cafeId}" name="cafeId" id="cafeId">
-			<input type="hidden" value="${loginId}" name="userId">
-			<input type="hidden" name="status" id="status" value="OK">
-			<div class="join_info">
-				<div class="join_info_head">
-					<strong style="line-height: 20px;">카페설명</strong>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
+      <div class="content col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix cstmContent" ${_cafeDTO.cafeLayout eq 'left' ? '' : 'style="float:right;"'}>
+       	<section class="section1">
+		    <div class="container clearfix">
+		      <div class="">
+		       	<h4>
+		          <span>카페 가입하기</span>
+		        </h4>
+		      </div>
+		      <div class="col-lg-8 col-md-8 col-sm-8 clearfix">
+				<div style="margin-top: 30px; padding: 8px 32px 32px; border: 1px solid #ebecef; line-height: 20px; border-radius: 10px;">
+					<form action="cafeRegApp" method="post" name="signupForm" id="signupForm">
+						<input type="hidden" value="${_cafeDTO.cafeId}" name="cafeId" id="cafeId">
+						<input type="hidden" value="${_cafeDTO.loginId}" name="userId">
+						<input type="hidden" name="status" id="status" value="OK">
+						<div class="join_info">
+							<div class="join_info_head">
+								<strong style="line-height: 20px;">카페소개</strong>
+							</div>
+							<div class="join_info_body">
+							<c:if test="${_cafeDTO.cafeExplanation eq null || _cafeDTO.cafeExplanation.length() == 0}">
+								등록된 카페소개 없습니다.
+							</c:if>
+								${_cafeDTO.cafeExplanation}
+							</div>
+						</div>
+						<div class="join_info">
+							<div class="join_info_head">
+								<strong style="line-height: 20px;">닉네임</strong>
+							</div>
+							<div class="join_info_body">
+								<div style="position: relative; display: inline-block; margin: 0; padding: 0;">
+									<input class="input_text" type="text" placeholder="닉네임" id="cafeUserNickname" name="cafeUserNickname" onkeyup="idOverlap()">
+									<span id="confirm"></span>
+									<button type="button" class="btn_close"></button>
+								</div>
+							</div>
+						</div>
+						<div class="join_info">
+							<div class="join_info_head">
+								<strong style="line-height: 20px;">프로필 이미지</strong>
+							</div>
+							<div class="join_info_body">
+								<div style="position: relative; display: inline-block; margin: 0; padding: 0;">
+									<img id ="profileImg" class="formProfileImg" src="${contextPath}/resources/img/cafe_profile.png" alt="프로필 이미지 없음">
+									<input class="" type="file" name="profileImage" onchange="previewProfileImage()">
+									<a href="javascript:deleteProfileImage()">삭제</a>
+								</div>
+							</div>
+						</div>
+						<!-- 카페 가입 설명, 안내  -->
+						<div class="join_info">
+							<div class="join_info_head">
+								<strong style="line-height: 20px;">가입안내</strong>
+							</div>
+							<div class="join_info_body">
+							<c:if test="${_cafeDTO.cafeJoinInformation eq null || _cafeDTO.cafeJoinInformation.length() == 0}">
+								등록된 가입안내가 없습니다.
+							</c:if>
+								${_cafeDTO.cafeJoinInformation}
+							</div>
+						</div>
+						<c:if test="${_cafeDTO.questionList ne null && _cafeDTO.questionList.size() > 0}">
+						<div class="join_info">
+							<div class="join_info_head">
+								<strong style="line-height: 20px;">가입질문</strong>
+							</div>
+							<div class="join_info_body">
+							<c:forEach var="question" items="${_cafeDTO.questionList}">
+								<div>
+									<strong style="line-height: 20px;">질문 ${question.cafeQuestionNum}. ${question.cafeQuestionContent}</strong>
+									<textarea class="qna_area" rows="2" cols="60" name="cafeAnswerContent"></textarea>
+								</div>
+							</c:forEach>
+							</div>
+						</div>
+						</c:if>
+						<div style="margin-top: 16px; text-align: center;">
+							<button class="button" type="button" onclick="update()">
+								동의 후 가입하기
+							</button>
+						</div>
+					</form>
 				</div>
-				<div class="join_info_body">
-					카페설명 내용~
-				</div>
-			</div>
-			<div class="join_info">
-				<div class="join_info_head">
-					<strong style="line-height: 20px;">가입안내</strong>
-				</div>
-				<div class="join_info_body">
-					가입안내 내용~
-				</div>
-			</div>
-			<!-- 카페 가입 설명, 안내  -->
-			<div class="join_info">
-				<div class="join_info_head">
-					<strong style="line-height: 20px;">닉네임</strong>
-				</div>
-				<div class="join_info_body">
-					<div style="position: relative; display: inline-block; margin: 0; padding: 0;">
-						<input class="input_text" type="text" placeholder="닉네임" id="cafeUserNickname" name="cafeUserNickname" onkeyup="idOverlap()">
-						<span id="confirm"></span>
-						<button type="button" class="btn_close"></button>
-					</div>
-				</div>
-			</div>
-			<div class="join_info">
-				<div class="join_info_head">
-					<strong style="line-height: 20px;">가입질문</strong>
-				</div>
-				<div class="join_info_body">
-					<div>
-						<strong style="line-height: 20px;">질문1</strong>
-						<textarea class="qna_area" rows="2" cols="60" name="answer1"></textarea>
-					</div>
-					<div>
-						<label style="cursor: default;">질문2</label>
-						<textarea class="qna_area" rows="2" cols="60" name="answer2"></textarea>
-					</div>
-					<div>
-						<label class="wqe">질문3</label>
-						<textarea class="qna_area" rows="2" cols="60" name="answer3"></textarea>
-					</div>
-				</div>
-			</div>
-			<div style="margin-top: 16px; text-align: center;">
-				<button class="signbutton" type="button" onclick="update()">
-					<span style="color: #009f47">동의 후 가입하기</span>
-				</button>
-			</div>
-		</form>
-	</div>
-	
-</div>
-<script type="text/javascript" src="resources/js/jquery3.6.0.js"></script>
+		     
+		      </div>
+		      <!-- end content -->
+		    </div>
+		    <!-- end container -->
+		  </section>
+      </div>
+      <!-- end content -->
+
+<script type="text/javascript" src="${contextPath}/resources/js/jquery3.6.0.js"></script>
 <script type="text/javascript">
 function idOverlap(){
 	let idCheck = document.getElementById("cafeUserNickname").value;
@@ -167,20 +126,81 @@ function idOverlap(){
 			}
 		},
 		error : function(){
+<<<<<<< HEAD
 			alert("닉네임을 확인해주세요")
+=======
+			//alert("에러ㅓㅓ")
+>>>>>>> a70101aa115492857243e689061e99c2eeaaacd2
 		}
 	});
 }
-
 function update(){
 	let confirm = document.getElementById("confirm");
 	let status = document.getElementById("status").value;
-	console.log(status)
+	let cafeUserNickname = document.getElementById('cafeUserNickname');
+	
+	if(cafeUserNickname.value == '') {
+		alert('카페 닉네임을 입력해주십시오.');
+		cafeUserNickname.focus();
+		return;
+	}
+	
+	//console.log(status);
 	if(status == "OK"){
-		document.getElementById("signupForm").submit();
+		var signupForm = document.signupForm;
+		
+		$.ajax({
+			type : "POST",
+			url : "cafeRegApp",
+			data : new FormData(signupForm),
+			enctype:'multipart/form-data',
+		    dataType:'json',
+		    processData:false,
+		    contentType:false,
+		    cache:false,
+			success : function(data){
+				if(Number(data) == 0) {
+					alert('카페 가입에 실패했습니다.');
+				} else {
+					location.href='${contextPath}/user/main?cafeId='+signupForm.cafeId.value;
+				}
+			},
+			error : function(){
+				//alert("에러ㅓㅓ")
+			}
+		});
 	}else{
 		alert('수정 정보를 다시 확인해주세요')
 	}
 }
-</script>
-<!-- end content -->
+
+function previewProfileImage() {
+	var fileInput = event.target;
+	var file = fileInput.files[0];
+	
+	if(file.type.indexOf('image') < 0) {
+		alert('이미지 파일이 아닙니다.');
+		fileInput.files = null;
+		fileInput.value = '';
+		fileInput.focus();
+	} else {
+		var profileImg = document.getElementById('profileImg');
+		var fileReader = new FileReader();
+		
+		fileReader.readAsDataURL(file);
+		fileReader.onload = function() {
+			profileImg.src = fileReader.result;
+		}
+	}	
+}
+
+function deleteProfileImage() {
+	var profileImg = document.getElementById('profileImg');
+	var orgSrc= '${contextPath}/resources/img/cafe_profile.png';
+	var fileInput = document.signupForm.profileImage;
+	
+	profileImg.src = orgSrc;
+	fileInput.files = null;
+	fileInput.value = '';
+}
+</script>    

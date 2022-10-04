@@ -14,10 +14,12 @@
       <div class="col-lg-12 col-md-12 col-sm-12 clearfix">
 
         <form class="main_form" action="register" method="post" name="signupForm">
+        	<input type="hidden" name="userIdCheck" value="N">
         	<h5 class="title">회원 기본 정보</h5>
         	<div class="infoLine">
         		<input type="hidden" name="status" id="status" value="NO">
         		<label for="id" class="infoLabel">아이디 <span class="required">*</span></label>
+<<<<<<< HEAD
           		<input type="text" name="id" id="id" class="form-control-inline" placeholder="아이디를 입력해주십시오.">
           		<span id="confirm"></span>
           		<input type="button" value="중복확인" class="button" style="margin-left:10px;"
@@ -25,30 +27,31 @@
           		<div style="margin:5px 0 0 205px;">
           			<label style="color: red;" id="idlabel"></label>	
           		</div>
+=======
+          		<input type="text" name="id" id="id" class="form-control-inline" placeholder="아이디를 입력해주십시오."
+          			onchange="changeUserIdCheckFlag()" onkeypress="if(event.keyCode == 13)checkUserId()">
+          		<input type="button" value="중복확인" class="button" style="margin-left:10px;"
+          			onclick="checkUserId()">
+          		<label class="infoText" style="color: red;" id="idlabel"></label>
+>>>>>>> a70101aa115492857243e689061e99c2eeaaacd2
         	</div>
         	
         	<div class="infoLine">
         		<label for="password" class="infoLabel">비밀번호 <span class="required">*</span></label>
           		<input type="password" name="password" id="password" class="form-control-inline" placeholder="비밀번호를 입력해주십시오.">
-          		<div style="margin:5px 0 0 205px;">
-          			<label style="color: red;" id="pwlabel"></label>
-          		</div>
+          		<label class="infoText" style="color: red;" id="pwlabel"></label>
         	</div>
         	
         	<div class="infoLine">
         		<label for="password2" class="infoLabel">비밀번호 확인 <span class="required">*</span></label>
           		<input type="password" name="password2" id="password2" class="form-control-inline" placeholder="비밀번호 확인을 입력해주십시오.">
-          		<div style="margin:5px 0 0 205px;">
-          			<label style="color: red;" id="pw2label"></label>
-          		</div>
+          		<label class="infoText" style="color: red;" id="pw2label"></label>
         	</div>
         	
         	<div class="infoLine">
         		<label for="name" class="infoLabel">이름 <span class="required">*</span></label>
           		<input type="text" name="name" id="name" class="form-control-inline" placeholder="이름을 입력해주십시오.">
-          		<div style="margin:5px 0 0 205px;">
-          			<label style="color: red;" id="namelabel"></label>
-          		</div>
+          		<label class="infoText" style="color: red;" id="namelabel"></label>
         	</div>
         	
           	<div class="clearfix"></div>
@@ -58,9 +61,7 @@
         	<div class="infoLine">
         		<label for="phone" class="infoLabel">휴대폰 번호</label>
           		<input type="tel" id="phone" name="phone" class="form-control-inline" placeholder="###-####-####">
-          		<div style="margin:5px 0 0 205px;">
-          			<label style="color: red;" id="phlabel"></label>
-          		</div>
+          		<label class="infoText" style="color: red;" id="phlabel"></label>
         	</div>
         	
         	<div class="infoLine">
@@ -97,9 +98,7 @@
         	<div class="infoLine">
         		<label for="email" class="infoLabel">이메일</label>
           		<input type="email" id="email" name="mail" class="form-control-inline" placeholder="이메일을 입력해주십시오.">
-          		<div style="margin:5px 0 0 205px;">
-          			<label style="color: red;" id="emaillabel"></label>
-          		</div>
+          		<br><label class="infoText" style="color: red;" id="emaillabel"></label>
         	</div>
 
           	<br><br>
@@ -170,6 +169,14 @@ function idOverlap2(){
 		var pwck = /^(?=.*[A-Z])(?=.*[a-z])(?=.*[0-9])(?=.*[#?!@$%^&*-])[\w#?!@$%^&*-]{8,15}$/g;
 		var emck = /^[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*@[0-9a-zA-Z]([-_\.]?[0-9a-zA-Z])*\.[a-zA-Z]{2,3}$/g;
 		
+		var userIdCheckVal = document.signupForm.userIdCheck.value;
+		
+		if(userIdCheckVal != 'Y') {
+			alert('아이디 중복확인을 해주세요.');
+			id.focus();
+			return false;
+		}
+		
 		if(id.value==""){
 			alert("아이디를 입력하세요.");
 			id.focus();
@@ -177,6 +184,7 @@ function idOverlap2(){
 		}
 
 		if(!idck.test(id.value)){ //아이디 체크
+<<<<<<< HEAD
 			console.log(document.getElementById("status").value)
 			if(document.getElementById("status").value=="NO"){
 				document.getElementById("idlabel").innerHTML = "아이디 중복확인 "
@@ -198,6 +206,19 @@ function idOverlap2(){
 			document.getElementById("idlabel").innerHTML = "사용가능합니다."
 			document.getElementById("idlabel").style.color = "green"
  			//return false;
+=======
+			document.getElementById("idlabel").innerHTML = "아이디는 5~20자의 영문소문자, 숫자, (-), (_)만 사용가능합니다.";
+			document.getElementById("idlabel").style.color = "red";
+			document.getElementById("idlabel").style.display = "block";
+			id.focus();
+			return false;
+		}else{
+			document.getElementById("idlabel").innerHTML = "사용가능합니다.";
+			document.getElementById("idlabel").style.color = "green";
+			document.getElementById("idlabel").style.display = "block";
+			pw.focus();
+			//return false;
+>>>>>>> a70101aa115492857243e689061e99c2eeaaacd2
 		}
 		
 		if(pw.value==""){
@@ -207,6 +228,7 @@ function idOverlap2(){
 		}
 		
 		if(!pwck.test(pw.value)){ //비밀번호 체크
+<<<<<<< HEAD
 			document.getElementById("pwlabel").innerHTML = "비밀번호는 영대소문자+숫자+특수문자 조합으로 8~15자리 입력해주세요"
 			document.getElementById("pwlabel").style.color = "red"
 			pw.focus();
@@ -214,6 +236,18 @@ function idOverlap2(){
 		}else{
 			document.getElementById("pwlabel").innerHTML = "사용가능합니다."
 			document.getElementById("pwlabel").style.color = "green"
+=======
+			document.getElementById("pwlabel").innerHTML = "비밀번호는 영문자+숫자+특수문자 조합으로 8~15자리 입력해주세요";
+			document.getElementById("pwlabel").style.color = "red";
+			document.getElementById("pwlabel").style.display = "block";
+			pw.focus();
+			return false;
+		}else{
+			document.getElementById("pwlabel").innerHTML = "사용가능합니다.";
+			document.getElementById("pwlabel").style.color = "green";
+			document.getElementById("pwlabel").style.display = "block";
+			pw2.focus();
+>>>>>>> a70101aa115492857243e689061e99c2eeaaacd2
 		}
 		if(pw2.value==""){
 			alert("비밀번호를 확인해주세요.");
@@ -221,13 +255,21 @@ function idOverlap2(){
 			return false;
 		}
 		if(pw.value !== pw2.value){ // 비밀번호 일치 체크
-			document.getElementById("pw2label").innerHTML = "비밀번호가 일치하지 않습니다."
-			document.getElementById("pw2label").style.color = "red"
+			document.getElementById("pw2label").innerHTML = "비밀번호가 일치하지 않습니다.";
+			document.getElementById("pw2label").style.color = "red";
+			document.getElementById("pw2label").style.display = "block";
 			pw2.focus();
 			return false;
 		}else{
+<<<<<<< HEAD
 			document.getElementById("pw2label").innerHTML = "비밀번호가 일치합니다."
 			document.getElementById("pw2label").style.color = "green"
+=======
+			document.getElementById("pw2label").innerHTML = "비밀번호가 일치합니다.";
+			document.getElementById("pw2label").style.color = "green";
+			document.getElementById("pw2label").style.display = "block";
+			name.focus();
+>>>>>>> a70101aa115492857243e689061e99c2eeaaacd2
 		}
 		
 		if(name.value==""){
@@ -236,13 +278,15 @@ function idOverlap2(){
 			return false;
 		}
 		if(!nameck.test(name.value)){ //이름 체크
-			document.getElementById("namelabel").innerHTML = "한글이름만 가입가능합니다."
-			document.getElementById("namelabel").style.color = "red"
+			document.getElementById("namelabel").innerHTML = "한글이름만 가입가능합니다.";
+			document.getElementById("namelabel").style.color = "red";
+			document.getElementById("namelabel").style.display = "block";
 			name.focus();
 			return false;
 		}else{
-			document.getElementById("namelabel").innerHTML = "사용가능합니다."
-			document.getElementById("namelabel").style.color = "green"
+			document.getElementById("namelabel").innerHTML = "사용가능합니다.";
+			document.getElementById("namelabel").style.color = "green";
+			document.getElementById("namelabel").style.display = "block";
 		}
 		if(phone.value==""){
 			alert("핸드폰번호를 입력해 주세요.");
@@ -250,13 +294,15 @@ function idOverlap2(){
 			return false;
 		}
 		if(!phck.test(phone.value)){ // 폰번호체크
-			document.getElementById("phlabel").innerHTML = "숫자만 입력해주세요"
-			document.getElementById("phlabel").style.color = "red"
+			document.getElementById("phlabel").innerHTML = "숫자만 입력해주세요";
+			document.getElementById("phlabel").style.color = "red";
+			document.getElementById("phlabel").style.display = "block";
 			phone.focus();
 			return false;
 		}else{
-			document.getElementById("phlabel").innerHTML = "사용가능합니다."
-			document.getElementById("phlabel").style.color = "green"
+			document.getElementById("phlabel").innerHTML = "사용가능합니다.";
+			document.getElementById("phlabel").style.color = "green";
+			document.getElementById("phlabel").style.display = "block";
 		}
 		if(birthdate.value==""){
 			alert("태어난 년도를 입력해 주세요.");
@@ -289,6 +335,7 @@ function idOverlap2(){
 			return false;
 		}
 		if(!emck.test(email.value)){ //이메일정규식 체크
+<<<<<<< HEAD
 			document.getElementById("emaillabel").innerHTML = "이메일형식으로 작성해주세요."
 			document.getElementById("emaillabel").style.color = "red"
 			email.focus();
@@ -304,5 +351,58 @@ function idOverlap2(){
 		}else{
 			alert('회원가입정보를 다시 확인해주세요')
 		}
+=======
+			document.getElementById("emaillabel").innerHTML = "이메일형식으로 작성해주세요.";
+			document.getElementById("emaillabel").style.display = "block";
+			email.focus();
+			return false;
+		}else{
+			document.getElementById("emaillabel").innerHTML = "사용가능합니다.";
+			document.getElementById("emaillabel").style.color = "green";
+			document.getElementById("emaillabel").style.display = "block";
+		}
+		
+		document.signupForm.submit();
+>>>>>>> a70101aa115492857243e689061e99c2eeaaacd2
+	}
+	
+	// 아이디 중복 확인
+	function checkUserId() {
+		var form = document.signupForm;
+		var userId = form.id;
+		var xhr = new XMLHttpRequest();
+		var idck = /^[a-z]+[a-z0-9-_]{4,20}$/g;
+		
+		if(userId.value == '') {
+			userId('아이디를 입력해주십시오.');
+			userId.focus();
+			return;
+		}
+		
+		if(!idck.test(userId.value)) {
+			alert('아이디는 5~20자의 영문소문자, 숫자, (-), (_)만 사용가능합니다.');
+			userId.focus();
+			return;
+		}
+		
+		xhr.open('get', '${contextPath}/cafe/member/checkUserId?userId=' + userId.value);
+		xhr.setRequestHeader('Content-Type', 'text/plain');
+		xhr.onreadystatechange = function() {
+			if(xhr.readyState == 4 && xhr.status == 200) {
+				if(Number(xhr.response) > 0) {
+					alert('사용할 수 없는 아이디입니다.');
+					userId.focus();
+					form.userIdCheck.value = 'N';
+				} else {
+					alert('사용가능한 아이디입니다.');
+					form.userIdCheck.value = 'Y';
+				}
+			}
+		}
+		xhr.send();
+	}
+	
+	function changeUserIdCheckFlag() {
+		document.signupForm.userIdCheck.value = 'N';
 	}
 </script>

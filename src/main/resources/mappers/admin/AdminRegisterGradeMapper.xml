@@ -125,8 +125,8 @@
 		    cafeMember.cafe_user_grade = grade.cafe_user_grade
 		    ) presentData
 		left join
-		    (select cafe_user_grade up_cafe_user_grade, cut_name up_cut_name from project_member_grade) upData
-		on presentData.cafe_user_grade+1 = upData.up_cafe_user_grade
+		    (select cafe_user_grade up_cafe_user_grade, cut_name up_cut_name, cafe_id from project_member_grade) upData
+		on presentData.cafe_user_grade+1 = upData.up_cafe_user_grade and presentData.cafe_id = upData.cafe_id
 		order by presentData.board_num desc
 	</select>	
 	

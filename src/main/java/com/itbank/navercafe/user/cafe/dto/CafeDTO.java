@@ -2,7 +2,9 @@ package com.itbank.navercafe.user.cafe.dto;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
+import com.itbank.navercafe.user.cafemember.dto.CafeMemberDTO;
 import com.itbank.navercafe.user.menu.dto.MenuDTO;
 
 public class CafeDTO {
@@ -23,7 +25,13 @@ public class CafeDTO {
 	private String isCafeMember;
 	private String isCafeManager;
 	private String loginId;
+	
+	private int boardMenuNum;
+	private MenuDTO menuDTO;
 	private List<MenuDTO> cafeMenuList;
+	private Map<String, Integer> countMap;
+	private List<CafeJoinQuestionDTO> questionList;
+	private CafeMemberDTO loginUser;
 
 	public String getCafeId() {
 		return cafeId;
@@ -127,10 +135,42 @@ public class CafeDTO {
 	public void setLoginId(String loginId) {
 		this.loginId = loginId;
 	}
+	
+	
+	public int getBoardMenuNum() {
+		return boardMenuNum;
+	}
+	public void setBoardMenuNum(int boardMenuNum) {
+		this.boardMenuNum = boardMenuNum;
+	}
+	public MenuDTO getMenuDTO() {
+		return menuDTO;
+	}
+	public void setMenuDTO(MenuDTO menuDTO) {
+		this.menuDTO = menuDTO;
+	}
 	public List<MenuDTO> getCafeMenuList() {
 		return cafeMenuList;
 	}
 	public void setCafeMenuList(List<MenuDTO> cafeMenuList) {
 		this.cafeMenuList = cafeMenuList;
+	}
+	public Map<String, Integer> getCountMap() {
+		return countMap;
+	}
+	public void setCountMap(Map<String, Integer> countMap) {
+		this.countMap = countMap;
+	}
+	public List<CafeJoinQuestionDTO> getQuestionList() {
+		return questionList;
+	}
+	public void setQuestionList(List<CafeJoinQuestionDTO> questionList) {
+		this.questionList = questionList;
+	}
+	public CafeMemberDTO getLoginUser() {
+		return loginUser;
+	}
+	public void setLoginUser(CafeMemberDTO loginUser) {
+		this.loginUser = loginUser;
 	}
 }

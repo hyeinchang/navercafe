@@ -1,13 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
 <c:if test="${message ne null}">
 <script type="text/javascript">
 	alert('${message}');
 </script>
 </c:if>
  
-  <section class="section1">
+  <section class="section1" style="display:none;">
     <div class="container clearfix">
       <!-- 주간 랭킹 카페는 일주일 동안 게시글, 댓글 수, 조회 수, 가입 맴버수가 가장 높은 카페 3개를 선정 -->
       <div class="title">
@@ -97,16 +98,32 @@
           	<c:otherwise>
           	<c:forEach var="cafe" items="${cafeList}">
           	<tr>
-              <td onclick="changeCafe('${cafe.cafeId}')">${cafe.cafeName}</td>
               <td onclick="changeCafe('${cafe.cafeId}')">
-              <c:choose>
-              	<c:when test="${cafe.cafeExplanation eq null || cafe.cafeExplanation.length() == 0}">
-              	등록된 카페 소개가 없습니다.
-              	</c:when>	
-              	<c:otherwise>
-              	${cafe.cafeExplanation}
-              	</c:otherwise>
-              </c:choose>
+	              <div title="${cafe.cafeName}">
+	               <span class="cafeListIcon">
+		              <c:choose>
+		   	  			<c:when test="${cafe.cafeIconNum eq null || cafe.cafeIconNum == 0}">
+		   	  			<img src="${contextPath}/resources/img/cafeicon_default_112x112.png" alt="카페 아이콘 없음">
+		   	  			</c:when>
+		   	  			<c:otherwise>
+		   	  			<img src="${contextPath}/file/download?cafeIconNum=${cafe.cafeIconNum}" alt="카페 아이콘">
+		   	  			</c:otherwise>
+		   	  		</c:choose>
+		   	  		</span>
+	 			 	${cafe.cafeName}
+              	</div>
+              </td>
+              <td onclick="changeCafe('${cafe.cafeId}')">
+	          	<div title="${cafe.cafeExplanation}">
+	          	<c:choose>
+	              	<c:when test="${cafe.cafeExplanation eq null || cafe.cafeExplanation.length() == 0}">
+	              	등록된 카페 소개가 없습니다.
+	              	</c:when>	
+	              	<c:otherwise>
+	              	${cafe.cafeExplanation}
+	              	</c:otherwise>
+              	</c:choose>
+	            </div>
               </td>
             </tr>
             </c:forEach>
@@ -158,7 +175,7 @@
           </div>
           <div class="form-group">
             <button type="button" class="button" onclick="checkLoginForm()">로그인</button>
-            <button type="button" class="button" onclick="location.href='cafe/member/signup'">회원가입</button>
+            <button type="button" class="button" onclick="location.href='${contextPath}/cafe/member/signup'">회원가입</button>
           </div>
         </form>
 	  </c:when>

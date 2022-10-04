@@ -1,7 +1,9 @@
 package com.itbank.navercafe;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -27,10 +29,13 @@ import com.itbank.navercafe.common.file.dto.FileDTO;
 import com.itbank.navercafe.common.file.dto.FileResult;
 import com.itbank.navercafe.common.file.service.FileService;
 import com.itbank.navercafe.common.pagination.Pagination;
-import com.itbank.navercafe.user.cafe.controller.CafeController;
+import com.itbank.navercafe.user.cafe.dto.BasicMemberGrade;
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
+import com.itbank.navercafe.user.cafe.dto.CafeJoinQuestionDTO;
+import com.itbank.navercafe.user.cafe.dto.CafeMemberGradeDTO;
 import com.itbank.navercafe.user.cafe.service.CafeService;
-import com.itbank.navercafe.user.cafejoin.CafeJoinQuestionDTO;
+import com.itbank.navercafe.user.cafemember.dto.CafeMemberDTO;
+import com.itbank.navercafe.user.cafemember.service.CafeMemberService;
 import com.itbank.navercafe.user.member.dto.MemberDTO;
 import com.itbank.navercafe.user.member.service.MemberService;
 
@@ -53,6 +58,12 @@ public class HomeController { //메인 로그인관련
 	
 	@Autowired
 	private FileService fileService;
+	
+	@Autowired
+	private CafeMemberService cafeMemberService;
+	
+	@Autowired
+	private MemberService memberService;
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
 	public String home(HttpServletRequest request, CafeDTO cafeDTO, Pagination pagination, Model model) {
@@ -82,6 +93,21 @@ public class HomeController { //메인 로그인관련
 		return url;
 	}
 	
+	@GetMapping(value="/cafe/member/checkUserId", produces="application/json")
+	@ResponseBody
+	public int checkUserId(String userId) {
+		int idCount = 0;
+
+		try {
+			if(memberService.getU(userId) != null) {
+				idCount = 1;
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return idCount;
+	}
 
 	@GetMapping("/cafe/member/signup")
 	public String signup() {
@@ -135,32 +161,47 @@ public class HomeController { //메인 로그인관련
 		return "redirect:"+url;
 
 	}
+	
+	// 카페 만들기로 이동
 	@GetMapping("/cafe/createCafeForm")
 	public String createCafeForm() {
 		return "cafe/createCafeForm";
 
 	}
 	
+	// 카페 만들기
 	@PostMapping(value="/cafe/createCafe", produces="application/json")
 	@ResponseBody
-	public int createCafe(MultipartHttpServletRequest multiRequest) {
-		int result = 0;
+	public Map<String, Object> createCafe(MultipartHttpServletRequest multiRequest, HttpSession session) {
+		Map<String, Object> result = new HashMap<>();
 		
 		try {
 			CommonUtils commonUtils = new CommonUtils();
 			CafeDTO cafeDTO = new CafeDTO();
-			String cafeId = null;
+			String cafeId = multiRequest.getParameter("cafeId");
+			String loginId = (String) session.getAttribute("loginId");
 			MultipartFile iconImage = multiRequest.getFile("iconImage");
-			
-			commonUtils.setDTO(multiRequest, cafeDTO);
-			
-			cafeId = cafeDTO.getCafeId();
+			int insertResult = 0;
 			
 			if(cafeId == null) {
+				result.put("resultCode", -1);
+				result.put("message", "카페 아이디가 없습니다.");
 				return result;
 			}
 			
-			if(iconImage != null) {
+			if(loginId == null) {
+				result.put("resultCode", -1);
+				result.put("message", "로그인 정보가 없습니다.");
+				return result;
+			}
+			
+			commonUtils.setDTO(multiRequest, cafeDTO);
+				
+			result.put("cafeId", cafeId);
+			
+			String orgFileName = iconImage.getOriginalFilename();
+			
+			if(iconImage != null && orgFileName != null && orgFileName.length() > 0) {
 				FileResult fileResult = fileUtils.uploadFile(iconImage, "icon/" + cafeId);
 				FileDTO fileDTO = fileResult.getFileDTO();
 				int cafeIconNum = cafeService.getIconSeq();
@@ -171,9 +212,12 @@ public class HomeController { //메인 로그인관련
 				fileService.insertAttachFile(fileDTO);
 			}
 
-			result = cafeService.InsertCafe(cafeDTO);
+			insertResult = cafeService.insertCafe(cafeDTO);
 			
-			if(result == 0) {
+			if(insertResult == 0) {
+				result.put("resultCode", 0);
+				result.put("cafeId", cafeId);
+				result.put("message", "카페 생성에 실패했습니다.");
 				return result;
 			}
 			
@@ -182,10 +226,13 @@ public class HomeController { //메인 로그인관련
 			String questions[] = multiRequest.getParameterValues("cafeQuestionContent");
 			
 			if(questionFlag != null && questionFlag.equals("Y") && questions != null) {
+				int insertQuestionResult = 0;
+				
 				for(int i=0;i<questions.length;i++) {
 					CafeJoinQuestionDTO questionDTO = new CafeJoinQuestionDTO();
 					String question = questions[i];
 					int order = i+1;
+					
 					
 					if(question.length() == 0) {
 						continue;
@@ -194,9 +241,55 @@ public class HomeController { //메인 로그인관련
 					questionDTO.setCafeId(cafeId);
 					questionDTO.setCafeQuestionNum(order);
 					questionDTO.setCafeQuestionContent(question);
+					insertQuestionResult = cafeService.insertCafeJoinQuestion(questionDTO);
+				}
+				
+				if(insertQuestionResult == 0) {
+					result.put("resultCode", 0);
+					result.put("cafeId", cafeId);
+					result.put("message", "카페 가입질문 설정에 실패했습니다.");
+					return result;
 				}
 			}
 			
+			// 카페 가입
+			CafeMemberDTO cafeMemberDTO = new CafeMemberDTO();
+			int cafeSignUpResult = 0;
+			
+			cafeMemberDTO.setCafeId(cafeId);
+			cafeMemberDTO.setUserId(loginId);
+			cafeMemberDTO.setCafeUserGrade(999);
+			cafeMemberDTO.setCafeUserNickname("카페 매니저");
+			cafeSignUpResult = cafeMemberService.signup(cafeMemberDTO);
+			
+			if(cafeSignUpResult == 0) {
+				result.put("resultCode", 0);
+				result.put("cafeId", cafeId);
+				result.put("message", "카페 매니저의 카페 가입에 실패했습니다.");
+				return result;
+			}
+			
+			
+			// 기본 카페 등급 설정
+			BasicMemberGrade basicMemberGrade =  new BasicMemberGrade();
+			List<CafeMemberGradeDTO> basicMemberGradeList = basicMemberGrade.basicMemberGradeList;
+			int insertGradeResult = 0;
+			
+			for(CafeMemberGradeDTO cafeMemberGradeDTO : basicMemberGradeList) {
+				cafeMemberGradeDTO.setCafeId(cafeId);
+				insertGradeResult = cafeService.insertMemberGrade(cafeMemberGradeDTO);
+			}
+			
+			if(insertGradeResult == 0) {
+				result.put("resultCode", 0);
+				result.put("cafeId", cafeId);
+				result.put("message", "등급 설정에 실패했습니다.");
+				return result;
+			}
+			
+			result.put("resultCode", 1);
+			result.put("cafeId", cafeId);
+			result.put("message", "카페가 생성되었습니다.");
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

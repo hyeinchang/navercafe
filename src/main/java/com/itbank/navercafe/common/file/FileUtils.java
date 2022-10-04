@@ -95,7 +95,7 @@ public class FileUtils {
 	}
 	
 	// 파일 삭제
-	public FileResult deleteFile(MultipartFile multipartFile, FileDTO fileDTO) {
+	public FileResult deleteFile(FileDTO fileDTO) {
 		FileResult fileResult = new FileResult();
 		
 		try {

@@ -1,6 +1,5 @@
 package com.itbank.navercafe.user.grade.dto;
 
-import java.sql.Date;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 

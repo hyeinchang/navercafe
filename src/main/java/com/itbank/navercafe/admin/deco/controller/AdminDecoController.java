@@ -180,8 +180,7 @@ public class AdminDecoController {
 		
 		return result;
 	}
-	
-	// 타이틀 설정페이지로 이동
+
 	@GetMapping("deleteTitle")
 	public String deleteTitle(HttpServletRequest request, CafeDTO cafeDTO) {
 		String cafeId ="";
@@ -196,6 +195,27 @@ public class AdminDecoController {
 		}
 		
 		return "redirect:/admin/deco/title?cafeId="+cafeId;
+	}
+	
+	// 레이아웃 설정 페이지로 이동
+	@GetMapping("/layout")
+	public String layout() {
+		return "admin/deco/layout";
+	}
+	
+	// 레이아웃 저장
+	@PostMapping(value="saveLayout", produces="application/json; charset=utf8")
+	@ResponseBody
+	public int saveLayout(@RequestBody CafeDTO cafeDTO) {
+		int result = 0;
+		
+		try {
+			result = adminDecoService.saveLayout(cafeDTO);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
 	}
 
 }

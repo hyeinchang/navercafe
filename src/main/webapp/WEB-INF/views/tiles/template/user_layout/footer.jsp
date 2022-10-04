@@ -109,11 +109,31 @@
   
   <form name="cafeForm" method="get">
   	<input type="hidden" name="cafeId" value="${_cafeDTO.cafeId}">
+  	<input type="hidden" name="boardMenuNum" value="${_cafeDTO.menuDTO.boardMenuNum}">
   </form>
 <script type="text/javascript">
-  function changeCafeMenu(path) {
-	  document.cafeForm.action = path;
-	  document.cafeForm.submit();
+  function changeCafeMenu(path, menuNum) {
+	  var form = document.cafeForm;
+	  var boardMenuNum = form.boardMenuNum;
+	  
+	  if(menuNum) {
+		  boardMenuNum.value = menuNum;
+		  
+		  if(boardMenuNum.value != '') {
+			  var boardReadAuth = '${_cafeDTO.menuDTO.boardReadAuth}';
+			  var cafeUserGrade = '${_cafeDTO.loginUser.cafeUserGrade}';
+
+			  if(Number(boardReadAuth) > Number(cafeUserGrade)) {
+				  alert('권한이 없습니다.');
+				  return;
+			  }
+		  }
+	  } else {
+		  form.removeChild(boardMenuNum);
+	  }
+	  
+	  form.action = path;
+	  form.submit();
   }
   
   function changeCafe(cafeId) {
