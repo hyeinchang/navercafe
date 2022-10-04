@@ -117,7 +117,8 @@ $(document).ready(function () {
 			
 		} else if (id === "email") {
 			$('#emailMembers').val(checkObjval);
-			document.getElementById('f-email').submit();
+			$("#emailModal").modal('show');
+			
 		} else if (id === "modify") {
 			$('#modifyMembers').val(checkObjval);
 			var gr = $('#cafeUserGrade').val()
@@ -131,6 +132,9 @@ $(document).ready(function () {
 		document.getElementById('f-deport').submit();
 	}
 	
+	function emailSubmit() {
+		document.getElementById('f-email').submit();
+	}
 </script>
 
 
@@ -203,11 +207,11 @@ $(document).ready(function () {
 	
 <!-- 모달 영역 -->
 <div class="modal fade" id="deportModal" tabindex="-1" role="dialog"
-	aria-labelledby="myModalLabel">
+	aria-labelledby="deportModalLabel">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h4 class="modal-title" id="myModalLabel" align="center"> <b>강제 탈퇴 멤버</b></h4>
+				<h4 class="modal-title" id="deportModalLabel" align="center"> <b>강제 탈퇴 멤버</b></h4>
 			</div>
 			<div class="modal-body">
 				<div class="input-group">
@@ -237,6 +241,32 @@ $(document).ready(function () {
 <form action="emailMembers" id="f-email" method="post">
 	<input type="hidden" value="" name="emailMembers" id="emailMembers">
 	<input type="hidden" value=${cafeId } name="cafeId">
+	
+<!-- 모달 영역 -->
+<div class="modal fade" id="emailModal" tabindex="-1" role="dialog"
+	aria-labelledby="emailModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="emailModalLabel" align="center"> <b>메일 쓰기</b></h4>
+			</div>
+			<div class="modal-body">
+				<div class="mb-3">
+				  <label for="exampleFormControlInput1" class="form-label">제목</label>
+				  <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="제목을 입력해주세요" name="eSubject">
+				</div>
+				<div class="mb-3">
+				  <label for="exampleFormControlTextarea1" class="form-label">메일 내용 작성</label>
+				  <textarea class="form-control" id="exampleFormControlTextarea1" rows="10" placeholder="내용을 입력해주세요" name="eBody"></textarea>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" onclick="emailSubmit()">확인</button>
+				<button type="button" class="btn btn-default" data-bs-dismiss="modal">취소</button>
+			</div>
+		</div>
+	</div>
+</div>
 </form>
 <form action="modifyMembers" id="f-modify" method="post">
 	<input type="hidden" value="" name="modifyMembers" id="modifyMembers">

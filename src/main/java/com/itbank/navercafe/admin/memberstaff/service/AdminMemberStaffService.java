@@ -11,7 +11,7 @@ public interface AdminMemberStaffService {
 
 	public String deportMembers(String deportMembers, String cafeId, String reason);
 
-	public String emailMembers(String emailMembers, String cafeId);
+	public String emailMembers(String emailMembers, String cafeId, String eSubject, String eBody);
 
 	public String unbanMembers(String unbanMembers, String cafeId);
 

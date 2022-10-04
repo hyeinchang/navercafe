@@ -41,8 +41,8 @@
 		delete from project_cafe_member where cafe_id = #{cafeId} and user_id = #{userId}
 	</delete>
 	
-	<select id="getEmailList" parameterType="String" resultType="String">
-		select user_email from project_members where user_id = #{value}
+	<select id="getEmailList" parameterType="Map" resultType="String">
+		select user_email from project_members where user_id = #{userId}
 	</select>
 	
 	<insert id="insertDeportedList" parameterType="Map" >

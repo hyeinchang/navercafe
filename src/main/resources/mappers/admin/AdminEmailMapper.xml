@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itbank.navercafe.admin.email.mapper.AdminEmailMapper">
+	<select id="getAllUserEmail" resultType="String" parameterType="String">
+		select user_email from project_members PM inner join project_cafe_member PCM
+		on PM.user_id = PCM.user_id
+		where cafe_id = #{value} and cafe_user_email_receieve = 'Y'
+	</select>
+	
+	<select id="getCafeName" resultType="String" parameterType="String">
+		select cafe_name from project_cafe_info where cafe_id = #{value}
+	</select>
+</mapper>

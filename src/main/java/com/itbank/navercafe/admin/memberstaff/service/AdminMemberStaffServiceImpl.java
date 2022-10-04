@@ -7,6 +7,7 @@ import java.util.Map;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.itbank.navercafe.admin.email.service.AdminEmailService;
 import com.itbank.navercafe.admin.memberstaff.dto.AllMembersDTO;
 import com.itbank.navercafe.admin.memberstaff.dto.DeportedMembersDTO;
 import com.itbank.navercafe.admin.memberstaff.mapper.AdminMemberStaffMapper;
@@ -16,6 +17,7 @@ import com.itbank.navercafe.admin.registergrade.mapper.AdminRegisterGradeMapper;
 public class AdminMemberStaffServiceImpl implements AdminMemberStaffService{
 	@Autowired AdminMemberStaffMapper mapper;
 	@Autowired AdminRegisterGradeMapper argMapper;
+	@Autowired AdminEmailService emailserv;
 	
 	//받아온 id 들 정리해서 arraylist 생성 및 map 생성 후 cafeid, userid 키값에 맞춰 mapList 리턴
 	public ArrayList< Map<String, String> > nameSort(String ids, String cafeId) {
@@ -185,29 +187,26 @@ public class AdminMemberStaffServiceImpl implements AdminMemberStaffService{
 	}
 
 	@Override
-	public String emailMembers(String emailMembers, String cafeId) {
+	public String emailMembers(String emailMembers, String cafeId, String subject, String body) {
 		ArrayList< Map<String, String> > mapList = nameSort(emailMembers, cafeId);
 		ArrayList<String> emailList = new ArrayList<>();
-		int result = 0;
 		
 		try {
 			for(int i = 0; i < mapList.size(); i++) {
 				emailList = mapper.getEmailList(mapList.get(i));
+				
+				if(emailList.get(i).contains("@")) {
+					emailserv.sendMail(emailList.get(i), subject, body);
+				}
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
 		
 		String msg, url;
-		if(result == mapList.size()) {
-			msg = "강제탈퇴가 완료되었습니다";
-			url = "manageAllMembers?cafeId="+cafeId;
-		} else {
-			msg = "오류가 발생했습니다!";
-			url = "manageAllMembers?cafeId="+cafeId;
-		}
-		return "";
-//		return getMessage(msg,url);
+		msg = "메일을 성공적으로 보냈습니다.";
+		url = "manageAllMembers?cafeId="+cafeId;
+		return getMessage(msg,url);
 	}
 
 	@Override

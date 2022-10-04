@@ -71,8 +71,8 @@ public class AdminMemberStaffController {
 	}
 	
 	@PostMapping("emailMembers")
-	public void emailMembers(String emailMembers, String cafeId, HttpServletResponse resp) throws Exception {
-		String msg = amss.emailMembers(emailMembers, cafeId);
+	public void emailMembers(String emailMembers, String cafeId, HttpServletResponse resp, String eSubject, String eBody) throws Exception {
+		String msg = amss.emailMembers(emailMembers, cafeId, eSubject, eBody);
 		
 		resp.setContentType("text/html; charset=utf-8");
 		PrintWriter out = resp.getWriter();
