@@ -71,8 +71,8 @@ public class BoardServiceImpl implements BoardService{
 	}
 
 	@Override
-	public void topList(Model model) {
-		model.addAttribute("topList",bm.topList());
+	public void topList(Model model, String cafeId) {
+		model.addAttribute("topList",bm.topList(cafeId));
 		//System.out.println(bm.topList());
 	}
 

@@ -30,7 +30,7 @@ public interface BoardService {
 	public void likeViewChk(int boardNum,String userId,Model model);
 	
 	//인기글 리스트
-	public void topList(Model model);
+	public void topList(Model model,String cafeId);
 	
 	//파일테이블리스트
 	public void getFileList(Model model);

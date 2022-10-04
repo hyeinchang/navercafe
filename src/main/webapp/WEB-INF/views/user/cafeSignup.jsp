@@ -126,11 +126,8 @@ function idOverlap(){
 			}
 		},
 		error : function(){
-<<<<<<< HEAD
 			alert("닉네임을 확인해주세요")
-=======
-			//alert("에러ㅓㅓ")
->>>>>>> a70101aa115492857243e689061e99c2eeaaacd2
+
 		}
 	});
 }

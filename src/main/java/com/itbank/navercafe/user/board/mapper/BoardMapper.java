@@ -37,7 +37,7 @@ public interface BoardMapper {
 	public void deleteLike(@Param("boardNum")int boardNum,@Param("userId")String userId);
 	
 	//인기글
-	public List<HashMap<String, Object>> topList();
+	public List<HashMap<String, Object>> topList(String cafeId);
 	
 	//보드 타입 가져오기
 	public MenuDTO getBoardMenuType(int boardMenuNum);
