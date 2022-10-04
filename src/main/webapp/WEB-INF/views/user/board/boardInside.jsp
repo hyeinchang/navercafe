@@ -277,8 +277,7 @@ li.bbp-topic-freshness-test{
 				              			width="40px" class="img-circle alignleft" alt="">
 				              		</c:if>
 									<c:if test="${ cafeUserInfo.cafeUserImageNum  != 0 }">
-										<img src="download?fileNum=${cafeUserInfo.cafeUserImageNum }" 
-										width="40px" class="img-circle alignleft" alt="">
+									<img src="${contextPath}/file/download?cafeUserImageNum=${cafeUserInfo.cafeUesrImageNum}" class="profileImg" alt="프로필 이미지"> 
 									</c:if>
 				              	</a>
 			                </div>
@@ -315,8 +314,7 @@ li.bbp-topic-freshness-test{
 	              			width="50" class="img-circle alignleft" alt="">
 	              		</c:if>
 						<c:if test="${ cafeUserInfo.cafeUserImageNum != 0 }">
-							<img src="download?fileNum=${cafeUserInfo.cafeUserImageNum}" 
-							width="50" class="img-circle alignleft" alt="">
+						<img src="${contextPath}/file/download?cafeUserImageNum=${cafeUserInfo.cafeUesrImageNum}" class="profileImg" alt="프로필 이미지"> 
 						</c:if>
 	              	</a>
 
@@ -370,10 +368,11 @@ li.bbp-topic-freshness-test{
 									      <p><span style="font-weight:1000; font-size: 20pt;">${sessionUser.cafeUserNickname}</span></p>
 									      <textarea class="form-control" name="replyContent" id="comments" rows="6">
 									      	${reply.REPLY_CONTENT}
-					                   		<c:if test="${reply.CAFE_USER_IMAGE_NUM != 0}">
-					                   			<img src="download?fileNum=${reply.CAFE_USER_IMAGE_NUM}" 
-												width="30%">
-			                   				</c:if>
+					                   		<c:forEach var="file" items="${fileList}">
+						                   			<c:if test="${file.replyNum == reply.REPLY_NUM}">
+						                   				<img src="${contextPath}/file/download?replyNum=${reply.REPLY_NUM}" class="profileImg"> 
+						                   			</c:if>
+						                   	</c:forEach>	
 									      </textarea>
 									      
 										  <div class="post-meta-test">
@@ -401,8 +400,7 @@ li.bbp-topic-freshness-test{
 			              			width="40px" class="img-circle alignleft" alt="">
 			              		</c:if>
 								<c:if test="${ reply.CAFE_USER_IMAGE_NUM  != 0 }">
-									<img src="download?fileNum=${reply.CAFE_USER_IMAGE_NUM}" 
-									width="40px" class="img-circle alignleft" alt="">
+									<img src="${contextPath}/file/download?cafeUserImageNum=${reply.CAFE_USER_IMAGE_NUM}" class="profileImg" alt="프로필 이미지"> 
 								</c:if>
 				             </a>
 			               
@@ -433,11 +431,11 @@ li.bbp-topic-freshness-test{
 		                       
 		                  	  </h4>
 		                   		${reply.REPLY_CONTENT}<br>
-		                   		<c:if test="${reply.CAFE_USER_IMAGE_NUM != 0}">
-		                   			<img src="download?fileNum=${reply.CAFE_USER_IMAGE_NUM}" 
-									width="30%">
-		                   		</c:if>
-		                   		
+		                   		<c:forEach var="file" items="${fileList}">
+			                   			<c:if test="${file.replyNum == reply.REPLY_NUM}">
+			                   				<img src="${contextPath}/file/download?replyNum=${reply.REPLY_NUM}" class="profileImg"> 
+			                   			</c:if>
+			                   	</c:forEach>
 		                   		
 		                      	<p>
 		                      		<a onclick="replyClick(this)" id="${reply.REPLY_NUM}" style="cursor:pointer">
@@ -489,8 +487,7 @@ li.bbp-topic-freshness-test{
 							              			width="40px" class="img-circle alignleft" alt="">
 							              		</c:if>
 												<c:if test="${ replyreply.CAFE_USER_IMAGE_NUM  != 0 }">
-													<img src="download?fileNum=${replyreply.CAFE_USER_IMAGE_NUM}" 
-													width="40px" class="img-circle alignleft" alt="">
+													<img src="${contextPath}/file/download?cafeUserImageNum=${replyreply.CAFE_USER_IMAGE_NUM}" class="profileImg" alt="프로필 이미지"> 
 												</c:if>
 							              	</a>
 						               
@@ -524,11 +521,10 @@ li.bbp-topic-freshness-test{
 					                  	  </h4>
 					                   		${replyreply.REPLY_CONTENT}<br>
 					                   		<c:forEach var="file" items="${fileList}">
-					                   			<c:if test="${file.replyNum == replyreply.REPLY_NUM}">
-					                   				<img src="download?fileNum=${replyreply.REPLY_NUM}" 
-													width="30%">
-					                   			</c:if>
-					                   		</c:forEach>
+						                   			<c:if test="${file.replyNum == replyreply.REPLY_NUM}">
+						                   				<img src="${contextPath}/file/download?replyNum=${replyreply.REPLY_NUM}" class="profileImg"> 
+						                   			</c:if>
+						                   	</c:forEach>
 
 					                   		
 					                      	<p>
@@ -713,9 +709,10 @@ li.bbp-topic-freshness-test{
 		              	  </c:if>
 						  <c:if test="${ top6.CAFE_USER_IMAGE_NUM  != 0 }">
 							  <img class="lazyOwl" style="height: 280px;"
-							  data-src="download?fileNum=${top6.CAFE_USER_IMAGE_NUM}" alt="">
+							  data-src="${contextPath}/file/download?cafeUserImageNum=${top6.CAFE_USER_IMAGE_NUM}" class="profileImg" alt="프로필 이미지"> 
+							  
 						  </c:if>
-		            	
+      	
 		              <div class="he-view">
 		                <div class="bg a0" data-animate="fadeIn">
 		                  <h3 class="a1" data-animate="fadeInDown">

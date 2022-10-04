@@ -126,8 +126,7 @@ function delMemoReply(){
 				              			width="40px;" class="img-circle alignleft">
 				              		</c:if>
 									<c:if test="${memoList.CAFE_USER_IMAGE_NUM != 0 }">
-										<img src="download?fileNum=${memoList.CAFE_USER_IMAGE_NUM}" 
-										width="40px;" class="img-circle alignleft">
+										<img src="${contextPath}/file/download?cafeUserImageNum=${memoList.CAFE_USER_IMAGE_NUM}" class="profileImg" alt="프로필 이미지"> 
 									</c:if>
 				              	</a>
 			                </div>
@@ -172,8 +171,7 @@ function delMemoReply(){
 							              			width="40px" class="img-circle alignleft" alt="">
 							              		</c:if>
 												<c:if test="${ memoReply.CAFE_USER_IMAGE_NUM  != 0 }">
-													<img src="download?fileNum=${memoReply.CAFE_USER_IMAGE_NUM}" 
-													width="40px" class="img-circle alignleft" alt="">
+														<img src="${contextPath}/file/download?cafeUserImageNum=${memoReply.CAFE_USER_IMAGE_NUM}" class="profileImg" alt="프로필 이미지"> 
 												</c:if>
 							              	</a>
 						               
@@ -193,13 +191,13 @@ function delMemoReply(){
 												</c:choose>
 						                   		${memoReply.MEMO_REPLY_CONTENT}<br>
 						                   					<!-- 내용에 이미지가 있다면 보여주고 -->
-						                   		
+						                   		<!-- width=30% -->
 						                   		<c:forEach var="file" items="${fileList}">
 						                   			<c:if test="${file.memoReplyNum == memoReply.MEMO_REPLY_NUM}">
-						                   				<img src="download?fileNum=${memoReply.MEMO_REPLY_NUM}" 
-														width="30%">
+						                   				<img src="${contextPath}/file/download?memoReplyNum=${memoReply.MEMO_REPLY_NUM}" class="profileImg"> 
 						                   			</c:if>
-						                   		</c:forEach>	                   		
+						                   		</c:forEach>	
+						                   		                   		
 						                   		
 						                      </div>
 					                      </article>
