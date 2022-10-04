@@ -172,7 +172,7 @@ $(document).ready(function () {
                 <td>${dto.userId} (${dto.cafeUserNickname})</td>
                 <td>${dto.cafeUserGrade }</td>
                 <td>${dto.cafeUserRegdate }</td>
-                <td>최종방문일..?</td>
+                <td>N/A</td>
                 <td>${dto.cafeUserVisit }</td>
                 <td>${dto.cafeUserWrite} </td>
                 <td>${dto.cafeUserReply }</td>
