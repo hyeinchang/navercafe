@@ -80,6 +80,9 @@ function back(obj){
 		            <h4>새로운 메모 게시판</h4>
 		            <form id="comments_form" action="memoSave" class="row" method="post">
 		            	<input type="hidden" name="userId" value="${sessionId}">
+		            	
+		            	<input type="hidden" name="boardMenuNum" value="${boardMenuNum}">
+		            	
 		              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		                <textarea class="form-control" name="memoContent" id="comments" rows="6" placeholder="글을 입력해 주세요."></textarea>
 		                <span style="font-size: 15pt;">
