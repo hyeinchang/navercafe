@@ -35,7 +35,6 @@
 								<div style="position: relative; display: inline-block; margin: 0; padding: 0;">
 									<input class="input_text" type="text" placeholder="닉네임" id="cafeUserNickname" name="cafeUserNickname" onkeyup="idOverlap()">
 									<span id="confirm"></span>
-									<button type="button" class="btn_close"></button>
 								</div>
 							</div>
 						</div>

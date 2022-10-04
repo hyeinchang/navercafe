@@ -363,7 +363,7 @@ li.bbp-topic-freshness-test{
 		                      	<div class="${-reply.REPLY_NUM}" style="display:none;">
 		                      		<form id="comments_form" action="saveReply?groupNum=${reply.REPLY_NUM}" class="row" 
 									  		method="post" enctype="multipart/form-data">
-									  		<input type="hidden" name="userId" value="${sessionUser.userId}">
+									  		<input type="hidden" name="userId" value="${_cafeDTO.loginUser.userId}">
 									  		<input type="hidden" name="boardNum" value="${userBoard.boardNum}">
 									    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 									    										

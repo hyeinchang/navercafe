@@ -20,11 +20,13 @@ import com.itbank.navercafe.admin.email.service.AdminEmailService;
 public class AdminEmailController {
 	@Autowired AdminEmailService ams;
 	
+	
 	@GetMapping("/emailForm")
-	public String email(AdminEmailDTO emailDTO, Model model) {
+	public String email(AdminEmailDTO emailDTO, Model model, String cafeId) {
+		emailDTO.setCafeName(ams.getCafeName(cafeId));
 		
-		emailDTO.setCafeName("테스트 카페");
 		model.addAttribute("emailDTO", emailDTO);
+		model.addAttribute("cafeId", cafeId);
 		
 		return "admin/email/email";
 	}

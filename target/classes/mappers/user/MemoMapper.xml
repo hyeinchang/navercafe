@@ -58,7 +58,7 @@
 	
 	<!-- 메모 seq -->
 	<select id="getMemoReplyNumSeq" resultType="int">
-			select memo_reply_num_seq.nextval memoReplyNum from dual
+			select project_memo_reply_seq.nextval memoReplyNum from dual
 	</select>
 
 	<!-- 메모 댓글 갯수 -->

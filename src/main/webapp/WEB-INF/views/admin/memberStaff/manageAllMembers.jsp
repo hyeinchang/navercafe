@@ -5,6 +5,7 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js"> </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js" integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 
 <script>
@@ -66,7 +67,19 @@ $(document).ready(function () {
 				$('.registerBan-cb-all').prop('checked', allChecked);				
 			}
 		});
-    
+		
+		$('#certReason').keyup(function() {
+			$('#r4').prop('checked', 'checked');
+			var cont = $('#certReason').val()	
+			$('#r4').val(cont);
+		})
+		
+		$(".rr01").change(function() {
+			if (this.checked) {
+				$('#certReason').val('');
+			}
+		})
+		
 });
     
 </script>
@@ -87,30 +100,41 @@ $(document).ready(function () {
 				}
 			}
 			checkObjval = checkObjval.substring(0, checkObjval.length-1);
-			console.log(checkObjval);
 		} else {
 			alert('멤버를 선택하세요')
 			return;
 		}
 
 		if(id === 'deport') {
-			console.log('디포트래!')
 			$('#deportMembers').val(checkObjval);
-			document.getElementById('f-deport').submit();
+			$('#selectedNum').text(checkObj.length);
+			$("#deportModal").modal('show');
+				
+			var idArray = checkObjval.split('/');
+			idArray.forEach(function(item) {
+				$('#idListHere').append('<li>'+item+'</li>')
+			})
+			
 		} else if (id === "email") {
-			console.log('이메일 보내줘')
 			$('#emailMembers').val(checkObjval);
-			document.getElementById('f-email').submit();
+			$("#emailModal").modal('show');
+			
 		} else if (id === "modify") {
-			console.log('등급 변경해줘')
 			$('#modifyMembers').val(checkObjval);
+			var gr = $('#cafeUserGrade').val()
+			$('#gradeLevel').val(gr);
 			document.getElementById('f-modify').submit();
 		}
-		
 		return;
-		
 	}
 	
+	function deportSubmit() {
+		document.getElementById('f-deport').submit();
+	}
+	
+	function emailSubmit() {
+		document.getElementById('f-email').submit();
+	}
 </script>
 
 
@@ -148,7 +172,7 @@ $(document).ready(function () {
                 <td>${dto.userId} (${dto.cafeUserNickname})</td>
                 <td>${dto.cafeUserGrade }</td>
                 <td>${dto.cafeUserRegdate }</td>
-                <td>최종방문일..?</td>
+                <td>N/A</td>
                 <td>${dto.cafeUserVisit }</td>
                 <td>${dto.cafeUserWrite} </td>
                 <td>${dto.cafeUserReply }</td>
@@ -180,14 +204,74 @@ $(document).ready(function () {
 <form action="deportMembers" id="f-deport" method="post">
 	<input type="hidden" value="" name="deportMembers" id="deportMembers">
 	<input type="hidden" value=${cafeId } name="cafeId">
+	
+<!-- 모달 영역 -->
+<div class="modal fade" id="deportModal" tabindex="-1" role="dialog"
+	aria-labelledby="deportModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="deportModalLabel" align="center"> <b>강제 탈퇴 멤버</b></h4>
+			</div>
+			<div class="modal-body">
+				<div class="input-group">
+					<span> 선택된 인원 수 : &nbsp;</span>
+					<span id="selectedNum"></span>
+				</div>
+				<ul id="idListHere"> </ul>
+				
+  				<span class="input-group-addon" id="sizing-addon2"><b>강제탈퇴 사유</b></span> <hr style="margin: 7px;">
+					<input type="radio" class="rr01" id="r1" name="reason" value="성인/도박 등 불법광고 및 스팸활동" checked> <label for="r1"> 성인/도박 등 불법광고 및 스팸활동 </label><br>
+					<input type="radio" class="rr01" id="r2" name="reason" value="바람직하지 않은 행동 (광고, 도배, 욕설 등)"> <label for="r2"> 바람직하지 않은 행동 (광고, 도배, 욕설 등) </label> <br>
+					<input type="radio" class="rr01" id="r3" name="reason" value="우리 카페 내 자체 운영 원칙에 위배되는 활동"> <label for="r3"> 우리 카페 내 자체 운영 원칙에 위배되는 활동 </label> <br>
+					<input type="radio" id="r4" name="reason" value="" id="emptyRadio"> <label for="r4"> 기타 </label> <br>
+				<div class="input-group">
+	  				<input type="text" class="form-control" placeholder="기타 - 한글 25자 이내로 작성해주세요" aria-describedby="sizing-addon2" id="certReason">
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" onclick="deportSubmit()">확인</button>
+				<button type="button" class="btn btn-default" data-bs-dismiss="modal">취소</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 </form>
 <form action="emailMembers" id="f-email" method="post">
 	<input type="hidden" value="" name="emailMembers" id="emailMembers">
 	<input type="hidden" value=${cafeId } name="cafeId">
+	
+<!-- 모달 영역 -->
+<div class="modal fade" id="emailModal" tabindex="-1" role="dialog"
+	aria-labelledby="emailModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="emailModalLabel" align="center"> <b>메일 쓰기</b></h4>
+			</div>
+			<div class="modal-body">
+				<div class="mb-3">
+				  <label for="exampleFormControlInput1" class="form-label">제목</label>
+				  <input type="text" class="form-control" id="exampleFormControlInput1" placeholder="제목을 입력해주세요" name="eSubject">
+				</div>
+				<div class="mb-3">
+				  <label for="exampleFormControlTextarea1" class="form-label">메일 내용 작성</label>
+				  <textarea class="form-control" id="exampleFormControlTextarea1" rows="10" placeholder="내용을 입력해주세요" name="eBody"></textarea>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" onclick="emailSubmit()">확인</button>
+				<button type="button" class="btn btn-default" data-bs-dismiss="modal">취소</button>
+			</div>
+		</div>
+	</div>
+</div>
 </form>
 <form action="modifyMembers" id="f-modify" method="post">
 	<input type="hidden" value="" name="modifyMembers" id="modifyMembers">
 	<input type="hidden" value=${cafeId } name="cafeId">
+	<input type="hidden" value="" name="gradeLevel" id="gradeLevel">
 </form>
     	</div>
     </div>

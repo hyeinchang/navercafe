@@ -28,15 +28,6 @@
                     <span>Dashboard</span></a>
             </li>
              -->
-<%--
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Interface
-            </div>
- --%>
  
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
@@ -47,9 +38,9 @@
                 </a>
                 <div id="cafeManage" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <!-- <h6 class="collapse-header">Custom Components:</h6> -->
                         <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/basicInfo')">기본 정보</a>
-                        <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/eventManage')">이벤트 관리</a>
+                        <a class="collapse-item" href="#">이벤트 관리</a>
+<%--                         <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/eventManage')">이벤트 관리</a> --%>
                         <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/layoffManager')">매니저 위임</a>
                     </div>
                 </div>
@@ -59,14 +50,15 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#memberStaff"
                     aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
+                    <i class="fa-solid fa-user-group"></i>
                     <span>멤버 &middot; 스탭 </span>
                 </a>
                 <div id="memberStaff" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/manageAllMembers')">전체 멤버 관리</a>
                         <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/manageDeportedMembers')">강제탈퇴 멤버 관리</a>
-                        <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/manageStaffs')">스텝 관리</a>
+                        <a class="collapse-item" href="#">스텝 관리</a>
+<%--                         <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/manageStaffs')">스텝 관리</a> --%>
                     </div>
                 </div>
             </li>
@@ -74,7 +66,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#registerGrade"
                     aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
+                    <i class="fa-solid fa-address-card"></i>
                     <span>가입 &middot; 등급</span>
                 </a>
                 <div id="registerGrade" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
@@ -90,7 +82,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#menu"
                     aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
+                    <i class="fa-solid fa-bars"></i>
                     <span>메뉴</span>
                 </a>
                 <div id="menu" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
@@ -103,7 +95,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#deco"
                     aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
+                    <i class="fa-solid fa-holly-berry"></i>
                     <span>꾸미기</span>
                 </a>
                 <div id="deco" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
@@ -119,7 +111,7 @@
             <li class="nav-item">
                 <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#email"
                     aria-expanded="true" aria-controls="collapseUtilities">
-                    <i class="fas fa-fw fa-wrench"></i>
+                    <i class="fa-solid fa-envelope"></i>
                     <span>메일</span>
                 </a>
                 <div id="email" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
@@ -136,9 +128,8 @@
             <!-- Sidebar Message -->
             <div class="sidebar-card d-none d-lg-flex">
                 <img class="sidebar-card-illustration mb-2" src="${adminPath }/img/undraw_rocket.svg" alt="...">
-                <p class="text-center mb-2"><strong>SB Admin Pro</strong> is packed with premium features, components, and more!</p>
-                <a class="btn btn-success btn-sm" href="https://startbootstrap.com/theme/sb-admin-pro">Upgrade to Pro!</a>
-            </div>
+                <a class="btn btn-success btn-sm" href="${contextPath}/user/main?cafeId=${_cafeDTO.cafeId}">카페로 돌아가기</a>
+            </div>	
 
         </ul>
         <!-- End of Sidebar -->

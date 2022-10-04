@@ -27,6 +27,21 @@
         <result column="CAFE_QUESTION_CONTENT" property="cafeQuestionContent"/>
     </resultMap>
     
+    <resultMap type="com.itbank.navercafe.user.board.dto.BoardDTO" id="cafeBoard">
+		<id property="boardNum" column="board_num"/>
+		<result property="boardTitle" column="board_title"/>
+		<result property="boardContent" column="board_content"/>
+		<result property="boardSaveDate" column="board_saveDate"/>
+		<result property="boardLikes" column="board_likes"/>
+		<result property="boardNotice" column="board_notice"/>
+		<result property="boardReplyAllow" column="board_reply_allow"/>
+		<result property="boardPrefix" column="board_prefix"/>
+		<result property="userId" column="user_id"/>
+		<result property="boardMenuNum" column="board_menu_num"/>
+		<result property="hit" column="hit"/>
+		<result property="cafeId" column="cafe_id"/>
+	</resultMap>
+    
 	<insert id="insertCafe">
 		<![CDATA[
 			INSERT INTO PROJECT_CAFE_INFO
@@ -188,6 +203,51 @@
 	<select id="selectQuestionList" resultMap="cafeQuestion">
 		<![CDATA[
 			SELECT * FROM project_join_question WHERE cafe_id = #{cafeId} ORDER BY cafe_question_num
+		]]>
+	</select>
+	
+	<select id="selectMainBoardList" resultMap="cafeBoard">
+		<![CDATA[
+			SELECT * FROM
+				(SELECT ROWNUM RN, board.* FROM
+					(SELECT BOARD_MENU_NUM, CAFE_ID FROM PROJECT_BOARD_TYPE 
+						WHERE BOARD_READ_AUTH = 0 AND BOARD_PUBLIC_FLAG = 'Y' AND CAFE_ID = #{cafeId}) boardMenu
+					INNER JOIN
+					PROJECT_BOARD  board
+					ON boardMenu.BOARD_MENU_NUM = board.BOARD_MENU_NUM
+				ORDER BY BOARD_NUM DESC)
+			WHERE RN BETWEEN 1 AND 10
+		]]>
+	</select>
+	
+	<select id="selectMainRecentList" resultMap="cafeBoard">
+		<![CDATA[
+			SELECT * FROM
+				(SELECT ROWNUM RN, board.* FROM
+					(SELECT BOARD_MENU_NUM, CAFE_ID FROM PROJECT_BOARD_TYPE 
+						WHERE BOARD_READ_AUTH = 0 AND BOARD_PUBLIC_FLAG = 'Y' AND CAFE_ID = #{cafeId}) boardMenu
+					INNER JOIN
+					(SELECT * FROM PROJECT_BOARD WHERE TO_CHAR(SYSDATE, 'YYYMMDD') = TO_CHAR(BOARD_SAVEDATE, 'YYYMMDD')) board
+					ON boardMenu.BOARD_MENU_NUM = board.BOARD_MENU_NUM
+				ORDER BY BOARD_NUM DESC)
+			WHERE RN BETWEEN 1 AND 10		
+		]]>
+	</select>
+	
+	<select id="selectMainRecentReplyList" resultMap="cafeBoard">
+		<![CDATA[
+			SELECT * FROM
+				(SELECT ROWNUM RN, board.* FROM
+					(SELECT BOARD_MENU_NUM, CAFE_ID FROM PROJECT_BOARD_TYPE 
+						WHERE BOARD_READ_AUTH = 0 AND BOARD_PUBLIC_FLAG = 'Y' AND CAFE_ID = #{cafeId}) boardMenu
+					INNER JOIN
+					(SELECT * FROM PROJECT_BOARD) board
+					ON boardMenu.BOARD_MENU_NUM = board.BOARD_MENU_NUM
+                    INNER JOIN 
+                    (SELECT distinct(board_num) board_num FROM PROJECT_REPLY WHERE TO_CHAR(SYSDATE, 'YYYYMMDD') = TO_CHAR(REPLY_SAVEDATE, 'YYYYMMDD')) reply
+                    ON board.BOARD_NUM = reply.BOARD_NUM
+				ORDER BY board.BOARD_NUM DESC)
+			WHERE RN BETWEEN 1 AND 10
 		]]>
 	</select>
 </mapper>

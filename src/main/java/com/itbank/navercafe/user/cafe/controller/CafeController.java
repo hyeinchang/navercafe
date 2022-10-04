@@ -124,20 +124,69 @@ public class CafeController {
 		return result;
 	}
 	
+	@PostMapping(value="profilesubmit", produces="application/json")
+	@ResponseBody
+	public int profilesubmit(MultipartHttpServletRequest multiRequest) { // 회원정보수정
+		int result = 0;
+		
+		try {
+			MultipartFile profileImage = multiRequest.getFile("profileImage");
+			CommonUtils commonUtils = new CommonUtils();
+			CafeMemberDTO cafeMemberDTO = new CafeMemberDTO();
+			int cafeUserImageNum = cafeMemberDTO.getCafeUserImageNum();
+			String cafeId = "";
+			String userId = "";
+			
+			cafeMemberDTO = (CafeMemberDTO) commonUtils.setDTO(multiRequest, cafeMemberDTO);
+			cafeId = cafeMemberDTO.getCafeId();
+			userId = cafeMemberDTO.getUserId();
+			
+			if("Y".equals(multiRequest.getParameter("userImageDel"))) {
+				FileDTO fileDTO = new FileDTO();
+				
+				fileDTO.setCafeUserImageNum(cafeUserImageNum);
+				fileUtils.deleteFile(fileDTO);
+			} 
+			
+			if(profileImage != null && profileImage.getSize() > 0) {
+				String directory = "profile/" +  cafeId + "/" + userId;
+				
+				if(cafeUserImageNum > 0) {
+					FileDTO fileDTO = new FileDTO();
+					fileDTO.setCafeUserImageNum(cafeUserImageNum);
+					FileResult fileResult = fileUtils.updateFile(profileImage, fileDTO);
+					
+					if(fileResult.getState() == fileResult.SUCCESS) {
+						fileDTO = fileResult.getFileDTO();
+						fileService.updateAttachFile(fileDTO);
+					}
+				} else {
+					FileResult fileResult = fileUtils.uploadFile(profileImage, directory);
+					
+					if(fileResult.getState() == fileResult.SUCCESS) {
+						FileDTO fileDTO = fileResult.getFileDTO();
+					
+						cafeUserImageNum = cms.getUserImageSeq();
+						cafeMemberDTO.setCafeUserImageNum(cafeUserImageNum);
+						fileDTO.setCafeUserImageNum(cafeUserImageNum);
+						
+						fileService.insertAttachFile(fileDTO);
+					}
+				}
+			}
+			
+			result = cms.cafeMemberUpdate(cafeMemberDTO);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+	
+		return result;
+	}
+	
 	@GetMapping("profileUpdate") // 회원정보수정창 이동 + 개인정보
 	public String profileUpdate() {
 		return "user/profileUpdate";
-	}
-	
-	@PostMapping("profilesubmit") // 회원정보수정
-	public String profilesubmit(CafeMemberDTO dto) {
-		int result = cms.cafeMemberUpdate(dto);
-		if(result == 1) {
-			
-			return "redirect:/user/main?cafeId="+dto.getCafeId();
-		}
-		
-		return "redirect:/user/main?cafeId="+dto.getCafeId();
 	}
 	
 	@PostMapping("profilesubmit2")

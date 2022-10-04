@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.itbank.navercafe.common.pagination.Pagination;
+import com.itbank.navercafe.user.board.dto.BoardDTO;
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
 import com.itbank.navercafe.user.cafe.dto.CafeJoinQuestionDTO;
 import com.itbank.navercafe.user.cafe.dto.CafeMemberGradeDTO;
@@ -57,6 +58,10 @@ public class CafeServiceImpl implements CafeService {
 		List<CafeJoinQuestionDTO> questionList = null;
 		CafeMemberDTO loginUser = null;
 		
+		List<BoardDTO> mainBoardList;
+		List<BoardDTO> mainRecentList;
+		List<BoardDTO> mainRecentReplyList;
+		
 		try {
 			String cafeId = cafeDTO.getCafeId();
 			String loginId = cafeDTO.getLoginId();
@@ -68,6 +73,10 @@ public class CafeServiceImpl implements CafeService {
 			countMap = this.getCafeCount(cafeId);
 			questionList = this.selectQuestionList(cafeId);
 			loginUser = cafeMemberService.getCafeMember(cafeId, loginId);
+			
+			mainBoardList = cafeMapper.selectMainBoardList(cafeId);
+			mainRecentList = cafeMapper.selectMainRecentList(cafeId);
+			mainRecentReplyList = cafeMapper.selectMainRecentReplyList(cafeId);
 			
 			if(cafeDTO != null && menuDTO != null) {
 				cafeDTO.setMenuDTO(menuDTO);
@@ -84,6 +93,17 @@ public class CafeServiceImpl implements CafeService {
 			if(cafeDTO != null && loginUser != null) {
 				cafeDTO.setLoginUser(loginUser);
 			}
+			
+			if(cafeDTO != null && mainBoardList != null) {
+				cafeDTO.setMainBoardList(mainBoardList);
+			}
+			if(cafeDTO != null && mainRecentList != null) {
+				cafeDTO.setMainRecentList(mainRecentList);
+			}
+			if(cafeDTO != null && mainRecentReplyList != null) {
+				cafeDTO.setMainRecentReplyList(mainRecentReplyList);
+			}
+			System.out.println(cafeDTO.getMainRecentReplyList().size());
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
