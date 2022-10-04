@@ -77,10 +77,9 @@ function back(obj){
 				
 											<!--  메모 작성 부분-->
 		         <div class="memo-board">
-		            <h4>새로운 메모 게시판</h4>
+		            <h4>새로운 메모 게시판 </h4><h1>boardMenuNum : ${boardMenuNum} }</h1>
 		            <form id="comments_form" action="memoSave" class="row" method="post">
 		            	<input type="hidden" name="userId" value="${sessionId}">
-		            	
 		            	<input type="hidden" name="boardMenuNum" value="${boardMenuNum}">
 		            	
 		              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
