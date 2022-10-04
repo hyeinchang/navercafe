@@ -63,6 +63,26 @@ function replyClick(obj){
 function back(obj){
 	document.getElementById(-obj.id).style="display:none";
 }
+
+function delMemoBoard(obj){
+	const result=confirm('게시글을 삭제하시겠습니까?');
+	if (result) {
+    	location.href='deleteMemoBoard?memoNum='+obj
+    } else {
+    	console.log('대기')
+	}
+}
+
+function delMemoReply(){
+	var delForm = document.getElementById("delForm");
+	const result=confirm('댓글을 삭제하시겠습니까?');
+	if(result){
+		delForm.submit();
+	}else{
+		console.log('댓글 삭제 취소')
+	}
+}
+
 </script>
 
 
@@ -113,7 +133,15 @@ function back(obj){
 			                </div>
 							<div class="memo-div-two">
 								<a href="#">${memoList.CAFE_USER_NICKNAME}</a>
-								수정 | 삭제
+
+								<c:choose>		
+									<c:when test="${loginId == memoList.USER_ID}">
+										<button onclick="delBoard(${memoList.MEMO_NUM})">
+											삭제 
+										</button>
+									</c:when>
+								</c:choose>
+
 							</div>
 							<div class="div-three">
 				                	${memoList.MEMO_SAVEDATE}
@@ -154,12 +182,21 @@ function back(obj){
 							                  <h4 class="comment-author">
 						                        ${memoReply.CAFE_USER_NICKNAME} <small class="comment-meta">${memoReply.REPLY_SAVEDATE}</small>
 						                  	  </h4>
+						                  	  <c:choose>		
+													<c:when test="${loginId == memoReply.USER_ID}">
+														<form action="deleteMemoReply" method="post" id="delForm" style="text-align: right;">
+															<input type="hidden" name="cafeId" value="${cafeId}">
+															<input type="hidden" name="memoReplyNum" value="${memoReply.MEMO_REPLY_NUM}">
+															<a href="#" onClick="delMemoReply()">삭제</a>
+														</form>
+													</c:when>
+												</c:choose>
 						                   		${memoReply.MEMO_REPLY_CONTENT}<br>
 						                   					<!-- 내용에 이미지가 있다면 보여주고 -->
 						                   		
 						                   		<c:forEach var="file" items="${fileList}">
-						                   			<c:if test="${file.memoReplyNum == replyreply.MEMO_REPLY_NUM}">
-						                   				<img src="download?fileNum=${replyreply.MEMO_REPLY_NUM}" 
+						                   			<c:if test="${file.memoReplyNum == memoReply.MEMO_REPLY_NUM}">
+						                   				<img src="download?fileNum=${memoReply.MEMO_REPLY_NUM}" 
 														width="30%">
 						                   			</c:if>
 						                   		</c:forEach>	                   		

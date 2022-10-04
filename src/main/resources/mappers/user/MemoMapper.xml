@@ -67,6 +67,15 @@
 		on M.memo_num = L.memo_reply_group where memo_num=#{memoNum}
 	</select>
 	
+	
+	<delete id="deleteMemoBoard">
+		delete project_memo_board where memo_num=#{memoNum}
+	</delete>
+	
+	
+	<delete id="deleteMemoReply">
+		delete project_memo_reply where memo_reply_num=#{memoReplyNum}
+	</delete>
 
 
 	

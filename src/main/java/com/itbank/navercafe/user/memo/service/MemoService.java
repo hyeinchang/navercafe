@@ -16,4 +16,7 @@ public interface MemoService {
 	public List<HashMap<String, Object>> getReplyList(String cafeId);
 	public void saveMemoReply(MultipartHttpServletRequest mul);
 	public void memoSave(HttpServletRequest res);
+	
+	public void deleteMemoBoard(int memoNum);
+	public void deleteMemoReply(int memoReplyNum);
 }

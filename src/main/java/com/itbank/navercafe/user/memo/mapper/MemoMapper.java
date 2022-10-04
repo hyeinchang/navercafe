@@ -22,4 +22,7 @@ public interface MemoMapper {
 	public void memoSave(MemoDTO dto);
 	//시퀀스
 	public int getMemoReplyNumSeq();
+	
+	public void deleteMemoBoard(int memoNum);
+	public void deleteMemoReply(int memoReplyNum);
 }

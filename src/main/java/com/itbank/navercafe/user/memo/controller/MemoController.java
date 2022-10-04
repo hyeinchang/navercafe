@@ -68,6 +68,17 @@ public class MemoController {
 		return "redirect:goMemoBoardList";
 	}
 	
+	@GetMapping("deleteMemoBoard")
+	public String deleteBoard(int memoNum) {
+		memoSer.deleteMemoBoard(memoNum);
+		return "user/board/memoBoardList";
+	}
+	
+	@PostMapping("deleteMemoReply")
+	public String deleteMemoReply(HttpServletRequest res) {
+		memoSer.deleteMemoReply(Integer.parseInt(res.getParameter("memoReplyNum")));
+		return "redirect:goMemoBoardList?cafeId="+res.getParameter("cafeId");
+	}
 	
 
 	 

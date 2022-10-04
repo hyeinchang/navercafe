@@ -108,6 +108,20 @@ public class MemoServiceImpl implements MemoService{
 		}
 		memoMap.memoSave(dto);
 	}
+
+
+
+
+	@Override
+	public void deleteMemoBoard(int memoNum) {
+		memoMap.deleteMemoBoard(memoNum);
+		
+	}
+	@Override
+	public void deleteMemoReply(int memoReplyNum) {
+		memoMap.deleteMemoReply(memoReplyNum);
+		
+	}
 	
 	
 
