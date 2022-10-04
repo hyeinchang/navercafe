@@ -90,9 +90,7 @@ public class HomeController { //메인 로그인관련
 	
 	@PostMapping("/cafe/member/register")
 	public String register(MemberDTO dto) {
-		System.out.println("회원가입컨트롤");
 		int result = ms.signup(dto);
-		System.out.println("리절트:"+result);
 		if(result==1) {
 			return "redirect:/";
 		}
@@ -118,6 +116,7 @@ public class HomeController { //메인 로그인관련
 		if(dto.getPassword()!="") {
 			int result = ms.update(dto);
 			if(result==1) {
+				System.out.println("정보수정");
 				return "redirect:"+url;
 			}return "redirect:"+url;
 		}
