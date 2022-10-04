@@ -101,7 +101,6 @@
 	
 	function writeBoard() {
 		var form = document.writeBoardForm;
-		
 		if(formCheck()) {
 			var xhr = new XMLHttpRequest();
 			var cafeId = form.cafeId.value;

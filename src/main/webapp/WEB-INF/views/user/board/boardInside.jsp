@@ -428,7 +428,7 @@ li.bbp-topic-freshness-test{
 		                   		
 		                      	<p>
 		                      		<a onclick="replyClick(this)" id="${reply.REPLY_NUM}" style="cursor:pointer">
-		                      		<b>답글 쓰기</b> <!--그룹:${reply.REPLY_GROUP}  --></a>
+		                      		<b>답글 쓰기</b> </a>
 		                      	</p>
 
 		                      	
@@ -516,7 +516,7 @@ li.bbp-topic-freshness-test{
 					                   		
 					                      	<p>
 					                      		<a onclick="replyClick(this)" id="${replyreply.REPLY_NUM}" style="cursor:pointer">
-					                      		<b>답글 쓰기</b> 그룹:${replyreply.REPLY_GROUP}</a>
+					                      		<b>답글 쓰기</b> </a>
 					                      	</p>
 					                      	
 					                      			<!-- 답글 쓰기 클릭시 생성되는 div  -->
@@ -690,7 +690,7 @@ li.bbp-topic-freshness-test{
 					<div class="col-lg-12">
 		            <div class="he-wrap tpl6 market-item">
 					<div class="name-topList">${top6.BOARD_TITLE}</div>
-		            	 <c:if test="${ top6.CAFE_USER_IMAGE_NUM== 0}">
+		            	 <c:if test="${ top6.CAFE_USER_IMAGE_NUM!= 0}">
 				       		  <img class="lazyOwl" style="height: 280px;"
 				       		  data-src="<%=request.getContextPath()%>/resources/img/프로필.jpg">
 		              	  </c:if>
