@@ -13,6 +13,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,7 +42,6 @@ import com.itbank.navercafe.user.member.service.MemberService;
 public class HomeController { //메인 로그인관련
 	
 	@Autowired MemberService ms; 
-	@Autowired CafeController cc;
 	
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
@@ -96,10 +96,10 @@ public class HomeController { //메인 로그인관련
 		if(result==1) {
 			return "redirect:/";
 		}
-		return "redirect:signup";
+		return "redirect:/cafe/member/signup";
 	}
 	
-	@GetMapping("cafe/member/userInfo")
+	@GetMapping("/cafe/member/userInfo")
 	public String userUpdate(String id, Model model) {
 		MemberDTO dto = ms.getU(id);
 		model.addAttribute("id", dto.getId());
@@ -112,9 +112,9 @@ public class HomeController { //메인 로그인관련
 		return "cafe/member/userInfo";
 	}
 	
-	@PostMapping("/userUpdate")
+	@PostMapping("/cafe/member/userUpdate")
 	public String userUpdate(MemberDTO dto) {
-		String url = "http://localhost:8085/navercafe/";
+		String url = "/";
 		if(dto.getPassword()!="") {
 			int result = ms.update(dto);
 			if(result==1) {
@@ -124,10 +124,10 @@ public class HomeController { //메인 로그인관련
 		return "redirect:"+url;
 	}
 	
-	@GetMapping("delete")
+	@GetMapping("/cafe/member/delete")
 	public String delete(String id, HttpServletRequest request, HttpSession session) {
-		String url = "http://localhost:8085/navercafe/";
-		cc.logout(request, session);
+		String url = "/";
+		logout(request, session);
 		
 		int result = ms.delete(id);
 		if(result==1) {
@@ -224,5 +224,32 @@ public class HomeController { //메인 로그인관련
 		String result = ms.idOverlap(id);
 		
 		return result;
+	}
+	@PostMapping(value="/cafe/login", produces="application/json")
+	@ResponseBody
+	public boolean login(@RequestBody MemberDTO memberDTO, HttpSession session) {
+		boolean result = ms.loginChk(memberDTO);
+		MemberDTO name = ms.getU(memberDTO.getId());
+		
+		if(result) {
+			session.setAttribute("loginId",  memberDTO.getId());
+			session.setAttribute("loginName",  name.getName());
+		}
+		
+		return result;
+	}
+	
+	@GetMapping("/cafe/logout")
+	public String logout(HttpServletRequest request,HttpSession session) {
+		String url = "/";
+		String referer = request.getHeader("referer");
+		
+		session.invalidate();
+		
+		if(referer != null) {
+			url = referer;
+		}
+
+		return "redirect:" + url;
 	}
 }

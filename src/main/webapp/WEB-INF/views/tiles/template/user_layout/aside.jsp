@@ -4,7 +4,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <!-- SIDEBAR -->
-      <div id="sidebar" class="col-lg-4 col-md-4 col-sm-4 col-xs-12 cstmAside" ${cafeDTO.cafeLayout > 0 ? 'style="float:right;"' : ''}>
+      <div id="sidebar" class="col-lg-4 col-md-4 col-sm-4 col-xs-12 cstmAside" ${_cafeDTO.cafeLayout > 0 ? 'style="float:right;"' : ''}>
         <div class="widget">
           <div class="tabbable">
             <ul class="nav nav-tabs">
@@ -18,27 +18,27 @@
                   	<span>
                   	  <a href="#">
                   	  <c:choose>
-                  	  	<c:when test="${cafeDTO.cafeIconNum eq null || cafeDTO.cafeIconNum == 0}">
+                  	  	<c:when test="${_cafeDTO.cafeIconNum eq null || _cafeDTO.cafeIconNum == 0}">
                   	  	<img class="profileImg" src="${contextPath}/resources/img/cafe_thumb_noimg_55.png" alt="카페 아이콘 없음">
                   	  	</c:when>
                   	  	<c:otherwise>
-                  	  	<img class="profileImg" src="${contextPath}/file/download?cafeIconNum=${cafeDTO.cafeIconNum}" alt="카페 아이콘 없음">
+                  	  	<img class="profileImg" src="${contextPath}/file/download?cafeIconNum=${_cafeDTO.cafeIconNum}" alt="카페 아이콘 없음">
                   	  	</c:otherwise>
                   	  </c:choose>
                   	  
                       </a>
-                      <c:if test="${cafeDTO.isCafeManager eq 'true'}"> 
+                      <c:if test="${_cafeDTO.isCafeManager eq 'true'}"> 
                       <a href="javascript:alert('카페 프로필 변경하기')" class="lab_thmb">카페 프로필 변경하기</a>
                       </c:if>
                   	</span>
                   	<div class="mananger_info">
                       <span class="gradeText">매니저</span>                   
-                      <b title="${cafeDTO.userId}">${cafeDTO.userId}</b>
+                      <b title="${_cafeDTO.userId}">${_cafeDTO.userId}</b>
                     </div>
-                    <div>since <fmt:formatDate value="${cafeDTO.cafeRegdate}" pattern="YYYY.MM.dd"/> </div>    
+                    <div>since <fmt:formatDate value="${_cafeDTO.cafeRegdate}" pattern="YYYY.MM.dd"/> </div>    
                     <div class="cafeSetting">
                     <c:choose>
-                    <c:when test="${cafeDTO.isCafeManager eq 'true'}">
+                    <c:when test="${_cafeDTO.isCafeManager eq 'true'}">
 	                  <a href="javascript:changeCafeMenu('${contextPath}/admin')" class="info-cafe">
 					    <span class="ico_aside ico_setting"></span>카페관리
 					  </a>
@@ -74,11 +74,11 @@
                   </li>
                   <li>
 
-                    <c:if test="${cafeDTO.isCafeManager eq 'true' || cafeDTO.isCafeMember eq 'true'}">
+                    <c:if test="${_cafeDTO.isCafeManager eq 'true' || _cafeDTO.isCafeMember eq 'true'}">
                   	<input type="button" class="button" value="카페 글쓰기" onclick="changeCafeMenu('${contextPath}/user/board/writeForm')" style="width:100%;">
                   	</c:if>
-                  	<c:if test="${cafeDTO.isCafeMember eq 'false'}">
-                  	<input type="button" class="button" value="카페 가입하기" onclick="changeCafeMenu('${contextPath}/user/cafeSignup?cafeId=${cafeDTO.cafeId }')" style="width:100%;">
+                  	<c:if test="${_cafeDTO.isCafeMember eq 'false'}">
+                  	<input type="button" class="button" value="카페 가입하기" onclick="changeCafeMenu('${contextPath}/user/cafeSignup?cafeId=${_cafeDTO.cafeId }')" style="width:100%;">
                   	</c:if>
                   </li>
                 </ul>
@@ -120,7 +120,7 @@
                 <ul class="recent_posts">
                
                   <!-- start 카페 가입 회원 정보 -->
-                  <c:if test="${cafeDTO.isCafeMember eq 'true'}">
+                  <c:if test="${_cafeDTO.isCafeMember eq 'true'}">
                   <li>
                   	<span>
                   	  <a href="#">
@@ -177,12 +177,12 @@
                   <li>
                   <c:choose>
 
-                  <c:when test="${cafeDTO.isCafeManager eq 'true' || cafeDTO.isCafeMember eq 'true'}">
+                  <c:when test="${_cafeDTO.isCafeManager eq 'true' || _cafeDTO.isCafeMember eq 'true'}">
                     <input type="button" class="button" value="카페 글쓰기" onclick="alert('카페 글쓰기 이동')" style="width:100%;">
                   </c:when>
                   <c:otherwise>
                     <c:if test="${loginId ne null}">
-                    <input type="button" class="button" value="카페 가입하기" onclick="changeCafeMenu('${contextPath}/user/cafeSignup?cafeId=${cafeDTO.cafeId }')" style="width:100%;">
+                    <input type="button" class="button" value="카페 가입하기" onclick="changeCafeMenu('${contextPath}/user/cafeSignup?cafeId=${_cafeDTO.cafeId }')" style="width:100%;">
                     </c:if>
                   </c:otherwise>
                   </c:choose>
@@ -203,7 +203,7 @@
 
           <ul class="categories">
           <c:choose>
-          	<c:when test="${cafeDTO.cafeMenuList eq null || cafeDTO.cafeMenuList.size() == 0}">
+          	<c:when test="${_cafeDTO.cafeMenuList eq null || _cafeDTO.cafeMenuList.size() == 0}">
           	<li>등록된 게시판이 없습니다.</li>
           	</c:when>
           	<c:otherwise>
@@ -222,10 +222,10 @@
             <span>Categories</span>
           </h4>
           <ul class="categories">            
-            <c:forEach var="cafeMenu" items="${cafeDTO.cafeMenuList}">
+            <c:forEach var="cafeMenu" items="${_cafeDTO.cafeMenuList}">
             <li><a href="javascript:alert('${cafeMenu.boardMenuNum} 번 게시판으로 이동');">${cafeMenu.boardMenuName}</a></li>
             </c:forEach>
-            <c:if test="${cafeDTO.cafeMenuList eq null || cafeDTO.cafeMenuList.size() == 0}">
+            <c:if test="${_cafeDTO.cafeMenuList eq null || _cafeDTO.cafeMenuList.size() == 0}">
             <li>등록된 게시판이 없습니다.</li>
             </c:if>
           </ul>

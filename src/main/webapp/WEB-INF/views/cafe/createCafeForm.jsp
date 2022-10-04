@@ -20,9 +20,9 @@
         	<div class="infoLine">
         		<label for="cafeId" class="infoLabel">카페 아이디 <span class="required">*</span></label>
           		<input type="text" name="cafeId" id="cafeId" class="form-control-inline" placeholder="카페 아이디를 입력해주십시오."
-          			data-length="1~100" data-format="numAndEng" data-text="카페 아이디">
+          			data-length="1~100" data-format="numAndEng" data-text="카페 아이디" onchange="changeCafeIdCheckFlag()">
           		<input type="button" value="중복확인" class="button" style="margin-left:10px;"
-          			onclick="checkCafeId()" onchange="changeCafeIdCheckFlag()">
+          			onclick="checkCafeId()">
         	</div>
         	<div class="infoLine">
         		<label for="cafeName" class="infoLabel">카페 이름 <span class="required">*</span></label>
@@ -292,12 +292,6 @@ function checkCafeId() {
 	var form = document.createCafeForm;
 	var cafeId = form.cafeId;
 	var xhr = new XMLHttpRequest();
-	
-	if(form.cafeIdCheck.value != 'Y') {
-		alert('아이디 중복 확인을 해주십시오.');
-		cafeId.focus();
-		return;
-	}
 	
 	if(cafeId.value == '') {
 		alert('카페 아이디를 입력해주십시오.');

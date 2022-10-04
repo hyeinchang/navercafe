@@ -13,7 +13,7 @@ public interface MemberService {
 
 	public MemberDTO getU(String id);
 
-	public int loginChk(MemberDTO memberDTO);
+	public boolean loginChk(MemberDTO memberDTO);
 
 	public String idOverlap(String id);
 

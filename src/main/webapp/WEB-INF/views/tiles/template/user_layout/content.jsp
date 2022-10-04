@@ -136,7 +136,7 @@
         <h4 class="title">
           <span>로그인</span>
         </h4>
-        <form id="loginForm" method="post" name="loginForm" action="${contextPath}/user/login">
+        <form id="loginForm" method="post" name="loginForm" action="${contextPath}/cafe/login">
           <div class="form-group">
             <div class="input-group">
               <span class="input-group-addon"><i class="fa fa-user"></i></span>
@@ -174,7 +174,7 @@
 		      <b><span class="text-primary">${loginName}</span>님</b>
 		      <div>${loginId}</div>
 		      <div class="cafeSetting">
-		        <a href="userInfo?id=${loginId}" class="info-cafe">
+		        <a href="${contextPath}/cafe/member/userInfo?id=${loginId}" class="info-cafe">
 			      <span class="ico_aside ico_setting"></span>회원정보수정
 			    </a>
 			    <a href="javascript:logout();" class="info-cafe">
@@ -194,7 +194,7 @@
   
  <script type="text/javascript">
  	function logout() {
- 		location.href='${contextPath}/user/logout';
+ 		location.href='${contextPath}/cafe/logout';
  	}
  	
  	function searchCafe(page) {

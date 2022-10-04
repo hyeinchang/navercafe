@@ -108,7 +108,7 @@
   <script src="${contextPath}/resources/MaxiBiz/js/main.js"></script>
   
   <form name="cafeForm" method="get">
-  	<input type="hidden" name="cafeId" value="${cafeDTO.cafeId}">
+  	<input type="hidden" name="cafeId" value="${_cafeDTO.cafeId}">
   </form>
 <script type="text/javascript">
   function changeCafeMenu(path) {
@@ -140,11 +140,11 @@
 	  data.id = loginForm.id.value;
 	  data.password = loginForm.password.value;
 	  
-	  xhr.open('post', '${contextPath}/user/login');
+	  xhr.open('post', '${contextPath}/cafe/login');
 	  xhr.setRequestHeader('Content-Type', 'application/json');
 	  xhr.onreadystatechange = function() {
 		  if(xhr.readyState == 4 && xhr.status == 200) {
-			  if(Number(xhr.response) == 0) {
+			  if(xhr.response == 'false') {
 				  alert('등록되지 않은 회원입니다.');
 			  } else {
 				  location.reload();

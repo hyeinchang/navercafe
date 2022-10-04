@@ -118,6 +118,7 @@
   
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 <script type="text/javascript">
+<<<<<<< HEAD
 function idOverlap2(){
 	let idCheck = document.getElementById("id").value;
 	let confirm = document.getElementById("confirm");
@@ -153,6 +154,8 @@ function idOverlap2(){
 
 
 
+=======
+>>>>>>> c336640b162a2a0b32cc361325a6f109dbdfecbc
 	function reg(){
 		var id = document.getElementById("id");	
 		var pw = document.getElementById("password");	
@@ -179,6 +182,7 @@ function idOverlap2(){
 		}
 
 		if(!idck.test(id.value)){ //아이디 체크
+<<<<<<< HEAD
 			console.log(document.getElementById("status").value)
 			if(document.getElementById("status").value=="NO"){
 				document.getElementById("idlabel").innerHTML = "아이디 중복확인 "
@@ -186,11 +190,14 @@ function idOverlap2(){
 				id.focus();
 				return false;
 			}
+=======
+>>>>>>> c336640b162a2a0b32cc361325a6f109dbdfecbc
 			document.getElementById("idlabel").innerHTML = "아이디는 5~20자의 영문소문자, 숫자, (-), (_)만 사용가능합니다."
 			document.getElementById("idlabel").style.color = "red"
 			id.focus();
 			return false;
 		}else{
+<<<<<<< HEAD
 			if(document.getElementById("status").value=="NO"){
 				document.getElementById("idlabel").innerHTML = "아이디 중복확인 "
 				document.getElementById("idlabel").style.color = "red"
@@ -199,6 +206,11 @@ function idOverlap2(){
 			}
 			document.getElementById("idlabel").innerHTML = "사용가능합니다."
 			document.getElementById("idlabel").style.color = "green"
+=======
+			document.getElementById("idlabel").innerHTML = "사용가능합니다."
+			document.getElementById("idlabel").style.color = "green"
+			pw.focus();
+>>>>>>> c336640b162a2a0b32cc361325a6f109dbdfecbc
 			//return false;
 		}
 		
@@ -209,13 +221,21 @@ function idOverlap2(){
 		}
 		
 		if(!pwck.test(pw.value)){ //비밀번호 체크
+<<<<<<< HEAD
 			document.getElementById("pwlabel").innerHTML = "비밀번호는 영대소문자+숫자+특수문자 조합으로 8~15자리 입력해주세요"
+=======
+			document.getElementById("pwlabel").innerHTML = "비밀번호는 영문자+숫자+특수문자 조합으로 8~15자리 입력해주세요"
+>>>>>>> c336640b162a2a0b32cc361325a6f109dbdfecbc
 			document.getElementById("pwlabel").style.color = "red"
 			pw.focus();
 			return false;
 		}else{
 			document.getElementById("pwlabel").innerHTML = "사용가능합니다."
 			document.getElementById("pwlabel").style.color = "green"
+<<<<<<< HEAD
+=======
+			pw2.focus();
+>>>>>>> c336640b162a2a0b32cc361325a6f109dbdfecbc
 		}
 		if(pw2.value==""){
 			alert("비밀번호를 확인해주세요.");
@@ -230,6 +250,10 @@ function idOverlap2(){
 		}else{
 			document.getElementById("pw2label").innerHTML = "비밀번호가 일치합니다."
 			document.getElementById("pw2label").style.color = "green"
+<<<<<<< HEAD
+=======
+			name.focus();
+>>>>>>> c336640b162a2a0b32cc361325a6f109dbdfecbc
 		}
 		
 		if(name.value==""){
@@ -292,11 +316,15 @@ function idOverlap2(){
 		}
 		if(!emck.test(email.value)){ //이메일정규식 체크
 			document.getElementById("emaillabel").innerHTML = "이메일형식으로 작성해주세요."
+<<<<<<< HEAD
 			document.getElementById("emaillabel").style.color = "red"
+=======
+>>>>>>> c336640b162a2a0b32cc361325a6f109dbdfecbc
 			email.focus();
 			return false;
 		}else{
 			document.getElementById("emaillabel").innerHTML = "사용가능합니다."
+<<<<<<< HEAD
 			document.getElementById("emaillabel").style.color = "green"
 		}
 		
@@ -309,3 +337,11 @@ function idOverlap2(){
 	}
 	
 </script>
+=======
+		}
+		
+		
+		document.signupForm.submit();
+	}
+</script>
+>>>>>>> c336640b162a2a0b32cc361325a6f109dbdfecbc
