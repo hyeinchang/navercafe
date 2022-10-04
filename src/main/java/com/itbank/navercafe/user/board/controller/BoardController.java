@@ -1,5 +1,6 @@
 package com.itbank.navercafe.user.board.controller;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -49,17 +50,22 @@ public class BoardController {
 
 	@GetMapping("/goBoardInside")
 	public String goBoardInside(int boardNum, Model model,HttpSession session,String cafeId,int boardMenuNum,
-			@RequestParam(value="num",required=false,defaultValue="0")int num) {
-		System.out.println("넘어온 보드 값 : "+boardNum);
-		System.out.println("넘어온 boardMenuNum 값 :"+boardMenuNum);
+			@RequestParam(value="num",required=false,defaultValue="0")int num,
+			@RequestParam(value="next",required=false,defaultValue="0")int next,
+			@RequestParam(value="preview",required=false,defaultValue="0")int preview) {
+//		System.out.println("넘어온 보드 값 : "+boardNum);
+//		System.out.println("넘어온 boardMenuNum 값 :"+boardMenuNum);
+//		System.out.println("next 값 : "+next);
+//		System.out.println("preview 값 : "+preview);
 		
 		//System.out.println("boardInside실행");
-		System.out.println("cafeId:"+cafeId);
+		//System.out.println("cafeId:"+cafeId);
+		
 		//댓글 갯수 세오기
 		model.addAttribute("replyCount",replySer.getReplyCount(boardNum));
 		//System.out.println("댓글 갯수 세오기 컷");
 		//게시물 가져오기
-		BoardDTO dto= ser.getUserBoard(boardNum,boardMenuNum,model,num,cafeId);
+		BoardDTO dto= ser.getUserBoard(boardNum,boardMenuNum,model,num,cafeId,next,preview);
 		model.addAttribute("userBoard",dto);
 		//System.out.println("게시물 가져오기 컷");
 		//카페유저 정보 가져오기
@@ -67,7 +73,7 @@ public class BoardController {
 		//위에있는거 2개 맵으로 가져와서 합쳐 줄 라고 했는데 clob이 문제가 생기네?
 		//System.out.println("카페 유저 정보 가져오기 컷");
 		//댓글 리스트 가져오기
-		model.addAttribute("replyList",replySer.getReplyList(boardNum));
+		model.addAttribute("replyList",replySer.getReplyList(boardNum,cafeId));
 		//System.out.println(replySer.getReplyList(boardNum));
 		//System.out.println("댓글 리스트 가져오기 컷");
 		
@@ -98,15 +104,19 @@ public class BoardController {
 		@RequestParam(value="step",required=false,defaultValue="0")int step) {
 		replySer.saveReply(mul,step);
 		return "redirect:goBoardInside?boardNum="
-				+mul.getParameter("boardNum")+"&num="+1;
-							//댓글 작성시 조회수 오르는거 방지
+				+mul.getParameter("boardNum")+"&num="+1+
+				"&boardMenuNum="+mul.getParameter("boardMenuNum")+"&cafeId="+mul.getParameter("cafeId");
+	//댓글 작성시 조회수 오르는거 방지
 	}
 	
 	@GetMapping("likeChk")
-	public String likeChk(int boardNum,String userId,Model model) {
+	public String likeChk(int boardNum,String userId,Model model,HttpServletRequest res) {
 		System.out.println("컨트롤러 : "+boardNum+" - "+userId);
+		System.out.println("좋아요 클릭시 넘어오는 :"+res.getParameter("boardMenuNum"));
+		System.out.println("좋아요 클릭시 넘어오는:"+res.getParameter("cafeId"));
 		ser.likeChk(boardNum,userId,model);
-		return "redirect:goBoardInside?boardNum="+boardNum+"&num="+1;
+		return "redirect:goBoardInside?boardNum="+boardNum+"&num="+1+
+				"&boardMenuNum="+res.getParameter("boardMenuNum")+"&cafeId="+res.getParameter("cafeId");
 	}
 	
 	

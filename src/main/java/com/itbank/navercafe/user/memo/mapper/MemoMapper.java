@@ -9,9 +9,9 @@ import com.itbank.navercafe.user.memo.dto.MemoReplyDTO;
 
 public interface MemoMapper {
 	//메모 리스트
-	public List<HashMap<String, Object>> getMemoList();
+	public List<HashMap<String, Object>> getMemoList(String cafeId);
 	//메모에 댓글들 리스트
-	public List<HashMap<String, Object>> getReplyList();
+	public List<HashMap<String, Object>> getReplyList(String cafeId);
 	
 	//댓글 작성
 	public int saveMemoReply(MemoReplyDTO dto);
