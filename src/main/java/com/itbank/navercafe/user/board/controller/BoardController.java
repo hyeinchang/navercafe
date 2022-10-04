@@ -71,7 +71,7 @@ public class BoardController {
 			returnUrl = "user/board/gradeBoardList";
 			break;
 		case 5 :
-			returnUrl = "user/board/memoBoardList";
+			returnUrl = "user/board/memoBoardList?cafeId="+cafeId;
 			break;
 		}
 		
@@ -84,19 +84,14 @@ public class BoardController {
 	
 
 	@GetMapping("/goBoardInside")
-
-	
-
-
 	public String goBoardInside(int boardNum, Model model,HttpSession session,String cafeId,int boardMenuNum,
 			@RequestParam(value="num",required=false,defaultValue="0")int num,
 			@RequestParam(value="next",required=false,defaultValue="0")int next,
 			@RequestParam(value="preview",required=false,defaultValue="0")int preview) {
 
 		
-		System.out.println("넘어온 보드 값 : "+boardNum);
-		System.out.println("넘어온 boardMenuNum 값 :"+boardMenuNum);
-
+		//System.out.println("넘어온 보드 값 : "+boardNum);
+		//System.out.println("넘어온 boardMenuNum 값 :"+boardMenuNum);
 		//System.out.println("boardInside실행");
 		//System.out.println("cafeId:"+cafeId);
 		
