@@ -1,7 +1,13 @@
 package com.itbank.navercafe.admin.memberstaff.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -9,9 +15,10 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.itbank.navercafe.admin.cafemember.dto.AdminCafeMemberDTO;
 import com.itbank.navercafe.admin.memberstaff.dto.AllMembersDTO;
+import com.itbank.navercafe.admin.memberstaff.dto.DeportedMembersDTO;
 import com.itbank.navercafe.admin.memberstaff.service.AdminMemberStaffService;
 
 @Controller
@@ -23,7 +30,6 @@ public class AdminMemberStaffController {
 	public String manageAllMembers(Model model, String cafeId) {
 		ArrayList<AllMembersDTO> amList = amss.getAllMembersList(cafeId);
 		ArrayList<String> gradeNameList = amss.getCafeGradeNames(cafeId);
-		System.out.println("리스트 사이즈 : " + gradeNameList.size());
 		
 		model.addAttribute("list", amList);
 		model.addAttribute("cafeId", cafeId);
@@ -33,19 +39,12 @@ public class AdminMemberStaffController {
 	}
 	
 	@GetMapping("manageDeportedMembers")
-	public String manageDeportedMembers(Model model) {
-		ArrayList<AdminCafeMemberDTO> list = new ArrayList<>();
-		for(int i = 0; i < 3; i++) {
-			AdminCafeMemberDTO pcm = new AdminCafeMemberDTO();
-			pcm.setUserName("테스트"+i);
-			pcm.setUserId("ddd"+i);
-			pcm.setUserEmail("email"+i);
-			pcm.setUserLevel(i);
-			pcm.setUserPoint(i);
-			list.add(pcm);
-		}
+	public String manageDeportedMembers(Model model, String cafeId) {
+		ArrayList<DeportedMembersDTO> list = amss.getDeportedMembersList(cafeId);
 		
 		model.addAttribute("list", list);
+		model.addAttribute("cafeId", cafeId);
+		
 		return "admin/memberStaff/manageDeportedMembers";
 	}
 	
@@ -56,36 +55,57 @@ public class AdminMemberStaffController {
 	
 	
 	@PostMapping("modifyMembers")
-	public String modifyMembers(String modifyMembers) {
-		amss.modifyMembers(modifyMembers);
-		return "redirect:manageAllMembers";
+	public void modifyMembers(String modifyMembers, String cafeId, String gradeLevel, HttpServletResponse resp) throws IOException {
+		String msg = amss.modifyMembers(modifyMembers, cafeId, gradeLevel);
+		
+		resp.setContentType("text/html; charset=utf-8");
+		PrintWriter out = resp.getWriter();
+		out.print(msg);
 	}
 	
 	@PostMapping("deportMembers")
-	public String deportMembers(String deportMembers) {
-		amss.deportMembers(deportMembers);
-		return "redirect:manageAllMembers";
+	public void deportMembers(String deportMembers, String cafeId, String reason, HttpServletResponse resp ) throws IOException {
+		String msg = amss.deportMembers(deportMembers, cafeId, reason);
+		
+		resp.setContentType("text/html; charset=utf-8");
+		PrintWriter out = resp.getWriter();
+		out.print(msg);
 	}
 	
 	@PostMapping("emailMembers")
-	public String emailMembers(String emailMembers) {
-		amss.emailMembers(emailMembers);
-		return "redirect:manageAllMembers";
+	public void emailMembers(String emailMembers, String cafeId, HttpServletResponse resp, String eSubject, String eBody) throws Exception {
+		String msg = amss.emailMembers(emailMembers, cafeId, eSubject, eBody);
+		
+		resp.setContentType("text/html; charset=utf-8");
+		PrintWriter out = resp.getWriter();
+		out.print(msg);
 	}
 	
 	@PostMapping("unbanMembers")
-	public String unbanMembers(String unbanMembers) {
-		amss.unbanMembers(unbanMembers);
-		return "redirect:manageDeportedMembers";
+	public void unbanMembers(String unbanMembers, String cafeId, HttpServletResponse resp) throws Exception {
+		String msg = amss.unbanMembers(unbanMembers, cafeId);
+		
+		resp.setContentType("text/html; charset=utf-8");
+		PrintWriter out = resp.getWriter();
+		out.print(msg);
 	}
 	
 	@PostMapping("banMembers")
-	public String banMembers(String banMembers) { 
-		amss.banMembers(banMembers);
-		return "redirect:manageDeportedMembers";
+	public void banMembers(String banMembers, String cafeId, HttpServletResponse resp, String reason) throws Exception { 
+		String msg = amss.banMembers(banMembers, cafeId, reason);
+		
+		resp.setContentType("text/html; charset=utf-8");
+		PrintWriter out = resp.getWriter();
+		out.print(msg);
 	}
 	
-
+	@GetMapping(value="searchQA", produces="application/json; charset=utf8")
+	@ResponseBody
+	public List<Map<String, Object>> searchQA(String userId, String cafeId) {
+		List<Map<String, Object>> mapList = amss.getQA(userId, cafeId);
+		
+		return mapList;
+	}
 	
 	
 }

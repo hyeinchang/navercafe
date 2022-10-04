@@ -17,6 +17,14 @@
         <result column="CAFE_USER_EMAIL_RECEIEVE" property="cafeUserEmailReceieve"/>
         <result column="CAFE_USER_GENDER_REVEAL" property="cafeUserGenderReveal"/>
     </resultMap>
+    
+    <resultMap type="com.itbank.navercafe.admin.memberstaff.dto.DeportedMembersDTO" id="deportedMembers">
+        <id column="CAFE_ID" property="cafeId"/>
+        <result column="USER_ID" property="userId"/>   
+        <result column="regdate" property="regdate"/>   
+        <result column="deported_reason" property="reason"/>   
+        <result column="manager_id" property="managerId"/>   
+    </resultMap>
 	
 	<select id="getAllMembersList" resultMap="allMembers" parameterType="String">
 		select * from project_cafe_member where cafe_id = #{value}
@@ -24,6 +32,51 @@
 	
 	<select id="getCafeGradeNames" parameterType="String" resultType="String">
 		select cut_name from project_member_grade where cafe_id = #{value} order by cafe_user_grade asc
+	</select>	
+	
+	<update id="modifyMembersGrade" parameterType="Map">
+		update project_cafe_member set cafe_user_grade = #{cafeUserGrade} where user_id = #{userId} and cafe_id = #{cafeId}
+	</update>
+	
+	<delete id="deportMembers" parameterType="Map">
+		delete from project_cafe_member where cafe_id = #{cafeId} and user_id = #{userId}
+	</delete>
+	
+	<select id="getEmailList" parameterType="Map" resultType="String">
+		select user_email from project_members where user_id = #{userId}
 	</select>
+	
+	<insert id="insertDeportedList" parameterType="Map" >
+		insert into project_cafe_deported(deported_num, cafe_id, user_id, regdate, deported_reason, manager_id) 
+		values(project_cafe_deported_seq.nextval, #{cafeId}, #{userId}, sysdate, #{reason}, #{managerId})
+	</insert>
+	
+	<select id="getDeportedMembersList" resultMap="deportedMembers" parameterType="String">
+		select * from project_cafe_deported where cafe_id = #{value}
+	</select>
+	
+	<select id="getManagerId" resultType="String" parameterType="String">
+		select user_id from project_cafe_info where cafe_id = #{value} 
+	</select>
+	
+	<select id="getBanFlag" resultType="integer" parameterType="map">
+		select count(*) from project_blacklist where cafe_id = #{cafeId} and user_id = #{userId}
+	</select>
+	
+	<insert id="banMembers" parameterType="Map">
+		insert into project_blacklist (cafe_id, user_id, blacklist_regdate, reason, manager_id)
+		values(#{cafeId}, #{userId}, sysdate, #{reason}, #{managerId})
+	</insert>
+	
+	<select id="getquestions" parameterType="Map" resultType="String">
+		select cafe_question_content from project_join_question where cafe_id = #{cafeId}
+		order by cafe_question_num asc
+	</select>
+	
+	<select id="getAnswers" parameterType="Map" resultType="String">
+		select cafe_answer_content from project_join_answers where cafe_id = #{cafeId} and user_id = #{userId}
+		order by cafe_answer_num asc
+	</select>
+	
 </mapper>
 

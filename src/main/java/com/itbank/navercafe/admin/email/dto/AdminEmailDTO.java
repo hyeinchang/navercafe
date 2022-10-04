@@ -3,7 +3,7 @@ package com.itbank.navercafe.admin.email.dto;
 public class AdminEmailDTO {
 	private String cafeId;
 	private String cafeName;
-	private String toEmailAddress;
+	private String userEmail;
 	private String subject;
 	private String content;
 	
@@ -20,10 +20,10 @@ public class AdminEmailDTO {
 		this.cafeName = cafeName;
 	}
 	public String getToEmailAddress() {
-		return toEmailAddress;
+		return userEmail;
 	}
-	public void setToEmailAddress(String toEmailAddress) {
-		this.toEmailAddress = toEmailAddress;
+	public void setToEmailAddress(String userEmail) {
+		this.userEmail = userEmail;
 	}
 	public String getSubject() {
 		return subject;

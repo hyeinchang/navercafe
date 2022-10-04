@@ -6,7 +6,13 @@
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js"> </script>
 <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
+<style>
+	.ulHide {
+		display: none;
+	}
+</style>
 <script>
 $(document).ready(function () {
 	
@@ -105,6 +111,55 @@ $(document).ready(function () {
 		return;
 		
 	}
+	
+	function showdiv(obj) {
+		
+			function getQA(dataform) {
+				$.ajax({
+					type : 'get',
+					contentType : 'application/json; charset=utf-8',
+					url : '${contextPath}/admin/searchQA',
+					dataType : 'text',
+					data : dataform,
+					success : function(result) {
+						var dataList = JSON.parse(result);
+						var htmlStr = '';
+						$("#"+aid).find("ul").html('');
+						
+						for(var i=0;i<dataList.length;i++) {
+							htmlStr += '<li>' +(i+1)+'. ' + dataList[i]['Q'+(i+1)] + '</li>';
+							htmlStr += '<li> &nbsp;&nbsp;&nbsp;&nbsp;' + dataList[i]['A'+(i+1)] + '</li>';
+						}
+						
+						$("#"+aid).find("ul").html(htmlStr);
+						
+					},
+					error : function(request,status,error) {
+						alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+					}
+				});
+			}
+			
+		var aid = obj.id
+		console.log(aid)
+		
+		var ulClassName = $("#"+aid).find('ul').attr('class');
+		if(ulClassName == 'ulHide') {
+			$("#"+aid).find("ul").removeClass('ulHide');
+		} else{
+			$("#"+aid).find("ul").addClass('ulHide');
+		}
+		
+		var arr = $("#"+aid).find('input').val().split('+')
+		var dataform = {
+			'userId' : arr[0],
+			'cafeId' : arr[1]
+		}
+		
+		getQA(dataform)
+		
+	}
+	
 
 	
 </script>
@@ -134,12 +189,18 @@ $(document).ready(function () {
         </thead>
         
         <tbody>
-        <c:forEach var="dto" items="${list }">
+        <c:forEach var="dto" items="${list }" varStatus="loop">
             <tr>
                 <td align="center"><input type="checkbox" class="registerBan-cb-item" name="temp" value="${dto.userId }+${dto.cafeRequestNum}"></td>
                 <td>${dto.userId }</td>
                 <td>${dto.regdate }</td>
-                <td>가입질문 어케하지</td>
+                <td>
+                	<a href="#" id="aa${loop.count }" onclick="showdiv(this)"> <i class="fa-solid fa-magnifying-glass"></i>
+                		<input type="hidden" name="" value="${dto.userId }+${cafeId}">
+	                	<ul class="ulHide" style="list-style: none">
+	                	</ul>
+                	</a>
+                </td>
             </tr>
 	        </c:forEach>
         </tbody>

@@ -5,6 +5,7 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
 <script src="https://code.jquery.com/jquery-3.5.1.js"> </script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.min.js" integrity="sha384-ODmDIVzN+pFdexxHEHFBQH3/9/vQ9uori45z4JjnFsRydbmQbmL5t1tQ0culUzyK" crossorigin="anonymous"></script>
 <script src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.min.js"></script>
 
 <script>
@@ -98,15 +99,36 @@ $(document).ready(function () {
 				document.getElementById('f-unban').submit();
 			}
 		} if(id === 'ban') {
-			if(window.confirm("가입불가 처리 하시겠습니까?")) {
-				console.log('가입불가 지정!')
-				$('#banMembers').val(checkObjval);
-				document.getElementById('f-ban').submit();
-			}
+			console.log('가입불가 지정!')
+			$('#banMembers').val(checkObjval);
+			$('#selectedNum').text(checkObj.length);
+			$("#banModal").modal('show');
+				
+			var idArray = checkObjval.split('/');
+			idArray.forEach(function(item) {
+				$('#idListHere').append('<li>'+item+'</li>')
+			})
+			
 		}	
-		
 		return;
+	}
+	
+	$(document).ready(function () {
+		$('#certReason').keyup(function() {
+			$('#r4').prop('checked', 'checked');
+			var cont = $('#certReason').val()	
+			$('#r4').val(cont);
+		})
 		
+		$(".rr01").change(function() {
+			if (this.checked) {
+				$('#certReason').val('');
+			}
+		})
+	});	
+
+	function banSubmit() {
+		$('#f-ban').submit();
 	}
 	
 </script>
@@ -141,12 +163,12 @@ $(document).ready(function () {
         <tbody>
         <c:forEach var="dto" items="${list }">
             <tr>
-                <td align="center"><input type="checkbox" class="registerBan-cb-item" name="temp" value="${dto.userName }"></td>
-                <td>${dto.userName }</td>
-                <td>${dto.userLevel }</td>
-                <td>${dto.userPoint }</td>
-                <td>${dto.userEmail }</td>
-                <td>${dto.userEmail }</td>
+                <td align="center"><input type="checkbox" class="registerBan-cb-item" name="temp" value="${dto.userId }"></td>
+                <td>${dto.userId }</td>
+                <td>${dto.reason }</td>
+                <td>${dto.regdate }</td>
+                <td>${dto.managerId }</td>
+                <td>${dto.banFlag }</td>
             </tr>
         </c:forEach>
         </tbody>
@@ -165,9 +187,44 @@ $(document).ready(function () {
     
 <form action="unbanMembers" id="f-unban" method="post">
 	<input type="hidden" value="" name="unbanMembers" id="unbanMembers">
+	<input type="hidden" value="${cafeId}" name="cafeId">
 </form>
 <form action="banMembers" id="f-ban" method="post">
 	<input type="hidden" value="" name="banMembers" id="banMembers">
+	<input type="hidden" value="${cafeId}" name="cafeId">
+	
+	<!-- 모달 영역 -->
+<div class="modal fade" id="banModal" tabindex="-1" role="dialog"
+	aria-labelledby="banModalLabel">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h4 class="modal-title" id="deportModalLabel" align="center"> <b>가입 불가 지정</b></h4>
+			</div>
+			<div class="modal-body">
+				<div class="input-group">
+					<span> 선택된 인원 수 : &nbsp;</span>
+					<span id="selectedNum"></span>
+				</div>
+				<ul id="idListHere"> </ul>
+				
+  				<span class="input-group-addon" id="sizing-addon2"><b>가입 불가 사유</b></span> <hr style="margin: 7px;">
+					<input type="radio" class="rr01" id="r1" name="reason" value="성인/도박 등 불법광고 및 스팸활동" checked> <label for="r1"> 성인/도박 등 불법광고 및 스팸활동 </label><br>
+					<input type="radio" class="rr01" id="r2" name="reason" value="바람직하지 않은 행동 (광고, 도배, 욕설 등)"> <label for="r2"> 바람직하지 않은 행동 (광고, 도배, 욕설 등) </label> <br>
+					<input type="radio" class="rr01" id="r3" name="reason" value="우리 카페 내 자체 운영 원칙에 위배되는 활동"> <label for="r3"> 우리 카페 내 자체 운영 원칙에 위배되는 활동 </label> <br>
+					<input type="radio" id="r4" name="reason" value="" id="emptyRadio"> <label for="r4"> 기타 </label> <br>
+				<div class="input-group">
+	  				<input type="text" class="form-control" placeholder="기타 - 한글 25자 이내로 작성해주세요" aria-describedby="sizing-addon2" id="certReason">
+				</div>
+			</div>
+			<div class="modal-footer">
+				<button type="button" class="btn btn-primary" onclick="banSubmit()">확인</button>
+				<button type="button" class="btn btn-default" data-bs-dismiss="modal">취소</button>
+			</div>
+		</div>
+	</div>
+</div>
+
 </form>	
     	</div>
     </div>
