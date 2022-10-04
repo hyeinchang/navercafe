@@ -17,6 +17,8 @@
 		text-align : center !important;
 	}
 	.grade-button{background-color: white;color:black; border:1px solid black;}
+	tr.notice_Y {background:#eee;}
+	td.notice_Y a::before {content: "공지"; display: inline-block; padding: 0 5px;  background: #fff; border: 1px solid;font-size: 12px; border-radius: 5px;margin-right: 2px;}
 </style>
 <script	src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script>
 <script>
@@ -28,15 +30,16 @@
 			info: false,// 정보 표시 숨기기
 			paging: true,// 페이징 기능 숨기기
 			responsive: true, //
-			order : [[0, "desc"]], //0번항목 내림차순 정렬(글번호)
+			order : [[0, "desc"], [1, "desc"]], //0번항목 내림차순 정렬(글번호)
 			// 열 넓이 설정
 			columnDefs: [
 				// visible 숨김, orderable 정렬기능
-				{ orderable: true, 	visible: true,  targets: 0, width: 50 },
-				{ orderable: true, visible: true, targets: 1, width: 200 },
-				{ orderable: true, visible: true, targets: 2, width: 100 },
-				{ orderable: true, visible: true, targets: 3, width: 100 },
-				{ orderable: true, 	visible: true, targets: 4, width: 50 }
+					{ orderable: false, 	visible: false,  targets: 0, width: 50 },
+				{ orderable: false, 	visible: true,  targets: 1, width: 50 },
+				{ orderable: false, visible: true, targets: 2, width: 200 },
+				{ orderable: false, visible: true, targets: 3, width: 100 },
+				{ orderable: false, visible: true, targets: 4, width: 100 },
+				{ orderable: false, 	visible: true, targets: 5, width: 50 }
 			],
 			lengthMenu: [ 5, 10, 15, 20, 30, 40, 50 ],// 표시 건수 단위 설정
 			// 기본 표시 건수를 15건으로 설정
@@ -59,7 +62,9 @@
 				loadingRecords : '로딩중..',
 				processing : '작업중..',
 				zeroRecords: "검색결과가 없습니다."
-			}
+			},
+			fixedHeader: true  // 헤더 고정
+			
 		});
 		
 		var table = $('#myTable').DataTable();
@@ -77,7 +82,7 @@
 		$('.dataTables_filter input').unbind().bind('keyup', function () {
 	        var colIndex = document.querySelector('#select').selectedIndex;
 	        
-	        table.column(colIndex).search(this.value).draw(); // 컬럼 숨기면 검색 인덱스 +1
+	        table.column(colIndex+1).search(this.value).draw(); // 컬럼 숨기면 검색 인덱스 +1
 	    });	
 		$('#myTable_length label').prepend($('#myTable_filter label'));
 		$('#myTable_length').prepend('<button type="button" id="writeBtn" class="boardBtn">글쓰기</button>');
@@ -99,6 +104,7 @@
 		      	<table class="table table-bordered" id="myTable">
 					<thead>
 						<tr>
+							<th>공지여부</th>
 							<th>글번호</th>
 							<th>제목</th>
 							<th>작성자</th>
@@ -106,19 +112,22 @@
 							<th>조회수</th>
 						</tr>
 					</thead>
+					<tbody>
 					<c:forEach var="dto" items="${boardList}">
-						<tr>
+						<c:set var="className" value="notice_${dto.boardNotice}"/>
+						<tr class="${className}">
+							<td>${dto.boardNotice}</td>
 							<td>${dto.boardNum}</td>
-							<td>
-								<a href="${contextPath}/user/board/goBoardInside?boardNum=${dto.boardNum}
-								&cafeId=${cafeId}&boardMenuNum=${dto.boardMenuNum}">
+							<td class="${className}">
+								<a href="${contextPath}/user/board/goBoardInside?boardNum=${dto.boardNum}&cafeId=${cafeId}&boardMenuNum=${dto.boardMenuNum}">
 								${dto.boardTitle}</a>
 							</td>
-							<td>${dto.userId}</td>
+							<td>${dto.cafeUserNickname}</td>
 							<td>${dto.boardSaveDate}</td>
 							<td>${dto.hit}</td>
 						</tr>
 					</c:forEach>
+					</tbody>
 				</table>
 				
 		      </div>

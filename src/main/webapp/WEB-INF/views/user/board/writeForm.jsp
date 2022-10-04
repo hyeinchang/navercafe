@@ -11,13 +11,24 @@
 		          <span>카페 글쓰기</span>
 		        </h4>
 		      </div>
-		      <br>
+		    
 		      <div class="col-lg-8 col-md-8 col-sm-8 clearfix">
 		      	<form class="contact-form" name="writeBoardForm" role="form" action="contactform/contactform.php" method="post">
 		      		<input type="hidden" name="cafeId" value="${_cafeDTO.cafeId}">
 					<input type="hidden" name="userId" value="${_cafeDTO.loginId}">
 					
 		            <div class="form-group">
+		            <c:if test="${_cafeDTO.isCafeManager eq 'true'}">
+		            	 <div style="text-align:right;">
+			              	<label>
+			              		<input type="checkbox" name="boardNoticeCheck" value="Y"> 공지글
+			              		<input type="hidden" name="boardNotice" value="N">
+			              	</label>
+		            	</div>
+		            </c:if>
+		            <c:if test="${_cafeDTO.isCafeManager ne 'true'}">
+		           	<input type="hidden" name="boardNotice" value="N">
+		            </c:if>
 		            <c:choose>
 		              <c:when test="${_cafeDTO.menuDTO.boardMenuNum eq null ||  _cafeDTO.menuDTO.boardMenuNum == 0}">
 		              <select class="form-control" name="boardMenuNum" 
@@ -39,7 +50,7 @@
 		              	data-length="1~200" data-format="" readonly value="${_cafeDTO.menuDTO.boardMenuName}">
 		              </c:otherwise>
 		            </c:choose>
-		             
+		              
 		              <div class="validate"></div>
 		            </div>
 		           
@@ -127,7 +138,11 @@
 		var boardMenuNum = form.boardMenuNum;
 		var title = form.boardTitle;
 		var titleLength = title.value.getBytes();
+		var boardNoticeCheck = form.boardNoticeCheck;
 		
+		if(boardNoticeCheck && boardNoticeCheck.checked) {
+			form.boardNotice.value = 'Y';
+		}
 
 		if(boardMenuNum.value == '') {
 			alert('게시판을 선택해주십시오.');
