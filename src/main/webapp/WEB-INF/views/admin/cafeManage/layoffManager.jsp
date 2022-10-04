@@ -28,8 +28,10 @@
 					$('#searchResult').text(result.substring(0, result.length-1));
 					if(result.substring(result.length, result.length-1) == 1) {
 						$('#notice').text('님은 우리카페의 회원입니다!')
+						$('#disableFlag').val('1');
 					} else {
 						$('#notice').text('님은 우리카페의 회원이 아닙니다.')
+						$('#disableFlag').val('0');
 					}
 				},
 				error : function(request,status,error) {
@@ -52,7 +54,6 @@
 					if(result.substring(result.length, result.length-1) == 1) {
 						$('#disableFlag').val('1');
 						$('#notice').text('님은 우리카페의 회원입니다!');
-						console.log('작동')
 					} else {
 						$('#notice').text('님은 우리카페의 회원이 아닙니다.');
 						$('#disableFlag').val('0');
@@ -69,7 +70,7 @@
 	function submitf() {
 		var flag = $('#disableFlag').val()
 		console.log(flag)
-		if( flag == 0 ) {
+		if( Number(flag) == 0 ) {
 			alert('매니저를 위임할 멤버를 검색 및 선택해주세요')
 		} else {
 			$('#f1').submit();
