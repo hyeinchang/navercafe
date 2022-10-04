@@ -134,6 +134,31 @@ public class FileUtils {
 		return fileResult;
 	}
 	
+	// 디렉토리 삭제(삭제 안됨)
+	public FileResult deleteDirectory(String directory) {
+		FileResult fileResult = new FileResult();
+		
+		try {
+			String uploadPath = getUploadPath(directory);
+				
+			if(checkDirectory(uploadPath)) {
+				File deleteDir = new File(uploadPath);
+				File[] children = deleteDir.listFiles();
+				
+				for(File f:children) {
+					org.apache.commons.io.FileUtils.deleteDirectory(f);
+				}
+				
+				org.apache.commons.io.FileUtils.deleteDirectory(deleteDir);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+			fileResult.setState(fileResult.FAIL);
+		}
+		
+		return fileResult;
+	}
+
 	
 	// 파일 다중 업로드
 	public FileResult uploadFile(MultipartHttpServletRequest multiRequest, String directory, boolean onlyFile) {
