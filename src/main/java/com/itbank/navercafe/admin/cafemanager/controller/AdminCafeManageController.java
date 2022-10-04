@@ -28,7 +28,9 @@ import com.itbank.navercafe.user.cafe.service.CafeService;
 @RequestMapping("admin")
 public class AdminCafeManageController {
 	
-	@Autowired AdminCafeManagerService acms;
+	@Autowired 
+	AdminCafeManagerService acms;
+	
 	@Autowired
 	private CafeService cafeService;
 	
@@ -121,13 +123,13 @@ public class AdminCafeManageController {
 	@GetMapping(value="searchId", produces="application/json; charset=utf8")
 	@ResponseBody
 	public String searchId(String id, String cafeId) {
-		return acms.searchId(id, cafeId);
+		return cafeManagerService.searchId(id, cafeId);
 	}
 	
 	@GetMapping(value="searchNickname", produces="application/json; charset=utf8")
 	@ResponseBody
 	public String searchNickname(String nickname, String cafeId) {
-		return acms.searchNickname(nickname, cafeId);
+		return cafeManagerService.searchNickname(nickname, cafeId);
 	}
 	
 	@PostMapping("changeManager")

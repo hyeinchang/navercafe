@@ -17,6 +17,7 @@
         	<input type="hidden" name="userIdCheck" value="N">
         	<h5 class="title">회원 기본 정보</h5>
         	<div class="infoLine">
+        		<input type="hidden" name="status" id="status" value="NO">
         		<label for="id" class="infoLabel">아이디 <span class="required">*</span></label>
           		<input type="text" name="id" id="id" class="form-control-inline" placeholder="아이디를 입력해주십시오."
           			onchange="changeUserIdCheckFlag()" onkeypress="if(event.keyCode == 13)checkUserId()">

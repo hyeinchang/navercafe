@@ -2,6 +2,8 @@ package com.itbank.navercafe.user.board.service;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 import org.springframework.ui.Model;
 
@@ -11,11 +13,12 @@ import com.itbank.navercafe.user.menu.dto.MenuDTO;
 
 
 public interface BoardService {
-	//전체목록인데 수영이형이랑 상의.
-	public ArrayList<BoardExtendDTO> getBoardList(MenuDTO menuDTO);
-	
+
 	//게시글 가져오기
-	public BoardDTO getUserBoard(int boardNum, MenuDTO menuDTO, Model model,int pageNum);
+	public BoardDTO getUserBoard(int boardNum,int boardMenuNum, Model model,int pageNum, String cafeId,int next,int preview);
+
+	public ArrayList<BoardExtendDTO> getBoardList(MenuDTO menuDTO);
+
 	
 	//조회수
 	public void hit(int boardNum,int num);
@@ -27,7 +30,7 @@ public interface BoardService {
 	public void likeViewChk(int boardNum,String userId,Model model);
 	
 	//인기글 리스트
-	public void topList(Model model);
+	public void topList(Model model,String cafeId);
 	
 	//파일테이블리스트
 	public void getFileList(Model model);

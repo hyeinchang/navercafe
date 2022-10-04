@@ -24,6 +24,13 @@ public class AdminCafeManagerServiceImpl implements AdminCafeManagerService{
 		return message;
 	}
 	
+	AdminCafeManagerMapper cafeManagerMapper;
+
+	@Override
+	public int updateBasicInfo(CafeDTO cafeDTO) throws Exception {
+		return cafeManagerMapper.updateBasicInfo(cafeDTO);
+	}
+
 	@Override
 	public String changeManager(String cafeId, String searchResult) {
 		String oldManager = amsMapper.getManagerId(cafeId);
@@ -53,7 +60,7 @@ public class AdminCafeManagerServiceImpl implements AdminCafeManagerService{
 		Map<String, String> map = new HashMap<>();
 		map.put("cafeId", cafeId);
 		map.put("userId", id);
-		int result = mapper.searchId(map);
+		int result = cafeManagerMapper.searchId(map);
 		
 		if(result == 1) {
 			return id+1;
@@ -67,7 +74,7 @@ public class AdminCafeManagerServiceImpl implements AdminCafeManagerService{
 		Map<String, String> map = new HashMap<>();
 		map.put("cafeId", cafeId);
 		map.put("nickname", nickname);
-		int result = mapper.searchNickname(map);
+		int result = cafeManagerMapper.searchNickname(map);
 		
 		if(result == 1) {
 			return nickname+1;
@@ -76,8 +83,4 @@ public class AdminCafeManagerServiceImpl implements AdminCafeManagerService{
 		}
 	}
 
-	@Override
-	public int updateBasicInfo(CafeDTO cafeDTO) throws Exception {
-		return mapper.updateBasicInfo(cafeDTO);
-	}
 }

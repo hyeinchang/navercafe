@@ -88,7 +88,6 @@
 		$('#myTable_length').prepend('<button type="button" id="writeBtn" class="boardBtn">글쓰기</button>');
 		
 		var writeBtn = document.getElementById('writeBtn');
-
 		writeBtn.onclick = goWriteForm;
 	});
 </script>
@@ -148,4 +147,4 @@
 		form.action = '${contextPath}/user/board/writeForm';
 		form.submit();
 	}
-</script>	      
+</script>

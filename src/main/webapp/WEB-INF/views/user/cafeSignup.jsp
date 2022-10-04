@@ -35,7 +35,6 @@
 								<div style="position: relative; display: inline-block; margin: 0; padding: 0;">
 									<input class="input_text" type="text" placeholder="닉네임" id="cafeUserNickname" name="cafeUserNickname" onkeyup="idOverlap()">
 									<span id="confirm"></span>
-									<button type="button" class="btn_close"></button>
 								</div>
 							</div>
 						</div>
@@ -110,10 +109,15 @@ function idOverlap(){
 		dataType : "text",
 		success : function(data){
 			if(data=="OK"){
-				confirm.style.color="#0000ff";
-				confirm.innerHTML = "사용 가능한 닉네임 입니다.";
-				$('input[name=status]').attr('value',"OK");
-				
+				if(idCheck==""){
+					confirm.style.color="#ff0000";
+					confirm.innerHTML = "사용 불가능한 닉네임 입니다.";
+					$('input[name=status]').attr('value',"NO");
+				}else{
+					confirm.style.color="#0000ff";
+					confirm.innerHTML = "사용 가능한 닉네임 입니다.";
+					$('input[name=status]').attr('value',"OK");
+				}
 			}else{
 				confirm.style.color="#ff0000";
 				confirm.innerHTML = "사용 불가능한 닉네임 입니다.";
@@ -121,7 +125,8 @@ function idOverlap(){
 			}
 		},
 		error : function(){
-			//alert("에러ㅓㅓ")
+			alert("닉네임을 확인해주세요")
+
 		}
 	});
 }

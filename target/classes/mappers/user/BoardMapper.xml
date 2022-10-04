@@ -67,7 +67,7 @@
 		<result property="upCutName" column="up_cut_name"/>
 	</resultMap>
 	
-	<!-- //전체목록인데 수영이형이랑 상의. -->
+
 	<select id="getBoardList" resultMap="boardExtend">
 		<![CDATA[
 	        SELECT ROWNUM rn, boardData.*, grade.cut_name, upData.up_cut_name, upData.up_cafe_user_grade FROM
@@ -112,6 +112,10 @@
 		select count(*) from project_board where board_menu_num=#{boardMenuNum}
 	</select>
 	
+	<select id="getBoardNumList" resultMap="project_board">
+		select * from project_board where board_menu_num=#{boardMenuNum}
+	</select>
+	
 	<!-- 조회수 올려주는애 -->
 	<update id="hitUp">
 		update project_board set hit = hit+1 where board_num=#{boardNum}
@@ -140,10 +144,12 @@
 	
 	<!-- 카페 인기글 -->
 	<select id="topList" resultType="HashMap">
-		select B.board_num,B.board_title,B.board_likes,B.user_id,
-		C.cafe_user_nickname,C.cafe_user_image_num
-		from project_board B inner join project_cafe_member C on B.user_id = C.user_id
-		order by B.board_likes desc
+		select boardMenu.cafe_id, board.* from 
+		(select * from project_board_type where cafe_id = #{cafeId}) boardMenu
+		inner join
+		(select *from project_board B inner join project_cafe_member C 
+        on B.user_id = C.user_id where C.cafe_id=#{cafeId}) board
+		on boardMenu.board_menu_num = board.board_menu_num order by board_likes desc
 	</select>
 	
 	<!--보드 타입 정보 가져오기  -->

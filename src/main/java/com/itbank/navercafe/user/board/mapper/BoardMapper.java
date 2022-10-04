@@ -14,7 +14,8 @@ import com.itbank.navercafe.user.menu.dto.MenuDTO;
 
 
 public interface BoardMapper {
-	//전체목록인데 수영이형이랑 상의.
+
+
 	public ArrayList<BoardExtendDTO> getBoardList(MenuDTO menuDTO);
 	//보드 넘에 따른 게시물
 	public BoardDTO getUserBoard(int boardNum);
@@ -36,7 +37,7 @@ public interface BoardMapper {
 	public void deleteLike(@Param("boardNum")int boardNum,@Param("userId")String userId);
 	
 	//인기글
-	public List<HashMap<String, Object>> topList();
+	public List<HashMap<String, Object>> topList(String cafeId);
 	
 	//보드 타입 가져오기
 	public MenuDTO getBoardMenuType(int boardMenuNum);
@@ -47,8 +48,13 @@ public interface BoardMapper {
 	(@Param("boardMenuNum")int boardMenuNum,@Param("cafeId")String cafeId,
 			@Param("start") int start,@Param("end")int end);
 	
+
+	//보드메모넘을 가지고 있는 보드 리스트
+	public ArrayList<BoardDTO>getBoardNumList(int boardMenuNum);
+
 	public int insertBoard(BoardDTO boardDTO) throws Exception;
 	
 	public int checkGradeBoard(BoardExtendDTO boardExtDTO) throws Exception;
+
 	
 }
