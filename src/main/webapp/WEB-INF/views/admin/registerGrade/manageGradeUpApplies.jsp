@@ -24,7 +24,7 @@ $(document).ready(function () {
 	"columnDefs": [
         { orderable: false, "width": "10px", "targets": 0 },
         { orderable: true, "targets": 1 }
-      ] ,
+      ],
     "order": [[ 3, 'desc' ]], 	// 방문일 기준 기본 정렬값 desc 설정 
     "autoWidth": false,
     language : {
@@ -131,10 +131,10 @@ $(document).ready(function () {
 					<div class="card-body">
 						<ul class="nav nav-pills nav-fill">
 							<li class="nav-item"> 
-								<a class="nav-link" href="${contextPath }/admin/manageMembersGrade">등급 조건 관리</a> 
+								<a class="nav-link" href="${contextPath }/admin/manageMembersGrade?cafeId=${cafeId}">등급 조건 관리</a> 
 							</li>
 							<li class="nav-item"> 
-								<a class="nav-link active" aria-current="page" href="${contextPath }/admin/manageGradeUpApplies">등급 신청 관리</a> 
+								<a class="nav-link active" aria-current="page" href="${contextPath }/admin/manageGradeUpApplies?cafeId=${cafeId}">등급 신청 관리</a> 
 							</li>
 						</ul>
 					</div>
@@ -168,15 +168,15 @@ $(document).ready(function () {
         <tbody>
         <c:forEach var="dto" items="${list }">
             <tr>
-                <td align="center"><input type="checkbox" class="registerBan-cb-item" name="temp" value="${dto.userName }"></td>
-                <td>${dto.userName }</td>
-                <td>${dto.userLevel }</td>
-                <td>${dto.userPoint }</td>
-                <td>${dto.userEmail }</td>
-                <td>${dto.userId }</td>
-                <td>2121212</td>
-                <td>${dto.userLevel }</td>
-                <td>${dto.userLevel }</td>
+                <td align="center"><input type="checkbox" class="registerBan-cb-item" name="temp" value="${dto.userId}+${dto.boardNum }"></td>
+                <td>${dto.userId} (${dto.cafeUserNickname })</td>
+                <td>${dto.upCutName }</td>
+                <td>${dto.cutName }</td>
+                <td>${dto.cafeUserVisit }</td>
+                <td>${dto.cafeUserWrite }</td>
+                <td>${dto.cafeUserReply }</td>
+                <td>${dto.cafeUserRegdate }</td>
+                <td>${dto.boardSavedate }</td>
             </tr>
         </c:forEach>
         </tbody>
@@ -197,7 +197,9 @@ $(document).ready(function () {
     
 		<form action="gradeUpMembers" id="f-gradeUp" method="post">
 			<input type="hidden" value="" name="gradeUpMembers" id="gradeUpMembers">
+			<input type="hidden" value="${cafeId }" name="cafeId">
 		</form>	
 		<form action="gradeRejectMembers" id="f-gradeReject" method="post">
 			<input type="hidden" value="" name="gradeRejectMembers" id="gradeRejectMembers">
+			<input type="hidden" value="${cafeId }" name="cafeId">
 		</form>

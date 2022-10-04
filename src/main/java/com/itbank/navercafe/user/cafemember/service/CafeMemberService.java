@@ -1,19 +1,10 @@
 package com.itbank.navercafe.user.cafemember.service;
 
-import java.util.ArrayList;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-
-import com.itbank.navercafe.comon.file.dto.FileDTO;
-
-import com.itbank.navercafe.user.cafejoin.dto.CafeJoinDTO;
-
+import com.itbank.navercafe.user.cafemember.dto.CafeJoinAnswerDTO;
 import com.itbank.navercafe.user.cafemember.dto.CafeMemberDTO;
-import com.itbank.navercafe.user.cafemember.dto.TestFileDTO;
 
 public interface CafeMemberService {
 
@@ -37,10 +28,8 @@ public interface CafeMemberService {
 	public CafeMemberDTO getSessionUserInfo(String cafeId,String userId);
 	//게시글 더 보러가기
 	public void getUserViewList(String cafeId,String userId,Model model);
-
 	
-
+	public int getUserImageSeq() throws Exception;
 	
-
-
+	public int insertJoinAnswer(CafeJoinAnswerDTO cafeJoinAnswerDTO) throws Exception;
 }

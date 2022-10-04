@@ -1,0 +1,193 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itbank.navercafe.user.cafe.mapper.CafeMapper">
+	<resultMap type="com.itbank.navercafe.user.cafe.dto.CafeDTO" id="cafe">
+		<id column="CAFE_ID" property="cafeId"/>
+        <result column="CAFE_NAME" property="cafeName"/>
+        <result column="USER_ID" property="userId"/>
+        <result column="CAFE_EXPLANATION" property="cafeExplanation"/>
+        <result column="CAFE_TITLE_NUM" property="cafeTitleNum"/>
+        <result column="CAFE_FRONT" property="cafeFront"/>
+        <result column="CAFE_SKIN" property="cafeSkin"/>
+        <result column="CAFE_LAYOUT" property="cafeLayout"/>
+        <result column="CAFE_JOIN_APPLY" property="cafeJoinApply"/>
+        <result column="CAFE_JOIN_GENDER" property="cafeJoinGender"/>
+        <result column="CAFE_JOIN_AGE" property="cafeJoinAge"/>
+        <result column="CAFE_ICON_NUM" property="cafeIconNum"/>
+        <result column="CAFE_JOIN_INFORMATION" property="cafeJoinInformation"/>
+        <result column="CAFE_REGDATE" property="cafeRegdate"/>
+        <result column="IS_CAFE_MEMBER" property="isCafeMember"/>
+        <result column="IS_CAFE_MANAGER" property="isCafeManager"/>
+        <result column="LOGIN_ID" property="loginId"/>
+	</resultMap>
+	
+	<resultMap type="com.itbank.navercafe.user.cafe.dto.CafeJoinQuestionDTO" id="cafeQuestion">
+        <id column="CAFE_QUESTION_NUM" property="cafeQuestionNum"/>
+        <result column="CAFE_ID" property="cafeId"/>
+        <result column="CAFE_QUESTION_CONTENT" property="cafeQuestionContent"/>
+    </resultMap>
+    
+	<insert id="insertCafe">
+		<![CDATA[
+			INSERT INTO PROJECT_CAFE_INFO
+				(CAFE_ID, CAFE_NAME, USER_ID, CAFE_EXPLANATION, 
+				CAFE_TITLE_NUM, CAFE_FRONT, CAFE_SKIN, CAFE_LAYOUT, 
+				CAFE_JOIN_APPLY, CAFE_JOIN_GENDER, CAFE_JOIN_AGE, CAFE_JOIN_INFORMATION, 
+				CAFE_ICON_NUM, CAFE_REGDATE)
+			VALUES
+				(#{cafeId}, #{cafeName}, #{userId}, #{cafeExplanation},
+				 #{cafeTitleNum}, #{cafeFront}, #{cafeSkin}, #{cafeLayout},
+				 #{cafeJoinApply}, #{cafeJoinGender}, #{cafeJoinAge}, #{cafeJoinInformation},
+				 #{cafeIconNum}, sysdate)
+		]]>
+	</insert>
+	
+	<select id="checkCafeId" resultType="Integer">
+		<![CDATA[
+			SELECT COUNT(*) ID_COUNT FROM PROJECT_CAFE_INFO WHERE CAFE_ID = #{cafeId}
+		]]>
+	</select>
+	
+	<select id="getIconSeq" resultType="Integer">
+		<![CDATA[
+			SELECT cafe_icon_num_seq.nextval seq from dual
+		]]>
+	</select>
+	
+	<select id="getTitleSeq" resultType="Integer">
+		<![CDATA[
+			SELECT cafe_title_num_seq.nextval seq from dual
+		]]>
+	</select>
+		
+	<select id="selectCafeList" resultMap="cafe">
+		<![CDATA[
+			SELECT * FROM
+				(SELECT ROWNUM RN, CAFE.* FROM
+					(SELECT * FROM PROJECT_CAFE_INFO WHERE CAFE_NAME LIKE '%' || #{cafeName} || '%' ORDER BY CAFE_REGDATE DESC) CAFE
+				)
+			WHERE RN BETWEEN #{startRow} AND #{endRow}
+		]]>
+	</select>
+	
+	<select id="selectCafeListTotalCount" resultType="Integer">
+		<![CDATA[
+			SELECT COUNT(*) TOTAL_COUNT 
+			FROM
+			(SELECT * FROM PROJECT_CAFE_INFO WHERE CAFE_NAME LIKE '%' || #{cafeName} || '%') CAFE
+		]]>
+	</select>
+	
+	<select id="selectCafe" resultMap="cafe">
+		<![CDATA[
+			SELECT CAFE.*,
+				NVL2(CAFE_MEMBER.USER_ID, 'true', 'false') IS_CAFE_MEMBER,
+				(CASE WHEN CAFE.USER_ID = #{loginId} THEN 'true' ELSE 'false' END) IS_CAFE_MANAGER,
+				#{loginId} LOGIN_ID
+			FROM 
+				(SELECT * FROM PROJECT_CAFE_INFO WHERE CAFE_ID = #{cafeId}) CAFE
+			LEFT JOIN
+				(SELECT CAFE_ID, USER_ID FROM PROJECT_CAFE_MEMBER WHERE USER_ID = #{loginId}) CAFE_MEMBER
+			ON CAFE.CAFE_ID = CAFE_MEMBER.CAFE_ID
+		]]>
+	</select>
+	
+	<insert id="insertCafeJoinQuestion">
+		<![CDATA[
+			INSERT INTO PROJECT_JOIN_QUESTION
+				(CAFE_QUESTION_NUM, CAFE_ID, CAFE_QUESTION_CONTENT)
+			VALUES
+				(#{cafeQuestionNum}, #{cafeId}, #{cafeQuestionContent})
+		]]>
+	</insert>
+	
+	<select id="getDayTotalBoardCount" resultType="Integer">
+		<![CDATA[
+			SELECT COUNT(*) count
+			FROM 
+			(SELECT * FROM project_board_type WHERE cafe_id = #{cafeId}) boardMenu
+			INNER JOIN
+			(SELECT * FROM project_board  WHERE  TO_CHAR(board_savedate, 'YYYYMMDD') =  TO_CHAR(sysdate, 'YYYYMMDD')) board
+			ON boardMenu.board_menu_num = board.board_menu_num
+		]]>
+	</select>
+	
+	<select id="getDayTotalBoardHit" resultType="Integer">
+		<![CDATA[
+			SELECT NVL(SUM(hit), 0) count
+			FROM 
+			(SELECT * FROM project_board_type WHERE cafe_id = #{cafeId}) boardMenu
+			INNER JOIN
+			(SELECT * FROM project_board WHERE TO_CHAR(board_savedate, 'YYYYMMDD') =  TO_CHAR(sysdate, 'YYYYMMDD')) board
+			ON boardMenu.board_menu_num = board.board_menu_num
+		]]>
+	</select>
+	
+	<select id="getDayTotalReplyCount" resultType="Integer">
+		<![CDATA[
+			SELECT COUNT(*) count
+			FROM 
+			(SELECT * FROM project_board_type  WHERE cafe_id = #{cafeId}) boardMenu
+			INNER JOIN
+			(SELECT * FROM project_board WHERE TO_CHAR(board_savedate, 'YYYYMMDD') =  TO_CHAR(sysdate, 'YYYYMMDD')) board
+			ON boardMenu.board_menu_num = board.board_menu_num
+			INNER JOIN project_reply reply
+			ON board.board_num = reply.board_num
+		]]>
+	</select>
+	
+	<select id="getTotalCafeMemberCount" resultType="Integer">
+		<![CDATA[
+			SELECT COUNT(*) count FROM project_cafe_member WHERE cafe_id = #{cafeId}
+		]]>
+	</select>
+	
+	<select id="getTotalBoardCount" resultType="Integer">
+		<![CDATA[
+			SELECT COUNT(*) count
+			FROM 
+			(SELECT * FROM project_board_type WHERE cafe_id = #{cafeId}) boardMenu
+			INNER JOIN
+			(SELECT * FROM project_board) board
+			ON boardMenu.board_menu_num = board.board_menu_num
+		]]>
+	</select>
+	
+	<select id="getTotalBoardHit" resultType="Integer">
+		<![CDATA[
+			SELECT NVL(SUM(hit), 0) count
+			FROM 
+			(SELECT * FROM project_board_type WHERE cafe_id = #{cafeId}) boardMenu
+			INNER JOIN
+			(SELECT * FROM project_board) board
+			ON boardMenu.board_menu_num = board.board_menu_num
+		]]>
+	</select>
+	
+	<select id="getTotalReplyCount" resultType="Integer">
+		<![CDATA[
+			SELECT COUNT(*) count
+			FROM 
+			(SELECT * FROM project_board_type  WHERE cafe_id = #{cafeId}) boardMenu
+			INNER JOIN
+			(SELECT * FROM project_board) board
+			ON boardMenu.board_menu_num = board.board_menu_num
+			INNER JOIN project_reply reply
+			ON board.board_num = reply.board_num
+		]]>
+	</select>
+	
+	<insert id="insertMemberGrade">
+		<![CDATA[
+			INSERT INTO project_member_grade
+				(CAFE_ID, CAFE_USER_GRADE, CUT_NAME, CUT_DESC, CUT_TYPE)
+			VALUES(#{cafeId}, #{cafeUserGrade}, #{cutName}, #{cutDesc}, #{cutType})
+		]]>
+	</insert>
+	
+	<select id="selectQuestionList" resultMap="cafeQuestion">
+		<![CDATA[
+			SELECT * FROM project_join_question WHERE cafe_id = #{cafeId} ORDER BY cafe_question_num
+		]]>
+	</select>
+</mapper>

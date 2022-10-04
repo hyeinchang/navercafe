@@ -6,21 +6,21 @@
   <section class="section1" style="padding: 30px 0 0 0;">
     <div class="container clearfix">
     <c:choose>
-    <c:when test="${cafeDTO.titleNum eq null || cafeDTO.titleNum <= 0}">
+    <c:when test="${_cafeDTO.cafeTitleNum eq null || _cafeDTO.cafeTitleNum <= 0}">
       <div class="default-title">
 	  	<div class="site-title">
             <a href="${contextPath}" title="">
               <h4>Ca<span>fe</span></h4>
             </a>
           </div>
-		<h1>${cafeDTO.cafeName}</h1>
-		<a href="${address}${contextPath}/user/main?cafeId=${cafeDTO.cafeId}">${address}${contextPath}/main?cafeId=${cafeDTO.cafeId}</a>
+		<h1>${_cafeDTO.cafeName}</h1>
+		<a href="${address}${contextPath}/user/main?cafeId=${_cafeDTO.cafeId}">${address}${contextPath}/main?cafeId=${_cafeDTO.cafeId}</a>
 	  </div>
 	</c:when>  
 	<c:otherwise>
 	  <div class="setting-title">
-		<a href="${contextPath}/user/main?cafeId=${cafeDTO.cafeId}">
-		  <img src="${contextPath}/file/download?titleNum=${cafeDTO.titleNum}">
+		<a href="${contextPath}/user/main?cafeId=${_cafeDTO.cafeId}">
+		  <img src="${contextPath}/file/download?cafeTitleNum=${_cafeDTO.cafeTitleNum}">
 		</a>
 	  </div>
 	</c:otherwise>

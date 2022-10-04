@@ -1,32 +1,23 @@
 package com.itbank.navercafe.user.memo.service;
 
-import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.Model;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.itbank.navercafe.comon.file.FileUtils;
-import com.itbank.navercafe.comon.file.TestFileService;
-import com.itbank.navercafe.comon.file.dto.FileDTO;
-import com.itbank.navercafe.comon.file.dto.FileResult;
-import com.itbank.navercafe.comon.file.service.FileService;
-import com.itbank.navercafe.user.cafemember.dto.TestFileDTO;
+import com.itbank.navercafe.common.file.FileUtils;
+import com.itbank.navercafe.common.file.dto.FileDTO;
+import com.itbank.navercafe.common.file.dto.FileResult;
+import com.itbank.navercafe.common.file.service.FileService;
 import com.itbank.navercafe.user.cafemember.mapper.CafeMemberMapper;
 import com.itbank.navercafe.user.memo.dto.MemoDTO;
 import com.itbank.navercafe.user.memo.dto.MemoReplyDTO;
 import com.itbank.navercafe.user.memo.mapper.MemoMapper;
-import com.itbank.navercafe.user.reply.dto.ReplyDTO;
 
 
 @Service

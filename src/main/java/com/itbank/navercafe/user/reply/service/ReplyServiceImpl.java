@@ -1,23 +1,18 @@
 package com.itbank.navercafe.user.reply.service;
 
-import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.itbank.navercafe.comon.file.FileUtils;
-import com.itbank.navercafe.comon.file.dto.FileDTO;
-import com.itbank.navercafe.comon.file.dto.FileResult;
-import com.itbank.navercafe.comon.file.service.FileService;
+import com.itbank.navercafe.common.file.FileUtils;
+import com.itbank.navercafe.common.file.dto.FileDTO;
+import com.itbank.navercafe.common.file.dto.FileResult;
+import com.itbank.navercafe.common.file.service.FileService;
 import com.itbank.navercafe.user.cafemember.mapper.CafeMemberMapper;
-
 import com.itbank.navercafe.user.reply.dto.ReplyDTO;
 import com.itbank.navercafe.user.reply.mapper.ReplyMapper;
 

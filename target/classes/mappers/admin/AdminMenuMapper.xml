@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.itbank.navercafe.admin.menu.mapper.AdminMenuMapper">
+	<resultMap type="com.itbank.navercafe.admin.menu.dto.AdminMenuDTO" id="adminMenu">
+        <id column="BOARD_MENU_NUM" property="boardMenuNum"/>
+        <result column="BOARD_MENU_NAME" property="boardMenuName"/>
+        <result column="BOARD_MENU_DESC" property="boardMenuDesc"/>
+       	<result column="BOARD_MENU_TYPE" property="boardMenuType"/>
+        <result column="BOARD_WRITE_AUTH" property="boardWriteAuth"/>
+        <result column="BOARD_REPLY_AUTH" property="boardReplyAuth"/>
+        <result column="BOARD_READ_AUTH" property="boardReadAuth"/>
+        <result column="CAFE_ID" property="cafeId"/>
+        <result column="BOARD_ORDER" property="boardOrder"/>
+        <result column="BOARD_LIKES_FLAG" property="boardLikesFlag"/>
+        <result column="BOARD_REPLY_FLAG" property="boardReplyFlag"/>
+        <result column="BOARD_PREFIXES_FLAG" property="boardPrefixesFlag"/>
+        <result column="BOARD_PUBLIC_FLAG" property="boardPublicFlag"/>
+    </resultMap>
+    
+    <insert id="insertBoardMenu">
+    	<![CDATA[
+    		INSERT INTO PROJECT_BOARD_TYPE
+    			(BOARD_MENU_NUM, BOARD_MENU_NAME, BOARD_MENU_DESC, BOARD_MENU_TYPE,
+    			BOARD_WRITE_AUTH, BOARD_REPLY_AUTH, BOARD_READ_AUTH,
+    			BOARD_LIKES_FLAG, BOARD_REPLY_FLAG, BOARD_PREFIXES_FLAG, BOARD_PUBLIC_FLAG,
+    			CAFE_ID, BOARD_ORDER)
+    		VALUES
+    			(PROJECT_BOARD_TYPE_SEQ.NEXTVAL, #{boardMenuName}, #{boardMenuDesc}, #{boardMenuType},
+    			#{boardWriteAuth}, #{boardReplyAuth}, #{boardReadAuth},
+    			#{boardLikesFlag}, #{boardReplyFlag}, #{boardPrefixesFlag}, #{boardPublicFlag},
+    			#{cafeId}, #{boardOrder})	
+    	]]>
+    </insert>
+    
+    <update id="updateBoardMenu">
+    	<![CDATA[
+    		UPDATE PROJECT_BOARD_TYPE SET
+	    		BOARD_MENU_NAME = #{boardMenuName}, BOARD_MENU_DESC = #{boardMenuDesc},
+	    		BOARD_WRITE_AUTH = #{boardWriteAuth}, BOARD_REPLY_AUTH = #{boardReplyAuth}, BOARD_READ_AUTH = #{boardReadAuth},
+	    		BOARD_LIKES_FLAG = #{boardLikesFlag}, BOARD_REPLY_FLAG = #{boardReplyFlag}, BOARD_PREFIXES_FLAG = #{boardPrefixesFlag}, BOARD_PUBLIC_FLAG = #{boardPublicFlag},
+	    		BOARD_ORDER = #{boardOrder}
+    		WHERE BOARD_MENU_NUM = #{boardMenuNum}
+    	]]>
+    </update>
+    
+    <select id="selectBoardMenuList" resultMap="adminMenu">
+    	<![CDATA[
+    		SELECT * FROM PROJECT_BOARD_TYPE WHERE CAFE_ID = #{cafeId} ORDER BY BOARD_ORDER
+    	]]>
+    </select>
+    
+    <select id="selectBoardMenu" resultMap="adminMenu">
+    	<![CDATA[
+    		SELECT * FROM PROJECT_BOARD_TYPE WHERE BOARD_MENU_NUM = #{boardMenuNum}
+    	]]>
+    </select>
+    
+    <delete id="deleteBoardMenu">
+    	<![CDATA[
+    		DELETE FROM PROJECT_BOARD_TYPE WHERE BOARD_MENU_NUM = #{boardMenuNum}
+    	]]>
+    </delete>
+    
+     <delete id="deleteBoardList">
+    	<![CDATA[
+    		DELETE FROM PROJECT_BOARD WHERE BOARD_MENU_NUM = #{boardMenuNum}
+    	]]>
+    </delete>
+   
+</mapper>
+

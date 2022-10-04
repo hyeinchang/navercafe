@@ -19,8 +19,8 @@
 		<result property="cafeUserStatus" column="cafe_user_status"/>
 		<result property="cafeUserEmailReceieve" column="cafe_user_email_receieve"/>
 		<result property="cafeUserGenderReveal" column="cafe_user_gender_reveal"/>
+		<result property="cutName" column="cut_name"/>
 	</resultMap>
-	
 
 
 	<!-- 카페 닉네임 중복검사 -->
@@ -30,8 +30,8 @@
 	</select>
 	<!-- 카페 회원가입 -->
 	<insert id="signup">
-		insert into project_cafe_member(cafe_id,user_id,cafe_user_nickname)
-		values(#{cafeId},#{userId},#{cafeUserNickname})
+		insert into project_cafe_member(cafe_id,user_id,cafe_user_nickname,cafe_user_grade, cafe_user_image_num)
+		values(#{cafeId},#{userId},#{cafeUserNickname},#{cafeUserGrade},#{cafeUserImageNum})
 	</insert>
 	
 	<select id="cafeMembers" resultType="Integer">
@@ -39,7 +39,11 @@
 	</select>
 	
 	<select id="getCafeMember" resultMap="project_cafe_member">
-		select * from project_cafe_member where cafe_id = #{cafeId} and user_id = #{userId}
+		select cafeMember.*, memberGrade.cut_name from 
+			(select * from project_cafe_member where cafe_id = #{cafeId} and user_id = #{userId}) cafeMember
+		left join
+			(select cafe_id, cafe_user_grade, cut_name from project_member_grade) memberGrade
+		on cafeMember.cafe_id = memberGrade.cafe_id and cafeMember.cafe_user_grade = memberGrade.cafe_user_grade
 	</select>
 	
 	<update id="cafeMemberUpdate">
@@ -71,5 +75,15 @@
 	<select id="getUserViewList" resultMap="project_cafe_member">
 		select * from project_cafe_member where user_id=#{userId} and cafe_id=#{cafeId}
 	</select>
+	
+	<select id="getUserImageSeq" resultType="Integer">
+		select CAFE_USER_IMAGE_NUM_SEQ.nextval from dual
+	</select>
 
+	<insert id="insertJoinAnswer">
+		insert into project_join_answers
+			(CAFE_ANSWER_NUM, USER_ID, CAFE_ANSWER_CONTENT, CAFE_ID, CAFE_QUESTION_NUM)
+		values
+			(project_join_answers_seq.nextval, #{userId}, #{cafeAnswerContent}, #{cafeId}, #{cafeQuestionNum})	
+	</insert>
 </mapper>

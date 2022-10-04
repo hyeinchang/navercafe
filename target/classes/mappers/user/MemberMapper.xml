@@ -34,11 +34,4 @@
 		delete project_members where user_id = #{id}
 	</delete>
 	
-
-	
-	
-	
-	
-	
-	
 </mapper>

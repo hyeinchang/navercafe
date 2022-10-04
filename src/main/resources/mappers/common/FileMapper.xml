@@ -1,30 +1,70 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.itbank.navercafe.comon.file.mapper.FileMapper">
-	<resultMap id="file" type="com.itbank.navercafe.comon.file.dto.FileDTO">
-		<id column="fileNum" property="FILE_NUM"/>
-		<result column="fileDirectory" property="FILE_DIRECTORY"/>
-		<result column="fileOrgName" property="FILE_ORG_NAME"/>
-		<result column="fileStoredName" property="FILE_STORED_NAME"/>
-		<result column="boardNum" property="BOARD_NUM"/>
-		<result column="replyNum" property="REPLY_NUM"/>
-		<result column="cafeUserImageNum" property="CAFE_USER_IMAGE_NUM"/>
-		<result column="cafeTitleNum" property="CAFE_TITLE_NUM"/>
-		<result column="memoReplyNum" property="MEMO_REPLY_NUM"/>
-		<result column="cafeIconNum" property="CAFE_ICON_NUM"/>
-		<result column="regdate" property="regdate"/>
 
-	</resultMap>
+<mapper namespace="com.itbank.navercafe.common.file.mapper.FileMapper">
+	<resultMap type="com.itbank.navercafe.common.file.dto.FileDTO" id="file">
+    	<id column="FILE_NUM" property="fileNum"/>
+        <result column="FILE_DIRECTORY" property="fileDirectory"/>
+        <result column="FILE_ORG_NAME" property="fileOrgName"/>
+        <result column="FILE_STORED_NAME" property="fileStoredName"/>
+        <result column="CAFE_ICON_NUM" property="cafeIconNum"/>
+       	<result column="CAFE_TITLE_NUM" property="cafeTitleNum"/>
+		<result column="CAFE_USER_IMAGE_NUM" property="cafeUserImageNum"/>       
+        <result column="BOARD_NUM" property="boardNum"/>
+        <result column="REPLY_NUM" property="replyNum"/>
+        <result column="MEMO_REPLY_NUM" property="memoReplyNum"/>
+        <result column="REGDATE" property="regdate"/>
+    </resultMap>
 	
 	<insert id="insertAttachFile" >
-		<![CDATA[INSERT INTO PROJECT_FILE(FILE_NUM, FILE_DIRECTORY, FILE_ORG_NAME, FILE_STORED_NAME, 
-			BOARD_NUM, REPLY_NUM, CAFE_USER_IMAGE_NUM, CAFE_TITLE_NUM, regdate, MEMO_REPLY_NUM)
-		VALUES(project_file_seq.nextval, #{fileDirectory}, #{fileOrgName}, #{fileStoredName}, 
-			#{boardNum}, #{replyNum}, #{cafeUserImageNum}, #{cafeTitleNum}, sysdate, #{memoReplyNum})]]>
+		<![CDATA[
+			INSERT INTO PROJECT_FILE
+				(FILE_NUM, FILE_DIRECTORY, FILE_ORG_NAME, FILE_STORED_NAME, 
+				CAFE_ICON_NUM, CAFE_TITLE_NUM, CAFE_USER_IMAGE_NUM, BOARD_NUM, REPLY_NUM, MEMO_REPLY_NUM,
+				REGDATE)
+			VALUES
+				(project_file_seq.nextval, #{fileDirectory}, #{fileOrgName}, #{fileStoredName}, 
+				#{cafeIconNum}, #{cafeTitleNum}, #{cafeUserImageNum}, #{boardNum}, #{replyNum}, #{memoReplyNum},
+				sysdate)
+		]]>
 	</insert>
-	<!--임시  -->
+	
+	<select id="selectAttachFile" resultMap="file">
+		<![CDATA[
+			SELECT * FROM PROJECT_FILE WHERE 
+			NVL(CAFE_ICON_NUM, 0) = #{cafeIconNum} AND NVL(CAFE_TITLE_NUM, 0) = #{cafeTitleNum} AND
+			NVL(CAFE_USER_IMAGE_NUM, 0) = #{cafeUserImageNum} AND NVL(BOARD_NUM, 0) = #{boardNum} AND
+			NVL(REPLY_NUM, 0) = #{replyNum} AND NVL(MEMO_REPLY_NUM, 0) = #{memoReplyNum}
+		]]>
+	</select>
+	
+	<select id="selectAttachFile_fileNum" resultMap="file">
+		<![CDATA[
+			SELECT * FROM PROJECT_FILE WHERE FILE_NUM = #{fileNum}
+		]]>
+	</select>
+	
+	<update id="updateAttachFile">
+		<![CDATA[
+			UPDATE PROJECT_FILE SET 
+				FILE_ORG_NAME = #{fileOrgName}, FILE_STORED_NAME = #{fileStoredName}
+			WHERE FILE_NUM = #{fileNum}
+		]]>
+	</update>
+	
+	<delete id="deleteAttachFile">
+		<![CDATA[
+			DELETE FROM PROJECT_FILE SET WHERE FILE_NUM = #{fileNum}
+		]]>
+	</delete>
+	
 	<select id="getFileList" resultMap="file">
-		select * from project_file
+		<![CDATA[
+			SELECT * FROM PROJECT_FILE WHERE 
+			NVL(CAFE_ICON_NUM, 0) = #{cafeIconNum} AND NVL(CAFE_TITLE_NUM, 0) = #{cafeTitleNum} AND
+			NVL(CAFE_USER_IMAGE_NUM, 0) = #{cafeUserImageNum} AND NVL(BOARD_NUM, 0) = #{boardNum} AND
+			NVL(REPLY_NUM, 0) = #{replyNum} AND NVL(MEMO_REPLY_NUM, 0) = #{memoReplyNum}
+		]]>
 	</select>
 </mapper>
 

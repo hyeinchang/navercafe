@@ -1,213 +1,232 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
-    <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <style type="text/css">
-/*//////////////////////////////////   등업 게시판   ////////////////////////////////  */
-.grade-button{background-color: white;color:black; border:1px solid black;}
-.grade-board-list{padding:10px;}
-
-
-.bbp-forum-test-nickname img{width:15%;}
-
-
-.grade-board{display: flex; padding:10px;}
-.grade-one{width:50%;}
-.grade-two{width:50%; text-align: right;}
-.grade-result{padding-top:50px;}
-
-.bbp-forum-test-nickname{float: left;text-align:left;width: 15%;}
-
-.bbp-forum-test-grade,.bbp-forum-test-nowGrade{float: left;text-align:left;width: 12.5%;}
-
-.bbp-forum-test-visit-count,.bbp-forum-test-board-count,
-.bbp-forum-test-reply-count,.bbp-forum-test-joindate,
-.bbp-forum-test-request{float: left;text-align:left;width: 10%;}
-.bbp-forum-test-joindate,.bbp-forum-test-request{
-float: left;text-align:left;width: 15%;
-}
-/* /////////////////////////////////////////    게시판    //////////////////////////////////////// */
-
-li.bbp-forum-info-test,
-li.bbp-topic-title-test {
-	float: left;
-	text-align: center;
-	width: 40%;
-}
-
-li.bbp-forum-info-allBoard,
-li.bbp-topic-title-allBoard{
-	/* float: left; */
-	text-align: left;
-	width: 50%;
-	font-size: 10pt;
-}
-
-li.bbp-forum-topic-count-test{
-	float: left;
-	text-align: center;
-	width: 20%;
-}
-
-.board-title{width:70%;float: left;text-align: left;}
-.board-nickname{width:15%;float: left;text-align: left;}
-.board-date{width:15%;float: left;text-align: left;}
-
-li.bbp-topic-voice-count-test,
-li.bbp-forum-reply-count-test,
-li.bbp-topic-reply-count-test,
-li.bbp-forum-likeCount-test,
-li.bbp-forum-num-test{
-	float: left;
-	text-align: center;
-	width: 10%;
-}
-
-li.bbp-forum-freshness-test,
-li.bbp-topic-freshness-test{
-	text-align: center;
-	float: left;
-	width: 10%;
-}
-/* bbpress 부분 */
-#bbpress-forums li.bbp-header-header{background-color:#141618!important;color:#fff!important;padding:20px!important;}
-
-#bbpress-forums li.bbp-header-content{background-color:white!important;color:black!important;padding:12px!important;
-					border-top: 1px solid #E0E0E0;border-bottom: 1px solid #E0E0E0;}
-#bbpress-forums li.bbp-header-grade-list{background-color:white!important;color:black!important;padding:20px!important;
-					border-top: 1px solid #E0E0E0;border-bottom: 1px solid #E0E0E0;}
-#bbpress-forums ul li ul.forum-titles-test{ padding-bottom: 10px;}
-/*///////////////////////////   컬럼명 부분   //////////////////  */
-#bbpress-forums-test{
-	background: transparent;
-	clear: both;
-	margin-bottom: 0px;
-	overflow: hidden;
-	font-size: 12px;
-}
-/* //////////////////////////////////영역 설정 부분/////////////////////////////////////// */
-
-.board-img{width:90%;}
-
-.more-more{display:flex;}
-.more-one{width:15%;}
-.more-two{width:85%; padding-top:10px; font-size: 15pt;}
-
-.post-meta-test{display: flex;padding-bottom: 10px;}
-.div-one{width:10%;}
-.div-two{width:40%;}
-.div-three{width:50%; text-align:right;padding-top:10px;}
-.memo-div-two{width:40%;padding-top:10px;}
-/* 댓글 쪽 */
-.reply-one{width:50%}
-.reply-two{width:50%; text-align: right;}
-.board-post-desc{
-	padding-left:10%; width:90%;
-}
-.board-post-desc img{
-	width:100%;
-}
-/* ///////////////// 게시물쪽 //////////////// */
-.blog-wrap-test{
-  background: #ffffff;
-  padding: 0;
-  position: relative;
-  display: block;
-  z-index: 1;
-}
-.board-board{border:1px solid silver; padding:10px;}
-
-ul{
-	list-style: none;
-}
-
-
+	/* 필터링 (검색) */
+	div.dataTables_filter {
+		text-align : right !important;
+	}
+	/* 표시 건수수 설정 */
+	div.dataTables_length {
+		text-align : right !important;
+	}
+	/* 페이징 설정*/
+	div.dataTables_paginate {
+		text-align : center !important;
+	}
+	#myTable th, #myTable td {
+		text-align : center !important;
+	}
 </style>
+<script	src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script>
+<script>
+	jQuery(function($) {
+		$("#myTable").DataTable({
+			lengthChange: true,// 표시 건수기능 숨기기
+			searching: true,// 검색 기능 숨기기
+			ordering: true,// 정렬 기능 숨기기
+			info: false,// 정보 표시 숨기기
+			paging: true,// 페이징 기능 숨기기
+			responsive: true, //
+			order : [[0, "desc"]], //0번항목 내림차순 정렬(글번호)
+			// 열 넓이 설정
+			columnDefs: [
+				// visible 숨김, orderable 정렬기능
+				{ orderable: true, 	visible: true,  targets: 0, width: 50 },
+				{ orderable: true, visible: true, targets: 1, width: 50 },
+				{ orderable: true, visible: true, targets: 2, width: 50 },
+				{ orderable: true, visible: true, targets: 3, width: 50 },
+				{ orderable: true, 	visible: true, targets: 4, width: 50 },
+				{ orderable: true, visible: true, targets: 5, width: 50 },
+				{ orderable: true, visible: true, targets: 6, width: 50 },
+				{ orderable: true, 	visible: true, targets: 7, width: 50 }
+			],
+			lengthMenu: [ 5, 10, 15, 20, 30, 40, 50 ],// 표시 건수 단위 설정
+			// 기본 표시 건수를 15건으로 설정
+			displayLength: 15,
+			stateSave: false,// 현재 상태를 보존
+			dom : '<"col-sm-11"f><"col-sm-11"l><"col-sm-6"r><"col-sm-11"t><"col-sm-6"i><"col-sm-11"p>',// 위치 설정값
+			language : { // datatables가 우리나라거 아니라서 한글로 convert해줘야한다.
+				search : '',
+				paginate : {
+					previous : '이전',
+					next : '다음',
+					last : '마지막',
+					first : '처음'
+				},
+				emptyTable : '데이터가 없습니다.',
+				infoEmpty : "데이터 없음",
+				info : '_START_부터  _END_까지  / 총데이터 : _TOTAL_',
+				infoEmpty : '데이터 0 부터 0 까지 0 총데이터',
+				lengthMenu : '_MENU_개씩',
+				loadingRecords : '로딩중..',
+				processing : '작업중..',
+				zeroRecords: "검색결과가 없습니다."
+			}
+		});
+		
+		var table = $('#myTable').DataTable();
+		
+		$('#myInput').on( 'keyup', function () {
+		    table.search( this.value ).draw();
+		} );
+		$('#myTable_filter label').prepend('<select id="select" class="form-control-inline" style="vertical-align:middle;margin-rigth:5px;"></select>');
+		$('#myTable > thead > tr').children().each(function (indexInArray, valueOfElement) { 
+			var seleced = valueOfElement.innerText == '제목' ? ' selected' : '';
+	        $('#select').append('<option' + seleced + '>'+valueOfElement.innerHTML+'</option>');
+	    });
+		$('#myTable_filter input').addClass('form-control-inline');
+		$('#myTable_length select').attr('class','form-control-inline');
+		$('.dataTables_filter input').unbind().bind('keyup', function () {
+	        var colIndex = document.querySelector('#select').selectedIndex;
+	        
+	        table.column(colIndex).search(this.value).draw(); // 컬럼 숨기면 검색 인덱스 +1
+	    });	
+		$('#myTable_length label').prepend($('#myTable_filter label'));
+		
+		var form = document.writeBoardForm;
+		var maxGrade = 5;
+		var cafeUserGrade = form.cafeUserGrade.value;
+		var isCafeMember = '${_cafeDTO.isCafeMember}';
+		
+		if(maxGrade > Number(cafeUserGrade) && isCafeMember == 'true') {
+			$('#myTable_length').prepend('<button type="button" id="gradeBtn" class="boardBtn">등업 신청하기</button>');
+			var gradeBtn = document.getElementById('gradeBtn');
+			gradeBtn.onclick = writeBoard;
+		}
+			
+	});
+	
+</script>
+	<div class="content col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix cstmContent" ${_cafeDTO.cafeLayout eq 'left' ? '' : 'style="float:right;"'}>
+       	<section class="section1">
+		    <div class="container clearfix">
+		      <div class="title">
+		       	<h4>
+		          <span>${boardMenuName}</span>
+		        </h4>
+		      </div>
+		      <div class="col-lg-10 col-md-8 col-sm-8 clearfix">
+		      	<table class="table table-bordered" id="myTable">
+					<thead>
+						<tr>
+							<th>신청자</th>
+							<th>신청등급</th>
+							<th>현재등급</th>
+							<th>방문수</th>
+							<th>게시글수</th>
+							<th>댓글수</th>
+							<th>가입일</th>
+							<th>신청일</th>
+						</tr>
+					</thead>
+					<c:forEach var="board" items="${boardList}">
+						<tr>
+							<td>
+								<c:if test="${ board.cafeUesrImageNum == 0}">
+			              			<img src="${contextPath}/resources/img/cafe_profile.png" class="profileImg" alt="프로필 이미지  없음">
+			              		</c:if>
+								<c:if test="${ board.cafeUesrImageNum > 0 }">
+									<img src="${contextPath}/file/download?cafeUserImageNum=${board.cafeUesrImageNum}" class="profileImg" alt="프로필 이미지">
+								</c:if>
+								<br><br>
+								${board.cafeUserNickname}
+							</td>
+							<td>${board.upCutName}</td>
+							<td>${board.cutName}</td>
+							<td>${board.cafeUserVisit}</td>
+							<td>${board.cafeUserWrite}</td>
+							<td>${board.cafeUserReply}</td>
+							<td>${board.cafeUserRegdate}</td>
+							<td>${board.boardSaveDate}</td> 	
+						</tr>
+					</c:forEach>
+				</table>
+				
+		      </div>
+		      <!-- end content -->
+		    </div>
+		    <!-- end container -->
+		  </section>
+      </div>
+      <!-- end content -->
+<form name="writeBoardForm" method="post">
+	<input type="hidden" name="cafeId" value="${_cafeDTO.cafeId}">
+	<input type="hidden" name="userId" value="${_cafeDTO.loginId}"> 
+	<input type="hidden" name="boardMenuNum" value="${_cafeDTO.menuDTO.boardMenuNum}">
+    <input type="hidden" name="boardTitle" value="등업게시글">
+    <input type="hidden" name="cafeUserGrade" value="${_cafeDTO.loginUser.cafeUserGrade}">
+</form>
 
-<div class="content pull-right col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix cstmContent" ${cafeDTO.cafeLayout > 0 ? '' : 'style="float:right;"'}>
-<section class="section1">
+<script type="text/javascript">
+function writeBoard() {
+	var form = document.writeBoardForm;
+	
+	if(!checkGradeBoard()) {
+		return;
+	}
+	
+	if(confirm('등업신청 하시겠습니까?')) {
+		var xhr = new XMLHttpRequest();
+		var data = getData();
+		
+		xhr.open('post', '${contextPath}/user/board/writeBoard', false);
+		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		xhr.setRequestHeader('Content-Type', 'application/json');
+		xhr.onreadystatechange = function() {
+			if(xhr.readyState == 4 && xhr.status == 200) {
+	 			if(Number(xhr.response) == 1) {
+	 				location.reload();
+	 			} else {
+	 				alert('저장에 실패했습니다.');
+	 			}
+			}
+		}
+		
+		xhr.send(JSON.stringify(data));
+	}
+}
 
-<div class="container clearfix">
-	      <div class="content col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix"
-	      style="background-color:#F5F5F5;">
-					<h1>등업 게시판입니다</h1>
+function checkGradeBoard() {
+	var form = document.writeBoardForm;
+	var xhr = new XMLHttpRequest();
+	var data = getData();
+	var result = false;
+	
+	xhr.open('post', '${contextPath}/user/board/checkGradeBoard', false);
+	xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+	xhr.setRequestHeader('Content-Type', 'application/json');
+	xhr.onreadystatechange = function() {
+		if(xhr.readyState == 4 && xhr.status == 200) {
+ 			var message = '';
+ 			
+ 			if(Number(xhr.response) > 0) {
+ 				alert('등업 신청중입니다.')
+ 			} else {
+ 				result = true;
+ 			}
+		}
+	}
+	
+	xhr.send(JSON.stringify(data));
+	
+	return result;
+}
 
-		        <!-- SLIDE POST -->
-		        <article class="blog-wrap-test">
-
-		         <div class="grade-board">
-		         	<div class="grade-one">
-		         		<h4>등업 게시판</h4><p>등업게시판</p> 
-		         		<button class="grade-button">등업 신청하기</button>
-		         	</div>
-		         	<div class="grade-two">
-		         		<button class="grade-button">우리카페 등급보기</button>
-		         		<div class="grade-result"><a href="#">결과보기</a></div>
-		         	</div>
-			     </div>  
-			     
-
-			     
-		<div class="grade-board-list">  
-
-			<div id="bbpress-forums">
-	              <ul class="forum-titles" style="background-color:black;color:white;
-	              padding:20px 30px 30px 35px; margin:0 auto;">
-	                <li class="bbp-forum-test-nickname">신청자</li>
-	                <li class="bbp-forum-test-grade">신청등급</li>
-	                <li class="bbp-forum-test-nowGrade">현재등급</li>
-	                <li class="bbp-forum-test-visit-count">방문수</li>
-	                <li class="bbp-forum-test-board-count">게시글수</li>
-	                <li class="bbp-forum-test-reply-count">댓글수</li>
-	                <li class="bbp-forum-test-joindate">가입일</li>
-	                <li class="bbp-forum-test-request">신청일</li>
-	              </ul>
-	        </div>
-
-		     <div id="bbpress-forums">
-
-	          <ul class="bbp-forums">
-		          <c:forEach var="gradeList" items="${getGradeList}">
-		          		<li class="bbp-header-grade-list">
-			              <ul class="forum-titles-test">
-			               <li class="bbp-forum-test-nickname">
-			                <c:if test="${ gradeList.CAFE_USER_IMAGE== 0}">
-		              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
-		              			width="40px" class="img-circle alignleft" alt="">
-		              		</c:if>
-							<c:if test="${ gradeList.CAFE_USER_IMAGE  != 0 }">
-								<img src="test_download?fileImageNum=${gradeList.CAFE_USER_IMAGE}" 
-								width="40px" class="img-circle alignleft" alt="">
-							</c:if>
-			               	${gradeList.CAFE_USER_NICKNAME}
-			               </li>
-			                <li class="bbp-forum-test-grade">${gradeList.GRADE_UP}</li>
-			                <li class="bbp-forum-test-nowGrade">${gradeList.GRADE_NOW}</li>
-			                <li class="bbp-forum-test-visit-count">${gradeList.VISIT}</li>
-			                <li class="bbp-forum-test-board-count">${gradeList.BOARD_COUNT}</li>
-			                <li class="bbp-forum-test-reply-count">${gradeList.REPLY_COUNT}</li>
-			                <li class="bbp-forum-test-joindate">${gradeList.REGDATE}</li>
-			                <li class="bbp-forum-test-request">${gradeList.APPLY_DATE}</li>
-			              </ul>
-			            </li>  	
-		          </c:forEach>
-			          	
-	            
-	          </ul>
-	          
-	          <!-- .forums-directory -->
-			</div>
-		</div>
- </article>         
-					<!--	페이징  -->
-			  <div class="paging" align="center">
-				  <ul class="pagination">
-				    <li><a href="#">1</a></li>
-				    <li><a href="#">2</a></li>
-				    <li><a href="#">3</a></li>
-				  </ul>
-			  </div>
-		</div>
-	</div>
-</section>
-</div>
+function getData() {
+	var form = document.writeBoardForm;
+	var data = new Object();
+	
+	for(var i=0;i<form.length;i++) {
+		var element = form[i];
+		
+		if(element.name && element.value) {
+			data[element.name] = element.value;
+		}
+	}
+	
+	return data;
+}
+</script>	      

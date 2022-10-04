@@ -3,20 +3,20 @@ package com.itbank.navercafe.user.board.mapper;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import org.apache.ibatis.annotations.Param;
 
-
 import com.itbank.navercafe.user.board.dto.BoardDTO;
+import com.itbank.navercafe.user.board.dto.BoardExtendDTO;
 import com.itbank.navercafe.user.board.dto.LikesDTO;
-import com.itbank.navercafe.user.boardmenu.dto.BoardMenuDTO;
+import com.itbank.navercafe.user.menu.dto.MenuDTO;
 
 
 
 public interface BoardMapper {
-	//전체목록인데 수영이형이랑 상의.
-	public List<HashMap<String, Object>> getBoardList(String cafeId);
+
+
+	public ArrayList<BoardExtendDTO> getBoardList(MenuDTO menuDTO);
 	//보드 넘에 따른 게시물
 	public BoardDTO getUserBoard(int boardNum);
 
@@ -40,7 +40,7 @@ public interface BoardMapper {
 	public List<HashMap<String, Object>> topList();
 	
 	//보드 타입 가져오기
-	public BoardMenuDTO getBoardMenuType(int boardMenuNum);
+	public MenuDTO getBoardMenuType(int boardMenuNum);
 	
 
 	//보드 타입에 따른 리스트
@@ -48,7 +48,13 @@ public interface BoardMapper {
 	(@Param("boardMenuNum")int boardMenuNum,@Param("cafeId")String cafeId,
 			@Param("start") int start,@Param("end")int end);
 	
+
 	//보드메모넘을 가지고 있는 보드 리스트
 	public ArrayList<BoardDTO>getBoardNumList(int boardMenuNum);
+
+	public int insertBoard(BoardDTO boardDTO) throws Exception;
+	
+	public int checkGradeBoard(BoardExtendDTO boardExtDTO) throws Exception;
+
 	
 }

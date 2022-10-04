@@ -1,7 +1,5 @@
 package com.itbank.navercafe.user.member.service;
 
-import javax.servlet.http.HttpServletRequest;
-
 import com.itbank.navercafe.user.member.dto.MemberDTO;
 
 
@@ -15,6 +13,6 @@ public interface MemberService {
 
 	public MemberDTO getU(String id);
 
-	public int loginChk(HttpServletRequest request);
+	public boolean loginChk(MemberDTO memberDTO);
 
 }

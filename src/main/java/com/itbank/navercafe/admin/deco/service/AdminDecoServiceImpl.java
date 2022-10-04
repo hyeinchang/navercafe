@@ -12,15 +12,22 @@ public class AdminDecoServiceImpl implements AdminDecoService {
 	AdminDecoMapper decoMapper;
 	
 	@Override
+	public int saveFront(CafeDTO cafeDTO) throws Exception {
+		return decoMapper.saveFront(cafeDTO);
+	}
+	
+	@Override
+	public int saveSkin(CafeDTO cafeDTO) throws Exception {
+		return decoMapper.saveSkin(cafeDTO);
+	}
+	
+	@Override
 	public int saveTitle(CafeDTO cafeDTO) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+		return decoMapper.saveTitle(cafeDTO);
 	}
 
 	@Override
-	public int deleteTitle(int titleNum) throws Exception {
-		// TODO Auto-generated method stub
-		return 0;
+	public int saveLayout(CafeDTO cafeDTO) throws Exception {
+		return decoMapper.saveLayout(cafeDTO);
 	}
-
 }

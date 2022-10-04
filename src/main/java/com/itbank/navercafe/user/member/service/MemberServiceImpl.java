@@ -1,9 +1,5 @@
 package com.itbank.navercafe.user.member.service;
 
-import java.util.ArrayList;
-
-import javax.servlet.http.HttpServletRequest;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -61,14 +57,20 @@ public class MemberServiceImpl implements MemberService{
 	}
 	
 	@Override
-	public int loginChk(HttpServletRequest request) {
-		MemberDTO dto = mm.getUser(request.getParameter("id"));
-		if(dto != null) {
-			if(en.matches(request.getParameter("password"), dto.getPassword()) || dto.getPassword().equals(request.getParameter("password"))) {
-				return 0;
+	public boolean loginChk(MemberDTO dto) {
+		boolean result = false;
+		
+		try {
+			MemberDTO user = mm.getUser(dto.getId());
+			
+			if(user != null) {
+				result = en.matches(dto.getPassword(), user.getPassword());
 			}
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
-		return 1;
+	
+		return result;
 	}
 	
 }

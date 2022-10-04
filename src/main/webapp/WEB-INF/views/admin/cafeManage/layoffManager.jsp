@@ -10,6 +10,23 @@
 		console.log(searchId)
 	}
 	
+	function searchID() {
+		var uid = $('#searchId').val();
+		$.ajax({
+			type : 'get',
+			contentType : 'application/json; charset=utf-8',
+			url : '${contextPath}/admin/searchId',
+			dataType : 'text',
+			data : JSON.stringify(uid),
+			success : function(result) {
+				$('#searchResult').val(result);
+			},
+			error : function(request,status,error) {
+				alert("code:"+request.status+"\n"+"message:"+request.responseText+"\n"+"error:"+error);
+			}
+		});
+	}
+	
 </Script>
   	<!-- Page Wrapper -->
     <div id="wrapper">
@@ -37,15 +54,15 @@
 										<option value="id">아이디</option>
 										<option value="nickname">별명</option>
 									</select>
-		                        	<input type="text" class="form-control form-control-user" placeholder="카페 아이디를 입력해주십시오.">
-		                            <a href="#" class="btn btn-success btn-icon-split">
+		                        	<input type="text" class="form-control form-control-user" placeholder="카페 아이디를 입력해주십시오." id="searchId">
+		                            <a href="#" class="btn btn-success btn-icon-split" onclick="searchID()">
 		                                <span class="icon text-white-50">
 		                                    <i class="fas fa-check"></i>
 		                                </span>
 		                                <span class="text">검색</span>
 		                         	</a>
 	                       		</div>
-								<div id="searchResult">11</div>
+								<div id="searchResult"></div>
 								아이디 해킹이나 카페 매매 등 비정상적, 불법으로 위임된 카페는 위임이 취소되거나, 아이디/카페 제재를 받으실 수 있습니다.
 							</div>
 						</div>

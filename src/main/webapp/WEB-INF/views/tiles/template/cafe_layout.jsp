@@ -3,5 +3,6 @@
 
 <tiles:insertAttribute name="header"/>
 <tiles:insertAttribute name="nav"/>
+<tiles:insertAttribute name="intro"/>
 <tiles:insertAttribute name="content"/>
 <tiles:insertAttribute name="footer"/>

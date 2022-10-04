@@ -1,4 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<!-- 스탭게시판 > 사용 안함 -->
 <form name="menuInfoForm" id="menuInfoForm_${menuDTO.boardOrder}">
 <table border="1" cellspacing="0" width="100%" summary="메뉴관리 설정">
 	<caption style="display: none;">메뉴관리 설정 정보</caption>
@@ -10,13 +11,14 @@
 		<tr>
 			<th>메뉴명</th>
 			<td>
-				<input type="text" class="ipt_type" name="boardMenuName" value="${menuDTO.boardMenuName}" onkeyup="changeMenuValue()">
+				<input type="text" class="ipt_type" name="boardMenuName" value="${menuDTO.boardMenuName}" onkeyup="changeMenuValue()" onchange="changeMenuValue()">
 			</td>
 		</tr>
 		<tr>
 			<th style="padding: 4px 0px 0px;">메뉴 설명</th>
 			<td style="padding: 0px 0px 14px;">
-				<input type="text" class="ipt_type2" name="boardMenuDesc" value="${menuDTO.boardMenuDesc}" onkeyup="changeMenuValue()"></td>
+				<input type="text" class="ipt_type2" name="boardMenuDesc" value="${menuDTO.boardMenuDesc}" onkeyup="changeMenuValue()" onchange="changeMenuValue()">
+				</td>
 		</tr>
 		<tr>
 			<th scope="row" colspan="2" class="line"></th>
