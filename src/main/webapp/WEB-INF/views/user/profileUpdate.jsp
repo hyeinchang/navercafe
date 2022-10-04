@@ -16,6 +16,7 @@
 						<input type="hidden" value="${_cafeDTO.cafeId}" name="cafeId" id="cafeId">
 						<input type="hidden" value="${_cafeDTO.loginId}" name="userId">
 						<input type="hidden" value="${_cafeDTO.loginUser.cafeUserNickname}" name="oldNick" id="oldNick">
+						<input type="hidden" value="N" name="userImageDel">
 						<input type="hidden" name="status" id="status" value="OK">
 						<div class="join_info">
 							<div class="join_info_head">
@@ -36,9 +37,21 @@
 							</div>
 							<div class="join_info_body">
 								<div style="position: relative; display: inline-block; margin: 0; padding: 0;">
-									<input type="file" >
+								<c:choose>
+									<c:when test="${_cafeDTO.loginUser.cafeUserImageNum eq null
+										|| _cafeDTO.loginUser.cafeUserImageNum == 0}">
+									<img id ="profileImg" class="formProfileImg" src="${contextPath}/resources/img/cafe_profile.png" alt="프로필 이미지 없음">
+									</c:when>
+									<c:otherwise>
+									<img id ="profileImg" class="formProfileImg" 
+										src="${contextPath}/file/download?cafeUserImageNum=${_cafeDTO.loginUser.cafeUserImageNum}" alt="프로필 이미지 ">
+									</c:otherwise>
+								</c:choose>
+									
+									<input class="" type="file" name="profileImage" onchange="previewProfileImage()">
+									<a href="javascript:deleteProfileImage()">삭제</a>
+									<p>프로필은 카페별로 설정가능합니다.</p>
 								</div>
-								<p>프로필은 카페별로 설정가능합니다.</p>
 							</div>
 						</div>
 						<div class="join_info">
@@ -87,8 +100,8 @@
 							</div>
 						</div>
 						<div style="margin-top: 16px; text-align: center;">
-							<button class="btn" type="button" style="background-color: gray;">
-								<span >취소</span>
+							<button class="btn" type="button" style="background-color: gray;" onclick="location.href='${contextPath}/user/main?cafeId=${_cafeDTO.cafeId}'">
+								<span>취소</span>
 							</button>
 							<button class="btn" type="button" onclick="update()">
 								<span >수정</span>
@@ -148,11 +161,65 @@
 			return;
 		}
 		
-		console.log(status)
 		if(status == "OK"){
-			document.getElementById("profilForm").submit();
+			var profilForm = document.profilForm;
+			
+			$.ajax({
+				type : "POST",
+				url : "profilesubmit",
+				data : new FormData(profilForm),
+				enctype:'multipart/form-data',
+			    dataType:'json',
+			    processData:false,
+			    contentType:false,
+			    cache:false,
+				success : function(data){
+					if(Number(data) == 0) {
+						alert('카페 가입에 실패했습니다.');
+					} else {
+						location.href='${contextPath}/user/main?cafeId='+profilForm.cafeId.value;
+					}
+				},
+				error : function(){
+					//alert("에러ㅓㅓ")
+				}
+			});
 		}else{
 			alert('수정 정보를 다시 확인해주세요')
 		}
+	}
+	
+	function previewProfileImage() {
+		var fileInput = event.target;
+		var file = fileInput.files[0];
+		
+		if(file.type.indexOf('image') < 0) {
+			alert('이미지 파일이 아닙니다.');
+			fileInput.files = null;
+			fileInput.value = '';
+			fileInput.focus();
+		} else {
+			var userImageDel = document.profilForm.userImageDel;
+			var profileImg = document.getElementById('profileImg');
+			var fileReader = new FileReader();
+			
+			userImageDel.value = 'N';
+			fileReader.readAsDataURL(file);
+			fileReader.onload = function() {
+				profileImg.src = fileReader.result;
+			}
+		}	
+	}
+
+	function deleteProfileImage() {
+		var profileImg = document.getElementById('profileImg');
+		var orgSrc= '${contextPath}/resources/img/cafe_profile.png';
+		var fileInput = document.profilForm.profileImage;
+		var userImageDel = document.profilForm.userImageDel;
+		
+		profileImg.src = orgSrc;
+		fileInput.files = null;
+		fileInput.value = '';
+		userImageDel.value = 'Y';
 	}
 </script>

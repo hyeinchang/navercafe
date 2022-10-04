@@ -48,7 +48,7 @@
 	
 	<update id="cafeMemberUpdate">
 		update project_cafe_member set cafe_user_nickname = #{cafeUserNickname}, cafe_user_email_receieve = #{cafeUserEmailReceieve},
-		cafe_user_gender_reveal = #{cafeUserGenderReveal}
+		cafe_user_gender_reveal = #{cafeUserGenderReveal}, cafe_user_image_num = #{cafeUserImageNum}
 		where cafe_id = #{cafeId} and user_id = #{userId}
 	</update>
 	
