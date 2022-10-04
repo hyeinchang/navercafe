@@ -10,4 +10,5 @@ public interface AdminCafeManagerService {
 	public String searchId(String id, String cafeId);
 
 	public String searchNickname(String nickname, String cafeId);
+
 }

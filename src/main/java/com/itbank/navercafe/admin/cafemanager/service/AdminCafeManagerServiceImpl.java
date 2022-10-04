@@ -7,11 +7,23 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.itbank.navercafe.admin.cafemanager.mapper.AdminCafeManagerMapper;
+import com.itbank.navercafe.admin.memberstaff.mapper.AdminMemberStaffMapper;
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
 
 @Service
 public class AdminCafeManagerServiceImpl implements AdminCafeManagerService{
 	@Autowired
+	AdminCafeManagerMapper mapper;
+	@Autowired
+	AdminMemberStaffMapper amsMapper;
+	
+	public String getMessage(String msg, String url) {
+		String message = "";
+		message += "<script>alert('"+msg+"');";
+		message += "location.href='"+url+"';</script>";
+		return message;
+	}
+	
 	AdminCafeManagerMapper cafeManagerMapper;
 
 	@Override
@@ -21,11 +33,26 @@ public class AdminCafeManagerServiceImpl implements AdminCafeManagerService{
 
 	@Override
 	public String changeManager(String cafeId, String searchResult) {
+		String oldManager = amsMapper.getManagerId(cafeId);
 		Map<String, String> map = new HashMap<>();
 		map.put("cafeId", cafeId);
-		map.put("newManager", searchResult);
-		int result = cafeManagerMapper.changeManager(map);
-		return "";
+		map.put("newManager", searchResult.trim());
+		map.put("oldManager", oldManager);
+		int result = 0;
+		result += mapper.changeManager(map);
+		result += mapper.changeOldManagerGrade(map);
+		result += mapper.changeNewManagerGrade(map);
+		
+		String msg, url;
+		if(result == 3) {
+			msg = "성공적으로 반영되었습니다";
+			url = "layoffManager?cafeId="+cafeId;
+		} else {
+			msg = "오류가 발생했습니다!";
+			url = "layoffManager?cafeId="+cafeId;
+		}
+	
+		return getMessage(msg,url);
 	}
 
 	@Override
@@ -55,4 +82,5 @@ public class AdminCafeManagerServiceImpl implements AdminCafeManagerService{
 			return nickname+0;
 		}
 	}
+
 }

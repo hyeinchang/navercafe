@@ -99,39 +99,6 @@ public class AdminMemberStaffServiceImpl implements AdminMemberStaffService{
 		return message;
 	}
 	
-	
-	
-	
-	
-	
-	
-	/*
-	 * 		ArrayList<Map<String, String>> mapList = nameSort(unbanMembers, cafeId);
-		
-		int result = 0;
-		
-		try {
-			for(int i = 0; i < mapList.size(); i++) {
-				result += mapper.unbanMembers(mapList.get(i));
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		String url, msg;
-		if(result == mapList.size()) {
-			msg = "성공적으로 반영되었습니다";
-			url = "manageRegisterBan?cafeId="+cafeId;
-		} else {
-			msg = "오류가 발생했습니다!";
-			url = "manageRegisterBan?cafeId="+cafeId;
-		}
-		return getMessage(msg,url);
-	 * 
-	 * 
-	 */
-	
-	
 	@Override
 	public String modifyMembers(String modifyMembers, String cafeId, String gradeLevel) {
 		ArrayList<Map<String, String>> mapList = nameSort(modifyMembers, cafeId);

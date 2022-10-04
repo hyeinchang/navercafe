@@ -1,5 +1,10 @@
 package com.itbank.navercafe.admin.cafemanager.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -7,10 +12,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
+
+import com.itbank.navercafe.admin.cafemanager.service.AdminCafeManagerService;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
-import com.itbank.navercafe.admin.cafemanager.service.AdminCafeManagerService;
 import com.itbank.navercafe.common.file.FileUtils;
 import com.itbank.navercafe.common.file.dto.FileDTO;
 import com.itbank.navercafe.common.file.dto.FileResult;
@@ -21,6 +27,10 @@ import com.itbank.navercafe.user.cafe.service.CafeService;
 @Controller
 @RequestMapping("admin")
 public class AdminCafeManageController {
+	
+	@Autowired 
+	AdminCafeManagerService acms;
+	
 	@Autowired
 	private CafeService cafeService;
 	
@@ -119,14 +129,15 @@ public class AdminCafeManageController {
 	@GetMapping(value="searchNickname", produces="application/json; charset=utf8")
 	@ResponseBody
 	public String searchNickname(String nickname, String cafeId) {
-		System.out.println(nickname);
-		System.out.println(cafeId);
 		return cafeManagerService.searchNickname(nickname, cafeId);
 	}
 	
 	@PostMapping("changeManager")
-	public void changeManager(String cafeId, String searchResult) {
-		cafeManagerService.changeManager(cafeId, searchResult);
+	public void changeManager(String cafeId, String searchResult, HttpServletResponse resp) throws IOException {
+		String msg = acms.changeManager(cafeId, searchResult);
+		resp.setContentType("text/html; charset=utf-8");
+		PrintWriter out = resp.getWriter();
+		out.print(msg);
 	}
 	
 	
