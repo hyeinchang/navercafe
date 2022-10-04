@@ -80,6 +80,9 @@ function back(obj){
 		            <h4>새로운 메모 게시판</h4>
 		            <form id="comments_form" action="memoSave" class="row" method="post">
 		            	<input type="hidden" name="userId" value="${sessionId}">
+		            	
+		            	<input type="hidden" name="boardMenuNum" value="${boardMenuNum}">
+		            	
 		              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		                <textarea class="form-control" name="memoContent" id="comments" rows="6" placeholder="글을 입력해 주세요."></textarea>
 		                <span style="font-size: 15pt;">
@@ -173,6 +176,7 @@ function back(obj){
                      		<form id="comments_form" action="saveMemoReply?groupNum=${memoList.MEMO_NUM}" class="row" 
 						  		method="post" enctype="multipart/form-data">
 						  		<input type="hidden" name="userId" value="${sessionUser.userId}">
+						  		<input type="hidden" name="cafeId" value="${cafeId}">
 						    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						    										
 						      <p><span style="font-weight:1000; font-size: 20pt;">${sessionUser.cafeUserNickname}</span></p>

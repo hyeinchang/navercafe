@@ -37,8 +37,8 @@ public class ReplyServiceImpl implements ReplyService{
 	}
 
 	@Override
-	public List<HashMap<String, Object>> getReplyList(int boardNum) {
-		return rm.getReplyList(boardNum);
+	public List<HashMap<String, Object>> getReplyList(int boardNum,String cafeId) {
+		return rm.getReplyList(boardNum,cafeId);
 	}
 
 

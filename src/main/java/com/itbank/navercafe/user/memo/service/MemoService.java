@@ -12,8 +12,8 @@ import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 
 public interface MemoService {
-	public List<HashMap<String, Object>> getMemoList();
-	public List<HashMap<String, Object>> getReplyList();
+	public List<HashMap<String, Object>> getMemoList(String cafeId);
+	public List<HashMap<String, Object>> getReplyList(String cafeId);
 	public void saveMemoReply(MultipartHttpServletRequest mul);
 	public void memoSave(HttpServletRequest res);
 }
