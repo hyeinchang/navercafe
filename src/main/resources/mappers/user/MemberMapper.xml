@@ -34,4 +34,12 @@
 		delete project_members where user_id = #{id}
 	</delete>
 	
+	<select id="loginChk" resultType="Integer">
+		select count(*) from project_members where user_id = #{id} and user_pw = #{password}
+	</select>
+	
+	<select id="idOverlap" resultType="Integer">
+		select count(user_id) from project_members where user_id = #{id}
+	</select>
+	
 </mapper>

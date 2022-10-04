@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -115,7 +116,6 @@ public class HomeController { //메인 로그인관련
 	
 	@PostMapping("/cafe/member/register")
 	public String register(MemberDTO dto) {
-		
 		int result = ms.signup(dto);
 		if(result==1) {
 			return "redirect:/";
@@ -142,6 +142,7 @@ public class HomeController { //메인 로그인관련
 		if(dto.getPassword()!="") {
 			int result = ms.update(dto);
 			if(result==1) {
+				System.out.println("정보수정");
 				return "redirect:"+url;
 			}return "redirect:"+url;
 		}
@@ -310,6 +311,12 @@ public class HomeController { //메인 로그인관련
 		return idCount;
 	}
 	
+	@PostMapping(value = "cafe/member/nickCheck3")
+	public @ResponseBody String nickCheck3(@RequestParam("id") String id){
+		String result = ms.idOverlap(id);
+		
+		return result;
+	}
 	@PostMapping(value="/cafe/login", produces="application/json")
 	@ResponseBody
 	public boolean login(@RequestBody MemberDTO memberDTO, HttpSession session) {

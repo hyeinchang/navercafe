@@ -17,12 +17,23 @@
         	<input type="hidden" name="userIdCheck" value="N">
         	<h5 class="title">회원 기본 정보</h5>
         	<div class="infoLine">
+        		<input type="hidden" name="status" id="status" value="NO">
         		<label for="id" class="infoLabel">아이디 <span class="required">*</span></label>
+<<<<<<< HEAD
+          		<input type="text" name="id" id="id" class="form-control-inline" placeholder="아이디를 입력해주십시오.">
+          		<span id="confirm"></span>
+          		<input type="button" value="중복확인" class="button" style="margin-left:10px;"
+          			onclick="idOverlap2()">
+          		<div style="margin:5px 0 0 205px;">
+          			<label style="color: red;" id="idlabel"></label>	
+          		</div>
+=======
           		<input type="text" name="id" id="id" class="form-control-inline" placeholder="아이디를 입력해주십시오."
           			onchange="changeUserIdCheckFlag()" onkeypress="if(event.keyCode == 13)checkUserId()">
           		<input type="button" value="중복확인" class="button" style="margin-left:10px;"
           			onclick="checkUserId()">
           		<label class="infoText" style="color: red;" id="idlabel"></label>
+>>>>>>> a70101aa115492857243e689061e99c2eeaaacd2
         	</div>
         	
         	<div class="infoLine">
@@ -106,6 +117,39 @@
   
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 <script type="text/javascript">
+function idOverlap2(){
+	let idCheck = document.getElementById("id").value;
+	let confirm = document.getElementById("confirm");
+	let status = document.getElementById("status");
+	console.log(idCheck)
+	$.ajax({
+		type : "POST",
+		url : "nickCheck3",
+		data : {"id" : idCheck},
+		dataType : "text",
+		success : function(data){
+			if(data=="OK"){
+				if(idCheck==""){
+					confirm.style.color="#ff0000";
+					confirm.innerHTML = "사용 불가능한 아이디 입니다.";
+					$('input[name=status]').attr('value',"NO");
+				}else{
+					confirm.style.color="#0000ff";
+					confirm.innerHTML = "사용 가능한 아이디 입니다.";
+					$('input[name=status]').attr('value',"OK");
+				}
+			}else{
+				confirm.style.color="#ff0000";
+				confirm.innerHTML = "사용 불가능한 아이디 입니다.";
+				$('input[name=status]').attr('value',"NO");
+			}
+		},
+		error : function(){
+			alert("아이디를 입력해주세요")
+		}
+	});
+}
+
 	function reg(){
 		var id = document.getElementById("id");	
 		var pw = document.getElementById("password");	
@@ -140,6 +184,29 @@
 		}
 
 		if(!idck.test(id.value)){ //아이디 체크
+<<<<<<< HEAD
+			console.log(document.getElementById("status").value)
+			if(document.getElementById("status").value=="NO"){
+				document.getElementById("idlabel").innerHTML = "아이디 중복확인 "
+				document.getElementById("idlabel").style.color = "red"
+				id.focus();
+				return false;
+			}
+			document.getElementById("idlabel").innerHTML = "아이디는 5~20자의 영문소문자, 숫자, (-), (_)만 사용가능합니다."
+			document.getElementById("idlabel").style.color = "red"
+			id.focus();
+			return false;
+		}else{
+			if(document.getElementById("status").value=="NO"){
+				document.getElementById("idlabel").innerHTML = "아이디 중복확인 "
+				document.getElementById("idlabel").style.color = "red"
+				id.focus();
+				return false;
+			}
+			document.getElementById("idlabel").innerHTML = "사용가능합니다."
+			document.getElementById("idlabel").style.color = "green"
+ 			//return false;
+=======
 			document.getElementById("idlabel").innerHTML = "아이디는 5~20자의 영문소문자, 숫자, (-), (_)만 사용가능합니다.";
 			document.getElementById("idlabel").style.color = "red";
 			document.getElementById("idlabel").style.display = "block";
@@ -151,6 +218,7 @@
 			document.getElementById("idlabel").style.display = "block";
 			pw.focus();
 			//return false;
+>>>>>>> a70101aa115492857243e689061e99c2eeaaacd2
 		}
 		
 		if(pw.value==""){
@@ -160,6 +228,15 @@
 		}
 		
 		if(!pwck.test(pw.value)){ //비밀번호 체크
+<<<<<<< HEAD
+			document.getElementById("pwlabel").innerHTML = "비밀번호는 영대소문자+숫자+특수문자 조합으로 8~15자리 입력해주세요"
+			document.getElementById("pwlabel").style.color = "red"
+			pw.focus();
+			return false;
+		}else{
+			document.getElementById("pwlabel").innerHTML = "사용가능합니다."
+			document.getElementById("pwlabel").style.color = "green"
+=======
 			document.getElementById("pwlabel").innerHTML = "비밀번호는 영문자+숫자+특수문자 조합으로 8~15자리 입력해주세요";
 			document.getElementById("pwlabel").style.color = "red";
 			document.getElementById("pwlabel").style.display = "block";
@@ -170,6 +247,7 @@
 			document.getElementById("pwlabel").style.color = "green";
 			document.getElementById("pwlabel").style.display = "block";
 			pw2.focus();
+>>>>>>> a70101aa115492857243e689061e99c2eeaaacd2
 		}
 		if(pw2.value==""){
 			alert("비밀번호를 확인해주세요.");
@@ -183,10 +261,15 @@
 			pw2.focus();
 			return false;
 		}else{
+<<<<<<< HEAD
+			document.getElementById("pw2label").innerHTML = "비밀번호가 일치합니다."
+			document.getElementById("pw2label").style.color = "green"
+=======
 			document.getElementById("pw2label").innerHTML = "비밀번호가 일치합니다.";
 			document.getElementById("pw2label").style.color = "green";
 			document.getElementById("pw2label").style.display = "block";
 			name.focus();
+>>>>>>> a70101aa115492857243e689061e99c2eeaaacd2
 		}
 		
 		if(name.value==""){
@@ -252,6 +335,23 @@
 			return false;
 		}
 		if(!emck.test(email.value)){ //이메일정규식 체크
+<<<<<<< HEAD
+			document.getElementById("emaillabel").innerHTML = "이메일형식으로 작성해주세요."
+			document.getElementById("emaillabel").style.color = "red"
+			email.focus();
+			return false;
+		}else{
+			document.getElementById("emaillabel").innerHTML = "사용가능합니다."
+			document.getElementById("emaillabel").style.color = "green"
+		}
+		
+		let status = document.getElementById("status").value;
+		if(status == "OK"){
+			document.signupForm.submit();
+		}else{
+			alert('회원가입정보를 다시 확인해주세요')
+		}
+=======
 			document.getElementById("emaillabel").innerHTML = "이메일형식으로 작성해주세요.";
 			document.getElementById("emaillabel").style.display = "block";
 			email.focus();
@@ -263,6 +363,7 @@
 		}
 		
 		document.signupForm.submit();
+>>>>>>> a70101aa115492857243e689061e99c2eeaaacd2
 	}
 	
 	// 아이디 중복 확인

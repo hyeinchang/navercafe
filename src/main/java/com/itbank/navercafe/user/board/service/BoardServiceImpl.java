@@ -87,7 +87,6 @@ public class BoardServiceImpl implements BoardService{
 		}
 		model.addAttribute("fileList",fm.getFileList());
 	}
-
 	
 	@Override
 	public BoardDTO getUserBoard(int boardNum,int boardMenuNum,Model model,int pageNum,String cafeId,int next,int preview) {
@@ -186,7 +185,6 @@ public class BoardServiceImpl implements BoardService{
 	public int checkGradeBoard(BoardExtendDTO boardExtDTO) throws Exception {
 		return bm.checkGradeBoard(boardExtDTO);
 	}
-
 
 }
 

@@ -110,10 +110,15 @@ function idOverlap(){
 		dataType : "text",
 		success : function(data){
 			if(data=="OK"){
-				confirm.style.color="#0000ff";
-				confirm.innerHTML = "사용 가능한 닉네임 입니다.";
-				$('input[name=status]').attr('value',"OK");
-				
+				if(idCheck==""){
+					confirm.style.color="#ff0000";
+					confirm.innerHTML = "사용 불가능한 닉네임 입니다.";
+					$('input[name=status]').attr('value',"NO");
+				}else{
+					confirm.style.color="#0000ff";
+					confirm.innerHTML = "사용 가능한 닉네임 입니다.";
+					$('input[name=status]').attr('value',"OK");
+				}
 			}else{
 				confirm.style.color="#ff0000";
 				confirm.innerHTML = "사용 불가능한 닉네임 입니다.";
@@ -121,7 +126,11 @@ function idOverlap(){
 			}
 		},
 		error : function(){
+<<<<<<< HEAD
+			alert("닉네임을 확인해주세요")
+=======
 			//alert("에러ㅓㅓ")
+>>>>>>> a70101aa115492857243e689061e99c2eeaaacd2
 		}
 	});
 }

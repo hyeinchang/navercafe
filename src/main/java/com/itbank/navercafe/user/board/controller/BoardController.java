@@ -24,6 +24,7 @@ import com.itbank.navercafe.user.board.dto.BoardDTO;
 import com.itbank.navercafe.user.board.dto.BoardExtendDTO;
 import com.itbank.navercafe.user.board.service.BoardService;
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
+import com.itbank.navercafe.user.cafemember.dto.CafeMemberDTO;
 import com.itbank.navercafe.user.cafemember.service.CafeMemberService;
 import com.itbank.navercafe.user.grade.service.GradeService;
 import com.itbank.navercafe.user.memo.service.MemoService;
@@ -43,9 +44,18 @@ public class BoardController {
 	@Autowired CafeMemberService cafeMemberService;
 	
 	@RequestMapping("/writeForm")
-	public String writeForm() {
+	public String writeForm(String cafeId, HttpSession session, CafeDTO cafeDTO, Model model) {
+		System.out.println("글쓰기 이동");
+		
+		String userId = (String) session.getAttribute("loginId");
+		System.out.println("아이디 :  "+userId);
+		CafeMemberDTO dto = boardCafeSer.getCafeMember(cafeId,userId);
+		model.addAttribute("cafeMember",dto);
+		model.addAttribute("cafeDTO", cafeDTO);
 		return "user/board/writeForm";
 	}
+	
+	
 	//전체목록인데 수영이형이랑 상의.
 	@GetMapping("/goBoardList")	
 	public String goBoardList(Model model, String cafeId, MenuDTO menuDTO) throws Exception{
