@@ -108,12 +108,32 @@
   <script src="${contextPath}/resources/MaxiBiz/js/main.js"></script>
   
   <form name="cafeForm" method="get">
-  	<input type="hidden" name="cafeId" value="${cafeDTO.cafeId}">
+  	<input type="hidden" name="cafeId" value="${_cafeDTO.cafeId}">
+  	<input type="hidden" name="boardMenuNum" value="${_cafeDTO.menuDTO.boardMenuNum}">
   </form>
 <script type="text/javascript">
-  function changeCafeMenu(path) {
-	  document.cafeForm.action = path;
-	  document.cafeForm.submit();
+  function changeCafeMenu(path, menuNum) {
+	  var form = document.cafeForm;
+	  var boardMenuNum = form.boardMenuNum;
+	  
+	  if(menuNum) {
+		  boardMenuNum.value = menuNum;
+		  
+		  if(boardMenuNum.value != '') {
+			  var boardReadAuth = '${_cafeDTO.menuDTO.boardReadAuth}';
+			  var cafeUserGrade = '${_cafeDTO.loginUser.cafeUserGrade}';
+
+			  if(Number(boardReadAuth) > Number(cafeUserGrade)) {
+				  alert('권한이 없습니다.');
+				  return;
+			  }
+		  }
+	  } else {
+		  form.removeChild(boardMenuNum);
+	  }
+	  
+	  form.action = path;
+	  form.submit();
   }
   
   function changeCafe(cafeId) {
@@ -121,6 +141,8 @@
   }
   
   function checkLoginForm() {
+	  var xhr = new XMLHttpRequest();
+	  var data = new Object();
 	  loginForm = document.loginForm;
 	  
 	  if(loginForm.id.value == '') {
@@ -135,7 +157,21 @@
 		  return;
 	  }
 	  
-	  loginForm.submit();
+	  data.id = loginForm.id.value;
+	  data.password = loginForm.password.value;
+	  
+	  xhr.open('post', '${contextPath}/cafe/login');
+	  xhr.setRequestHeader('Content-Type', 'application/json');
+	  xhr.onreadystatechange = function() {
+		  if(xhr.readyState == 4 && xhr.status == 200) {
+			  if(xhr.response == 'false') {
+				  alert('등록되지 않은 회원입니다.');
+			  } else {
+				  location.reload();
+			  }
+		  }
+	  }
+	  xhr.send(JSON.stringify(data));
   }
 </script>
 </body>

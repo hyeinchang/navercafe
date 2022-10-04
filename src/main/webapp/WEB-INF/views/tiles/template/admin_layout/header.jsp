@@ -44,7 +44,9 @@
 
 <!-- 2022-09-16 chi9148 공통 js 추가 -->
 <script src="${adminPath}/js/common.js"></script>
-  
+
+<!-- 2022-09-28 chi9148 common js 추가 -->
+<script type="text/javascript" src="${contextPath}/resources/js/common.js"></script>  
 </head> 
 
 <body id="page-top">

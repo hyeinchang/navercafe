@@ -10,7 +10,7 @@
         <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
 
              <!-- Sidebar - Brand -->
-            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="${adminViewPath}">
+            <a class="sidebar-brand d-flex align-items-center justify-content-center" href="${adminViewPath}?cafeId=${_cafeDTO.cafeId}">
                 <div class="sidebar-brand-icon rotate-n-15">
                     <i class="fas fa-laugh-wink"></i>
                 </div>
@@ -111,6 +111,7 @@
                         <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/deco/frontdoor')">카페 대문</a>
                         <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/deco/skin')">스킨</a>
                         <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/deco/title')">타이틀</a>
+                        <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/deco/layout')">레이아웃</a>
                     </div>
                 </div>
             </li>
@@ -142,7 +143,7 @@
         </ul>
         <!-- End of Sidebar -->
 <form name="cafeForm">
-	<input type="hidden" name="cafeId" value="${cafeDTO.cafeId}">
+	<input type="hidden" name="cafeId" value="${_cafeDTO.cafeId}">
 </form>        
 <script type="text/javascript">
 	function changeMenu(path) {

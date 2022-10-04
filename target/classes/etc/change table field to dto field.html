@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>desc 테이블 필드 -> DTO 필드</title>
+</head>
+<body>
+    <h1>DTO 필드</h1>
+    <hr>
+    <div id="result"></div>
+    <br>
+    <h1>ResultMap</h1>
+    <hr>
+    <div id="result2"></div>
+    <div id="inputArea">
+        <p>sql developer에서 desc 테이블 명 입력해서 출력된 스크립트 값 입력</p>
+        <textarea id="desc" cols="100" rows="30"></textarea>
+        <br>
+        <button onclick="change()">바꾸기</button>
+    </div>
+<script type="text/javascript">
+    function change() {
+        var desc = document.getElementById('desc');
+        var result = document.getElementById('result');
+        var result2 = document.getElementById('result2');
+        var lines = desc.value.split(/\r|\n/);
+        var tab = '&nbsp;&nbsp;&nbsp;&nbsp;'
+        var resultVal = '';
+        var resultVal2 =  tab + '&lt;resultMap type="" id=""&gt;'
+        var result2Count = 0;
+
+        for(var i=0; i<lines.length; i++) {
+            var line = lines[i]
+            var resultLine = 'private ';
+            var compentList = line.split(/\s/);
+            var strList = new Array();
+            var columName = '';
+            var type = '';
+
+            if(line.length == 0) {
+                continue;
+            }
+
+            if(line.toLowerCase().indexOf('varchar') > -1 || line.toLowerCase().indexOf('char(') > -1 || line.toLowerCase().indexOf('clob') > -1) {
+                type = 'String';
+            }
+
+            if(line.toLowerCase().indexOf('number') > -1) {
+                type = 'int';
+            }
+
+            if(line.toLowerCase().indexOf('date') > -1 || line.toLowerCase().indexOf('timestamp') > -1) {
+                type = 'Date';
+            }
+
+            resultLine += type;
+
+            for(var j=0;j<compentList.length;j++) {
+                var component = compentList[j];
+
+                if(component.length == 0) {
+                    continue;
+                }
+
+                strList.push(component);
+            }
+
+            if(strList.length == 0) {
+                continue;
+            }
+            
+            columName = strList[0];
+
+            var colName = columName.toLowerCase();
+            var fieldName = colName.charAt(0);
+
+            for(var j=1;j<colName.length;j++) {
+                var colChar = colName.charAt(j);
+                
+                if(colChar == '_') {
+                    continue;
+                }
+
+                if(colName.charAt(j-1) == '_') {
+                    colChar = colChar.toUpperCase();
+                }
+
+                fieldName += colChar;
+            }
+
+            //console.log(fieldName);
+
+            resultLine += ' ' + fieldName + ';';
+
+            if(resultVal.length > 0) {
+                resultVal += '<br>';
+            }
+            resultVal += resultLine;
+
+
+            if(result2Count == 0) {
+                resultVal2 += '<br>' + tab + tab + '&lt;id column="' + columName + '" property="' + fieldName + '"/&gt;'
+            } else {
+                resultVal2 += '<br>' + tab + tab + '&lt;result column="' + columName + '" property="' + fieldName + '"/&gt;'
+            }
+           
+            result2Count++;
+        }
+
+        resultVal2 += '<br>' + tab + '&lt;/resultMap&gt;'
+        console.log(resultVal2)
+        result.innerHTML = resultVal;
+        result2.innerHTML = resultVal2;
+
+        console.log(result2);
+
+        //document.getElementById('inputArea').style.display = 'none';
+    } 
+</script>    
+</body>
+</html>

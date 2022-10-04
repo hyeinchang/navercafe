@@ -30,11 +30,11 @@
   <!-- Main Stylesheet File -->
   <link href="${contextPath}/resources/MaxiBiz/css/style.css" rel="stylesheet">
   <c:choose>
-  <c:when test="${cafeDTO eq null || cafeDTO.cafeSkin eq null}">
+  <c:when test="${_cafeDTO eq null || _cafeDTO.cafeSkin eq null}">
    <link rel="stylesheet" href="${contextPath}/resources/MaxiBiz/css/colors/default.css">
   </c:when>
   <c:otherwise>
-   <link rel="stylesheet" href="${contextPath}/resources/MaxiBiz/css/colors/${cafeDTO.cafeSkin}.css">	
+   <link rel="stylesheet" href="${contextPath}/resources/MaxiBiz/css/colors/${_cafeDTO.cafeSkin}.css">	
   </c:otherwise>
   </c:choose>
  
@@ -47,6 +47,8 @@
   
   <!-- 2022-08-26 chi9148 custom css 추가 -->
   <link href="${contextPath}/resources/css/custom_user.css" rel="stylesheet">
+  <!-- 2022-09-28 chi9148 common js 추가 -->
+  <script type="text/javascript" src="${contextPath}/resources/js/common.js"></script>
 </head>
 
 <body>

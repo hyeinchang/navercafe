@@ -96,7 +96,7 @@ body.bbPress #page .forum-widgets .forum-widget ul li a.bbp-author-name{padding:
 	margin: 0 0 24px 0;
 }
 
-#bbpress-forums {
+# {
 	background: transparent;
 	clear: both;
 	margin-bottom: 20px;
@@ -984,3 +984,4 @@ body.my-account #bbpress-forums {
 #bbpress-forums li:hover > div.row-actions {
 	visibility: visible;
 }
+
