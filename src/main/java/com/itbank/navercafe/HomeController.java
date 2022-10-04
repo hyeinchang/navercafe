@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
@@ -87,10 +88,11 @@ public class HomeController { //메인 로그인관련
 		return "cafe/member/signup";
 	}
 	
-	@PostMapping("register")
+	@PostMapping("/cafe/member/register")
 	public String register(MemberDTO dto) {
-		
+		System.out.println("회원가입컨트롤");
 		int result = ms.signup(dto);
+		System.out.println("리절트:"+result);
 		if(result==1) {
 			return "redirect:/";
 		}
@@ -215,5 +217,12 @@ public class HomeController { //메인 로그인관련
 		}
 		
 		return idCount;
+	}
+	
+	@PostMapping(value = "cafe/member/nickCheck3")
+	public @ResponseBody String nickCheck3(@RequestParam("id") String id){
+		String result = ms.idOverlap(id);
+		
+		return result;
 	}
 }

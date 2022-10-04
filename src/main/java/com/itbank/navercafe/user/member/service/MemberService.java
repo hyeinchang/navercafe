@@ -15,4 +15,6 @@ public interface MemberService {
 
 	public int loginChk(MemberDTO memberDTO);
 
+	public String idOverlap(String id);
+
 }

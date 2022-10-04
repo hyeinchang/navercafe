@@ -65,4 +65,16 @@ public class MemberServiceImpl implements MemberService{
 		return mm.loginChk(dto);
 	}
 	
+	@Override
+	public String idOverlap(String id) {
+		String result = null;
+		int idCheck = mm.idOverlap(id);
+		if(idCheck!=1) {
+			result = "OK"; // 중복X
+		}else {
+			result = "NO";
+		}
+		return result;
+	}
+	
 }
