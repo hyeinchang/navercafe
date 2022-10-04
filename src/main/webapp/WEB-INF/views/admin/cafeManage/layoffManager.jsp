@@ -29,6 +29,7 @@
 					if(result.substring(result.length, result.length-1) == 1) {
 						$('#notice').text('님은 우리카페의 회원입니다!')
 						$('#disableFlag').val('1');
+						$('#sr').val($('#searchResult').text())
 					} else {
 						$('#notice').text('님은 우리카페의 회원이 아닙니다.')
 						$('#disableFlag').val('0');
@@ -54,6 +55,7 @@
 					if(result.substring(result.length, result.length-1) == 1) {
 						$('#disableFlag').val('1');
 						$('#notice').text('님은 우리카페의 회원입니다!');
+						$('#sr').val($('#searchResult').text())
 					} else {
 						$('#notice').text('님은 우리카페의 회원이 아닙니다.');
 						$('#disableFlag').val('0');
@@ -116,6 +118,7 @@
 		                         	</a>
 	                       		</div>
 								<div> <span id="searchResult"></span> <span id="notice"></span></div>
+								<input type="hidden" name="searchResult" value="" id="sr">
 								아이디 해킹이나 카페 매매 등 비정상적, 불법으로 위임된 카페는 위임이 취소되거나, 아이디/카페 제재를 받으실 수 있습니다.
 							</div>
 						</div>

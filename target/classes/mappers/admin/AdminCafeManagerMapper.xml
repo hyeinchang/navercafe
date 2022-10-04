@@ -3,7 +3,7 @@
 <mapper namespace="com.itbank.navercafe.admin.cafemanager.mapper.AdminCafeManagerMapper">
 
 	<update id="changeManager" parameterType="Map">
-		update project_cafe_info set user_id = #{newManager} where cafe_id = #{cafe_id}
+		update project_cafe_info set user_id = #{newManager} where cafe_id = #{cafeId}
 	</update>
 	
 	<select id="searchId" parameterType="Map" resultType="integer">
@@ -13,6 +13,14 @@
 	<select id="searchNickname" parameterType="Map" resultType="integer">
 		select count(*) from project_cafe_member where cafe_user_nickname = #{nickname} and cafe_id = #{cafeId}
 	</select>	
+	
+	<update id="changeOldManagerGrade" parameterType="Map">
+		update project_cafe_member set cafe_user_grade = 5 where cafe_id = #{cafeId} and user_id = #{oldManager}
+	</update>
+	
+	<update id="changeNewManagerGrade" parameterType="Map">
+		update project_cafe_member set cafe_user_grade = 999 where cafe_id = #{cafeId} and user_id = #{newManager}
+	</update>
 	
 </mapper>
 

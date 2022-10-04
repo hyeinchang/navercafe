@@ -1,5 +1,10 @@
 package com.itbank.navercafe.admin.cafemanager.controller;
 
+import java.io.IOException;
+import java.io.PrintWriter;
+
+import javax.servlet.http.HttpServletResponse;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -122,14 +127,15 @@ public class AdminCafeManageController {
 	@GetMapping(value="searchNickname", produces="application/json; charset=utf8")
 	@ResponseBody
 	public String searchNickname(String nickname, String cafeId) {
-		System.out.println(nickname);
-		System.out.println(cafeId);
 		return acms.searchNickname(nickname, cafeId);
 	}
 	
 	@PostMapping("changeManager")
-	public void changeManager(String cafeId, String searchResult) {
-		acms.changeManager(cafeId, searchResult);
+	public void changeManager(String cafeId, String searchResult, HttpServletResponse resp) throws IOException {
+		String msg = acms.changeManager(cafeId, searchResult);
+		resp.setContentType("text/html; charset=utf-8");
+		PrintWriter out = resp.getWriter();
+		out.print(msg);
 	}
 	
 	

@@ -14,4 +14,8 @@ public interface AdminCafeManagerMapper {
 
 	public int updateBasicInfo(CafeDTO cafeDTO) throws Exception;
 
+	public int changeOldManagerGrade(Map<String, String> map);
+
+	public int changeNewManagerGrade(Map<String, String> map);
+
 }
