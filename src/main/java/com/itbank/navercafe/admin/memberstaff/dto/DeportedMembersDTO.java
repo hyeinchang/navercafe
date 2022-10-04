@@ -3,14 +3,20 @@ package com.itbank.navercafe.admin.memberstaff.dto;
 import java.util.Date;
 
 public class DeportedMembersDTO {
-	private String cafeId, userId, reason;
+	private String cafeId, userId, reason, managerId;
 	private Date regdate;
-	private int banFlag;
+	private String banFlag;
 	
-	public int getBanFlag() {
+	public String getManagerId() {
+		return managerId;
+	}
+	public void setManagerId(String managerId) {
+		this.managerId = managerId;
+	}
+	public String getBanFlag() {
 		return banFlag;
 	}
-	public void setBanFlag(int banFlag) {
+	public void setBanFlag(String banFlag) {
 		this.banFlag = banFlag;
 	}
 	public String getCafeId() {

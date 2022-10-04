@@ -458,15 +458,19 @@ public class AdminRegisterGradeServiceimpl implements AdminRegisterGradeService 
 		}
 		
 		if (dto.getCafeJoinAge() != null) {
-			dto.setAgeCondition("true");
-			String[] ageArr = dto.getCafeJoinAge().split("~");
-			dto.setSelectYear1(Integer.parseInt(ageArr[0]));
-			dto.setSelectYear2(Integer.parseInt(ageArr[1]));
-			if(dto.getSelectYear1() == -1) {
+			if(dto.getCafeJoinAge().equals("all")) {
 				dto.setAgeCondition("false");
+				dto.setSelectYear1(-1);
+				dto.setSelectYear2(-1);
+			} else {
+				dto.setAgeCondition("true");
+				String[] ageArr = dto.getCafeJoinAge().split("~");
+				dto.setSelectYear1(Integer.parseInt(ageArr[0]));
+				dto.setSelectYear2(Integer.parseInt(ageArr[1]));
+				if(dto.getSelectYear1() == -1) {
+					dto.setAgeCondition("false");
+				}
 			}
-		} else {
-			dto.setAgeCondition("false");
 		}
 		return dto;
 	}

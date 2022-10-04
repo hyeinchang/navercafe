@@ -17,4 +17,8 @@ public interface AdminMemberStaffMapper {
 	public ArrayList<String> getEmailList(Map<String, String> map);
 	public int insertDeportedList(Map<String, String> map);
 	public ArrayList<DeportedMembersDTO> getDeportedMembersList(String cafeId);
+	public String getManagerId(String cafeId);
+	public int getBanFlag(Map<String, String> map);
+	public ArrayList<String> getquestions(Map<String, String> dataMap);
+	public ArrayList<String> getAnswers(Map<String, String> cafeId);
 }

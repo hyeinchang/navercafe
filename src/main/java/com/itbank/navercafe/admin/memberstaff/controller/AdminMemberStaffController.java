@@ -3,6 +3,8 @@ package com.itbank.navercafe.admin.memberstaff.controller;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -13,8 +15,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.itbank.navercafe.admin.cafemember.dto.AdminCafeMemberDTO;
 import com.itbank.navercafe.admin.memberstaff.dto.AllMembersDTO;
 import com.itbank.navercafe.admin.memberstaff.dto.DeportedMembersDTO;
 import com.itbank.navercafe.admin.memberstaff.service.AdminMemberStaffService;
@@ -89,15 +91,21 @@ public class AdminMemberStaffController {
 	}
 	
 	@PostMapping("banMembers")
-	public void banMembers(String banMembers, String cafeId, HttpServletResponse resp) throws Exception { 
-		String msg = amss.banMembers(banMembers, cafeId);
+	public void banMembers(String banMembers, String cafeId, HttpServletResponse resp, String reason) throws Exception { 
+		String msg = amss.banMembers(banMembers, cafeId, reason);
 		
 		resp.setContentType("text/html; charset=utf-8");
 		PrintWriter out = resp.getWriter();
 		out.print(msg);
 	}
 	
-
+	@GetMapping(value="searchQA", produces="application/json; charset=utf8")
+	@ResponseBody
+	public List<Map<String, Object>> searchQA(String userId, String cafeId) {
+		List<Map<String, Object>> mapList = amss.getQA(userId, cafeId);
+		
+		return mapList;
+	}
 	
 	
 }

@@ -2,6 +2,7 @@ package com.itbank.navercafe.admin.memberstaff.service;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -158,16 +159,20 @@ public class AdminMemberStaffServiceImpl implements AdminMemberStaffService{
 	}
 
 	@Override
-	// id 값으로 회원 강제 탈퇴
 	public String deportMembers(String deportMembers, String cafeId, String reason) {
 		ArrayList< Map<String, String> > mapList = nameSort(deportMembers, cafeId);
 		int result = 0;
-		System.out.println(reason);
+		String managerId = mapper.getManagerId(cafeId);
+		System.out.println(managerId);
 		
 		try {
 			for(int i = 0; i < mapList.size(); i++) {
 				mapList.get(i).put("reason", reason);
+				mapList.get(i).put("managerId", managerId);
+				
+				//강제탈퇴 테이블 project_cafe_deported 에 값 추가
 				result += mapper.insertDeportedList(mapList.get(i));
+				//카페회원 테이블에서 회원 정보 삭제 (탈퇴)
 				result += mapper.deportMembers(mapList.get(i));
 			}
 		} catch(Exception e) {
@@ -224,10 +229,10 @@ public class AdminMemberStaffServiceImpl implements AdminMemberStaffService{
 			
 			if(result == idList.size()) {
 				msg = "재가입 가능한 멤버로 변경하였습니다.";
-				url = "manageAllMembers?cafeId="+cafeId;
+				url = "manageDeportedMembers?cafeId="+cafeId;
 			} else {
 				msg = "오류가 발생했습니다";
-				url = "manageAllMembers?cafeId=1"+cafeId;
+				url = "manageDeportedMembers?cafeId="+cafeId;
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -238,14 +243,18 @@ public class AdminMemberStaffServiceImpl implements AdminMemberStaffService{
 	}
 
 	@Override
-	// id값으로 블랙리스트 등록 + cafeid + 사유
-	public String banMembers(String banMembers, String cafeId) {
+	public String banMembers(String banMembers, String cafeId, String reason) {
 		ArrayList< Map<String, String> > mapList = nameSort(banMembers, cafeId);
+		String managerId = mapper.getManagerId(cafeId);
 		int result = 0;
 		
 		try {
 			for(int i = 0; i < mapList.size(); i++) {
+				System.out.println("포문진입");
+				mapList.get(i).put("reason", reason);
+				mapList.get(i).put("managerId", managerId);
 				result += mapper.banMembers(mapList.get(i));
+					
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -254,10 +263,10 @@ public class AdminMemberStaffServiceImpl implements AdminMemberStaffService{
 		String msg, url;
 		if(result == mapList.size()) {
 			msg = "성공적으로 반영 되었습니다";
-			url = "manageAllMembers?cafeId="+cafeId;
+			url = "manageDeportedMembers?cafeId="+cafeId;
 		} else {
 			msg = "오류가 발생했습니다!";
-			url = "manageAllMembers?cafeId="+cafeId;
+			url = "manageDeportedMembers?cafeId="+cafeId;
 		}
 	
 		return getMessage(msg,url);
@@ -275,7 +284,40 @@ public class AdminMemberStaffServiceImpl implements AdminMemberStaffService{
 
 	@Override
 	public ArrayList<DeportedMembersDTO> getDeportedMembersList(String cafeId) {
-		return mapper.getDeportedMembersList(cafeId);
+		ArrayList<DeportedMembersDTO> list = mapper.getDeportedMembersList(cafeId);
+		// 밴 여부 확인
+		for(int i = 0; i < list.size(); i++) {
+			Map<String, String> map = new HashMap<>();
+			map.put("userId", list.get(i).getUserId());
+			map.put("cafeId", cafeId);
+			int result = mapper.getBanFlag(map);
+			if(result == 0) {
+				list.get(i).setBanFlag("-");
+			} else {
+				list.get(i).setBanFlag("가입불가");
+			}
+		}
+		
+		return list;
+	}
+
+	@Override
+	public List<Map<String, Object>> getQA(String userId, String cafeId) {
+		Map<String, String> dataMap = new HashMap<>();
+		dataMap.put("userId", userId);
+		dataMap.put("cafeId", cafeId);
+		ArrayList<String> questions = mapper.getquestions(dataMap);
+		ArrayList<String> answers = mapper.getAnswers(dataMap);
+		
+		List<Map<String, Object>> mapList = new ArrayList<>();
+		for(int i = 0; i<questions.size(); i++) {
+			Map<String, Object> map = new HashMap<>();
+			map.put("Q"+(i+1), questions.get(i));
+			map.put("A"+(i+1), answers.get(i));
+			mapList.add(map);
+		}
+		
+		return mapList;
 	}
 
 }
