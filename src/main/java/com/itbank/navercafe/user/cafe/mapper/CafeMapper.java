@@ -3,6 +3,7 @@ package com.itbank.navercafe.user.cafe.mapper;
 import java.util.HashMap;
 import java.util.List;
 
+import com.itbank.navercafe.user.board.dto.BoardDTO;
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
 import com.itbank.navercafe.user.cafe.dto.CafeJoinQuestionDTO;
 import com.itbank.navercafe.user.cafe.dto.CafeMemberGradeDTO;
@@ -25,4 +26,7 @@ public interface CafeMapper {
 	public int getTotalReplyCount(String cafeId) throws Exception;
 	public int insertMemberGrade(CafeMemberGradeDTO cafeMemberGradeDTO) throws Exception;
 	public List<CafeJoinQuestionDTO> selectQuestionList(String cafeId) throws Exception;
+	public List<BoardDTO> selectMainBoardList(String cafeId) throws Exception;
+	public List<BoardDTO> selectMainRecentList(String cafeId) throws Exception;
+	public List<BoardDTO> selectMainRecentReplyList(String cafeId) throws Exception;
 }

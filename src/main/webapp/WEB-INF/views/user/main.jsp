@@ -33,9 +33,13 @@
                <span>전체글 목록</span>
                <a href="javascript:changeCafeMenu('board/goBoardList?cafeId=${_cafeDTO.cafeId}')">더보기</a>
              </h4>
-             <ul>            
-               <li><a href="javascript:alert('전체글 보기 이동')">전체글 1</a></li>
-               <li><a href="javascript:alert('전체글 보기 이동')">전체글 1전체글 1전체글 1전체글 1전체글 1전체글 1전체글 1전체글 1</a></li>
+             <ul>
+               <c:forEach  var="mainBoard" items="${_cafeDTO.mainBoardList}"> 
+               <li>
+               	<a 
+               		href="${contextPath}/user/board/goBoardInside?cafeId=${_cafeDTO.cafeId}&boardMenuNum=${mainBoard.boardMenuNum}&boardNum=${mainBoard.boardNum}">
+               	${mainBoard.boardTitle}</a></li>
+               </c:forEach>          
              </ul>
            </div>
          
@@ -44,7 +48,12 @@
                <span>최신글 목록</span><a href="javascript:alert('더보기 이동')">더보기</a>
               </h4>
               <ul>            
-                <li><a href="javascript:alert('전체글 보기 이동')">최신글 1</a></li>
+                <c:forEach var="mainRecent" items="${_cafeDTO.mainRecentList}"> 
+               <li>
+               	<a 
+               		href="${contextPath}/user/board/goBoardInside?cafeId=${_cafeDTO.cafeId}&boardMenuNum=${mainRecent.boardMenuNum}&boardNum=${mainRecent.boardNum}">
+               	${mainRecent.boardTitle}</a></li>
+               </c:forEach> 
               </ul>
            </div>
            
@@ -53,7 +62,13 @@
                <span>최신 댓글/답글</span><a href="javascript:alert('더보기 이동')">더보기</a>
               </h4>
               <ul>            
-                <li><a href="javascript:alert('전체글 보기 이동')">최신글 1</a></li>
+                <c:forEach var="mainRecentReply" items="${_cafeDTO.mainRecentReplyList}"> 
+               <li>
+	               	<a 
+	               		href="${contextPath}/user/board/goBoardInside?cafeId=${_cafeDTO.cafeId}&boardMenuNum=${mainRecentReply.boardMenuNum}&boardNum=${mainRecentReply.boardNum}">
+	               	${mainRecentReply.boardTitle}</a>
+               	</li>
+               </c:forEach> 
               </ul>
            </div>
          </div>
