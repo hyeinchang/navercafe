@@ -34,7 +34,6 @@
 		delete project_members where user_id = #{id}
 	</delete>
 	
-<<<<<<< HEAD
 	<select id="loginChk" resultType="Integer">
 		select count(*) from project_members where user_id = #{id} and user_pw = #{password}
 	</select>
@@ -43,15 +42,4 @@
 		select count(user_id) from project_members where user_id = #{id}
 	</select>
 	
-	
-	
-
-	
-	
-	
-	
-	
-	
-=======
->>>>>>> c336640b162a2a0b32cc361325a6f109dbdfecbc
 </mapper>
