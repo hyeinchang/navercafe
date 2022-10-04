@@ -311,12 +311,6 @@ public class HomeController { //메인 로그인관련
 		return idCount;
 	}
 	
-	@PostMapping(value = "cafe/member/nickCheck3")
-	public @ResponseBody String nickCheck3(@RequestParam("id") String id){
-		String result = ms.idOverlap(id);
-		
-		return result;
-	}
 	@PostMapping(value="/cafe/login", produces="application/json")
 	@ResponseBody
 	public boolean login(@RequestBody MemberDTO memberDTO, HttpSession session) {

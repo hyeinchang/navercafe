@@ -14,6 +14,4 @@ public interface MemberMapper {
 	public int delete(String id);
 	
 	public int loginChk(MemberDTO memberDTO);
-
-	public int idOverlap(String id);
 }
