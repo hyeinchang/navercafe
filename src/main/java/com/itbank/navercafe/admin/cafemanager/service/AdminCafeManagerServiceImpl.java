@@ -16,6 +16,8 @@ public class AdminCafeManagerServiceImpl implements AdminCafeManagerService{
 	AdminCafeManagerMapper mapper;
 	@Autowired
 	AdminMemberStaffMapper amsMapper;
+	@Autowired 
+	AdminCafeManagerMapper cafeManagerMapper;
 	
 	public String getMessage(String msg, String url) {
 		String message = "";
@@ -24,7 +26,6 @@ public class AdminCafeManagerServiceImpl implements AdminCafeManagerService{
 		return message;
 	}
 	
-	AdminCafeManagerMapper cafeManagerMapper;
 
 	@Override
 	public int updateBasicInfo(CafeDTO cafeDTO) throws Exception {

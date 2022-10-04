@@ -28,15 +28,6 @@
                     <span>Dashboard</span></a>
             </li>
              -->
-<%--
-            <!-- Divider -->
-            <hr class="sidebar-divider">
-
-            <!-- Heading -->
-            <div class="sidebar-heading">
-                Interface
-            </div>
- --%>
  
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
@@ -48,7 +39,8 @@
                 <div id="cafeManage" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/basicInfo')">기본 정보</a>
-                        <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/eventManage')">이벤트 관리</a>
+                        <a class="collapse-item" href="#">이벤트 관리</a>
+<%--                         <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/eventManage')">이벤트 관리</a> --%>
                         <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/layoffManager')">매니저 위임</a>
                     </div>
                 </div>
@@ -65,7 +57,8 @@
                     <div class="bg-white py-2 collapse-inner rounded">
                         <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/manageAllMembers')">전체 멤버 관리</a>
                         <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/manageDeportedMembers')">강제탈퇴 멤버 관리</a>
-                        <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/manageStaffs')">스텝 관리</a>
+                        <a class="collapse-item" href="#">스텝 관리</a>
+<%--                         <a class="collapse-item" href="javascript:changeMenu('${adminViewPath}/manageStaffs')">스텝 관리</a> --%>
                     </div>
                 </div>
             </li>
