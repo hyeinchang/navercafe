@@ -108,14 +108,6 @@
 					</thead>
 					<c:forEach var="dto" items="${boardList}">
 						<tr>
-							<th>${dto.BOARD_NUM}</th>
-							<th>
-							<a href="goBoardInside?boardNum=${dto.BOARD_NUM }
-							&cafeId=${cafeId}&boardMenuNum=${dto.BOARD_MENU_NUM}">
-							${dto.BOARD_TITLE} </a></th>
-							<th>${dto.USER_Id}</th>
-							<th>${dto.BOARD_SAVEDATE}</th>
-							<th>${dto.HIT}</th>
 							<td>${dto.boardNum}</td>
 							<td>
 								<a href="${contextPath}/user/board/goBoardInside?boardNum=${dto.boardNum}
