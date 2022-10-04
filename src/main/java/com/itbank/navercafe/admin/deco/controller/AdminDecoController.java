@@ -181,14 +181,21 @@ public class AdminDecoController {
 		return result;
 	}
 
-	@GetMapping("deleteTitle")
+	@PostMapping("deleteTitle")
 	public String deleteTitle(HttpServletRequest request, CafeDTO cafeDTO) {
 		String cafeId ="";
 		
 		try {
 			if(cafeDTO != null && cafeDTO.getCafeId() != null) {
-				int titleNum = cafeDTO.getCafeTitleNum();		
+				cafeId = cafeDTO.getCafeId();
+				int cafeTitleNum = cafeDTO.getCafeTitleNum();
+				FileDTO fileDTO = new FileDTO();
 				
+				cafeDTO.setCafeTitleNum(0);
+				fileDTO.setCafeTitleNum(cafeTitleNum);
+			
+				fileUtils.deleteFile(fileDTO);
+				adminDecoService.saveTitle(cafeDTO);
 			}
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -196,6 +203,28 @@ public class AdminDecoController {
 		
 		return "redirect:/admin/deco/title?cafeId="+cafeId;
 	}
+	
+	@PostMapping("deleteFront")
+	public String deleteFront(HttpServletRequest request, CafeDTO cafeDTO) {
+		String cafeId ="";
+		
+		try {
+ 			if(cafeDTO != null && cafeDTO.getCafeId() != null) {
+				cafeId = cafeDTO.getCafeId();
+				String editorDirectory = request.getParameter("editorDirectory");
+				FileDTO fileDTO = new FileDTO();
+			
+				fileUtils.deleteFile(fileDTO);
+				adminDecoService.saveFront(cafeDTO);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return "redirect:/admin/deco/title?cafeId="+cafeId;
+	}
+	
+	
 	
 	// 레이아웃 설정 페이지로 이동
 	@GetMapping("/layout")

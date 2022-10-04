@@ -58,7 +58,7 @@
                          				</a>
 		                    			</span>
 		                    			<input type="hidden" name="boardMenuName" value="${menuType.boardMenuName}">
-		                    			<input type="hidden" name="boardMenuNum" value="">
+		                    			<input type="hidden" name="boardMenuNum" value="${menuType.boardMenuNum}">
 		                    			<input type="hidden" name="boardMenuDesc" value="${menuType.boardMenuDesc}">
 		                    			<input type="hidden" name="boardMenuType" value="${menuType.boardMenuType}">
 		                    			<input type="hidden" name="boardWriteAuth" value="0">
