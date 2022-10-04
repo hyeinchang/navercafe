@@ -86,7 +86,7 @@
 								<form name="menuForm">
 									<input type="hidden" name="cafeId" value="${_cafeDTO.cafeId}">
 									<ul id="rightMenuUl">
-									<c:forEach var="menu" items="${menuList}" varStatus="status">
+									<c:forEach var="menu" items="${_cafeDTO.cafeMenuList}" varStatus="status">
 			                    		<c:set var="typeClass"/>
 			                    		<c:set var="order" value="${status.index+1}"/>
 			                    		<c:choose>
