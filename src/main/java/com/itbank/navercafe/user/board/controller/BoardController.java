@@ -43,10 +43,10 @@ public class BoardController {
 	
 	@RequestMapping("/writeForm")
 	public String writeForm(String cafeId, HttpSession session, CafeDTO cafeDTO, Model model) {
-		System.out.println("글쓰기 이동");
+		//System.out.println("글쓰기 이동");
 		
 		String userId = (String) session.getAttribute("loginId");
-		System.out.println("아이디 :  "+userId);
+		//System.out.println("아이디 :  "+userId);
 		CafeMemberDTO dto = boardCafeSer.getCafeMember(cafeId,userId);
 		model.addAttribute("cafeMember",dto);
 		model.addAttribute("cafeDTO", cafeDTO);
@@ -146,9 +146,9 @@ public class BoardController {
 	
 	@GetMapping("likeChk")
 	public String likeChk(int boardNum,String userId,Model model,HttpServletRequest res) {
-		System.out.println("컨트롤러 : "+boardNum+" - "+userId);
-		System.out.println("좋아요 클릭시 넘어오는 :"+res.getParameter("boardMenuNum"));
-		System.out.println("좋아요 클릭시 넘어오는:"+res.getParameter("cafeId"));
+		//System.out.println("컨트롤러 : "+boardNum+" - "+userId);
+		//System.out.println("좋아요 클릭시 넘어오는 :"+res.getParameter("boardMenuNum"));
+		//System.out.println("좋아요 클릭시 넘어오는:"+res.getParameter("cafeId"));
 		ser.likeChk(boardNum,userId,model);
 		return "redirect:goBoardInside?boardNum="+boardNum+"&num="+1+
 				"&boardMenuNum="+res.getParameter("boardMenuNum")+"&cafeId="+res.getParameter("cafeId");

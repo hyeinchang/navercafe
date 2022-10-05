@@ -52,11 +52,11 @@ public class MemoController {
 
 	@PostMapping("saveMemoReply")
 	public String saveReply(MultipartHttpServletRequest mul) {
-		System.out.println("그룹번호:"+mul.getParameter("groupNum"));
-		System.out.println("작성하고있는쉐끼:"+mul.getParameter("userId"));
-		System.out.println("내용:"+mul.getParameter("memoReplyContent"));
-		System.out.println("파일명:"+mul.getFile("replyImageName"));
-		System.out.println("cafeId : "+mul.getParameter("cafeId"));
+//		System.out.println("그룹번호:"+mul.getParameter("groupNum"));
+//		System.out.println("작성하고있는쉐끼:"+mul.getParameter("userId"));
+//		System.out.println("내용:"+mul.getParameter("memoReplyContent"));
+//		System.out.println("파일명:"+mul.getFile("replyImageName"));
+//		System.out.println("cafeId : "+mul.getParameter("cafeId"));
 		memoSer.saveMemoReply(mul);
 		
 		return "redirect:goMemoBoardList?cafeId="+mul.getParameter("cafeId");

@@ -219,7 +219,7 @@ public class AdminDecoController {
 
 			fileUtils.deleteDirectory(editorDirectory);
 			result = adminDecoService.saveFront(cafeDTO);
-			System.out.println( " editorDirectory :" + editorDirectory);
+			//System.out.println( " editorDirectory :" + editorDirectory);
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

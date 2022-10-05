@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class MenuController {
 	@GetMapping("iboard")
 	public String iboard(String layout) {
-		System.out.println("layout : " + layout);
+//		System.out.println("layout : " + layout);
 		return "redirect:/";
 	}
 }

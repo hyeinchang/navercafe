@@ -48,8 +48,8 @@ public class BoardServiceImpl implements BoardService{
 		//우선 좋아요 리스트 받아오기
 		if(bm.getLikesList(boardNum,userId)==null) {
 			bm.likeUp(boardNum);
-			System.out.println("좋아요 테이블에 추가 :"+ boardNum);
-			System.out.println("좋아요 테이블에 추가 :"+ userId);
+			//System.out.println("좋아요 테이블에 추가 :"+ boardNum);
+			//System.out.println("좋아요 테이블에 추가 :"+ userId);
 			bm.insertLike(boardNum, userId);
 			model.addAttribute("like","T");
 		}else {

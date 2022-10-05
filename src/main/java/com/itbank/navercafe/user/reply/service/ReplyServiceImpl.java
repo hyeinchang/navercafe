@@ -52,8 +52,8 @@ public class ReplyServiceImpl implements ReplyService{
 			String directory = "boardReply";
 			String userId =  mul.getParameter("userId");
 			
-			System.out.println("userId : " + userId);
-			System.out.println("replyImgName : " + multipartFile.getOriginalFilename());
+//			System.out.println("userId : " + userId);
+//			System.out.println("replyImgName : " + multipartFile.getOriginalFilename());
 			
 			if(userId != null && userId.length() > 0) {
 				directory += "/" + userId;

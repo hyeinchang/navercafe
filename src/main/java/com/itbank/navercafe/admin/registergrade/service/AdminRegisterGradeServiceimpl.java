@@ -208,7 +208,7 @@ public class AdminRegisterGradeServiceimpl implements AdminRegisterGradeService 
 		int result = 0;
 		for(int i = 0; i<update.size(); i++) {
 			result += mapper.modifyMembersGrade(update.get(i));
-			System.out.println("result : " + result);
+			//System.out.println("result : " + result);
 		}
 		
 		String url, msg;

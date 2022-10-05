@@ -13,7 +13,7 @@ import com.itbank.navercafe.user.member.dto.MemberDTO;
 public class AdminController {
 	@GetMapping("")
 	public String index(CafeDTO cafeDTO, Model model) {
-		System.out.println("cafeId : " + cafeDTO.getCafeId());
+		//System.out.println("cafeId : " + cafeDTO.getCafeId());
 		model.addAttribute("cafeDTO", cafeDTO);
 		return "admin/index";
 	}
