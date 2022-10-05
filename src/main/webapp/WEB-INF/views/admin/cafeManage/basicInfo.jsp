@@ -76,7 +76,7 @@
 			      				</div>
 			      				<div>
 			      					<label for="joinApplyN">
-						          		<input type="radio" id="joinApplyN" name="cafeJoinApply" value="Y"${_cafeDTO.cafeJoinApply eq 'N' ? ' checked' : ''}>
+						          		<input type="radio" id="joinApplyN" name="cafeJoinApply" value="Y"${_cafeDTO.cafeJoinApply eq 'Y' ? ' checked' : ''}>
 						            	<span>가입 신청 시 운영진 승인을 거쳐 가입할 수 있습니다.</span>
 						       		</label>
 			      				</div>

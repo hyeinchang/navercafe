@@ -22,5 +22,15 @@
 		update project_cafe_member set cafe_user_grade = 999 where cafe_id = #{cafeId} and user_id = #{newManager}
 	</update>
 	
+	<update id="updateBasicInfo">
+		<![CDATA[
+			UPDATE project_cafe_info SET
+				CAFE_NAME = #{cafeName},
+			 	CAFE_EXPLANATION = #{cafeExplanation}, 
+				CAFE_ICON_NUM = #{cafeIconNum},
+				CAFE_JOIN_APPLY = #{cafeJoinApply}
+			WHERE cafe_id = #{cafeId}
+		]]>
+	</update>
 </mapper>
 
