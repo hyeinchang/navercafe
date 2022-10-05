@@ -101,17 +101,19 @@
 	
 	function writeBoard() {
 		var form = document.writeBoardForm;
+		
 		if(formCheck()) {
 			var xhr = new XMLHttpRequest();
 			var cafeId = form.cafeId.value;
 			var userId = form.userId.value;
 			var editorDirectory = 'board';
-			var data = getData();
+			var data = new Object();
 			
 			editorDirectory += '/' + cafeId + '/' + userId;
 			
 			updateEditorContent(contentAreaId, '${contextPath}', editorDirectory);
 			
+			data = getData();
 			xhr.open('post', '${contextPath}/user/board/writeBoard', false);
 			xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 			xhr.setRequestHeader('Content-Type', 'application/json');
