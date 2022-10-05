@@ -45,7 +45,8 @@
          
            <div class="widget component1">
              <h4 class="title">
-               <span>최신글 목록</span><a href="javascript:alert('더보기 이동')">더보기</a>
+               <span>최신글 목록</span>
+                <a href="javascript:changeCafeMenu('board/goBoardList?cafeId=${_cafeDTO.cafeId}')">더보기</a>
               </h4>
               <ul>            
                 <c:forEach var="mainRecent" items="${_cafeDTO.mainRecentList}"> 
@@ -59,7 +60,8 @@
            
            <div class="widget component2">
              <h4 class="">
-               <span>최신 댓글/답글</span><a href="javascript:alert('더보기 이동')">더보기</a>
+               <span>최신 댓글/답글</span>
+               <a href="javascript:changeCafeMenu('board/goBoardList?cafeId=${_cafeDTO.cafeId}')">더보기</a>
               </h4>
               <ul>            
                 <c:forEach var="mainRecentReply" items="${_cafeDTO.mainRecentReplyList}"> 
