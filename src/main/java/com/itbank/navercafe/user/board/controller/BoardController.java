@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.itbank.navercafe.common.CommonUtils;
+import com.itbank.navercafe.common.file.service.FileService;
 import com.itbank.navercafe.user.board.dto.BoardDTO;
 import com.itbank.navercafe.user.board.dto.BoardExtendDTO;
 import com.itbank.navercafe.user.board.service.BoardService;
@@ -40,6 +41,7 @@ public class BoardController {
 	@Autowired GradeService upSer;
 	@Autowired MemoService memoSer;
 	@Autowired CafeMemberService cafeMemberService;
+	@Autowired FileService fs;
 	
 	@RequestMapping("/writeForm")
 	public String writeForm(String cafeId, HttpSession session, CafeDTO cafeDTO, Model model) {
@@ -53,8 +55,7 @@ public class BoardController {
 		return "user/board/writeForm";
 	}
 	
-	
-	//전체목록인데 수영이형이랑 상의.
+
 	@GetMapping("/goBoardList")	
 	public String goBoardList(Model model, String cafeId, MenuDTO menuDTO) throws Exception{
 		int boardMenuNum = menuDTO.getBoardMenuNum();
@@ -97,7 +98,6 @@ public class BoardController {
 			@RequestParam(value="next",required=false,defaultValue="0")int next,
 			@RequestParam(value="preview",required=false,defaultValue="0")int preview) {
 
-		
 		//System.out.println("넘어온 보드 값 : "+boardNum);
 		//System.out.println("넘어온 boardMenuNum 값 :"+boardMenuNum);
 		//System.out.println("boardInside실행");
@@ -127,7 +127,7 @@ public class BoardController {
 		//인기글 리스트
 		ser.topList(model,cafeId);
 		//파일테이블리스트
-		ser.getFileList(model);
+		fs.getFileList(model);
 
 		return "user/board/boardInside";
 	}
@@ -172,6 +172,9 @@ public class BoardController {
 		try {
 			boardDTO = (BoardDTO) commonUtils.setDTO(map, boardDTO);
 			result = ser.insertBoard(boardDTO);
+			System.out.println("작성완료시 : "+ boardDTO.getBoardNum());
+			System.out.println("작성완료시 : "+boardDTO.getBoardMenuNum());
+			System.out.println("작성완료시 : "+boardDTO.getBoardContent());
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -198,9 +201,12 @@ public class BoardController {
 	
 	@GetMapping("deleteBoard")
 	public String deleteBoard(int boardNum) {
+		//보드넘으로 카페아이디 가져오기
+		MenuDTO dto=ser.getBoardCafeId(boardNum);
 		ser.deleteBoard(boardNum);
-		return "user/board/boardList";
-	}
+		return "user/board/boardList?cafeId="+dto.getCafeId()+
+				"&boardMenuNum="+1;
+	}//boardList로 어캐 넘기누?
 	
 	@PostMapping("deleteReply")
 	public String deleteReply(HttpServletRequest res) {
@@ -213,6 +219,14 @@ public class BoardController {
 		"&boardMenuNum="+res.getParameter("boardMenuNum")+"&cafeId="+res.getParameter("cafeId");
 	}
 	
+	@PostMapping("update_reply")
+	public String updateReply(MultipartHttpServletRequest mul) {
+		System.out.println("바꿔줄 녀석 : "+mul.getParameter("replyNum"));
+		System.out.println("수정 내용:"+mul.getParameter("replyContent"));
+		System.out.println("수정할 이미지:"+mul.getParameter("replyImgName"));
+		System.out.println("수정할 이미지:"+mul.getFile("replyImgName"));
+		return "";
+	}
 	
 }
 

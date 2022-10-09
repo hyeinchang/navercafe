@@ -1,7 +1,10 @@
 package com.itbank.navercafe.common.file.service;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.ui.Model;
 
 import com.itbank.navercafe.common.file.dto.FileDTO;
 import com.itbank.navercafe.common.file.mapper.FileMapper;
@@ -39,5 +42,13 @@ public class FileServiceImpl implements FileService {
 	@Override
 	public int deleteAttachFile(int fileNum) throws Exception {
 		return fileMapper.deleteAttachFile(fileNum);
+	}
+	
+	@Override
+	public void getFileList(Model model) {
+		ArrayList<FileDTO> list=fileMapper.getFileList();
+		for(int i=0 ; i<list.size();i++) {
+		}
+		model.addAttribute("fileList",fileMapper.getFileList());
 	}
 }

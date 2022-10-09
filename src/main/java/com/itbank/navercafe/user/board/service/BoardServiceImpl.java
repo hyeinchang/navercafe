@@ -25,7 +25,7 @@ public class BoardServiceImpl implements BoardService{
 	@Autowired FileMapper fm;
 	
 	
-	//전체목록인데 수영이형이랑 상의.
+
 	@Override
 	public ArrayList<BoardExtendDTO> getBoardList(MenuDTO menuDTO) {
 		return bm.getBoardList(menuDTO);
@@ -76,17 +76,7 @@ public class BoardServiceImpl implements BoardService{
 		//System.out.println(bm.topList());
 	}
 
-	@Override
-	public void getFileList(Model model) {
-		ArrayList<FileDTO> list=fm.getFileList();
-		for(int i=0 ; i<list.size();i++) {
-//			System.out.println("파일 고유 번호 :"+list.get(i).getFileNum());
-//			System.out.println("사진 정보 :"+list.get(i).getFileOrgName());
-//			System.out.println("replyNum :"+list.get(i).getReplyNum());
-//			System.out.println("userImageNum :"+list.get(i).getCafeUserImageNum());
-		}
-		model.addAttribute("fileList",fm.getFileList());
-	}
+	
 	
 	@Override
 	public BoardDTO getUserBoard(int boardNum,int boardMenuNum,Model model,int pageNum,String cafeId,int next,int preview) {
@@ -178,6 +168,8 @@ public class BoardServiceImpl implements BoardService{
 
 	@Override
 	public int insertBoard(BoardDTO boardDTO) throws Exception {
+		System.out.println("작성할 게시글 번호 : "+ boardDTO.getBoardNum());
+		System.out.println("작성할 게시글 내용 :"+ boardDTO.getBoardContent());
 		return bm.insertBoard(boardDTO);
 	}
 
@@ -186,7 +178,11 @@ public class BoardServiceImpl implements BoardService{
 		return bm.checkGradeBoard(boardExtDTO);
 	}
 
-
+	@Override
+	public MenuDTO getBoardCafeId(int boardNum) {
+		return bm.getBoardCafeId(boardNum);
+	}
+	
 	@Override
 	public void deleteBoard(int boardNum) {
 		bm.deleteBoard(boardNum);
@@ -197,6 +193,9 @@ public class BoardServiceImpl implements BoardService{
 	public void deleteReply(int replyNum) {
 		bm.deleteReply(replyNum);
 	}
+
+
+	
 
 }
 

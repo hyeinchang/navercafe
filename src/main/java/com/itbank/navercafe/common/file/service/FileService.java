@@ -1,5 +1,7 @@
 package com.itbank.navercafe.common.file.service;
 
+import org.springframework.ui.Model;
+
 import com.itbank.navercafe.common.file.dto.FileDTO;
 
 public interface FileService {
@@ -9,4 +11,7 @@ public interface FileService {
 	public int insertAttachFile(FileDTO fileDTO) throws Exception;
 	public int updateAttachFile(FileDTO fileDTO) throws Exception;
 	public int deleteAttachFile(int fileNum) throws Exception;
+	
+	//파일테이블리스트
+	public void getFileList(Model model);
 }

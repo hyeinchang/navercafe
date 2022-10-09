@@ -69,17 +69,20 @@ public class ReplyServiceImpl implements ReplyService{
 			redto.setReplyContent(mul.getParameter("replyContent"));
 			redto.setReplyStep(step);
 			redto.setReplyNum(seq);
-//			System.out.println("들어갈 보드넘 :"+redto.getBoardNum());
-//			System.out.println("들어갈 유저아이디 :"+redto.getUserId());
-//			System.out.println("들어갈 내용 :"+redto.getReplyContent());
-//			System.out.println("들어갈 스탭 :"+redto.getReplyStep());
-//			System.out.println("들어갈 댓글넘버 :"+redto.getReplyNum());
+			System.out.println("들어갈 보드넘 :"+redto.getBoardNum());
+			System.out.println("들어갈 유저아이디 :"+redto.getUserId());
+			System.out.println("들어갈 내용 :"+redto.getReplyContent());
+			System.out.println("들어갈 스탭 :"+redto.getReplyStep());
+			System.out.println("들어갈 댓글넘버 :"+redto.getReplyNum());
 			System.out.println("directory >>>> " + directory);
+			System.out.println("설마 너?:"+multipartFile.getSize());
 			if(multipartFile.getSize()!=0) {
 				FileDTO fileDTO = null;
 				FileResult fileResult = fileUtils.uploadFile(multipartFile, directory);
 				fileDTO = fileResult.getFileDTO();
+				System.out.println("넣어줄애:"+seq);
 				fileDTO.setReplyNum(seq);
+				
 				fs.insertAttachFile(fileDTO);
 			}
 			System.out.println("댓글인지 답글인지 판단할 그룹번호 : "+mul.getParameter("groupNum"));

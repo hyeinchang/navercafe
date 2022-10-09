@@ -310,12 +310,15 @@ public class FileUtils {
 	// DB에서  파일 num 또는 reference num으로 파일정보를 찾아 다운로드
 	public void download(HttpServletResponse response,  int fileNum) throws IOException {
 		try {
+			System.out.println("넘겨준 값 : "+fileNum);
 			FileDTO fileDTO = fileService.selectAttachFile_fileNum(fileNum);
-			
+			System.out.println("파일 번호 :"+fileDTO.getFileNum());
+			System.out.println("리플라이번호 :"+fileDTO.getReplyNum());
 			if(fileDTO != null) {
 				String orgFileName = fileDTO.getFileOrgName();
 				String storedFileName = fileDTO.getFileStoredName();
 				String directory = fileDTO.getFileDirectory();
+				System.out.printf(orgFileName,storedFileName,directory);
 				
 				download(response, directory, storedFileName, orgFileName);
 			}
@@ -341,6 +344,24 @@ public class FileUtils {
 		} 
 	}
 	
+	// 파일 다운로드
+		public void download(HttpServletResponse response, String directory, String storedFileName, String orgFileName) throws IllegalStateException, IOException {
+			FileInputStream fis = null;
+			
+			try {
+				if(checkDirectory(directory)) {
+					File file = new File(getUploadPath(directory) + PATH_DELIMITER + storedFileName);
+					fis = new FileInputStream(file);
+					
+					response.setHeader("Content-Disposition", "attachment; fileName=" + orgFileName);
+
+					FileCopyUtils.copy(fis, response.getOutputStream());
+				}
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+		}
+	
 	
 	// DB에서 FileDTO로 파일정보를 찾아 다운로드
 	public void download(HttpServletResponse response, FileDTO pfileDTO, boolean onlyFile) throws IOException {		
@@ -363,23 +384,7 @@ public class FileUtils {
 		} 
 	}
 	
-	// 파일 다운로드
-	public void download(HttpServletResponse response, String directory, String storedFileName, String orgFileName) throws IllegalStateException, IOException {
-		FileInputStream fis = null;
-		
-		try {
-			if(checkDirectory(directory)) {
-				File file = new File(getUploadPath(directory) + PATH_DELIMITER + storedFileName);
-				fis = new FileInputStream(file);
-				
-				response.setHeader("Content-Disposition", "attachment; fileName=" + orgFileName);
-
-				FileCopyUtils.copy(fis, response.getOutputStream());
-			}
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-	}
+	
 	
 	// 파일 명으로 해당 디렉토리의 파일 다운로드
 	public void download(HttpServletResponse response, String directory, String fileName) throws IllegalStateException, IOException {

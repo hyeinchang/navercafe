@@ -32,14 +32,16 @@ public interface BoardService {
 	//인기글 리스트
 	public void topList(Model model,String cafeId);
 	
-	//파일테이블리스트
-	public void getFileList(Model model);
+	
 	
 	public int insertBoard(BoardDTO boardDTO) throws Exception;
 	
 	public int checkGradeBoard(BoardExtendDTO boardExtDTO) throws Exception;
 	
+	public MenuDTO getBoardCafeId(int boardNum);
 	public void deleteBoard(int boardNum);
 	
 	public void deleteReply(int replyNum);
+	
+	
 }

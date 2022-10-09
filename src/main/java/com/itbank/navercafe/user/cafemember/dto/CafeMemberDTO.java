@@ -4,6 +4,7 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 public class CafeMemberDTO {
+	
 	private String cafeId;
 	private String userId;
 	private String cafeUserNickname;
@@ -19,7 +20,6 @@ public class CafeMemberDTO {
 	private String cafeUserEmailReceieve;
 	private String cafeUserGenderReveal;
 	private String cutName;
-	
 	public String getCafeId() {
 		return cafeId;
 	}
@@ -110,4 +110,6 @@ public class CafeMemberDTO {
 	public void setCutName(String cutName) {
 		this.cutName = cutName;
 	}
+	
+
 }

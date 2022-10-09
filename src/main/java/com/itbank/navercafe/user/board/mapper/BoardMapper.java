@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
 
+import com.itbank.navercafe.common.menu.BoardMenuType;
 import com.itbank.navercafe.user.board.dto.BoardDTO;
 import com.itbank.navercafe.user.board.dto.BoardExtendDTO;
 import com.itbank.navercafe.user.board.dto.LikesDTO;
@@ -56,9 +57,12 @@ public interface BoardMapper {
 	
 	public int checkGradeBoard(BoardExtendDTO boardExtDTO) throws Exception;
 	
+	public MenuDTO getBoardCafeId(int boardNum);
 	public void deleteBoard(int boardNum);
 	
 	public void deleteReply(int replyNum);
+	
+	
 
 	
 }

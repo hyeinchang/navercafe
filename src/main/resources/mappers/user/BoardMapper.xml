@@ -199,5 +199,15 @@
 		delete project_reply where reply_num=#{replyNum}
 	</delete>
 	
+	<!-- boardNum으로 카페 id 가져오기  -->
+	<select id="getBoardCafeId" resultMap="project_board_type">
+		select C.cafe_id from 
+		(select * from project_board_type)C
+		inner join
+		(select board_menu_num AS Bno from project_board where board_num=#{boardNum})B
+		on C.board_menu_num = B.Bno
+		where board_menu_num=B.Bno
+	</select>
+	
 </mapper>
 

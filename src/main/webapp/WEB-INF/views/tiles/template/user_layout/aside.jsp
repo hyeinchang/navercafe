@@ -117,13 +117,13 @@
 		          </form>
 		        </div>
 		        </c:if>
-		      
                 <ul class="recent_posts">
                
                   <!-- start 카페 가입 회원 정보 -->
                   <c:if test="${_cafeDTO.isCafeMember eq 'true'}">
                   <li>
                   	<span>
+                  		
                   	  <a href="${contextPath}/user/profileUpdate?cafeId=${_cafeDTO.cafeId}" title="프로필 변경하기">
                   	  	<c:choose>
                   	  		<c:when test="${_cafeDTO.loginUser.cafeUserImageNum == 0}">
@@ -131,6 +131,7 @@
                   	  			<img class="profileImg" src="${contextPath}/resources/img/cafe_profile.png" alt="프로필 이미지 없음">
                   	  		</c:when>
                   	  		<c:otherwise>
+                  	  			
                   	  			<img class="profileImg" src="${contextPath}/file/download?cafeUserImageNum=${_cafeDTO.loginUser.cafeUserImageNum}" alt="프로필 이미지">
                   	  		</c:otherwise>
                   	  	</c:choose>
