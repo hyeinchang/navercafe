@@ -54,7 +54,7 @@
 					last : '마지막',
 					first : '처음'
 				},
-				emptyTable : '데이터가 없습니다.',
+				emptyTable : '게시글이 없습니다.',
 				infoEmpty : "데이터 없음",
 				info : '_START_부터  _END_까지  / 총데이터 : _TOTAL_',
 				infoEmpty : '데이터 0 부터 0 까지 0 총데이터',

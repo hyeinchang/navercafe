@@ -1,9 +1,8 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
-
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+    <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <style type="text/css">
+
 	.test{
 		display: block;
 		width:90%;
@@ -89,9 +88,9 @@ li.bbp-topic-freshness-test{
 #bbpress-forums li.bbp-header-header{background-color:#141618!important;color:#fff!important;padding:20px!important;}
 
 #bbpress-forums li.bbp-header-content{background-color:white!important;color:black!important;padding:12px!important;
-					border-top: 1px solid #ddd;border-bottom: 1px solid #ddd;}
+					border-top: 1px solid #E0E0E0;border-bottom: 1px solid #E0E0E0;}
 #bbpress-forums li.bbp-header-grade-list{background-color:white!important;color:black!important;padding:20px!important;
-					border-top: 1px solid #ddd;border-bottom: 1px solid #ddd;}
+					border-top: 1px solid #E0E0E0;border-bottom: 1px solid #E0E0E0;}
 #bbpress-forums ul li ul.forum-titles-test{ padding-bottom: 10px;}
 /*///////////////////////////   컬럼명 부분   //////////////////  */
 #bbpress-forums-test{
@@ -118,7 +117,7 @@ li.bbp-topic-freshness-test{
 .reply-one{width:50%}
 .reply-two{width:50%; text-align: right;}
 .board-post-desc{
-	padding:20px;
+	padding-left:10%; width:90%;
 }
 .board-post-desc img{
 	width:100%;
@@ -137,9 +136,8 @@ li.bbp-topic-freshness-test{
 	display: flex;
 }
 
-h5.title_sub{margin: 0; border-bottom: 1px solid #ddd;padding:20px 0;}
-h5.title_sub label:not(:last-child) {margin-right: 10px;}
 </style>
+
 <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
 <script src="http://code.jquery.com/jquery-latest.min.js"></script>
 <script>
@@ -201,315 +199,529 @@ h5.title_sub label:not(:last-child) {margin-right: 10px;}
 	}
 
 	</script>
-	<div class="content col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix cstmContent" ${_cafeDTO.cafeLayout eq 'left' ? '' : 'style="float:right;"'}>
-       	<section class="section1">
-		    <div class="container clearfix">
-		      <div class="title">
-		       	<h4>
-		          <span>${_cafeDTO.menuDTO.boardMenuName}</span>
-		        </h4>
-		      </div>
-		      <div class="col-lg-9 col-md-9 col-sm-9 clearfix">
-		      	
-		      	<header class="page-header blog-title">
-		          	<!-- <a href="#"><h5 style="color:green;">${boardMenuType.boardMenuName} ></h5></a> -->
-		          	
-		            <h3 class="general-title">${userBoard.boardTitle}</h3>
-		            
-		            <div class="post-meta-test">
-		              
-		              	<div class="div-one">
-		              		<a href="#">
-		              		<c:choose>
-			              	<c:when test="${replyreply.CAFE_USER_IMAGE_NUM eq null || replyreply.CAFE_USER_IMAGE_NUM == 0}">
-		              			<img src="${contextPath}/resources/img/프로필.jpg"
-		              			width="40px" class="profileImg" alt="">
-		              		</c:when>
-							<c:otherwise>
-								<img src="${contextPath}/file/download?file/cafeUserImageNum=${replyreply.CAFE_USER_IMAGE_NUM}" 
-								width="40px" class="profileImg" alt="">
-							</c:otherwise>
-							</c:choose>
-			              	</a>
-		                </div>
-		                
-						<div class="div-two">
-							${cafeUserInfo.cafeUserNickname }<br>
-			                ${userBoard.boardSaveDate} 조회 ${userBoard.hit }
-						</div>
-						<div class="div-three">
-			                	<a href="#">
-			                	<img src="${contextPath}/resources/img/댓글아이콘.png" width="25px" alt="">
-			                		댓글 ${replyCount}
-			                	</a>
+	
+	
+
+</script>
+
+<div class="content col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix cstmContent" ${_cafeDTO.cafeLayout eq 'left' ? '' : 'style="float:right;"'}>
+  <section class="section1">
+    <div class="container clearfix">
+	      <div class="content col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix">
+			
+			<div id="del_next">
+			<!--      loginId == 관리자 계정 ||   -->
+			<!--location.href='deleteBoard?boardNum=${userBoard.boardNum}  -->
+			
+			<div class="modify_delete">
+				<c:choose>
+					<c:when test="${loginId == userBoard.userId}">
+						<button onclick="test()">
+							삭제 
+						</button>
+					</c:when>
+					<c:when test="${loginId == userBoard.userId}">
+						<button onclick="location.href='modifyBoard?boardNum=${userBoard.boardNum}'">
+							수정
+						</button>
+					</c:when>
+				</c:choose>
+			</div>
+						<%-- <h5>들어온 쒜끼${sessionUser.userId} 게시물 주인쒜끼${userBoard.userId}</h5> --%>
+			
+			
+			<div class="before-next-nav">
+				<c:choose>
+					<c:when test="${Preview == false}">
+						<button onclick="location.href='goBoardInside?boardNum=${userBoard.boardNum}&cafeId=${boardMenuType.cafeId}&boardMenuNum=${boardMenuType.boardMenuNum}&next=1'">∨다음글</button>
+					</c:when>
+					<c:when test="${Next == false}">
+						<button onclick="location.href='goBoardInside?boardNum=${userBoard.boardNum}&cafeId=${boardMenuType.cafeId}&boardMenuNum=${boardMenuType.boardMenuNum}&preview=1'">∧이전글</button>
+					</c:when>
+					<c:otherwise>
+						<button onclick="location.href='goBoardInside?boardNum=${userBoard.boardNum}&cafeId=${boardMenuType.cafeId}&boardMenuNum=${boardMenuType.boardMenuNum}&preview=1'">∧이전글</button>
+						<button onclick="location.href='goBoardInside?boardNum=${userBoard.boardNum}&cafeId=${boardMenuType.cafeId}&boardMenuNum=${boardMenuType.boardMenuNum}&next=1'">∨다음글</button>
+					</c:otherwise>
+				</c:choose>
+				
+				<button onclick="location.href='goBoardList?cafeId=${boardMenuType.cafeId}'">목록</button>
+			</div>
+		</div>
+		        <!-- SLIDE POST -->
+		        <article class="blog-wrap-test">
+		         
+		         <div class="board-board">
+				
+			          <header class="page-header blog-title">
+			          	<a href="#"><h5 style="color:green;">${boardMenuType.boardMenuName} ></h5></a>
+			          	
+			            <h3 class="general-title">${userBoard.boardTitle}</h3>
+			            
+			            <div class="post-meta-test">
+			              
+			              	<div class="div-one">
+			              		<a href="#">
+				              		<c:if test="${ cafeUserInfo.cafeUserImageNum == 0 }">
+				              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
+				              			width="40px" class="img-circle alignleft" alt="">
+				              		</c:if>
+									<c:if test="${ cafeUserInfo.cafeUserImageNum  != 0 }">
+										<img src="download?fileNum=${cafeUserInfo.cafeUserImageNum }" 
+										width="40px" class="img-circle alignleft" alt="">
+									</c:if>
+				              	</a>
+			                </div>
+			                
+							<div class="div-two">
+								<a href="#">${cafeUserInfo.cafeUserNickname }</a><br>
+				                ${userBoard.boardSaveDate} 조회 ${userBoard.hit }
+							</div>
+							<div class="div-three">
+				                	<a href="#">
+				                	<img src="<%=request.getContextPath() %>/resources/img/댓글아이콘.png" width="25px" alt="">
+				                	댓글 ${replyCount}
+				                	</a>
+				            </div>
 			            </div>
-		            </div>
-		        </header>
+			            
+			          </header>
+		
+			          <div class="board-post-desc">
+			          	<p>
+			          	${userBoard.boardContent}
+			          	</p>
+			           	 
+			          </div>
 		        
-		        <div class="board-post-desc">
-		          	${userBoard.boardContent}
-			   	</div>
-		      	
-		      
+				<hr>
+				
+		        <div class="more-more">
+		          <div class="more-one">
+		          
+		          	<a href="#">
+	              		<c:if test="${ cafeUserInfo.cafeUserImageNum == 0 }">
+	              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
+	              			width="50" class="img-circle alignleft" alt="">
+	              		</c:if>
+						<c:if test="${ cafeUserInfo.cafeUserImageNum != 0 }">
+							<img src="download?fileNum=${cafeUserInfo.cafeUserImageNum}" 
+							width="50" class="img-circle alignleft" alt="">
+						</c:if>
+	              	</a>
+
+		          </div>
+		          <%-- <div class="more-two">
+		          	<a href="userViewList?userId=${cafeUserInfo.userId}">
+		          	<b>${cafeUserInfo.cafeUserNickname}</b>님의 게시글 더보기</a>
+		          </div> --%>
+		        </div>
+		        
+				
+		        <div id="comments_wrapper">
 		        	
-	          	<h5 class="title_sub">
-	          		<label>
+		          <h4 class="title">
 		          	<c:if test="${like=='F'}">
 		          		<a href="likeChk?boardNum=${userBoard.boardNum}&userId=${sessionUser.userId}&cafeId=${boardMenuType.cafeId}&boardMenuNum=${boardMenuType.boardMenuNum}">
-		       		 		<img src="${contextPath}/resources/img/빨간하트.jpg" width="25px" alt="">
+		       		 		<img src="<%=request.getContextPath()%>/resources/img/빨간하트.jpg" width="25px" alt="">
 		       		 	</a> 
 		        	</c:if>
 		        	<c:if test="${like=='T'}">
 		        		<a href="likeChk?boardNum=${userBoard.boardNum}&userId=${sessionUser.userId}&cafeId=${boardMenuType.cafeId}&boardMenuNum=${boardMenuType.boardMenuNum}">
-		       		 		<img src="${contextPath}/resources/img/빈하트.jpg" width="25px" alt="">
+		       		 		<img src="<%=request.getContextPath()%>/resources/img/빈하트.jpg" width="25px" alt="">
 		       		 	</a> 
 		        	</c:if>
-		         		좋아요 ${userBoard.boardLikes}  
-	         		</label>
-	         		<label>
-		          		<img src="${contextPath}/resources/img/댓글아이콘.png" width="25px" alt=""> 
-		          		댓글 ${replyCount}
-	          		</label>
-	          	</h5>
-		     	
-		     	<ul class="comment-list">
+		        	
+		       
+		        	
+		         	좋아요 ${userBoard.boardLikes}  
+		          	<img src="<%=request.getContextPath() %>/resources/img/댓글아이콘.png" width="25px" alt=""> 
+		          	댓글 ${replyCount}</h4>
 		          
-	          	<c:forEach var="reply" items="${replyList}">
-	          		<c:if test="${reply.REPLY_STEP == 0}"><!--댓글 이라면-->
-		            <li>
-		              <!-- 수정 클릭시 생성되는 div  --><!-- 얘도 article로? -->
-                      	<div class="${-reply.REPLY_NUM}" style="display:none;">
-                      		<form id="comments_form" action="saveReply?groupNum=${reply.REPLY_NUM}" class="row" 
-								method="post" enctype="multipart/form-data">
-						  		<input type="hidden" name="userId" value="${_cafeDTO.loginUser.userId}">
-						  		<input type="hidden" name="boardNum" value="${userBoard.boardNum}">
-							    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-							    										
-							      <p><span style="font-weight:1000; font-size: 20pt;">${sessionUser.cafeUserNickname}</span></p>
-							      <textarea class="form-control" name="replyContent" id="comments" rows="6">
-							      	${reply.REPLY_CONTENT}
-			                   		<c:if test="${reply.CAFE_USER_IMAGE_NUM != 0}">
-			                   			<img src="download?fileNum=${reply.CAFE_USER_IMAGE_NUM}" 
-										width="30%">
-	                   				</c:if>
-							      </textarea>
-							      
-								  <div class="post-meta-test">
-								  	<div class="reply-one">
-										<input type="file" name="replyImgName">
-										<!--사진 아이콘을 누르면 input type file을 누른 효과를 준다?  -->
-										<!-- <img id="preview" src="#" width=100 height=100 alt="선택된 이미지가 없습니다"> -->
-								  		<!-- 여기가 범인 두번 실행됨  -->
-								  	</div>
-								  	<div class="reply-two"> 
-								  		<input type="button" value="취소" onclick="back(this)" class="${reply.REPLY_NUM}" class="button small">
-								  		<input type="submit" value="등록" id="submit" class="button small">
-								  	</div>
-								  </div>
-							      <hr>
-							    </div>
-							  </form>
-                      	</div>
-		               
-		                <div class="comment-content">
-		                <a href="#">
-			              	<c:choose>
-			              	<c:when test="${replyreply.CAFE_USER_IMAGE_NUM eq null || replyreply.CAFE_USER_IMAGE_NUM == 0}">
-		              			<img src="${contextPath}/resources/img/프로필.jpg"
-		              			width="40px" class="profileImg" alt="">
-		              		</c:when>
-							<c:otherwise>
-								<img src="${contextPath}/file/download?file/cafeUserImageNum=${replyreply.CAFE_USER_IMAGE_NUM}" 
-								width="40px" class="profileImg" alt="">
-							</c:otherwise>
-							</c:choose>
-				          </a>
-		                  <strong class="comment-author">
-	                        ${reply.CAFE_USER_NICKNAME} <small class="comment-meta">${reply.REPLY_SAVEDATE}</small>
-	                        <!-- loginId == 관리자 계정 ||  -->
-	                        <c:choose>		
-								<c:when test="${loginId == reply.USER_ID}">
-									<a href="deleteBoardReply?replyNum=${reply.REPLY_NUM}">
-										삭제 
-									</a>
-									<%-- <h5>들어온 쒜끼${sessionUser.userId} 게시물 주인쒜끼${reply.USER_ID}</h5> --%>
-								</c:when>
-								<c:when test="${sessionUser.userId == reply.USER_ID}">		
-									<a>수정</a>
-									<%-- onclick="replyModifyClick(this)" class="${reply.REPLY_NUM}" style="cursor:pointer" --%>
-									<%-- <h5>들어온 쒜끼${sessionUser.userId} 게시물 주인쒜끼${reply.USER_ID}</h5> --%>
-								</c:when>
-							</c:choose>
-	                        <%-- <a href="modifyBoardReply?replyNum=${reply.REPLY_NUM}">
-										수정
-									</a> --%>
-	                       
-	                  	  </strong>
-	                   		${reply.REPLY_CONTENT}<br>
-	                   		<c:if test="${reply.CAFE_USER_IMAGE_NUM != 0}">
-	                   			<img src="download?fileNum=${reply.CAFE_USER_IMAGE_NUM}" 
-								width="30%">
-	                   		</c:if>
-	                   		
-	                   		
-	                      	<p>
-	                      		<a onclick="replyClick(this)" id="${reply.REPLY_NUM}" style="cursor:pointer">
-	                      		<b>답글 쓰기</b> <!--그룹:${reply.REPLY_GROUP}  --></a>
-	                      	</p>
-
-	                      	
-	                      			<!-- 답글 쓰기 클릭시 생성되는 div  -->
-	                      	<div id="${-reply.REPLY_NUM}" style="display:none;">
-	                      		<form id="comments_form" action="saveReply?groupNum=${reply.REPLY_GROUP}&step=1" class="row" 
-								  		method="post" enctype="multipart/form-data">
-								  		<input type="hidden" name="userId" value="${sessionUser.userId}">
-								  		<input type="hidden" name="boardNum" value="${userBoard.boardNum}">
-								  		<input type="hidden" name="boardMenuNum" value="${userBoard.boardMenuNum}">
-										<input type="hidden" name="cafeId" value="${boardMenuType.cafeId}">
-								    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-								    										
-								      <p><span style="font-weight:1000; font-size: 20pt;">${sessionUser.cafeUserNickname}</span></p>
-								      <textarea class="form-control" name="replyContent" id="comments" 
-								      rows="6" placeholder="답글을 남겨보세요"></textarea>
-								      
-									  <div class="post-meta-test">
-									  	<div class="reply-one">
-											<input type="file" name="replyImgName">
-											<!--사진 아이콘을 누르면 input type file을 누른 효과를 준다?  -->
-											<!-- <img id="preview" src="#" width=100 height=100 alt="선택된 이미지가 없습니다"> -->
-									  		<!-- 여기가 범인 두번 실행됨  -->
-									  	</div>
-									  	<div class="reply-two"> 
-									  		<input type="button" value="취소" onclick="back(this)" id="${reply.REPLY_NUM}" class="button small">
-									  		<input type="submit" value="등록" id="submit" class="button small">
-									  	</div>
-									  </div>
-								      
-								      <hr>
-								    </div>
-								  </form>
-	                      	</div>
-	                      	
-	                      	<!--  		답글view		 -->
-	                      	<c:forEach var="replyreply" items="${replyList}">
-	                      		<c:if test="${reply.REPLY_NUM == replyreply.REPLY_GROUP && replyreply.REPLY_STEP == 1}">
-	                      			
-	                      			<li>
-					              <article class="comment" style="color:black;">
-					              	<a href="#">
-						              		<c:if test="${replyreply.CAFE_USER_IMAGE_NUM == 0}">
-						              			<img src="${contextPath}/resources/img/프로필.jpg"
-						              			width="40px" class="profileImg" alt="">
-						              		</c:if>
-											<c:if test="${replyreply.CAFE_USER_IMAGE_NUM  != 0 }">
-												<img src="${contextPath}/file/download?file/cafeUserImageNum=${replyreply.CAFE_USER_IMAGE_NUM}" 
-												width="40px" class="profileImg" alt="">
-											</c:if>
-						              	</a>
-					               
-					               	<!-- style="border:solid 1px gray; "-->
-					                <div class="comment-content">
-					                  <h4 class="comment-author">
-				                        ${replyreply.CAFE_USER_NICKNAME} <small class="comment-meta">${replyreply.REPLY_SAVEDATE}</small>
-				                       <!-- loginId == 관리자 계정 ||  -->
-				                       	<c:choose>			
-											<c:when test="${loginId == replyreply.USER_ID}">
-												<a href="deleteBoardReply?replyNum=${replyreply.REPLY_NUM}">
-													삭제 
-												</a>
-												<%-- <h5>들어온 쒜끼${loginId} 게시물 주인쒜끼${replyreply.USER_ID}</h5> --%>
-											</c:when>
-											<c:when test="${loginId == replyreply.USER_ID}">
-												<a href="modifyBoardReply?replyNum=${replyreply.REPLY_NUM}">
-													수정
-												</a>
-												<%-- <h5>들어온 쒜끼${loginId} 게시물 주인쒜끼${replyreply.USER_ID}</h5> --%>
-											</c:when>
-										</c:choose>
-				                       
-				                       
-				                       
-				                       
-				                  	  </h4>
-				                   		${replyreply.REPLY_CONTENT}<br>
-				                   		<c:forEach var="file" items="${fileList}">
-				                   			<c:if test="${file.replyNum == replyreply.REPLY_NUM}">
-				                   				<img src="download?fileNum=${replyreply.REPLY_NUM}" 
+		          
+		          
+		          
+		          <!-- 					댓글 목록 				 -->
+		          <ul class="comment-list">
+		          
+		          	<c:forEach var="reply" items="${replyList}">
+		          		<c:if test="${reply.REPLY_STEP == 0}"><!--댓글 이라면-->
+			            <li>
+			              <article class="comment">
+			              
+			              <!-- 수정 클릭시 생성되는 div  --><!-- 얘도 article로? -->
+		                      	<div class="${-reply.REPLY_NUM}" style="display:none;">
+		                      		<form id="comments_form" action="saveReply?groupNum=${reply.REPLY_NUM}" class="row" 
+									  		method="post" enctype="multipart/form-data">
+									  		<input type="hidden" name="userId" value="${_cafeDTO.loginUser.userId}">
+									  		<input type="hidden" name="boardNum" value="${userBoard.boardNum}">
+									    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									    										
+									      <p><span style="font-weight:1000; font-size: 20pt;">${sessionUser.cafeUserNickname}</span></p>
+									      <textarea class="form-control" name="replyContent" id="comments" rows="6">
+									      	${reply.REPLY_CONTENT}
+					                   		<c:if test="${reply.CAFE_USER_IMAGE_NUM != 0}">
+					                   			<img src="download?fileNum=${reply.CAFE_USER_IMAGE_NUM}" 
 												width="30%">
-				                   			</c:if>
-				                   		</c:forEach>
+			                   				</c:if>
+									      </textarea>
+									      
+										  <div class="post-meta-test">
+										  	<div class="reply-one">
+												<input type="file" name="replyImgName">
+												<!--사진 아이콘을 누르면 input type file을 누른 효과를 준다?  -->
+												<!-- <img id="preview" src="#" width=100 height=100 alt="선택된 이미지가 없습니다"> -->
+										  		<!-- 여기가 범인 두번 실행됨  -->
+										  	</div>
+										  	<div class="reply-two"> 
+										  		<input type="button" value="취소" onclick="back(this)" class="${reply.REPLY_NUM}" class="button small">
+										  		<input type="submit" value="등록" id="submit" class="button small">
+										  	</div>
+										  </div>
+									      
+									      <hr>
+									    </div>
+									  </form>
+		                      	</div>
+			              
 
-				                   		
-				                      	<p>
-				                      		<a onclick="replyClick(this)" id="${replyreply.REPLY_NUM}" style="cursor:pointer">
-				                      		<b>답글 쓰기</b> 그룹:${replyreply.REPLY_GROUP}</a>
-				                      	</p>
-				                      	
-				                      			<!-- 답글 쓰기 클릭시 생성되는 div  -->
-				                      	<div id="${-replyreply.REPLY_NUM}" style="display:none;">
-				                      		<form id="comments_form" action="saveReply?groupNum=${replyreply.REPLY_GROUP}&step=1" class="row" 
-											  		method="post" enctype="multipart/form-data">
-											  		<input type="hidden" name="userId" value="${sessionUser.userId}">
-											  		<input type="hidden" name="boardNum" value="${userBoard.boardNum}">
-											  		<input type="hidden" name="boardMenuNum" value="${userBoard.boardMenuNum}">
-											  		<input type="hidden" name="cafeId" value="${boardMenuType.cafeId}">
-											    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-											    										
-											      <p><span style="font-weight:1000; font-size: 20pt;">${sessionUser.cafeUserNickname}</span></p>
-											      <textarea class="form-control" name="replyContent" id="comments" 
-											      rows="6" placeholder="답글을 남겨보세요"></textarea>
-											      
-												  <div class="post-meta-test">
-												  	<div class="reply-one">
-														<input type="file" name="replyImgName">
-												  	</div>
-												  	<div class="reply-two"> 
-												  		<input type="button" value="취소" onclick="back(this)" id="${replyreply.REPLY_NUM}" class="button small">
-												  		<input type="submit" value="등록" id="submit" class="button small">
-												  	</div>
-												  </div>
-											      
-											      <hr>
-											    </div>
-											  </form>
-				                      	</div>
-				                      	</div>
-				                      	</article>
-	                   			   	</li>
+			              	<a href="#">
+			              		<c:if test="${ reply.CAFE_USER_IMAGE_NUM== 0}">
+			              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
+			              			width="40px" class="img-circle alignleft" alt="">
+			              		</c:if>
+								<c:if test="${ reply.CAFE_USER_IMAGE_NUM  != 0 }">
+									<img src="download?fileNum=${reply.CAFE_USER_IMAGE_NUM}" 
+									width="40px" class="img-circle alignleft" alt="">
+								</c:if>
+				             </a>
+			               
+			                	
+			                <div class="comment-content">
+			                  <h4 class="comment-author">
+		                        ${reply.CAFE_USER_NICKNAME} <small class="comment-meta">${reply.REPLY_SAVEDATE}</small>
+		                        <!-- loginId == 관리자 계정 ||  -->
+		                        <c:choose>		
+									<c:when test="${loginId == reply.USER_ID}">
+										<a href="deleteBoardReply?replyNum=${reply.REPLY_NUM}">
+											삭제 
+										</a>
+										<%-- <h5>들어온 쒜끼${sessionUser.userId} 게시물 주인쒜끼${reply.USER_ID}</h5> --%>
+									</c:when>
+									<c:when test="${sessionUser.userId == reply.USER_ID}">		
+										<a>수정</a>
+										<%-- onclick="replyModifyClick(this)" class="${reply.REPLY_NUM}" style="cursor:pointer" --%>
+										<%-- <h5>들어온 쒜끼${sessionUser.userId} 게시물 주인쒜끼${reply.USER_ID}</h5> --%>
+									</c:when>
+								</c:choose>
+		                        <%-- <a href="modifyBoardReply?replyNum=${reply.REPLY_NUM}">
+											수정
+										</a> --%>
+		                       
+		                  	  </h4>
+		                   		${reply.REPLY_CONTENT}<br>
+		                   		<c:if test="${reply.CAFE_USER_IMAGE_NUM != 0}">
+		                   			<img src="download?fileNum=${reply.CAFE_USER_IMAGE_NUM}" 
+									width="30%">
+		                   		</c:if>
+		                   		
+		                   		
+		                      	<p>
+		                      		<a onclick="replyClick(this)" id="${reply.REPLY_NUM}" style="cursor:pointer">
+		                      		<b>답글 쓰기</b> <!--그룹:${reply.REPLY_GROUP}  --></a>
+		                      	</p>
 
-	                      			
-	                      		</c:if>
-	                      	</c:forEach>
+		                      	
+		                      			<!-- 답글 쓰기 클릭시 생성되는 div  -->
+		                      	<div id="${-reply.REPLY_NUM}" style="display:none;">
+		                      		<form id="comments_form" action="saveReply?groupNum=${reply.REPLY_GROUP}&step=1" class="row" 
+									  		method="post" enctype="multipart/form-data">
+									  		<input type="hidden" name="userId" value="${sessionUser.userId}">
+									  		<input type="hidden" name="boardNum" value="${userBoard.boardNum}">
+									  		<input type="hidden" name="boardMenuNum" value="${userBoard.boardMenuNum}">
+											<input type="hidden" name="cafeId" value="${boardMenuType.cafeId}">
+									    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+									    										
+									      <p><span style="font-weight:1000; font-size: 20pt;">${sessionUser.cafeUserNickname}</span></p>
+									      <textarea class="form-control" name="replyContent" id="comments" 
+									      rows="6" placeholder="답글을 남겨보세요"></textarea>
+									      
+										  <div class="post-meta-test">
+										  	<div class="reply-one">
+												<input type="file" name="replyImgName">
+												<!--사진 아이콘을 누르면 input type file을 누른 효과를 준다?  -->
+												<!-- <img id="preview" src="#" width=100 height=100 alt="선택된 이미지가 없습니다"> -->
+										  		<!-- 여기가 범인 두번 실행됨  -->
+										  	</div>
+										  	<div class="reply-two"> 
+										  		<input type="button" value="취소" onclick="back(this)" id="${reply.REPLY_NUM}" class="button small">
+										  		<input type="submit" value="등록" id="submit" class="button small">
+										  	</div>
+										  </div>
+									      
+									      <hr>
+									    </div>
+									  </form>
+		                      	</div>
+		                      	
+		                      	<!--  		답글view		 -->
+		                      	<c:forEach var="replyreply" items="${replyList}">
+		                      		<c:if test="${reply.REPLY_NUM == replyreply.REPLY_GROUP && replyreply.REPLY_STEP == 1}">
+		                      			
+		                      			<li>
+						              <article class="comment" style="color:black;">
+						              	<a href="#">
+							              		<c:if test="${ replyreply.CAFE_USER_IMAGE_NUM== 0}">
+							              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
+							              			width="40px" class="img-circle alignleft" alt="">
+							              		</c:if>
+												<c:if test="${ replyreply.CAFE_USER_IMAGE_NUM  != 0 }">
+													<img src="download?fileNum=${replyreply.CAFE_USER_IMAGE_NUM}" 
+													width="40px" class="img-circle alignleft" alt="">
+												</c:if>
+							              	</a>
+						               
+						               	<!-- style="border:solid 1px gray; "-->
+						                <div class="comment-content">
+						                  <h4 class="comment-author">
+					                        ${replyreply.CAFE_USER_NICKNAME} <small class="comment-meta">${replyreply.REPLY_SAVEDATE}</small>
+					                       <!-- loginId == 관리자 계정 ||  -->
+					                       	<c:choose>			
+												<c:when test="${loginId == replyreply.USER_ID}">
+													<a href="deleteBoardReply?replyNum=${replyreply.REPLY_NUM}">
+														삭제 
+													</a>
+													<%-- <h5>들어온 쒜끼${loginId} 게시물 주인쒜끼${replyreply.USER_ID}</h5> --%>
+												</c:when>
+												<c:when test="${loginId == replyreply.USER_ID}">
+													<a href="modifyBoardReply?replyNum=${replyreply.REPLY_NUM}">
+														수정
+													</a>
+													<%-- <h5>들어온 쒜끼${loginId} 게시물 주인쒜끼${replyreply.USER_ID}</h5> --%>
+												</c:when>
+											</c:choose>
+					                       
+					                       
+					                       
+					                       
+					                  	  </h4>
+					                   		${replyreply.REPLY_CONTENT}<br>
+					                   		<c:forEach var="file" items="${fileList}">
+					                   			<c:if test="${file.replyNum == replyreply.REPLY_NUM}">
+					                   				<img src="download?fileNum=${replyreply.REPLY_NUM}" 
+													width="30%">
+					                   			</c:if>
+					                   		</c:forEach>
 
-		                </div>
-
-		              </article>
-		              <!-- End .comment -->
-		            </li>
-		            </c:if>
-	            </c:forEach>
-	          </ul>
-	          <!-- End .comment-list -->
-	          <!--reply num 값을 가져와서 아이디 부여하고 클릭시 reply num 에 맞게 답글창 생성  -->
-		      	
+					                   		
+					                      	<p>
+					                      		<a onclick="replyClick(this)" id="${replyreply.REPLY_NUM}" style="cursor:pointer">
+					                      		<b>답글 쓰기</b> 그룹:${replyreply.REPLY_GROUP}</a>
+					                      	</p>
+					                      	
+					                      			<!-- 답글 쓰기 클릭시 생성되는 div  -->
+					                      	<div id="${-replyreply.REPLY_NUM}" style="display:none;">
+					                      		<form id="comments_form" action="saveReply?groupNum=${replyreply.REPLY_GROUP}&step=1" class="row" 
+												  		method="post" enctype="multipart/form-data">
+												  		<input type="hidden" name="userId" value="${sessionUser.userId}">
+												  		<input type="hidden" name="boardNum" value="${userBoard.boardNum}">
+												  		<input type="hidden" name="boardMenuNum" value="${userBoard.boardMenuNum}">
+												  		<input type="hidden" name="cafeId" value="${boardMenuType.cafeId}">
+												    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+												    										
+												      <p><span style="font-weight:1000; font-size: 20pt;">${sessionUser.cafeUserNickname}</span></p>
+												      <textarea class="form-control" name="replyContent" id="comments" 
+												      rows="6" placeholder="답글을 남겨보세요"></textarea>
+												      
+													  <div class="post-meta-test">
+													  	<div class="reply-one">
+															<input type="file" name="replyImgName">
+													  	</div>
+													  	<div class="reply-two"> 
+													  		<input type="button" value="취소" onclick="back(this)" id="${replyreply.REPLY_NUM}" class="button small">
+													  		<input type="submit" value="등록" id="submit" class="button small">
+													  	</div>
+													  </div>
+												      
+												      <hr>
+												    </div>
+												  </form>
+					                      	</div>
+					                      	</div>
+					                      	</article>
+		                   			   	</li>
 	
+		                      			
+		                      		</c:if>
+		                      	</c:forEach>
+
+			                </div>
+
+			              </article>
+			              <!-- End .comment -->
+			            </li>
+			            </c:if>
+		            </c:forEach>
+		          </ul>
+		          <!-- End .comment-list -->
+		          <!--reply num 값을 가져와서 아이디 부여하고 클릭시 reply num 에 맞게 답글창 생성  -->
 		          
-		      </div>
-		      <!-- end content -->
-		    </div>
-		    <!-- end container -->
-		  </section>
+
+				
+					<!--			댓글작성	댓글작성	댓글작성					  -->
+					<div class="clearfix"></div>
+					
+					
+					<div class="comments_form">
+					  <h4 class="title">댓글</h4>
+					  
+					  <form id="comments_form" action="saveReply" class="row" 
+					  		method="post" enctype="multipart/form-data">
+					  		<input type="hidden" name="userId" value="${sessionUser.userId}">
+					  		<input type="hidden" name="boardNum" value="${userBoard.boardNum}">
+					  		<input type="hidden" name="boardMenuNum" value="${userBoard.boardMenuNum}">
+					  		<input type="hidden" name="cafeId" value="${boardMenuType.cafeId}">
+					    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					    										
+					      <p><span style="font-weight:1000; font-size: 20pt;">${sessionUser.cafeUserNickname}</span></p>
+					      <textarea class="form-control" name="replyContent" id="comments" 
+					      rows="6" placeholder="댓글을 남겨보세요"></textarea>
+					      
+						  <div class="post-meta-test">
+						  	<div class="reply-one">
+								<input type="file" name="replyImgName">
+								<!--사진 아이콘을 누르면 input type file을 누른 효과를 준다?  -->
+								<!-- <img id="preview" src="#" width=100 height=100 alt="선택된 이미지가 없습니다"> -->
+						  		<!-- 여기가 범인 두번 실행됨  -->
+						  	</div>
+						  	<div class="reply-two"> 
+						  		<input type="submit" value="등록" id="submit" class="button small">
+						  	</div>
+						  </div>
+					      
+					      <hr>
+					    </div>
+					  </form>
+					</div>  
+			          
+			    </div>
+			    
+			  </article>
+			  
+	<h1><a href="goMemoBoardList?cafeId=${boardMenuType.cafeId}">메모로</a></h1>
+         
+		       
+		          					<!-- 새로운자유게시판1 등 기준 관련 게시판   -->
+		          				
+		<div class="content col-lg-12 col-md-12 col-sm-12 clearfix">   
+			<!--전체게시판은 제목 50 작성자20 나머지 10  -->
+	         <div id="bbpress-forums">
+	          <ul class="bbp-forums" style="margin:0;">
+	            <li class="bbp-header-header">
+	              <ul class="forum-titles">
+	                <li class="bbp-forum-info-allBoard">
+	                '${boardMenuType.boardMenuName}' 게시판 글</li>
+
+	              </ul>
+	            </li>
+	            <!-- .bbp-header -->
+	          </ul>
+	          <!-- .forums-directory -->
+	        </div>
+	        
+			<div id="bbpress-forums">
+	          <ul class="bbp-forums">
+	          
+	          	<c:forEach var="typeList" items="${boardMenuTypeList}"> 	
+		            <li class="bbp-header-content">
+		              <ul class="forum-titles-test">
+		
+		                <li class="board-title" class="name-prefixList">
+		                <a href="goBoardInside?boardNum=${typeList.BOARD_NUM}&userId=${typeList.USER_ID}&cafeId=${boardMenuType.cafeId}&boardMenuNum=${boardMenuType.boardMenuNum}">
+		                ${typeList.BOARD_TITLE }</a>
+		                </li>
+		                <li class="board-nickname">${typeList.CAFE_USER_NICKNAME }</li>
+		                <li class="board-date">${typeList.BOARD_SAVEDATE}</li>
+		
+		              </ul>
+		            </li>
+	            </c:forEach>
+	            
+	          </ul>
+	          <!-- .forums-directory -->
+
+	          
+	          					<!--	페이징  -->
+	          <div class="page">
+		          <div class="page-one">
+			          <ul class="pagination">
+			         	<c:forEach var="num" begin="1" end="${repeat}">
+							<li><a href="goBoardInside?boardNum=${userBoard.boardNum}
+							&num=${num}&cafeId=${boardMenuType.cafeId}
+							&boardMenuNum=${boardMenuType.boardMenuNum}">${num}</a></li>
+						</c:forEach>
+			          </ul>
+		           </div>
+		           
+		          <div class="page-two">
+		          	<a href="goBoardList">전체보기</a>
+		          </div>
+	          </div>
+	          
+	        </div>
+	        
+      </div>
+      <!-- 말머리 영역 끝 -->
+	            
+
+							<!--카페 인기글 헤더  -->
+					<!-- style="background-color:#F5F5F5;" -->
+        <div class="content col-lg-12 col-md-12 col-sm-12 clearfix">
+	        <div class="general-title text-center">
+	          <h3>이 카페 인기글</h3>
+	          <hr>
+	        </div>
+	        <div class="divider"></div>
+        					<!--카페 인기글 이미지  -->
+
+	        <div id="popularitems" class="owl-carousel">
+									<!-- 9개만 표현 -->
+				<c:forEach var="top6" items="${topList}" begin="1" end="9" step="1">
+					<div class="col-lg-12">
+		            <div class="he-wrap tpl6 market-item">
+					<div class="name-topList">${top6.BOARD_TITLE}</div>
+		            	 <c:if test="${ top6.CAFE_USER_IMAGE_NUM== 0}">
+				       		  <img class="lazyOwl" style="height: 280px;"
+				       		  data-src="<%=request.getContextPath()%>/resources/img/프로필.jpg">
+		              	  </c:if>
+						  <c:if test="${ top6.CAFE_USER_IMAGE_NUM  != 0 }">
+							  <img class="lazyOwl" style="height: 280px;"
+							  data-src="download?fileNum=${top6.CAFE_USER_IMAGE_NUM}" alt="">
+						  </c:if>
+		            	
+		              <div class="he-view">
+		                <div class="bg a0" data-animate="fadeIn">
+		                  <h3 class="a1" data-animate="fadeInDown">
+		                  	작성자 <br><Br> ${top6.CAFE_USER_NICKNAME}</h3>
+		                  <a href="goBoardInside?boardNum=${top6.BOARD_NUM}&userId=${top6.USER_ID}&cafeId=${boardMenuType.cafeId}&boardMenuNum=${boardMenuType.boardMenuNum}"
+		                  class="dmbutton a2" data-animate="fadeIn">게시글 보러가기</a>
+		                </div>
+		              </div>
+		            </div>
+		          </div>
+				</c:forEach>
+	        </div>
+        <!-- 리스트 끝 -->
+      </div>
+      <!-- 카페 인기글 영역 끝 -->
+      
+	 </div>
+<!-- end comments_Form -->
+
+     	 <div class="divider"></div>
+        <!-- div comments -->
       </div>
       <!-- end content -->
-<form name="boardListForm">
-	<input type="hidden" name="cafeId" value="${_cafeDTO.cafeId}">
-	<input type="hidden" name="boardMenuNum" value="${_cafeDTO.menuDTO.boardMenuNum}">
-</form>      
-<script type="text/javascript">
-	function goWriteForm() {
-		var form = document.boardListForm;
-		
-		form.action = '${contextPath}/user/board/writeForm';
-		form.submit();
-	}
-</script>
+      <div id="nav" class="right"></div>
+    
+	</section>
+</div>

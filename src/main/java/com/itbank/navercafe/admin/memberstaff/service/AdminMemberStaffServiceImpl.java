@@ -130,7 +130,7 @@ public class AdminMemberStaffServiceImpl implements AdminMemberStaffService{
 		ArrayList< Map<String, String> > mapList = nameSort(deportMembers, cafeId);
 		int result = 0;
 		String managerId = mapper.getManagerId(cafeId);
-		System.out.println(managerId);
+		//System.out.println(managerId);
 		
 		try {
 			for(int i = 0; i < mapList.size(); i++) {
@@ -217,7 +217,6 @@ public class AdminMemberStaffServiceImpl implements AdminMemberStaffService{
 		
 		try {
 			for(int i = 0; i < mapList.size(); i++) {
-				System.out.println("포문진입");
 				mapList.get(i).put("reason", reason);
 				mapList.get(i).put("managerId", managerId);
 				result += mapper.banMembers(mapList.get(i));

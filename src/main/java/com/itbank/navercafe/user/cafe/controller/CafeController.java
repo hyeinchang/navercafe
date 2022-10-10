@@ -191,7 +191,6 @@ public class CafeController {
 	
 	@PostMapping("profilesubmit2")
 	public String profilesubmit2(MultipartHttpServletRequest mul) {
-		System.out.println();
 		int result = cms.cafeMemberUpdate(mul);
 		if(result == 1 ) {
 			

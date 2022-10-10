@@ -56,24 +56,24 @@ public class MemoServiceImpl implements MemoService{
 		try {
 			String directory = "memoReply";
 			String userId =  mul.getParameter("userId");
-			System.out.println("userId : " + userId);
-			System.out.println("replyImgName : " + multipartFile.getOriginalFilename());
+//			System.out.println("userId : " + userId);
+//			System.out.println("replyImgName : " + multipartFile.getOriginalFilename());
 			
 			if(userId != null && userId.length() > 0) {
 				directory += "/" + userId;
 			}
-			System.out.println("directory >>>> " + directory);
+//			System.out.println("directory >>>> " + directory);
 			
 			//memo_reply_num_seq
 			int seq=memoMap.getMemoReplyNumSeq();
 	
 			MemoReplyDTO dto = new MemoReplyDTO();
 			dto.setMemoReplyGroup(Integer.parseInt(mul.getParameter("groupNum")));
-			System.out.println("댓글을 작성할 메모 게시글 번호 : "+Integer.parseInt(mul.getParameter("groupNum")));
+//			System.out.println("댓글을 작성할 메모 게시글 번호 : "+Integer.parseInt(mul.getParameter("groupNum")));
 			dto.setUserId(mul.getParameter("userId"));
 			dto.setMemoReplyContent(mul.getParameter("memoReplyContent"));
 			dto.setMemoReplyNum(seq);
-			System.out.println("memoreplyNum을 생성할 번호 :"+seq);
+//			System.out.println("memoreplyNum을 생성할 번호 :"+seq);
 			
 			if(multipartFile.getSize()!=0) {
 				FileDTO fileDTO = null;

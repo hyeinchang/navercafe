@@ -18,7 +18,7 @@
   <link href="https://fonts.googleapis.com/css?family=Ruda:400,900,700" rel="stylesheet">
 
   <!-- Bootstrap CSS File -->
-  <link href="${contextPath}/resources/MaxiBiz/lib/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="${contextPath}/resources/MaxiBiz/lib/bootstrap/css/bootstrap.css" rel="stylesheet">
 
   <!-- Libraries CSS Files -->
   <link href="${contextPath}/resources/MaxiBiz/lib/font-awesome/css/font-awesome.min.css" rel="stylesheet">

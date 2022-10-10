@@ -13,9 +13,9 @@ import com.itbank.navercafe.user.cafe.dto.CafeDTO;
 @Service
 public class AdminCafeManagerServiceImpl implements AdminCafeManagerService{
 	@Autowired
-	AdminCafeManagerMapper mapper;
-	@Autowired
 	AdminMemberStaffMapper amsMapper;
+	@Autowired 
+	AdminCafeManagerMapper cafeManagerMapper;
 	
 	public String getMessage(String msg, String url) {
 		String message = "";
@@ -24,7 +24,6 @@ public class AdminCafeManagerServiceImpl implements AdminCafeManagerService{
 		return message;
 	}
 	
-	AdminCafeManagerMapper cafeManagerMapper;
 
 	@Override
 	public int updateBasicInfo(CafeDTO cafeDTO) throws Exception {
@@ -39,9 +38,9 @@ public class AdminCafeManagerServiceImpl implements AdminCafeManagerService{
 		map.put("newManager", searchResult.trim());
 		map.put("oldManager", oldManager);
 		int result = 0;
-		result += mapper.changeManager(map);
-		result += mapper.changeOldManagerGrade(map);
-		result += mapper.changeNewManagerGrade(map);
+		result += cafeManagerMapper.changeManager(map);
+		result += cafeManagerMapper.changeOldManagerGrade(map);
+		result += cafeManagerMapper.changeNewManagerGrade(map);
 		
 		String msg, url;
 		if(result == 3) {
