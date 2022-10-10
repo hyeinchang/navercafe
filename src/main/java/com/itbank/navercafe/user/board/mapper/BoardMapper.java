@@ -14,9 +14,10 @@ import com.itbank.navercafe.user.menu.dto.MenuDTO;
 
 
 public interface BoardMapper {
-
-
-	public ArrayList<BoardExtendDTO> getBoardList(MenuDTO menuDTO);
+	public ArrayList<BoardExtendDTO> getBoardList(MenuDTO menuDTO) throws Exception;
+	public ArrayList<BoardExtendDTO> getBoardList_paging(MenuDTO menuDTO) throws Exception;
+	public int getBoardTotalCount(MenuDTO menuDTO) throws Exception;
+	
 	//보드 넘에 따른 게시물
 	public BoardDTO getUserBoard(int boardNum);
 
@@ -59,6 +60,5 @@ public interface BoardMapper {
 	public void deleteBoard(int boardNum);
 	
 	public void deleteReply(int replyNum);
-
 	
 }

@@ -10,7 +10,6 @@ public class ReplyDTO {
 	private String userId;
 	private int replyGroup;
 	private int replyStep;
-	
 
 	public int getReplyGroup() {
 		return replyGroup;

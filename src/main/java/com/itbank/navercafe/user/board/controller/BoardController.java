@@ -1,6 +1,7 @@
 package com.itbank.navercafe.user.board.controller;
 
 
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -18,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.itbank.navercafe.common.CommonUtils;
+import com.itbank.navercafe.common.pagination.Pagination;
 import com.itbank.navercafe.user.board.dto.BoardDTO;
 import com.itbank.navercafe.user.board.dto.BoardExtendDTO;
 import com.itbank.navercafe.user.board.service.BoardService;
@@ -56,12 +58,13 @@ public class BoardController {
 	
 	//전체목록인데 수영이형이랑 상의.
 	@GetMapping("/goBoardList")	
-	public String goBoardList(Model model, String cafeId, MenuDTO menuDTO) throws Exception{
+	public String goBoardList(Model model, String cafeId, MenuDTO menuDTO, Pagination pagination) throws Exception{
 		int boardMenuNum = menuDTO.getBoardMenuNum();
 		int boardMenuType = 1;
+		List<BoardExtendDTO> boardList = null;
 		String boardMenuName = "전체글보기";
-		
 		String returnUrl = "user/board/boardList";
+	
 		
 		if(cafeId != null) {
 			menuDTO.setCafeId(cafeId);
@@ -77,14 +80,19 @@ public class BoardController {
 		switch(boardMenuType) {
 		case 4 :
 			returnUrl = "user/board/gradeBoardList";
+			boardList = ser.getBoardList(menuDTO);
 			break;
 		case 5 :
 			returnUrl = "user/board/memoBoardList";
+			boardList = ser.getBoardList(menuDTO);
+			break;
+		default :
+			boardList = ser.getBoardList(menuDTO);
 			break;
 		}
 		
 		model.addAttribute("boardMenuName",boardMenuName);
-		model.addAttribute("boardList",ser.getBoardList(menuDTO));
+		model.addAttribute("boardList", boardList);
 		model.addAttribute("cafeId",cafeId);
 		
 		return returnUrl;

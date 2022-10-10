@@ -27,8 +27,16 @@ public class BoardServiceImpl implements BoardService{
 	
 	//전체목록인데 수영이형이랑 상의.
 	@Override
-	public ArrayList<BoardExtendDTO> getBoardList(MenuDTO menuDTO) {
-		return bm.getBoardList(menuDTO);
+	public List<BoardExtendDTO> getBoardList(MenuDTO menuDTO) {
+		List<BoardExtendDTO> boardList = null;
+		
+		try {
+			boardList = bm.getBoardList(menuDTO);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return boardList;
 	}
 
 

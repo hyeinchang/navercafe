@@ -17,7 +17,7 @@ public interface BoardService {
 	//게시글 가져오기
 	public BoardDTO getUserBoard(int boardNum,int boardMenuNum, Model model,int pageNum, String cafeId,int next,int preview);
 
-	public ArrayList<BoardExtendDTO> getBoardList(MenuDTO menuDTO);
+	public List<BoardExtendDTO> getBoardList(MenuDTO menuDTO);
 
 	
 	//조회수

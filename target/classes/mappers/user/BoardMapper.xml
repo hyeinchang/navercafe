@@ -100,6 +100,77 @@
 		]]>		
 	</select>
 	
+	<select id="getBoardList_paging" resultMap="boardExtend">
+		<![CDATA[
+		    SELECT * FROM
+		        (SELECT ROWNUM rn, boardData.* FROM
+		            (SELECT boardMenu.cafe_id, boardMenu.board_menu_name, boardMenu.board_menu_type, board.*, 
+		            cafeMember.cafe_user_nickname, cafeMember.cafe_user_image_num
+		            FROM
+		                (SELECT cafe_id, board_menu_num, board_menu_name, board_menu_type FROM project_board_type
+		                WHERE cafe_id = #{cafeId}
+		                AND board_menu_num = #{boardMenuNum}
+		                ) boardMenu,
+		                (SELECT * FROM project_board 
+		                WHERE board_title LIKE '%' || #{boardTitle} || '%'
+		                AND board_content LIKE '%' || #{boardContent} || '%'
+		                ) board,
+		                (SELECT * FROM project_cafe_member
+		                WHERE cafe_user_nickname  LIKE '%' || #{cafeUserNickname} || '%'
+		                ) cafeMember
+		            WHERE
+		            boardMenu.board_menu_num = board.board_menu_num
+		            AND
+		            board.user_id = cafeMember.user_id  AND boardMenu.cafe_id = cafeMember.cafe_id 
+		            ORDER BY board_num DESC) boardData
+		        LEFT JOIN
+		            (SELECT DISTINCT(board_num) FROM
+		                (SELECT board_num, user_id FROM project_reply 
+		                WHERE reply_content LIKE '%' || #{replyContent} || '%') reply
+		            INNER JOIN 
+		                (SELECT user_id FROM project_cafe_member
+		                WHERE cafe_user_nickname LIKE '%' || #{replyUserNickname} || '%') replayMember
+		            ON reply.user_id = replayMember.user_id) replyData
+		        ON boardData.board_num = replyData.board_num
+		        )
+		    WHERE rn BETWEEN #{startRow} AND #{endRow}
+		]]>		
+	</select>
+	
+	<select id="getBoardTotalCount" resultType="Integer">
+		<![CDATA[
+	       SELECT COUNT(*) count FROM
+	            (SELECT boardMenu.cafe_id, boardMenu.board_menu_name, boardMenu.board_menu_type, board.*, 
+	            cafeMember.cafe_user_nickname, cafeMember.cafe_user_image_num
+	            FROM
+	                (SELECT cafe_id, board_menu_num, board_menu_name, board_menu_type FROM project_board_type
+	                WHERE cafe_id = #{cafeId}
+	                AND board_menu_num = #{boardMenuNum}
+	                ) boardMenu,
+	                (SELECT * FROM project_board 
+	                WHERE board_title LIKE '%' || #{boardTitle} || '%'
+	                AND board_content LIKE '%' || #{boardContent} || '%'
+	                ) board,
+	                (SELECT * FROM project_cafe_member
+	                WHERE cafe_user_nickname  LIKE '%' || #{cafeUserNickname} || '%'
+	                ) cafeMember
+	            WHERE
+	            boardMenu.board_menu_num = board.board_menu_num
+	            AND
+	            board.user_id = cafeMember.user_id  AND boardMenu.cafe_id = cafeMember.cafe_id 
+	            ORDER BY board_num DESC) boardData
+	        LEFT JOIN
+	            (SELECT DISTINCT(board_num) FROM
+	                (SELECT board_num, user_id FROM project_reply 
+	                WHERE reply_content LIKE '%' || #{replyContent} || '%') reply
+	            INNER JOIN 
+	                (SELECT user_id FROM project_cafe_member
+	                WHERE cafe_user_nickname LIKE '%' || #{replyUserNickname} || '%') replayMember
+	            ON reply.user_id = replayMember.user_id) replyData
+	        ON boardData.board_num = replyData.board_num
+		]]>		
+	</select>
+	
 
 	<!-- 보드넘에 따른 게시물 하나 -->
 	<select id="getUserBoard" resultMap="project_board">
