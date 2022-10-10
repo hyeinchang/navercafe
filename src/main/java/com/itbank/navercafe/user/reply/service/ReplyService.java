@@ -14,4 +14,5 @@ public interface ReplyService {
 	public Integer getReplyCount(int boardNum);
 	public List<HashMap<String, Object>> getReplyList(int boardNum,String cafeId);
 	public void saveReply(MultipartHttpServletRequest mul,int step);
+	public void updateReply(MultipartHttpServletRequest mul);
 }

@@ -52,6 +52,10 @@
 		select project_reply_seq.nextval replyNum from dual
 	</select>
 	
+	<select id="updateReply">
+		update project_reply set reply_content=#{replyContent} where reply_num=#{replyNum}
+	</select>
+	
 	
 	
 	

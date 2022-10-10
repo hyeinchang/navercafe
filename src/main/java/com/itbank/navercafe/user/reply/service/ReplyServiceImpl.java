@@ -104,6 +104,45 @@ public class ReplyServiceImpl implements ReplyService{
 
 	}
 
+	@Override
+	public void updateReply(MultipartHttpServletRequest mul) {
+		MultipartFile multipartFile = mul.getFile("replyImgName");
+		System.out.println("수정해줄 replyNum :"+mul.getParameter("replyNum"));
+		System.out.println("수정해줄 내용 :"+mul.getParameter("replyContent"));
+		rm.updateReply(Integer.parseInt(mul.getParameter("replyNum")),mul.getParameter("replyContent"));
+		try {
+			//생성할 디렉토리
+			String directory = "boardReply";
+			String userId =  mul.getParameter("userId");
+			
+			System.out.println("userId : " + userId);
+			System.out.println("replyImgName : " + multipartFile.getOriginalFilename());
+			
+			if(userId != null && userId.length() > 0) {
+				directory += "/" + userId;
+			}
+
+			if(multipartFile.getSize()!=0) {
+				FileDTO fileDTO = null;
+				FileResult fileResult = fileUtils.uploadFile(multipartFile, directory);
+				fileDTO = fileResult.getFileDTO();
+				//존재한다면 교체
+				if(fs.getReplyNum(Integer.parseInt(mul.getParameter("replyNum")))!=null) {
+					fs.updateReply(fileDTO,Integer.parseInt(mul.getParameter("replyNum")));
+				}else {
+					//존재하지않으면 replyNum부여
+					fileDTO.setReplyNum(Integer.parseInt(mul.getParameter("replyNum")));
+					fs.insertAttachFile(fileDTO);
+				}
+				
+			}
+
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+
 
 
 }

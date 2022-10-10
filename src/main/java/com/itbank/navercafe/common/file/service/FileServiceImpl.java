@@ -51,4 +51,16 @@ public class FileServiceImpl implements FileService {
 		}
 		model.addAttribute("fileList",fileMapper.getFileList());
 	}
+	
+	@Override
+	public FileDTO getReplyNum(int replyNum) {
+		return fileMapper.getReplyNum(replyNum);
+	}
+
+	@Override
+	public void updateReply(FileDTO fileDTO, int replyNum) {
+		fileMapper.updateReply(fileDTO, replyNum);
+	}
+
+	
 }

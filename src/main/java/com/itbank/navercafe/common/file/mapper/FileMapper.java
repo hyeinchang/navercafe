@@ -2,6 +2,8 @@ package com.itbank.navercafe.common.file.mapper;
 
 import java.util.ArrayList;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.itbank.navercafe.common.file.dto.FileDTO;
 
 public interface FileMapper {
@@ -13,6 +15,11 @@ public interface FileMapper {
 	public int insertAttachFile(FileDTO fileDTO) throws Exception;
 	public int updateAttachFile(FileDTO fileDTO) throws Exception;
 	public int deleteAttachFile(int fileNum) throws Exception;
-	//임시
+	//댓글에 사진 있는지 여부
 	public ArrayList<FileDTO> getFileList();
+	//replyNum이 존재하는지 여부
+	public FileDTO getReplyNum(int replyNum);
+	//댓글 사진 업데이트
+	public void updateReply(@Param("fileDTO")FileDTO fileDTO,
+			@Param("replyNum")int replyNum);
 }

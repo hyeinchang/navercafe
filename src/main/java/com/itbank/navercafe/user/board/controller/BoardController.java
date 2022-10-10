@@ -221,11 +221,10 @@ public class BoardController {
 	
 	@PostMapping("update_reply")
 	public String updateReply(MultipartHttpServletRequest mul) {
-		System.out.println("바꿔줄 녀석 : "+mul.getParameter("replyNum"));
-		System.out.println("수정 내용:"+mul.getParameter("replyContent"));
-		System.out.println("수정할 이미지:"+mul.getParameter("replyImgName"));
-		System.out.println("수정할 이미지:"+mul.getFile("replyImgName"));
-		return "";
+		replySer.updateReply(mul);
+		return "redirect:goBoardInside?boardNum="
+			+mul.getParameter("boardNum")+"&num="+1+
+			"&boardMenuNum="+mul.getParameter("boardMenuNum")+"&cafeId="+mul.getParameter("cafeId");
 	}
 	
 }

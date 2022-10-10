@@ -14,4 +14,9 @@ public interface FileService {
 	
 	//파일테이블리스트
 	public void getFileList(Model model);
+	//replyNum존재여부
+		public FileDTO getReplyNum(int replyNum);
+	//댓글 사진 업데이트
+	public void updateReply(FileDTO fileDTO, int replyNum);
+	
 }

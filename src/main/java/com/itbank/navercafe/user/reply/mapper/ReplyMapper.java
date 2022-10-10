@@ -22,5 +22,8 @@ public interface ReplyMapper {
 	public void saveGroupNumReply(ReplyDTO dto);
 	//replyNum 시퀀스값 
 	public int getReplyNum();
+	
+	public void updateReply(@Param("replyNum")int replyNum,
+					@Param("replyContent")String replyContent);
 }
 

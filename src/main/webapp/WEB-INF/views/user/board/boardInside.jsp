@@ -154,6 +154,8 @@ li.bbp-topic-freshness-test{
 	} */
 
 	 function replyClick(obj){
+		console.log(obj.id)
+		console.log(-obj.id)
 		document.getElementById(-obj.id).style="display:block";
 		/* document.getElementById(-obj.id).innerHTML = 
 		+"<form action='saveReply' class='row' method='post' enctype='multipart/form-data'>"
@@ -175,23 +177,37 @@ li.bbp-topic-freshness-test{
 	}
 	
 	function back(obj){
-		document.getElementById(-obj.id).style="display:none";
+		console.log(obj.id)
+		console.log(-obj.id)
+		document.getElementById(obj.id).style="display:none";
 	}
+	
 	
 	
 	function replyModifyClick(obj){
 		var reId='re'+obj.id
+		var rereId='re'+-obj.id
 		document.getElementById(reId).style="display:block";
-		var hideRe=obj.id
-		console.log(-hideRe)
-		document.getElementById(-hideRe).style="display:none";
+		document.getElementById(rereId).style="display:none";
 	}
 	function replyModifyBack(obj){
 		var reId='re'+obj.id
+		var rereId='re'+-obj.id
+		document.getElementById(rereId).style="display:block";
 		document.getElementById(reId).style="display:none";
-		var hideRe=obj.id
-		console.log(-hideRe)
-		document.getElementById(-hideRe).style="display:block";
+	}
+	
+	function replyReModifyClick(obj){
+		var rere='rere'+obj.id
+		var rere2='rere'+-obj.id
+		document.getElementById(rere).style="display:block;"
+		document.getElementById(rere2).style="display:none";
+	}
+	function replyReModifyBack(obj){
+		var rere='rere'+obj.id
+		var rere2='rere'+-obj.id
+		document.getElementById(rere2).style="display:block;"
+		document.getElementById(rere).style="display:none";
 	}
 	
 	
@@ -335,6 +351,9 @@ li.bbp-topic-freshness-test{
                       		<form id="comments_form" action="update_reply" class="row" method="post" enctype="multipart/form-data">
 							  	<input type="hidden" name="replyNum" value="${reply.REPLY_NUM}">
 							  	<input type="hidden" name="userId" value="${sessionUser.userId}">
+						  		<input type="hidden" name="boardNum" value="${userBoard.boardNum}">
+						  		<input type="hidden" name="boardMenuNum" value="${userBoard.boardMenuNum}">
+						  		<input type="hidden" name="cafeId" value="${boardMenuType.cafeId}">
 							    	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">									
 					              		<c:if test="${ reply.CAFE_USER_IMAGE_NUM== 0}">
 					              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
@@ -365,7 +384,8 @@ li.bbp-topic-freshness-test{
                       		</div>
                       		<!-- 수정시 생성 div 끝 -->
 			              	<!--댓글 목록 View  -->
-							<div id="${-reply.REPLY_NUM}">
+			              <div id="re${-reply.REPLY_NUM }">
+							<div id="${reply.REPLY_NUM}">
 				            	<a href="#">
 				              		<c:if test="${ reply.CAFE_USER_IMAGE_NUM== 0}">
 				              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
@@ -392,9 +412,9 @@ li.bbp-topic-freshness-test{
 													</form>
 												</c:if>
 											</div>
-											&nbsp;|&nbsp;
 											<div class="del">
-												<c:if test="${loginId == reply.USER_ID}">		
+												<c:if test="${loginId == reply.USER_ID}">
+													&nbsp;|&nbsp;		
 													<a onclick="replyModifyClick(this)" id="${reply.REPLY_NUM}" style="cursor:pointer">
 													수정</a>
 												</c:if>
@@ -428,7 +448,7 @@ li.bbp-topic-freshness-test{
 														<input type="file" name="replyImgName">
 										  			</div>
 												  	<div class="reply-two"> 
-												  		<input type="button" value="취소" onclick="back(this)" id="${reply.REPLY_NUM}" class="button small">
+												  		<input type="button" value="취소" onclick="back(this)" id="${-reply.REPLY_NUM}" class="button small">
 												  		<input type="submit" value="등록" id="submit" class="button small">
 												  	</div>
 										  		</div>
@@ -443,6 +463,45 @@ li.bbp-topic-freshness-test{
 			                      		<c:if test="${reply.REPLY_NUM == replyreply.REPLY_GROUP && replyreply.REPLY_STEP == 1}">	
 			                      			<li>	<!-- 해당 조건이여야 리스트 보여줄거임 -->
 							             		<article class="comment" style="color:black;">
+													<!-- 수정 클릭시 생성되는 답글 div  -->
+									            	<div id="rere${replyreply.REPLY_NUM}" style="display:none;">
+							                      		<form id="comments_form" action="update_reply" class="row" method="post" enctype="multipart/form-data">
+														  	<input type="hidden" name="replyNum" value="${replyreply.REPLY_NUM}">
+														  	<input type="hidden" name="userId" value="${sessionUser.userId}">
+													  		<input type="hidden" name="boardNum" value="${userBoard.boardNum}">
+													  		<input type="hidden" name="boardMenuNum" value="${userBoard.boardMenuNum}">
+													  		<input type="hidden" name="cafeId" value="${boardMenuType.cafeId}">
+														    	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">									
+												              		<c:if test="${ replyreply.CAFE_USER_IMAGE_NUM== 0}">
+												              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
+												              			width="40px" class="img-circle alignleft" alt="">
+												              		</c:if>
+																	<c:if test="${ replyreply.CAFE_USER_IMAGE_NUM  != 0 }">
+																		<img src="<%=request.getContextPath()%>/file/download?cafeUserImageNum=${reply.CAFE_USER_IMAGE_NUM}" 
+																		width="40px" class="img-circle alignleft" alt=""> 
+																	</c:if>
+																	<div class="comment-content">
+														            	<h4 class="comment-author">
+														            		${replyreply.CAFE_USER_NICKNAME} <small class="comment-meta">${replyreply.REPLY_SAVEDATE}</small>
+																		</h4>
+																		<textarea rows="3" cols="50" name="replyContent">${replyreply.REPLY_CONTENT}</textarea>
+																		<!-- 사진선택, 취소, 등록 -->
+																		<div class="post-meta-test">
+																		  	<div class="reply-one">
+																				<input type="file" name="replyImgName">
+																		  	</div>
+																		  	<div class="reply-two"> 
+																		  		<input type="button" value="취소" onclick="replyReModifyBack(this)" id="${replyreply.REPLY_NUM}" class="button small">
+																		  		<input type="submit" value="등록" id="submit" class="button small">
+																		  	</div>
+															  			</div>
+											                   		</div>
+														    	</div>
+														  	</form>
+							                      		</div>
+							                      	<!--수정 클릭시 답글 div 끝  -->
+							                      	<!-- 원래 영역엔 - 붙여서 제어 -->
+							             		<div id="rere${-replyreply.REPLY_NUM}">
 							              			<a href="#">
 								              		<c:if test="${ replyreply.CAFE_USER_IMAGE_NUM== 0}">
 								              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
@@ -453,25 +512,31 @@ li.bbp-topic-freshness-test{
 														width="40px" class="img-circle alignleft" alt=""> 
 													</c:if>
 								              		</a>
+								              
 									                <div class="comment-content">
 										                <h4 class="comment-author">
 									                        ${replyreply.CAFE_USER_NICKNAME} <small class="comment-meta">${replyreply.REPLY_SAVEDATE}</small>
-									                       	<c:choose>			
-																<c:when test="${loginId == replyreply.USER_ID}">
-																	<form action="deleteReply" method="post" id="delForm" style="text-align: right;">
+									                       <!-- 수정 삭제 div -->
+							                      			<div class="mo_de" style="display: flex; float: right;">
+								                      			<div class="modi">
+																	<c:if test="${loginId == reply.USER_ID}">
+																		<form action="deleteReply" method="post" id="delForm">
 																			<input type="hidden" name="boardNum" value="${userBoard.boardNum}">
 																			<input type="hidden" name="boardMenuNum" value="${boardMenuType.boardMenuNum}">
 																			<input type="hidden" name="cafeId" value="${boardMenuType.cafeId}">
 																			<input type="hidden" name="replyNum" value="${replyreply.REPLY_NUM}">
 																			<a href="#" onClick="delReply()">삭제</a>
-																	</form>
-																</c:when>
-																<c:when test="${loginId == replyreply.USER_ID}">
-																	<a href="modifyBoardReply?replyNum=${replyreply.REPLY_NUM}">
-																		수정
-																	</a>
-																</c:when>
-															</c:choose>
+																		</form>
+																	</c:if>
+																</div>
+																<div class="del">
+																	<c:if test="${loginId == reply.USER_ID}">
+																		&nbsp;|&nbsp;	
+																		<a onclick="replyReModifyClick(this)" id="${replyreply.REPLY_NUM}" style="cursor:pointer">
+																		수정</a>
+																	</c:if>
+																</div>
+															</div>
 									                  	 </h4>
 								                   		 ${replyreply.REPLY_CONTENT}<br>
 								                   		 <c:forEach var="file" items="${fileList}">
@@ -500,7 +565,7 @@ li.bbp-topic-freshness-test{
 																			<input type="file" name="replyImgName">
 																	  	</div>
 																	  	<div class="reply-two"> 
-																	  		<input type="button" value="취소" onclick="back(this)" id="${replyreply.REPLY_NUM}" class="button small">
+																	  		<input type="button" value="취소" onclick="back(this)" id="${-replyreply.REPLY_NUM}" class="button small">
 																	  		<input type="submit" value="등록" id="submit" class="button small">
 																	  	</div>
 																	  </div>
@@ -510,6 +575,7 @@ li.bbp-topic-freshness-test{
 										                   </div>
 										                  <!--답글 쓰기 끝  -->
 										              </div>
+										          </div>
 										               <!-- comment-content 끝 -->
 						                      	</article>
 			                   			   	</li>
@@ -518,6 +584,7 @@ li.bbp-topic-freshness-test{
 			                      <!-- 답글 view for문 끝 -->
 								</div>
 			                </div>
+			               </div>
 				</article>
 			</li>
 		</c:if>
