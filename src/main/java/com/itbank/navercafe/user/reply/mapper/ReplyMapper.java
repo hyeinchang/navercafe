@@ -25,5 +25,7 @@ public interface ReplyMapper {
 	
 	public void updateReply(@Param("replyNum")int replyNum,
 					@Param("replyContent")String replyContent);
+	
+	public void deleteReply(int replyNum);
 }
 

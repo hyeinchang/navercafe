@@ -62,5 +62,11 @@ public class FileServiceImpl implements FileService {
 		fileMapper.updateReply(fileDTO, replyNum);
 	}
 
+	@Override
+	public void deleteReplyNum(int replyNum) {
+		System.out.println("여까지 안오나?"+replyNum);
+		fileMapper.deleteReplyNum(replyNum);
+	}
+
 	
 }

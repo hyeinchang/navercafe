@@ -52,8 +52,8 @@ public class ReplyServiceImpl implements ReplyService{
 			String directory = "boardReply";
 			String userId =  mul.getParameter("userId");
 			
-			System.out.println("userId : " + userId);
-			System.out.println("replyImgName : " + multipartFile.getOriginalFilename());
+			//System.out.println("userId : " + userId);
+			//System.out.println("replyImgName : " + multipartFile.getOriginalFilename());
 			
 			if(userId != null && userId.length() > 0) {
 				directory += "/" + userId;
@@ -69,13 +69,13 @@ public class ReplyServiceImpl implements ReplyService{
 			redto.setReplyContent(mul.getParameter("replyContent"));
 			redto.setReplyStep(step);
 			redto.setReplyNum(seq);
-			System.out.println("들어갈 보드넘 :"+redto.getBoardNum());
-			System.out.println("들어갈 유저아이디 :"+redto.getUserId());
-			System.out.println("들어갈 내용 :"+redto.getReplyContent());
-			System.out.println("들어갈 스탭 :"+redto.getReplyStep());
-			System.out.println("들어갈 댓글넘버 :"+redto.getReplyNum());
-			System.out.println("directory >>>> " + directory);
-			System.out.println("설마 너?:"+multipartFile.getSize());
+//			System.out.println("들어갈 보드넘 :"+redto.getBoardNum());
+//			System.out.println("들어갈 유저아이디 :"+redto.getUserId());
+//			System.out.println("들어갈 내용 :"+redto.getReplyContent());
+//			System.out.println("들어갈 스탭 :"+redto.getReplyStep());
+//			System.out.println("들어갈 댓글넘버 :"+redto.getReplyNum());
+//			System.out.println("directory >>>> " + directory);
+//			System.out.println("설마 너?:"+multipartFile.getSize());
 			if(multipartFile.getSize()!=0) {
 				FileDTO fileDTO = null;
 				FileResult fileResult = fileUtils.uploadFile(multipartFile, directory);
@@ -107,16 +107,16 @@ public class ReplyServiceImpl implements ReplyService{
 	@Override
 	public void updateReply(MultipartHttpServletRequest mul) {
 		MultipartFile multipartFile = mul.getFile("replyImgName");
-		System.out.println("수정해줄 replyNum :"+mul.getParameter("replyNum"));
-		System.out.println("수정해줄 내용 :"+mul.getParameter("replyContent"));
+		//System.out.println("수정해줄 replyNum :"+mul.getParameter("replyNum"));
+		//System.out.println("수정해줄 내용 :"+mul.getParameter("replyContent"));
 		rm.updateReply(Integer.parseInt(mul.getParameter("replyNum")),mul.getParameter("replyContent"));
 		try {
 			//생성할 디렉토리
 			String directory = "boardReply";
 			String userId =  mul.getParameter("userId");
 			
-			System.out.println("userId : " + userId);
-			System.out.println("replyImgName : " + multipartFile.getOriginalFilename());
+			//System.out.println("userId : " + userId);
+			//System.out.println("replyImgName : " + multipartFile.getOriginalFilename());
 			
 			if(userId != null && userId.length() > 0) {
 				directory += "/" + userId;
@@ -141,6 +141,14 @@ public class ReplyServiceImpl implements ReplyService{
 			e.printStackTrace();
 		}
 		
+	}
+
+	@Override
+	public void deleteReply(int replyNum) {
+		System.out.println("삭제할 댓글 : "+replyNum);
+		rm.deleteReply(replyNum);
+		System.out.println("사진 삭제할 댓글번호 : "+replyNum);
+		fs.deleteReplyNum(replyNum);
 	}
 
 

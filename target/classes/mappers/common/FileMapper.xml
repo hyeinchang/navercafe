@@ -77,6 +77,10 @@
 		FILE_STORED_NAME =#{fileDTO.fileStoredName} where reply_Num=#{replyNum}
 	</update>
 	
+	<delete id="deleteReplyNum">
+		delete from project_file where reply_num=#{replyNum}
+	</delete>
+	
 	
 </mapper>
 

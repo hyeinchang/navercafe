@@ -56,6 +56,9 @@
 		update project_reply set reply_content=#{replyContent} where reply_num=#{replyNum}
 	</select>
 	
+	<delete id="deleteReply">
+		delete project_reply where reply_num=#{replyNum}
+	</delete>
 	
 	
 	

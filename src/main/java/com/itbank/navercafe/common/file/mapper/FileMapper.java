@@ -22,4 +22,6 @@ public interface FileMapper {
 	//댓글 사진 업데이트
 	public void updateReply(@Param("fileDTO")FileDTO fileDTO,
 			@Param("replyNum")int replyNum);
+	
+	public void deleteReplyNum(int replyNum);
 }

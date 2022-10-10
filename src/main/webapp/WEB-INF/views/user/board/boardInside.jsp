@@ -230,6 +230,16 @@ li.bbp-topic-freshness-test{
 			console.log('댓글 삭제 취소')
 		}
 	}
+	
+	function deldelReply(){
+		var delForm = document.getElementById("deldelForm");
+		const result=confirm('답글을 삭제하시겠습니까?');
+		if(result){
+			deldelForm.submit();
+		}else{
+			console.log('댓글 삭제 취소')
+		}
+	}
 
 </script>
 	
@@ -407,7 +417,7 @@ li.bbp-topic-freshness-test{
 														<input type="hidden" name="boardNum" value="${userBoard.boardNum}">
 														<input type="hidden" name="boardMenuNum" value="${boardMenuType.boardMenuNum}">
 														<input type="hidden" name="cafeId" value="${boardMenuType.cafeId}">
-														<input type="hidden" name="replyNum" value="${replyreply.REPLY_NUM}">
+														<input type="hidden" name="replyNum" value="${reply.REPLY_NUM}">
 														<a href="#" onClick="delReply()">삭제</a>
 													</form>
 												</c:if>
@@ -520,12 +530,12 @@ li.bbp-topic-freshness-test{
 							                      			<div class="mo_de" style="display: flex; float: right;">
 								                      			<div class="modi">
 																	<c:if test="${loginId == reply.USER_ID}">
-																		<form action="deleteReply" method="post" id="delForm">
+																		<form action="deleteReply" method="post" id="deldelForm">
 																			<input type="hidden" name="boardNum" value="${userBoard.boardNum}">
 																			<input type="hidden" name="boardMenuNum" value="${boardMenuType.boardMenuNum}">
 																			<input type="hidden" name="cafeId" value="${boardMenuType.cafeId}">
 																			<input type="hidden" name="replyNum" value="${replyreply.REPLY_NUM}">
-																			<a href="#" onClick="delReply()">삭제</a>
+																			<a href="#" onClick="deldelReply()">삭제</a>
 																		</form>
 																	</c:if>
 																</div>

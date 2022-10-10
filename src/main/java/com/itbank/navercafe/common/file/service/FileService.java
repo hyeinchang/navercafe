@@ -18,5 +18,6 @@ public interface FileService {
 		public FileDTO getReplyNum(int replyNum);
 	//댓글 사진 업데이트
 	public void updateReply(FileDTO fileDTO, int replyNum);
+	public void deleteReplyNum(int replyNum);
 	
 }
