@@ -206,6 +206,34 @@ public class BoardServiceImpl implements BoardService{
 		bm.deleteReply(replyNum);
 	}
 
+
+	@Override
+	public List<BoardExtendDTO> getBoardList_paging(MenuDTO menuDTO) throws Exception {
+		List<BoardExtendDTO> boardList = null;
+		
+		try {
+			boardList = bm.getBoardList_paging(menuDTO);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return boardList;
+	}
+
+
+	@Override
+	public int getBoardTotalCount(MenuDTO menuDTO) throws Exception {
+		int totalCount = 0;
+		
+		try {
+			totalCount = bm.getBoardTotalCount(menuDTO);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		
+		return totalCount;
+	}
+
 }
 
 	

@@ -1,7 +1,7 @@
 package com.itbank.navercafe.common.pagination;
 
 public class Pagination {
-	private int page = 1;			// 현재 페이지
+	private int page;				// 현재 페이지
 	private int startRow;			// DB에서 가져올 시작 줄
 	private int endRow;				// DB에서 가져올 마지막 줄
 	private int totalCount;			// 전체 행 개수

@@ -1,8 +1,5 @@
 package com.itbank.navercafe.user.board.service;
 
-
-import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
 
 import org.springframework.ui.Model;
@@ -18,7 +15,10 @@ public interface BoardService {
 	public BoardDTO getUserBoard(int boardNum,int boardMenuNum, Model model,int pageNum, String cafeId,int next,int preview);
 
 	public List<BoardExtendDTO> getBoardList(MenuDTO menuDTO);
-
+	
+	// 페이징 & 검색 처리된 게시글
+	public List<BoardExtendDTO> getBoardList_paging(MenuDTO menuDTO) throws Exception;
+	public int getBoardTotalCount(MenuDTO menuDTO) throws Exception;
 	
 	//조회수
 	public void hit(int boardNum,int num);

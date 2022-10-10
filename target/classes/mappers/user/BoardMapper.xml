@@ -114,6 +114,13 @@
 		                (SELECT * FROM project_board 
 		                WHERE board_title LIKE '%' || #{boardTitle} || '%'
 		                AND board_content LIKE '%' || #{boardContent} || '%'
+		                ]]>
+		                <if test="startSearchDate != null and endSearchDate != null">
+		                <![CDATA[
+		                AND board_savedate BETWEEN TO_DATE(#{startSearchDate}, 'YYYY-MM-DD') AND TO_DATE(#{endSearchDate}, 'YYYY-MM-DD')
+		                ]]>
+		                </if>
+		                <![CDATA[
 		                ) board,
 		                (SELECT * FROM project_cafe_member
 		                WHERE cafe_user_nickname  LIKE '%' || #{cafeUserNickname} || '%'
@@ -123,7 +130,10 @@
 		            AND
 		            board.user_id = cafeMember.user_id  AND boardMenu.cafe_id = cafeMember.cafe_id 
 		            ORDER BY board_num DESC) boardData
-		        LEFT JOIN
+		            ]]>
+		     	<if test="replyContent != null or replyUserNickname != null">
+	        	<![CDATA[
+		        INNER JOIN
 		            (SELECT DISTINCT(board_num) FROM
 		                (SELECT board_num, user_id FROM project_reply 
 		                WHERE reply_content LIKE '%' || #{replyContent} || '%') reply
@@ -132,6 +142,9 @@
 		                WHERE cafe_user_nickname LIKE '%' || #{replyUserNickname} || '%') replayMember
 		            ON reply.user_id = replayMember.user_id) replyData
 		        ON boardData.board_num = replyData.board_num
+		        ]]>
+		        </if>
+		        <![CDATA[
 		        )
 		    WHERE rn BETWEEN #{startRow} AND #{endRow}
 		]]>		
@@ -150,6 +163,13 @@
 	                (SELECT * FROM project_board 
 	                WHERE board_title LIKE '%' || #{boardTitle} || '%'
 	                AND board_content LIKE '%' || #{boardContent} || '%'
+	                ]]>
+	                <if test="startSearchDate != null and endSearchDate != null">
+	                <![CDATA[
+	                AND board_savedate BETWEEN TO_DATE(#{startSearchDate}, 'YYYY-MM-DD') AND TO_DATE(#{endSearchDate}, 'YYYY-MM-DD')
+	                ]]>
+	                </if>
+	                <![CDATA[
 	                ) board,
 	                (SELECT * FROM project_cafe_member
 	                WHERE cafe_user_nickname  LIKE '%' || #{cafeUserNickname} || '%'
@@ -159,7 +179,10 @@
 	            AND
 	            board.user_id = cafeMember.user_id  AND boardMenu.cafe_id = cafeMember.cafe_id 
 	            ORDER BY board_num DESC) boardData
-	        LEFT JOIN
+	        ]]>    
+	        <if test="replyContent != null or replyUserNickname != null">
+	        <![CDATA[
+	        INNER JOIN
 	            (SELECT DISTINCT(board_num) FROM
 	                (SELECT board_num, user_id FROM project_reply 
 	                WHERE reply_content LIKE '%' || #{replyContent} || '%') reply
@@ -168,7 +191,8 @@
 	                WHERE cafe_user_nickname LIKE '%' || #{replyUserNickname} || '%') replayMember
 	            ON reply.user_id = replayMember.user_id) replyData
 	        ON boardData.board_num = replyData.board_num
-		]]>		
+	       ]]>
+	       </if>	
 	</select>
 	
 

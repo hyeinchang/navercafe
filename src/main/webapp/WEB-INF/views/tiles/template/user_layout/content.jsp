@@ -134,13 +134,13 @@
         <div class=" text-center">
           <ul class="pagination">
           <c:if test="${pagination.prevActive}">
-          	<li><a href="#">«</a></li>
+          	<li><a href="javascript:searchCafe(${startPage-1})">«</a></li>
           </c:if>
           <c:forEach var="page" begin="${pagination.startPage}" end="${pagination.endPage}">
             <li${pagination.page eq page ? ' class="active"' : ''}><a href="javascript:searchCafe(${page})">${page}</a></li>
           </c:forEach>
           <c:if test="${pagination.nextActive}">
-          	<li><a href="#">»</a></li>
+          	<li><a href="javascript:searchCafe(${endPage+1})">»</a></li>
           </c:if>
           </ul>
         </div>

@@ -1,6 +1,8 @@
 package com.itbank.navercafe.user.menu.dto;
 
-public class MenuDTO {
+import com.itbank.navercafe.user.board.dto.BoardSearchDTO;
+
+public class MenuDTO extends BoardSearchDTO {
 	private int boardMenuNum;
 	private String cafeId;
 	private String boardMenuName;

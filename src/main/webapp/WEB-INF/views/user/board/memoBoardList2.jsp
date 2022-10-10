@@ -1,7 +1,6 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
-<c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <style>
 /*//////////////////////////////////   메모 게시판   ////////////////////////////////  */
 .memo-board{padding-top:10px;}
@@ -65,50 +64,48 @@ function back(obj){
 	document.getElementById(-obj.id).style="display:none";
 }
 </script>
-	<div class="content col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix cstmContent" ${_cafeDTO.cafeLayout eq 'left' ? '' : 'style="float:right;"'}>
-       	<section class="section1">
-		    <div class="container clearfix">
-		      <div class="title">
-		       	<h4>
-		          <span>${boardMenuName}</span>
-		        </h4>
-		      </div>
-		      <div class="col-lg-8 col-md-8 col-sm-8 clearfix">
-		      	<!--  메모 작성 부분-->
-		        <div class="memo-board">
-		            <form name="comments_form" id="comments_form" action="memoSave" class="row" method="post">
-		            	<input type="hidden" name="cafeId" value="${_cafeDTO.cafeId}">
-		            	<input type="hidden" name="userId" value="${_cafeDTO.loginUser.userId}">
-		            	<input type="hidden" name="boardMenuNum" value="${_cafeDTO.menuDTO.boardMenuNum}">
-		            	<input type="hidden" name="boardNotice" value="N">
-		            	<input type="hidden" name="boardTitle" value="${_cafeDTO.menuDTO.boardMenuName}의 글">
+
+<div class="content col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix cstmContent" ${_cafeDTO.cafeLayout eq 'left' ? '' : 'style="float:right;"'}>
+<div class="container clearfix" style="list-style: none;">
+	      <div class="content col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix">
+				<h1>메모 게시판입니다</h1>
+		        <!-- SLIDE POST -->
+		        <article class="blog-wrap-test">
+		        
+				<div class="memo-wrap">
+				
+				<!--  메모 작성 부분-->
+		         <div class="memo-board">
+		            <h4>새로운 메모 게시판 </h4><h1>boardMenuNum : ${boardMenuNum}</h1>
+		            <form id="comments_form" action="memoSave" class="row" method="post">
+		            	<input type="hidden" name="userId" value="${sessionId}">
+		            	<input type="hidden" name="boardMenuNum" value="${boardMenuNum}">
 		            	
 		              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-		                <textarea class="form-control" name="boardContent" id="comments" rows="6" placeholder="글을 입력해 주세요."></textarea>
-		                <span style="display:none;">
-		               	 	<input type="checkbox" name="checkbox" value="" style="zoom: 1.5; cursor:pointer;"> 스탭만 보기
+		                <textarea class="form-control" name="memoContent" id="comments" rows="6" placeholder="글을 입력해 주세요."></textarea>
+		                <span style="font-size: 15pt;">
+		               	 	<input type="checkbox" name="checkbox" value="" 
+		               	 	style="zoom: 1.5; cursor:pointer;"> 스탭만 보기
 		                </span>
 	                	<span style="float: right;">
-	                		<button type="button" class="button" onclick="writeBoard()">등록</button>
+	                		<input type="submit" value="등록" class="button small">
 	                	</span>
 		              </div>
 		            </form>
-			    </div>
-		      	<!-- end 메모 작성 부분 -->
-		      	
-		      	<!-- 메모 작성글들   -->
-		        <c:forEach var="memoList" items="${boardList}">
+			     </div>  
+		       	<!-- 메모 작성글들   -->
+		         <c:forEach var="memoList" items="${boardList}">
 		         	<div class="board-board">
 			          <header class="page-header blog-title">
 			            <div class="post-meta-test">
 			              	<div class="div-one">
 				              	<a href="#">
-				              		<c:if test="${memoList.cafeUesrImageNum == 0 }">
+				              		<c:if test="${memoList.cafeUserImageNum == 0 }">
 				              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
 				              			width="40px;" class="img-circle alignleft">
 				              		</c:if>
-									<c:if test="${memoList.cafeUesrImageNum != 0 }">
-										<img src="download?fileNum=${memoList.cafeUesrImageNum}" 
+									<c:if test="${memoList.cafeUserImageNum != 0 }">
+										<img src="download?fileNum=${memoList.cafeUserImageNum}" 
 										width="40px;" class="img-circle alignleft">
 									</c:if>
 				              	</a>
@@ -124,20 +121,20 @@ function back(obj){
 			          </header>
 			          <div class="board-post-desc">
 			          	<p>
-			         		${memoList.boardContent}
+			         		${memoList.MEMO_CONTENT}
 						</p>
-						${memoList.boardNum}<br>
+						${memoList.MEMO_NUM}<br>
 						<a onclick="replyClick(this)" id="${memoList.boardNum}" style="cursor:pointer">
-						∧ 댓글  ${0 }
+						∧ 댓글  ${memoList.REPLY_COUNT }
 						</a><!--memoNum의 아이디 그룹을 갖고있는 수만큼 표시  -->
 			          </div>
 			          
 			          <!-- 댓글 클릭시 생성되는 div  -->
 			       	 	
-			          <div id="${-memoList.boardNum}" style="display:none;" >
+			          <div id="${-memoList.MEMO_NUM}" style="display:none;" >
 			          		<hr><!--  	근데 메모는 답글들 먼저 보여주고. 답글view		 -->
 		                      	<c:forEach var="memoReply" items="${memoReplyList}">
-		                      		<c:if test="${memoList.boardNum == memoReply.MEMO_REPLY_GROUP}">
+		                      		<c:if test="${memoList.MEMO_NUM == memoReply.MEMO_REPLY_GROUP}">
 		                      			<li>
 						              <article class="comment" style="color:black;">
 						              	<a href="#">
@@ -157,7 +154,7 @@ function back(obj){
 						                        ${memoReply.CAFE_USER_NICKNAME} <small class="comment-meta">${memoReply.REPLY_SAVEDATE}</small>
 						                  	  </h4>
 						                   		${memoReply.MEMO_REPLY_CONTENT}<br>
-						                   		<!-- 내용에 이미지가 있다면 보여주고 -->
+						                   					<!-- 내용에 이미지가 있다면 보여주고 -->
 						                   		
 						                   		<c:forEach var="file" items="${fileList}">
 						                   			<c:if test="${file.memoReplyNum == replyreply.MEMO_REPLY_NUM}">
@@ -174,7 +171,7 @@ function back(obj){
 			          
 			          
 			          
-                     		<form id="comments_form" action="saveMemoReply?groupNum=${memoList.boardNum}" class="row" 
+                     		<form id="comments_form" action="saveMemoReply?groupNum=${memoList.MEMO_NUM}" class="row" 
 						  		method="post" enctype="multipart/form-data">
 						  		<input type="hidden" name="userId" value="${sessionUser.userId}">
 						  		<input type="hidden" name="cafeId" value="${cafeId}">
@@ -192,7 +189,7 @@ function back(obj){
 							  		<!-- 여기가 범인 두번 실행됨  -->
 							  	</div>
 							  	<div class="reply-two"> 
-							  		<input type="button" value="취소" onclick="back(this)" id="${memoList.boardNum}" class="button small">
+							  		<input type="button" value="취소" onclick="back(this)" id="${memoList.MEMO_NUM}" class="button small">
 							  		<input type="submit" value="등록" id="submit" class="button small">
 							  	</div>
 							  </div>
@@ -205,82 +202,41 @@ function back(obj){
 	          
 				</div>
 		     </c:forEach>
-		     <!-- end 메모 작성글 들 -->
-		     
-		     	<!--	페이징  -->
+				
+				
+				<!--	페이징  -->
 				  <div class="paging" align="center">
 					  <ul class="pagination">
-					  <c:if test="${menuDTO.prevActive}">
-				      	<li><a href="javascript:searchBoardList(${menuDTO.startPage-1})">«</a></li>
-				      </c:if>
-			          <c:forEach var="page" begin="${menuDTO.startPage}" end="${menuDTO.endPage}">
-			            <li${menuDTO.page eq page ? ' class="active"' : ''}><a href="javascript:searchBoardList(${page})">${page}</a></li>
-			          </c:forEach>
-			          <c:if test="${menuDTO.nextActive}">
-			          	<li><a href="javascript:searchBoardList(${menuDTO.endPage+1})">»</a></li>
-			          </c:if>
+					    <li><a href="#">1</a></li>
+					    <li><a href="#">2</a></li>
+					    <li><a href="#">3</a></li>
 					  </ul>
 				  </div>
 				
-		      </div>
-		      <!-- end content -->
-		    </div>
-		    <!-- end container -->
-		  </section>
-      </div>
-      <!-- end content -->
-<form name="boardListForm" action="${contextPath}/user/board/goBoardList">
-	<input type="hidden" name="cafeId" value="${menuDTO.cafeId}">
-	<input type="hidden" name="boardMenuNum" value="${menuDTO.boardMenuNum}">
-	<input type="hidden" name="page" value="${menuDTO.page}">
-</form>
-<script type="text/javascript">
-	function writeBoard() {
-		var form = document.comments_form;
-		var xhr = new XMLHttpRequest();
-		var cafeId = form.cafeId.value;
-		var userId = form.userId.value;
-		var data = new Object();
-		
-		data = getData();
-		xhr.open('post', '${contextPath}/user/board/writeBoard', false);
-		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-		xhr.setRequestHeader('Content-Type', 'application/json');
-		
-		xhr.onreadystatechange = function() {
-			if(xhr.readyState == 4 && xhr.status == 200) {
-	 			var message = '';
-	 			
-	 			if(Number(xhr.response) == 1) {
-	 				location.href = '${contextPath}/user/board/goBoardList?cafeId=' + cafeId + '&boardMenuNum=' + data.boardMenuNum;
-	 			} else {
-	 				alert('저장에 실패했습니다.');
-	 			}
-			}
-		}
-		
-		xhr.send(JSON.stringify(data));
-	}
-	
-	function getData() {
-		var form = document.comments_form;
-		var data = new Object();
-		
-		for(var i=0;i<form.length;i++) {
-			var element = form[i];
-			
-			if(element.name && element.value) {
-				data[element.name] = element.value;
-			}
-		}
-		
-		return data;
-	}
-	
-	function searchBoardList(page) {
-		var form = boardListForm;
-		
-		form.page.value = page;
-		form.submit();
-	}
-</script>      
+			</div>
+		 </article>
+		          
+
+						
+				  
+				  						<!--	페이징  -->
+	         <%--  <div class="page">
+		          <div class="page-one">
+			          <ul class="pagination">
+			         	<c:forEach var="num" begin="1" end="${repeat}">
+							<li><a href="goBoardInside?boardNum=${userBoard.boardNum}
+							&num=${num}">${num}</a></li>
+						</c:forEach>
+			          </ul>
+		           </div>
+		           
+		          <div class="page-two">
+		          	<a href="goBoardList">전체보기</a>
+		          </div>
+	          </div> --%>
+				  
+				  
+			</div>
+		</div>
+
+</div>

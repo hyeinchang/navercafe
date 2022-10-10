@@ -14,8 +14,8 @@ import com.itbank.navercafe.user.menu.dto.MenuDTO;
 
 
 public interface BoardMapper {
-	public ArrayList<BoardExtendDTO> getBoardList(MenuDTO menuDTO) throws Exception;
-	public ArrayList<BoardExtendDTO> getBoardList_paging(MenuDTO menuDTO) throws Exception;
+	public List<BoardExtendDTO> getBoardList(MenuDTO menuDTO) throws Exception;
+	public List<BoardExtendDTO> getBoardList_paging(MenuDTO menuDTO) throws Exception;
 	public int getBoardTotalCount(MenuDTO menuDTO) throws Exception;
 	
 	//보드 넘에 따른 게시물

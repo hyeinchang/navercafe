@@ -19,7 +19,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.itbank.navercafe.common.CommonUtils;
-import com.itbank.navercafe.common.pagination.Pagination;
 import com.itbank.navercafe.user.board.dto.BoardDTO;
 import com.itbank.navercafe.user.board.dto.BoardExtendDTO;
 import com.itbank.navercafe.user.board.service.BoardService;
@@ -58,14 +57,15 @@ public class BoardController {
 	
 	//전체목록인데 수영이형이랑 상의.
 	@GetMapping("/goBoardList")	
-	public String goBoardList(Model model, String cafeId, MenuDTO menuDTO, Pagination pagination) throws Exception{
+	public String goBoardList(Model model, String cafeId, MenuDTO menuDTO) throws Exception{
 		int boardMenuNum = menuDTO.getBoardMenuNum();
 		int boardMenuType = 1;
 		List<BoardExtendDTO> boardList = null;
 		String boardMenuName = "전체글보기";
 		String returnUrl = "user/board/boardList";
+		int page = menuDTO.getPage();
+		int totalCount = 0;
 	
-		
 		if(cafeId != null) {
 			menuDTO.setCafeId(cafeId);
 		}
@@ -76,15 +76,23 @@ public class BoardController {
 			boardMenuName = menuDTO.getBoardMenuName();
 		}
 		
+		if(page == 0) {
+			page = 1;
+		}
+		
 		// 게시판 타입에 따라 다른 view 설정
 		switch(boardMenuType) {
-		case 4 :
+		case 4 :	// 등업게시판
+			boardList = ser.getBoardList(menuDTO);
 			returnUrl = "user/board/gradeBoardList";
-			boardList = ser.getBoardList(menuDTO);
 			break;
-		case 5 :
+		case 5 :	// 메모게시판
+			totalCount = ser.getBoardTotalCount(menuDTO);
+			
+			menuDTO.setPageination(page, totalCount, 10, 5);
+			
+			boardList = ser.getBoardList_paging(menuDTO);
 			returnUrl = "user/board/memoBoardList";
-			boardList = ser.getBoardList(menuDTO);
 			break;
 		default :
 			boardList = ser.getBoardList(menuDTO);
@@ -93,6 +101,7 @@ public class BoardController {
 		
 		model.addAttribute("boardMenuName",boardMenuName);
 		model.addAttribute("boardList", boardList);
+		model.addAttribute("menuDTO", menuDTO);
 		model.addAttribute("cafeId",cafeId);
 		
 		return returnUrl;
