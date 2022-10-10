@@ -79,7 +79,7 @@ public class BoardController {
 			returnUrl = "user/board/gradeBoardList";
 			break;
 		case 5 :
-			returnUrl = "user/board/memoBoardList?cafeId="+cafeId;
+			returnUrl = "user/board/memoBoardList?";
 			break;
 		}
 		

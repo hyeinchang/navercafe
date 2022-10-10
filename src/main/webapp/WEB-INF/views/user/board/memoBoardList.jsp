@@ -64,8 +64,7 @@ function back(obj){
 	document.getElementById(-obj.id).style="display:none";
 }
 </script>
-
-
+>>>>>>>>>>>>>>>>>>>>>>
 <div class="content col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix cstmContent" ${_cafeDTO.cafeLayout eq 'left' ? '' : 'style="float:right;"'}>
 <div class="container clearfix" style="list-style: none;">
 	      <div class="content col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix">
@@ -96,28 +95,28 @@ function back(obj){
 		            </form>
 			     </div>  
 		        					 <!-- 메모 작성글들   -->
-		         <c:forEach var="memoList" items="${mapList}">
+		         <c:forEach var="memoList" items="${boardList}">
 		         	<div class="board-board">
 			          <header class="page-header blog-title">
 			            <div class="post-meta-test">
 			              	<div class="div-one">
 				              	<a href="#">
-				              		<c:if test="${memoList.CAFE_USER_IMAGE_NUM == 0 }">
+				              		<c:if test="${memoList.cafeUserImageNum == 0 }">
 				              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
 				              			width="40px;" class="img-circle alignleft">
 				              		</c:if>
-									<c:if test="${memoList.CAFE_USER_IMAGE_NUM != 0 }">
-										<img src="download?fileNum=${memoList.CAFE_USER_IMAGE_NUM}" 
+									<c:if test="${memoList.cafeUserImageNum != 0 }">
+										<img src="download?fileNum=${memoList.cafeUserImageNum}" 
 										width="40px;" class="img-circle alignleft">
 									</c:if>
 				              	</a>
 			                </div>
 							<div class="memo-div-two">
-								<a href="#">${memoList.CAFE_USER_NICKNAME}</a>
+								<a href="#">${memoList.cafeUserNickname}</a>
 								수정 | 삭제
 							</div>
 							<div class="div-three">
-				                	${memoList.MEMO_SAVEDATE}
+				                	${memoList.boardSaveDate}
 				            </div>
 			            </div>
 			          </header>
@@ -126,7 +125,7 @@ function back(obj){
 			         		${memoList.MEMO_CONTENT}
 						</p>
 						${memoList.MEMO_NUM}<br>
-						<a onclick="replyClick(this)" id="${memoList.MEMO_NUM}" style="cursor:pointer">
+						<a onclick="replyClick(this)" id="${memoList.boardNum}" style="cursor:pointer">
 						∧ 댓글  ${memoList.REPLY_COUNT }
 						</a><!--memoNum의 아이디 그룹을 갖고있는 수만큼 표시  -->
 			          </div>

@@ -103,7 +103,7 @@ public class CafeServiceImpl implements CafeService {
 			if(cafeDTO != null && mainRecentReplyList != null) {
 				cafeDTO.setMainRecentReplyList(mainRecentReplyList);
 			}
-			System.out.println(cafeDTO.getMainRecentReplyList().size());
+			
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
