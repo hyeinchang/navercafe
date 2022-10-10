@@ -189,12 +189,22 @@ li.bbp-topic-freshness-test{
 	
 	
 	
-	function test(){
-		const result=confirm('삭제하시겠습니까?');
+	function delBoard(obj){
+		const result=confirm('게시글을 삭제하시겠습니까?');
 		if (result) {
-	    	console.log('삭제')
+	    	location.href='deleteBoard?boardNum='+obj
 	    } else {
 	    	console.log('대기')
+		}
+	}
+	
+	function delReply(){
+		var delForm = document.getElementById("delForm");
+		const result=confirm('댓글을 삭제하시겠습니까?');
+		if(result){
+			delForm.submit();
+		}else{
+			console.log('댓글 삭제 취소')
 		}
 	}
 
@@ -216,7 +226,7 @@ li.bbp-topic-freshness-test{
 			<div class="modify_delete">
 				<c:choose>
 					<c:when test="${loginId == userBoard.userId}">
-						<button onclick="test()">
+						<button onclick="delBoard(${userBoard.boardNum})">
 							삭제 
 						</button>
 					</c:when>
@@ -402,10 +412,13 @@ li.bbp-topic-freshness-test{
 		                        <!-- loginId == 관리자 계정 ||  -->
 		                        <c:choose>		
 									<c:when test="${loginId == reply.USER_ID}">
-										<a href="deleteBoardReply?replyNum=${reply.REPLY_NUM}">
-											삭제 
-										</a>
-										<%-- <h5>들어온 쒜끼${sessionUser.userId} 게시물 주인쒜끼${reply.USER_ID}</h5> --%>
+										<form action="deleteReply" method="post" id="delForm" style="text-align: right;">
+											<input type="hidden" name="boardNum" value="${userBoard.boardNum}">
+											<input type="hidden" name="boardMenuNum" value="${boardMenuType.boardMenuNum}">
+											<input type="hidden" name="cafeId" value="${boardMenuType.cafeId}">
+											<input type="hidden" name="replyNum" value="${replyreply.REPLY_NUM}">
+											<a href="#" onClick="delReply()">삭제</a>
+										</form>
 									</c:when>
 									<c:when test="${sessionUser.userId == reply.USER_ID}">		
 										<a>수정</a>
@@ -485,12 +498,16 @@ li.bbp-topic-freshness-test{
 						                  <h4 class="comment-author">
 					                        ${replyreply.CAFE_USER_NICKNAME} <small class="comment-meta">${replyreply.REPLY_SAVEDATE}</small>
 					                       <!-- loginId == 관리자 계정 ||  -->
+
 					                       	<c:choose>			
 												<c:when test="${loginId == replyreply.USER_ID}">
-													<a href="deleteBoardReply?replyNum=${replyreply.REPLY_NUM}">
-														삭제 
-													</a>
-													<%-- <h5>들어온 쒜끼${loginId} 게시물 주인쒜끼${replyreply.USER_ID}</h5> --%>
+													<form action="deleteReply" method="post" id="delForm" style="text-align: right;">
+															<input type="hidden" name="boardNum" value="${userBoard.boardNum}">
+															<input type="hidden" name="boardMenuNum" value="${boardMenuType.boardMenuNum}">
+															<input type="hidden" name="cafeId" value="${boardMenuType.cafeId}">
+															<input type="hidden" name="replyNum" value="${replyreply.REPLY_NUM}">
+															<a href="#" onClick="delReply()">삭제</a>
+													</form>
 												</c:when>
 												<c:when test="${loginId == replyreply.USER_ID}">
 													<a href="modifyBoardReply?replyNum=${replyreply.REPLY_NUM}">
@@ -515,7 +532,7 @@ li.bbp-topic-freshness-test{
 					                   		
 					                      	<p>
 					                      		<a onclick="replyClick(this)" id="${replyreply.REPLY_NUM}" style="cursor:pointer">
-					                      		<b>답글 쓰기</b> 그룹:${replyreply.REPLY_GROUP}</a>
+					                      		<b>답글 쓰기</b></a>
 					                      	</p>
 					                      	
 					                      			<!-- 답글 쓰기 클릭시 생성되는 div  -->

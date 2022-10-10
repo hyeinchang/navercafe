@@ -113,6 +113,7 @@
 					</thead>
 					<tbody>
 					<c:forEach var="dto" items="${boardList}">
+
 						<c:set var="className" value="notice_${dto.boardNotice}"/>
 						<tr class="${className}">
 							<td>${dto.boardNotice}</td>

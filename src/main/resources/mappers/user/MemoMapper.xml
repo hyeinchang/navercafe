@@ -27,7 +27,7 @@
 	<!-- 메모리스트  -->
 	<select id="getMemoList" resultType="HashMap">
 		select boardMenu.cafe_id, board.* from 
-		(select * from project_boardType where cafe_id = #{cafeId}) boardMenu
+		(select * from project_board_type where cafe_id = #{cafeId}) boardMenu
 		inner join
 		(select * from project_memo_board B inner join project_cafe_member C
         on B.user_id = C.user_id where C.cafe_id=#{cafeId}) board

@@ -104,7 +104,7 @@ public class BoardServiceImpl implements BoardService{
 		//보드 넘버에 따른 보드 정보 가져오기
 		MenuDTO menudto = bm.getBoardMenuType(boardMenuNum);
 		model.addAttribute("boardMenuType",bm.getBoardMenuType(boardMenuNum));
-
+		
 		
 		int pageLetter = 5;
 		
@@ -184,6 +184,18 @@ public class BoardServiceImpl implements BoardService{
 	@Override
 	public int checkGradeBoard(BoardExtendDTO boardExtDTO) throws Exception {
 		return bm.checkGradeBoard(boardExtDTO);
+	}
+
+
+	@Override
+	public void deleteBoard(int boardNum) {
+		bm.deleteBoard(boardNum);
+	}
+
+
+	@Override
+	public void deleteReply(int replyNum) {
+		bm.deleteReply(replyNum);
 	}
 
 }

@@ -100,6 +100,7 @@ public class MemoServiceImpl implements MemoService{
 		MemoDTO dto=new MemoDTO();
 		dto.setUserId(res.getParameter("userId"));
 		dto.setMemoContent(res.getParameter("memoContent"));
+		dto.setBoardMenuNum(Integer.parseInt(res.getParameter("boardMenuNum")));
 		if(res.getParameter("checkbox")==null) {
 			dto.setMemoStepOnly("N");
 		}else {
