@@ -65,7 +65,7 @@ public class HomeController { //메인 로그인관련
 	@Autowired
 	private MemberService memberService;
 	
-	@RequestMapping(value = "/", method = RequestMethod.GET)
+	@RequestMapping(value = "/")
 	public String home(HttpServletRequest request, CafeDTO cafeDTO, Pagination pagination, Model model) {
 		String url = "index";
 		ArrayList<CafeDTO> rankingList = new ArrayList<>();

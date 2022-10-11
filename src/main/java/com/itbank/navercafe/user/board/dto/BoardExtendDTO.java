@@ -1,12 +1,16 @@
 package com.itbank.navercafe.user.board.dto;
 
 import java.sql.Date;
+import java.sql.Timestamp;
+import java.util.List;
+
+import com.itbank.navercafe.user.reply.dto.ReplyDTO;
 
 public class BoardExtendDTO {
 	private int boardNum;
 	private String boardTitle;
 	private String boardContent;
-	private Date boardSaveDate;
+	private Timestamp boardSaveDate;
 	private int boardLikes;
 	private String boardNotice;
 	private String boardReplyAllow;
@@ -17,7 +21,7 @@ public class BoardExtendDTO {
 	private String cafeId;
 	
 	private String cafeUserNickname;
-	private int cafeUesrImageNum;
+	private int cafeUserImageNum;
 	private int cafeUserGrade;
 	private int cafeUserVisit;
 	private int cafeUserWrite;
@@ -30,6 +34,9 @@ public class BoardExtendDTO {
 	private String cutName;
 	private int upCafeUserGrade;
 	private String upCutName;
+	
+	private int replyCount;
+	private List<ReplyDTO> replyList;
 	
 	public int getBoardNum() {
 		return boardNum;
@@ -49,10 +56,10 @@ public class BoardExtendDTO {
 	public void setBoardContent(String boardContent) {
 		this.boardContent = boardContent;
 	}
-	public Date getBoardSaveDate() {
+	public Timestamp getBoardSaveDate() {
 		return boardSaveDate;
 	}
-	public void setBoardSaveDate(Date boardSaveDate) {
+	public void setBoardSaveDate(Timestamp boardSaveDate) {
 		this.boardSaveDate = boardSaveDate;
 	}
 	public int getBoardLikes() {
@@ -109,11 +116,11 @@ public class BoardExtendDTO {
 	public void setCafeUserNickname(String cafeUserNickname) {
 		this.cafeUserNickname = cafeUserNickname;
 	}
-	public int getCafeUesrImageNum() {
-		return cafeUesrImageNum;
+	public int getCafeUserImageNum() {
+		return cafeUserImageNum;
 	}
-	public void setCafeUesrImageNum(int cafeUesrImageNum) {
-		this.cafeUesrImageNum = cafeUesrImageNum;
+	public void setCafeUserImageNum(int cafeUserImageNum) {
+		this.cafeUserImageNum = cafeUserImageNum;
 	}
 	public int getCafeUserGrade() {
 		return cafeUserGrade;
@@ -180,5 +187,18 @@ public class BoardExtendDTO {
 	}
 	public void setUpCutName(String upCutName) {
 		this.upCutName = upCutName;
+	}
+	
+	public int getReplyCount() {
+		return replyCount;
+	}
+	public void setReplyCount(int replyCount) {
+		this.replyCount = replyCount;
+	}
+	public List<ReplyDTO> getReplyList() {
+		return replyList;
+	}
+	public void setReplyList(List<ReplyDTO> replyList) {
+		this.replyList = replyList;
 	}
 }

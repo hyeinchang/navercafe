@@ -1,6 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+
+<jsp:useBean id="boardType" class="com.itbank.navercafe.common.menu.BoardMenuType"/>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+
+<c:if test="${message ne null}">
+<script type="text/javascript">
+	alert('${message}');
+</script>
+</c:if>
 
       <div class="content col-lg-8 col-md-8 col-sm-8 col-xs-12 clearfix cstmContent" ${_cafeDTO.cafeLayout eq 'left' ? '' : 'style="float:right;"'}>
        	<!-- start 대문 -->
@@ -34,12 +42,34 @@
                <a href="javascript:changeCafeMenu('board/goBoardList?cafeId=${_cafeDTO.cafeId}')">더보기</a>
              </h4>
              <ul>
-               <c:forEach  var="mainBoard" items="${_cafeDTO.mainBoardList}"> 
-               <li>
-               	<a 
-               		href="${contextPath}/user/board/goBoardInside?cafeId=${_cafeDTO.cafeId}&boardMenuNum=${mainBoard.boardMenuNum}&boardNum=${mainBoard.boardNum}">
-               	${mainBoard.boardTitle}</a></li>
-               </c:forEach>          
+             <c:forEach  var="mainBoard" items="${_cafeDTO.mainBoardList}">
+                <c:choose>
+	            <c:when test="${mainBoard.boardMenuNum == boardType.TOTAL_BOARD_NUM}">
+               	<li>
+	               	<a href="${contextPath}/user/board/goBoardInside?cafeId=${_cafeDTO.cafeId}&boardMenuNum=${mainBoard.boardMenuNum}&boardNum=${mainBoard.boardNum}">
+	               	${mainBoard.boardTitle}
+	               	</a>
+               	</li>
+               	</c:when>
+               	<c:when test="${mainBoard.boardMenuNum == boardType.GRADE_BOARD_NUM}">
+               	<li>
+	               	<a href="${contextPath}/user/board/goBoardInside?cafeId=${_cafeDTO.cafeId}&boardMenuNum=${mainBoard.boardMenuNum}&boardNum=${mainBoard.boardNum}">
+	               	${mainBoard.boardTitle}
+	               	</a>
+               	</li>
+               	</c:when>
+               	<c:when test="${mainBoard.boardMenuNum == boardType.SIMPLE_BOARD_NUM 
+               	 	|| mainBoard.boardMenuNum == boardType.MEMO_BOARD_NUM 
+               	 	|| mainBoard.boardMenuNum == boardType.ATTENDANCE_BOARD_NUM}">
+               	<li>
+	               	<a href="${contextPath}/user/board/goBoardInside?cafeId=${_cafeDTO.cafeId}&boardMenuNum=${mainBoard.boardMenuNum}&boardNum=${mainBoard.boardNum}">
+	               	${mainBoard.boardContent}
+	               	</a>
+               	</li>
+               	</c:when>
+               	<c:otherwise></c:otherwise>
+	            </c:choose>
+             </c:forEach>          
              </ul>
            </div>
          

@@ -46,11 +46,11 @@ public class CafeController {
 	@Autowired MemberService ms;
 	@Autowired CafeMemberService cms;
 	
-	@GetMapping("/main")
+	@RequestMapping("/main")
 	public String main(HttpServletRequest request, RedirectAttributes redirectAttributes) {
 		
 		if(request.getParameter("cafeId") == null) {
-			redirectAttributes.addFlashAttribute("message", "해당 카페가 없습니다.");
+			redirectAttributes.addFlashAttribute("message", "해당 카페가 존재하지 않습니다.");
 			return "redirect:/";
 		}
 		

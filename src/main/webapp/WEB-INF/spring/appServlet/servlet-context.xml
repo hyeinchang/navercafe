@@ -58,6 +58,11 @@
 			<mapping path="/cafe/member/delete"/>
 			<mapping path="/cafe/createCafeForm"/>
 			<mapping path="/cafe/createCafe"/>
+			<mapping path="/user/*/*save*"/>
+			<mapping path="/user/*/*save*"/>
+			<mapping path="/user/*/*write*"/>
+			<mapping path="/user/*/*update*"/>
+			<mapping path="/user/*/*delete*"/>
 			<mapping path="/admin/**"/>
 			<beans:ref bean="checkLoginIn"/>
 		</interceptor>

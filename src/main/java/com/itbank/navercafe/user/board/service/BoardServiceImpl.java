@@ -16,6 +16,8 @@ import com.itbank.navercafe.user.board.dto.BoardDTO;
 import com.itbank.navercafe.user.board.dto.BoardExtendDTO;
 import com.itbank.navercafe.user.board.mapper.BoardMapper;
 import com.itbank.navercafe.user.menu.dto.MenuDTO;
+import com.itbank.navercafe.user.reply.dto.ReplyDTO;
+import com.itbank.navercafe.user.reply.mapper.ReplyMapper;
 
 
 
@@ -23,6 +25,8 @@ import com.itbank.navercafe.user.menu.dto.MenuDTO;
 public class BoardServiceImpl implements BoardService{
 	@Autowired BoardMapper bm;
 	@Autowired FileMapper fm;
+	@Autowired
+	private ReplyMapper replyMapper;
 	
 	
 	//전체목록인데 수영이형이랑 상의.
@@ -212,7 +216,20 @@ public class BoardServiceImpl implements BoardService{
 		List<BoardExtendDTO> boardList = null;
 		
 		try {
+			List<ReplyDTO> replyList = replyMapper.getSearchReplyList(menuDTO);
 			boardList = bm.getBoardList_paging(menuDTO);
+			
+			for(BoardExtendDTO beDTO : boardList) {
+				List<ReplyDTO> boardReplyList = new ArrayList<>();
+				
+				for(ReplyDTO replyDTO : replyList) {
+					if(beDTO.getBoardNum() == replyDTO.getBoardNum()) {
+						boardReplyList.add(replyDTO);
+					}
+				}
+				
+				beDTO.setReplyList(boardReplyList);
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

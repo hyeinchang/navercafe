@@ -28,28 +28,30 @@ public class CheckLoginInterceptor extends HandlerInterceptorAdapter{
 			
 			HttpSession session = request.getSession();
 			String loginId = (String) session.getAttribute("loginId");
+			String cafeId = request.getParameter("cafeId");
 			String message = "";
+			String forwardUrl = "/";
 			boolean forward = false;
+		
+			String requestURI = request.getRequestURI();
+			String contextPath = request.getContextPath();
+			String[] paths = requestURI.split("/");
+			String group = "";
+			
+			if(contextPath.equals("/")) {
+				group = paths[1].toLowerCase();
+			} else {
+				group = paths[2].toLowerCase();
+			}
 			
 			// 로그인이 안되어있을 경우
 			if(loginId == null || loginId.length() == 0) {
 				message = "로그인 정보가 없습니다.";
 				forward = true;
 			} else {
-				String requestURI = request.getRequestURI();
-				String contextPath = request.getContextPath();
-				String[] paths = requestURI.split("/");
-				String group = "";
-				
-				if(contextPath.equals("/")) {
-					group = paths[1].toLowerCase();
-				} else {
-					group = paths[2].toLowerCase();
-				}
-			
 				if("admin".equals(group)) {
 					CafeDTO cafeDTO = new CafeDTO();
-					String cafeId = request.getParameter("cafeId");
+					
 					String managerId = "";
 					
 					if(cafeDTO != null) {
@@ -69,21 +71,24 @@ public class CheckLoginInterceptor extends HandlerInterceptorAdapter{
 							message = "해당 카페가 존재하지 않습니다.";
 							forward = true;
 						}
-					} else {
-						message = "해당 카페가 존재하지 않습니다.";
-						forward = true;
-					}
+					} 
 				}
-				
+			}
+			
+			if("user".equals(group) && cafeId != null) {
+				forwardUrl = "/user/main?cafeId=" + cafeId;
+				request.setAttribute("navTab", 1);
 			}
 
 			if(forward) {
-				RequestDispatcher requestDispatcher = request.getRequestDispatcher("/");
+				RequestDispatcher requestDispatcher = request.getRequestDispatcher(forwardUrl);
 				
 				request.setAttribute("message", message);
 				request.setAttribute("_cafeDTO", new CafeDTO());
-				
+		
 				requestDispatcher.forward(request, response);
+				
+				return false;
 			}
 		
 		} catch(Exception e) {

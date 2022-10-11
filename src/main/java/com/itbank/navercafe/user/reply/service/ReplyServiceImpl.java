@@ -101,6 +101,32 @@ public class ReplyServiceImpl implements ReplyService{
 
 	}
 
+	@Override
+	public int getReplyNum() throws Exception {
+		int replyNum = 0;
+		
+		try {
+			replyNum = rm.getReplyNum();
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return replyNum;
+	}
+
+	@Override
+	public int insertReply(ReplyDTO replyDTO) throws Exception {
+		int result = 0;
+		
+		try {
+			result = rm.insertReply(replyDTO);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+
 
 
 }

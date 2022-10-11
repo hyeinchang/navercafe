@@ -1,12 +1,11 @@
 package com.itbank.navercafe.user.reply.mapper;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Param;
-import org.springframework.stereotype.Repository;
 
+import com.itbank.navercafe.user.menu.dto.MenuDTO;
 import com.itbank.navercafe.user.reply.dto.ReplyDTO;
 
 
@@ -22,5 +21,10 @@ public interface ReplyMapper {
 	public void saveGroupNumReply(ReplyDTO dto);
 	//replyNum 시퀀스값 
 	public int getReplyNum();
+	
+	// 검색된 답글 리스트를 가져옴
+	public List<ReplyDTO> getSearchReplyList(MenuDTO menuDTO) throws Exception;
+	
+	public int insertReply(ReplyDTO replyDTO) throws Exception;
 }
 

@@ -4,7 +4,6 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 <style>
 /*//////////////////////////////////   메모 게시판   ////////////////////////////////  */
-.memo-board{padding-top:10px;}
 .memo-wrap{padding:10px;}
 
 
@@ -31,17 +30,31 @@
 .more-one{width:15%;}
 .more-two{width:85%; padding-top:10px; font-size: 15pt;}
 
-.post-meta-test{display: flex;padding-bottom: 10px;}
-.div-one{width:10%;}
-.div-two{width:40%;}
-.div-three{width:50%; text-align:right;padding-top:10px;}
-.memo-div-two{width:40%;padding-top:10px;}
+.memo-list-area {border: 1px solid #eee;padding:10px 20px;}
+.post-meta-area {padding-bottom: 10px;}
+.post-meta-area > div {display:inline-block; vertical-align:middle;}
+.post-meta-area > div {margin-right: 5px;}
+.post-meta-area > div:last-child {float:right;}
+.post-meta-area .memo-action a {color:#696E74;}
+.post-meta-area .memo-action a:hover {text-decoration:underline;}
+.post-meta-area .memo-date {color: #aaa;}
+.memo-board{padding:10px 0;}
+.memo-list-area .memo-board:not(:last-child) {border-bottom: 1px solid #ccc;}
+.board-post-desc .memo-content {padding: 20px 0 40px;}
+
 /* 댓글 쪽 */
-.reply-one{width:50%}
-.reply-two{width:50%; text-align: right;}
-.board-post-desc{
-	padding-left:10%; width:90%;
-}
+.reply-list-area li {list-style:none;}
+.reply-list-area .comment-content > span {margin-right: 5px;}
+.reply-list-area .comment-content .reply-action {float:right;}
+.reply-list-area .comment-content .reply-action > a {color: #000;}
+.reply-list-area .comment-content .reply-action > a:hover {text-decoration:underline;}
+.reply-list-area .reply-content {margin-top:10px;}
+.replyA:hover {text-decoration: underline;}
+.reply-file-attach{width:50%; padding-left: 10px;}
+.reply-file-attach .imageAttach{width:30px; cursor:pointer;}
+.reply-file-attach .replyImage {width:0;height:0;}
+.reply-btns{text-align: right;}
+.board-post-desc{}
 .board-post-desc img{
 	width:100%;
 }
@@ -53,13 +66,18 @@
   display: block;
   z-index: 1;
 }
-.board-board{border:1px solid silver; padding:10px;}
 
 </style>
 
 <script>
-function replyClick(obj){
-	document.getElementById(-obj.id).style="display:block; padding-left: 30px;";
+function replyClick(boardNum){
+	var replyArea = document.getElementById('reply_' + boardNum);
+	
+	if(replyArea.style.display == 'none') {
+		replyArea.style.display = 'block';
+	} else {
+		replyArea.style.display = 'none';
+	}
 }
 function back(obj){
 	document.getElementById(-obj.id).style="display:none";
@@ -76,7 +94,7 @@ function back(obj){
 		      <div class="col-lg-8 col-md-8 col-sm-8 clearfix">
 		      	<!--  메모 작성 부분-->
 		        <div class="memo-board">
-		            <form name="comments_form" id="comments_form" action="memoSave" class="row" method="post">
+		            <form name="boardWriteForm" id="boardWriteForm" action="memoSave" class="row" method="post">
 		            	<input type="hidden" name="cafeId" value="${_cafeDTO.cafeId}">
 		            	<input type="hidden" name="userId" value="${_cafeDTO.loginUser.userId}">
 		            	<input type="hidden" name="boardMenuNum" value="${_cafeDTO.menuDTO.boardMenuNum}">
@@ -97,114 +115,126 @@ function back(obj){
 		      	<!-- end 메모 작성 부분 -->
 		      	
 		      	<!-- 메모 작성글들   -->
-		        <c:forEach var="memoList" items="${boardList}">
-		         	<div class="board-board">
+		      	<div class="memo-list-area">
+		        <c:forEach var="board" items="${boardList}">
+		         	<div class="memo-board">
 			          <header class="page-header blog-title">
-			            <div class="post-meta-test">
-			              	<div class="div-one">
-				              	<a href="#">
-				              		<c:if test="${memoList.cafeUesrImageNum == 0 }">
-				              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
-				              			width="40px;" class="img-circle alignleft">
-				              		</c:if>
-									<c:if test="${memoList.cafeUesrImageNum != 0 }">
-										<img src="download?fileNum=${memoList.cafeUesrImageNum}" 
-										width="40px;" class="img-circle alignleft">
-									</c:if>
-				              	</a>
+			            <div class="post-meta-area">
+			              	<div class="memo-profile">
+			              	<c:choose>
+			              		<c:when test="${board.cafeUserImageNum eq null || board.cafeUserImageNum == 0}">
+			              		<img src="${contextPath}/resources/img/Users-Folder-icon.png" class="profileImg-small">
+			              		</c:when>
+								<c:otherwise>
+								<img src="${contextPath}/file/download?cafeUserImageNum=${board.cafeUserImageNum}" class="profileImg-small"
+									onerror="${contextPath}/resources/img/Users-Folder-icon.png">
+								</c:otherwise>
+							</c:choose>
 			                </div>
-							<div class="memo-div-two">
-								<a href="#">${memoList.cafeUserNickname}</a>
-								수정 | 삭제
+							<div class="memo-nickname">
+								<a href="#">${board.cafeUserNickname}</a>
+								<c:if test="${(board.cafeUserGrade >= 0 && board.cafeUserGrade <= 5) 
+									|| board.cafeUserGrade == 999}">
+			              		<img src="${contextPath}/resources/img/grade/icon/level${board.cafeUserGrade}.gif">
+			              		</c:if>
 							</div>
-							<div class="div-three">
-				                	${memoList.boardSaveDate}
-				            </div>
+							<div class="memo-action">
+								<a href="#">수정</a> | <a href="#">삭제</a>
+							</div>
+							<div class="memo-date"><fmt:formatDate value="${board.boardSaveDate}" pattern="YYYY-MM-dd hh:mm"/></div>
 			            </div>
 			          </header>
 			          <div class="board-post-desc">
-			          	<p>
-			         		${memoList.boardContent}
-						</p>
-						${memoList.boardNum}<br>
-						<a onclick="replyClick(this)" id="${memoList.boardNum}" style="cursor:pointer">
-						∧ 댓글  ${0 }
+			          	<div class="memo-content">
+			         		${board.boardContent}
+						</div>
+						<a href="javascript:replyClick(${board.boardNum})" id="replyA_${board.boardNum}" class="replyA">
+							<span>^</span> 댓글  ${board.replyCount}
 						</a><!--memoNum의 아이디 그룹을 갖고있는 수만큼 표시  -->
 			          </div>
 			          
 			          <!-- 댓글 클릭시 생성되는 div  -->
-			       	 	
-			          <div id="${-memoList.boardNum}" style="display:none;" >
-			          		<hr><!--  	근데 메모는 답글들 먼저 보여주고. 답글view		 -->
-		                      	<c:forEach var="memoReply" items="${memoReplyList}">
-		                      		<c:if test="${memoList.boardNum == memoReply.MEMO_REPLY_GROUP}">
-		                      			<li>
-						              <article class="comment" style="color:black;">
-						              	<a href="#">
-							              		<c:if test="${ memoReply.CAFE_USER_IMAGE_NUM== 0}">
-							              			<img src="<%=request.getContextPath()%>/resources/img/프로필.jpg"
-							              			width="40px" class="img-circle alignleft" alt="">
-							              		</c:if>
-												<c:if test="${ memoReply.CAFE_USER_IMAGE_NUM  != 0 }">
-													<img src="download?fileNum=${memoReply.CAFE_USER_IMAGE_NUM}" 
-													width="40px" class="img-circle alignleft" alt="">
-												</c:if>
-							              	</a>
-						               
-							               	<!-- style="border:solid 1px gray; "-->
-							                <div class="comment-content">
-							                  <h4 class="comment-author">
-						                        ${memoReply.CAFE_USER_NICKNAME} <small class="comment-meta">${memoReply.REPLY_SAVEDATE}</small>
-						                  	  </h4>
-						                   		${memoReply.MEMO_REPLY_CONTENT}<br>
-						                   		<!-- 내용에 이미지가 있다면 보여주고 -->
-						                   		
-						                   		<c:forEach var="file" items="${fileList}">
-						                   			<c:if test="${file.memoReplyNum == replyreply.MEMO_REPLY_NUM}">
-						                   				<img src="download?fileNum=${replyreply.MEMO_REPLY_NUM}" 
-														width="30%">
-						                   			</c:if>
-						                   		</c:forEach>	                   		
-						                   		
-						                      </div>
-					                      </article>
-		                   			   	</li>
-		                      		</c:if>
-		                      	</c:forEach>
-			          
-			          
-			          
-                     		<form id="comments_form" action="saveMemoReply?groupNum=${memoList.boardNum}" class="row" 
-						  		method="post" enctype="multipart/form-data">
-						  		<input type="hidden" name="userId" value="${sessionUser.userId}">
-						  		<input type="hidden" name="cafeId" value="${cafeId}">
-						    <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-						    										
-						      <p><span style="font-weight:1000; font-size: 20pt;">${sessionUser.cafeUserNickname}</span></p>
-						      <textarea class="form-control" name="memoReplyContent" id="comments" 
-						      rows="6" placeholder="답글을 남겨보세요"></textarea>
-						      
-							  <div class="post-meta-test">
-							  	<div class="reply-one">
-									<input type="file" name="replyImgName">
-									<!--사진 아이콘을 누르면 input type file을 누른 효과를 준다?  -->
-									<!-- <img id="preview" src="#" width=100 height=100 alt="선택된 이미지가 없습니다"> -->
-							  		<!-- 여기가 범인 두번 실행됨  -->
+			          <div id="reply_${board.boardNum}" class="reply-list-area" style="display:none;">
+			          	<!--  	근데 메모는 답글들 먼저 보여주고. 답글view		 -->
+			          	<ul>
+			          	<c:forEach var="reply" items="${board.replyList}">
+                      		<li>
+				            	<article class="comment-content" style="color:black;">
+				            		<span>
+					              	<c:choose>
+				              			<c:when test="${reply.cafeUserImageNum eq null || reply.cafeUserImageNum == 0}">
+				              			<img src="${contextPath}/resources/img/Users-Folder-icon.png" class="profileImg-small">
+				              			</c:when>
+										<c:otherwise>
+										<img src="${contextPath}/file/download?cafeUserImageNum=${reply.cafeUserImageNum}" class="profileImg-small"
+										onerror="${contextPath}/resources/img/Users-Folder-icon.png">
+										</c:otherwise>
+									</c:choose>
+									</span>
+									<span>
+										<a href="#" class="comment-author">
+					                       ${reply.cafeUserNickname}
+					                    </a>
+					                    <c:if test="${(board.cafeUserGrade >= 0 && board.cafeUserGrade <= 5) 
+											|| board.cafeUserGrade == 999}">
+					              		<img src="${contextPath}/resources/img/grade/icon/level${board.cafeUserGrade}.gif">
+					              		</c:if>
+									</span>
+									<span>
+										<small class="comment-meta">${reply.replySaveDate}</small>
+									</span>
+									<span class="reply-action">
+										<a href="#">수정</a> | <a href="#">삭제</a>
+									</span>
+				                  	<div class="reply-content">
+			                   		${reply.replyContent}
+			                   		</div>
+		                   			<!-- 내용에 이미지가 있다면 보여주고 -->
+		                   		
+		                   		<c:forEach var="file" items="${fileList}">
+		                   			<c:if test="${file.memoReplyNum == reply.replyNum}">
+		                   				<img src="download?fileNum=${reply.replyNum}" 
+										width="30%">
+		                   			</c:if>
+		                   		</c:forEach>	                   		
+				                   		
+			                      </article>
+                   			   </li>
+	                      	</c:forEach>
+			          	</ul>
+	                      	
+                    	<form name="replyForm" id="replyForm_${board.boardNum}" class="row" method="post" enctype="multipart/form-data">
+					  		<input type="hidden" name="cafeId" value="${_cafeDTO.cafeId}">
+					  		<input type="hidden" name="userId" value="${_cafeDTO.loginUser.userId}">
+					  		<input type="hidden" name="boardMenuNum" value="${_cafeDTO.menuDTO.boardMenuNum}">
+					  		<input type="hidden" name="boardNum" value="${board.boardNum}">
+					  		<input type="hidden" name="replyGroup" value="${board.boardNum}">
+					  		<input type="hidden" name="replyStep" value="0">
+					  		
+					    	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+					    	
+						      	<textarea class="form-control" name="replyContent"
+						      		rows="6" placeholder="답글을 남겨보세요"></textarea>
+								<div class="post-meta-area">
+								  	<div class=reply-file-attach>
+								  		<img src="${contextPath}/resources/img/camera-icon.png" title="답글 이미지 첨부" alt="답글 이미지 첨부"
+								  			class="imageAttach" onclick="this.nextElementSibling.click()">
+								  		<input type="file" name="replyImage" class="replyImage" onchange="">
+								  	</div>
+								  	<div class="reply-btns"> 
+								  		<button type="button" onclick="back(this)" id="${memoList.boardNum}" class="button">취소</button>
+								  		<button type="button" class="button" onclick="writeReply(${board.boardNum})">등록</button>
+								  	</div>
 							  	</div>
-							  	<div class="reply-two"> 
-							  		<input type="button" value="취소" onclick="back(this)" id="${memoList.boardNum}" class="button small">
-							  		<input type="submit" value="등록" id="submit" class="button small">
-							  	</div>
-							  </div>
-						      
-						      <hr>
-						    </div>
-						  </form>
+							  	
+					  		</div>
+					  </form>
 						  
-                      	</div>		
+                	</div>		
 	          
 				</div>
 		     </c:forEach>
+		     </div>
 		     <!-- end 메모 작성글 들 -->
 		     
 		     	<!--	페이징  -->
@@ -236,13 +266,19 @@ function back(obj){
 </form>
 <script type="text/javascript">
 	function writeBoard() {
-		var form = document.comments_form;
+		var form = document.boardWriteForm;
 		var xhr = new XMLHttpRequest();
-		var cafeId = form.cafeId.value;
-		var userId = form.userId.value;
+		var boardContent = form.boardContent;
 		var data = new Object();
 		
-		data = getData();
+		if(boardContent.value == '') {
+			alert('내용을 입력해주세요.');
+			boardContent.focus();
+			return;
+		}
+		
+		data = getData(form);
+		
 		xhr.open('post', '${contextPath}/user/board/writeBoard', false);
 		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 		xhr.setRequestHeader('Content-Type', 'application/json');
@@ -252,7 +288,10 @@ function back(obj){
 	 			var message = '';
 	 			
 	 			if(Number(xhr.response) == 1) {
-	 				location.href = '${contextPath}/user/board/goBoardList?cafeId=' + cafeId + '&boardMenuNum=' + data.boardMenuNum;
+	 				var cafeId = form.cafeId.value;
+	 				var boardMenuNum = form.boardMenuNum.value;
+	 				
+	 				location.href = '${contextPath}/user/board/goBoardList?cafeId=' + cafeId + '&boardMenuNum=' + boardMenuNum;
 	 			} else {
 	 				alert('저장에 실패했습니다.');
 	 			}
@@ -262,8 +301,39 @@ function back(obj){
 		xhr.send(JSON.stringify(data));
 	}
 	
-	function getData() {
-		var form = document.comments_form;
+	function writeReply(boardNum) {
+		var form = document.getElementById('replyForm_' + boardNum);
+		var xhr = new XMLHttpRequest();
+		var replyContent = form.replyContent;
+		
+		if(replyContent.value == '') {
+			alert('내용을 입력해주세요.');
+			replyContent.focus();
+			return;
+		}
+		
+		xhr.open('post', '${contextPath}/user/reply/writeReply', false);
+		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		
+		xhr.onreadystatechange = function() {
+			if(xhr.readyState == 4 && xhr.status == 200) {
+	 			var message = '';
+	 			
+	 			if(Number(xhr.response) == 1) {
+	 				var cafeId = form.cafeId.value;
+	 				var boardMenuNum = form.boardMenuNum.value;
+	 				
+	 				location.href = '${contextPath}/user/board/goBoardList?cafeId=' + cafeId + '&boardMenuNum=' + boardMenuNum;
+	 			} else {
+	 				alert('저장에 실패했습니다.');
+	 			}
+			}
+		}
+		
+		xhr.send(new FormData(form));
+	}
+	
+	function getData(form) {
 		var data = new Object();
 		
 		for(var i=0;i<form.length;i++) {

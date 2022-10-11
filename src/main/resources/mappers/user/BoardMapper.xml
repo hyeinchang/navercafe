@@ -36,7 +36,6 @@
 		<id property="userId" column="user_id"/>
 	</resultMap>
 	
-	
 	<resultMap type="com.itbank.navercafe.user.board.dto.BoardExtendDTO" id="boardExtend">
 		<id property="boardNum" column="board_num"/>
 		<result property="boardTitle" column="board_title"/>
@@ -52,7 +51,7 @@
 		<result property="cafeId" column="cafe_id"/>
 		
 		<result property="cafeUserNickname" column="cafe_user_nickname"/>
-		<result property="cafeUesrImageNum" column="cafe_user_image_num"/>
+		<result property="cafeUserImageNum" column="cafe_user_image_num"/>
 		<result property="cafeUserGrade" column="cafe_user_grade"/>
 		<result property="cafeUserVisit" column="cafe_user_visit"/>
 		<result property="cafeUserVisit" column="cafe_user_write"/>
@@ -65,6 +64,8 @@
 		<result property="cutName" column="cut_name"/>
 		<result property="upCafeUserGrade" column="up_cafe_user_grade"/>
 		<result property="upCutName" column="up_cut_name"/>
+		
+		<result property="replyCount" column="reply_count"/>
 	</resultMap>
 	
 
@@ -103,9 +104,9 @@
 	<select id="getBoardList_paging" resultMap="boardExtend">
 		<![CDATA[
 		    SELECT * FROM
-		        (SELECT ROWNUM rn, boardData.* FROM
+		        (SELECT ROWNUM rn, boardData.*, replyData.reply_count FROM
 		            (SELECT boardMenu.cafe_id, boardMenu.board_menu_name, boardMenu.board_menu_type, board.*, 
-		            cafeMember.cafe_user_nickname, cafeMember.cafe_user_image_num
+		            cafeMember.cafe_user_nickname, cafeMember.cafe_user_image_num, cafeMember.cafe_user_grade
 		            FROM
 		                (SELECT cafe_id, board_menu_num, board_menu_name, board_menu_type FROM project_board_type
 		                WHERE cafe_id = #{cafeId}
@@ -131,20 +132,24 @@
 		            board.user_id = cafeMember.user_id  AND boardMenu.cafe_id = cafeMember.cafe_id 
 		            ORDER BY board_num DESC) boardData
 		            ]]>
-		     	<if test="replyContent != null or replyUserNickname != null">
+		        <choose>
+		     	<when test="replyContent != null or replyUserNickname != null">
+		     	INNER JOIN
+		     	</when>
+		     	<otherwise>
+		     	LEFT JOIN
+		     	</otherwise>
+		     	</choose>
 	        	<![CDATA[
-		        INNER JOIN
-		            (SELECT DISTINCT(board_num) FROM
-		                (SELECT board_num, user_id FROM project_reply 
+		            (SELECT DISTINCT(board_num), count(*) reply_count FROM
+		                (SELECT board_num, user_id FROM project_reply
 		                WHERE reply_content LIKE '%' || #{replyContent} || '%') reply
 		            INNER JOIN 
 		                (SELECT user_id FROM project_cafe_member
 		                WHERE cafe_user_nickname LIKE '%' || #{replyUserNickname} || '%') replayMember
-		            ON reply.user_id = replayMember.user_id) replyData
+		            ON reply.user_id = replayMember.user_id
+		            GROUP BY board_num) replyData
 		        ON boardData.board_num = replyData.board_num
-		        ]]>
-		        </if>
-		        <![CDATA[
 		        )
 		    WHERE rn BETWEEN #{startRow} AND #{endRow}
 		]]>		
@@ -154,7 +159,7 @@
 		<![CDATA[
 	       SELECT COUNT(*) count FROM
 	            (SELECT boardMenu.cafe_id, boardMenu.board_menu_name, boardMenu.board_menu_type, board.*, 
-	            cafeMember.cafe_user_nickname, cafeMember.cafe_user_image_num
+	            cafeMember.cafe_user_nickname, cafeMember.cafe_user_image_num, cafeMember.cafe_user_grade
 	            FROM
 	                (SELECT cafe_id, board_menu_num, board_menu_name, board_menu_type FROM project_board_type
 	                WHERE cafe_id = #{cafeId}
@@ -179,20 +184,26 @@
 	            AND
 	            board.user_id = cafeMember.user_id  AND boardMenu.cafe_id = cafeMember.cafe_id 
 	            ORDER BY board_num DESC) boardData
-	        ]]>    
-	        <if test="replyContent != null or replyUserNickname != null">
-	        <![CDATA[
-	        INNER JOIN
-	            (SELECT DISTINCT(board_num) FROM
-	                (SELECT board_num, user_id FROM project_reply 
+	        ]]>   
+        	<choose>
+       		<when test="replyContent != null or replyUserNickname != null">
+	     	INNER JOIN
+	     	</when>
+	     	<otherwise>
+	     	LEFT JOIN
+	     	</otherwise>
+	     	</choose>
+	        	<![CDATA[
+	            (SELECT DISTINCT(board_num), count(*) reply_count FROM
+	                (SELECT board_num, user_id FROM project_reply
 	                WHERE reply_content LIKE '%' || #{replyContent} || '%') reply
 	            INNER JOIN 
 	                (SELECT user_id FROM project_cafe_member
 	                WHERE cafe_user_nickname LIKE '%' || #{replyUserNickname} || '%') replayMember
-	            ON reply.user_id = replayMember.user_id) replyData
-	        ON boardData.board_num = replyData.board_num
-	       ]]>
-	       </if>	
+	            ON reply.user_id = replayMember.user_id
+	            GROUP BY board_num) replyData
+	    	ON boardData.board_num = replyData.board_num
+		]]>
 	</select>
 	
 

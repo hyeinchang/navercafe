@@ -89,7 +89,7 @@ public class BoardController {
 		case 5 :	// 메모게시판
 			totalCount = ser.getBoardTotalCount(menuDTO);
 			
-			menuDTO.setPageination(page, totalCount, 10, 5);
+			menuDTO.setPageination(page, totalCount, 5, 5);
 			
 			boardList = ser.getBoardList_paging(menuDTO);
 			returnUrl = "user/board/memoBoardList";

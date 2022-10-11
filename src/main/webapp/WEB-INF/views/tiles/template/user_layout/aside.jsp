@@ -9,11 +9,11 @@
         <div class="widget">
           <div class="tabbable">
             <ul class="nav nav-tabs">
-              <li class="active"><a href="left-sidebar.html#recent" data-toggle="tab">카페정보</a></li>
-              <li><a href="left-sidebar.html#popular" data-toggle="tab">나의활동</a></li>
+              <li${navTab eq null || navTab eq 0 ? ' class="active"' : ''}><a href="left-sidebar.html#recent" data-toggle="tab">카페정보</a></li>
+              <li${navTab eq 1 ? ' class="active"' : ''}><a href="left-sidebar.html#popular" data-toggle="tab">나의활동</a></li>
             </ul>
             <div class="tab-content">
-              <div class="tab-pane active" id="recent">
+              <div class="tab-pane${navTab eq null || navTab eq 0 ? ' active' : ''}" id="recent">
                 <ul class="recent_posts">
                   <li>
                   	<span>
@@ -78,14 +78,14 @@
                     <c:if test="${_cafeDTO.isCafeManager eq 'true' || _cafeDTO.isCafeMember eq 'true'}">
                   	<input type="button" class="button" value="카페 글쓰기" onclick="changeCafeMenu('${contextPath}/user/board/writeForm')" style="width:100%;">
                   	</c:if>
-                  	<c:if test="${_cafeDTO.isCafeMember eq 'false'}">
+                  	<c:if test="${_cafeDTO.loginUser.userId ne null && _cafeDTO.isCafeMember eq 'false'}">
                   	<input type="button" class="button" value="카페 가입하기" onclick="changeCafeMenu('${contextPath}/user/cafeSignup?cafeId=${_cafeDTO.cafeId }')" style="width:100%;">
                   	</c:if>
                   </li>
                 </ul>
                 <!-- recent posts -->
               </div>
-              <div class="tab-pane" id="popular">
+              <div class="tab-pane${navTab eq 1 ? ' active' : ''}" id="popular">
                	<c:if test="${loginId eq null}">
                 <div class="widget">
 		          <h4 class="title">
@@ -95,13 +95,15 @@
 		            <div class="form-group">
 		              <div class="input-group">
 		                <span class="input-group-addon"><i class="fa fa-user"></i></span>
-		                <input type="text" class="form-control" name="id" placeholder="아이디를 입력해주십시오." style="font-size:12px;">
+		                <input type="text" class="form-control" name="id" placeholder="아이디를 입력해주십시오." style="font-size:12px;"
+		                	onkeypress="if(event.keyCode == 13) checkLoginForm()">
 		              </div>
 		            </div>
 		            <div class="form-group">
 		              <div class="input-group">
 		                <span class="input-group-addon"><i class="fa fa-lock"></i></span>
-		                <input type="password" class="form-control" name="password" placeholder="비밀번호를 입력해주십시오." style="font-size:12px;">
+		                <input type="password" class="form-control" name="password" placeholder="비밀번호를 입력해주십시오." style="font-size:12px;"
+		                	onkeypress="if(event.keyCode == 13) checkLoginForm()">
 		              </div>
 		            </div>
 		            <div class="form-group">
@@ -180,9 +182,9 @@
                     <input type="button" class="button" value="카페 글쓰기" onclick="changeCafeMenu('/navercafe/user/board/writeForm')" style="width:100%;">
                   </c:when>
                   <c:otherwise>
-                    <c:if test="${loginId ne null}">
+                  	<c:if test="${_cafeDTO.loginUser.userId ne null &&  _cafeDTO.isCafeMember eq 'false'}">
                     <input type="button" class="button" value="카페 가입하기" onclick="changeCafeMenu('${contextPath}/user/cafeSignup?cafeId=${_cafeDTO.cafeId }')" style="width:100%;">
-                    </c:if>
+                  	</c:if>
                   </c:otherwise>
                   </c:choose>
                   </li>

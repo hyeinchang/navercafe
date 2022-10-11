@@ -10,6 +10,10 @@ public class ReplyDTO {
 	private String userId;
 	private int replyGroup;
 	private int replyStep;
+	
+	private String cafeUserNickname;
+	private int cafeUserImageNum;
+	private int cafeUserGrade;
 
 	public int getReplyGroup() {
 		return replyGroup;
@@ -54,13 +58,22 @@ public class ReplyDTO {
 		this.userId = userId;
 	}
 	
-//private int replyImgName;
-//	public int getReplyImgName() {
-//		return replyImgName;
-//	}
-//	public void setReplyImgName(int replyImgName) {
-//		this.replyImgName = replyImgName;
-//	}
-	
-	
+	public String getCafeUserNickname() {
+		return cafeUserNickname;
+	}
+	public void setCafeUserNickname(String cafeUserNickname) {
+		this.cafeUserNickname = cafeUserNickname;
+	}
+	public int getCafeUserImageNum() {
+		return cafeUserImageNum;
+	}
+	public void setCafeUserImageNum(int cafeUserImageNum) {
+		this.cafeUserImageNum = cafeUserImageNum;
+	}
+	public int getCafeUserGrade() {
+		return cafeUserGrade;
+	}
+	public void setCafeUserGrade(int cafeUserGrade) {
+		this.cafeUserGrade = cafeUserGrade;
+	}
 }

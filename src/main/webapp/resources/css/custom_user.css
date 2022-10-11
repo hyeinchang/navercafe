@@ -104,7 +104,6 @@ table.cstmTbl1 th, table.cstmTbl1 td:nth-child(2) > div {width:452px;}
 .info-cafe:not(:last-child) {margin-right: 10px;}
 .recent_posts > li {height: auto;margin: 0 !important; padding: 15px 10px 15px 10px ; display: block; width:auto;}
 .recent_posts > li:not(:last-child) {border-bottom: 1px solid #ddd;}
-img.profileImg {border:none !important;border-radius:100%;width:58px;height:58px;}
 .cafeSetting, .gradeInfo {font-size: 12px; margin-top: 5px;}
 .gradeInfo img {border:none !important; float:none !important; margin:0 !important;}
 .gradeText {border: 1px solid #ddd;font-size:10px;vertical-align:middle;padding:2px;margin-right:2px;}
@@ -157,6 +156,9 @@ img.profileImg {border:none !important;border-radius:100%;width:58px;height:58px
 input[type=file] {
     display: inline-block;
 }
+
+button.button.danger {background-color: #d9534f;}
+button.button.info {background-color: #5bc0de;}
 
 /* 카페 소개  */
 .infoCafeIcon {width:100px; height:100px;border-radius:45%;}
@@ -249,3 +251,5 @@ input[type=file] {
 }
 .boardBtn {vertical-align: middle; float: left;}
 .formProfileImg {width:58px;height:58px;border-radius:100%;margin-right:10px;}
+img.profileImg {border:none !important;border-radius:100%;width:58px;height:58px;}
+img.profileImg-small {border:none !important;border-radius:100%;width:24px;height:24px;}

@@ -43,6 +43,18 @@ public class BoardMenuType {
 	public void setBoardMenuTypeList(List<MenuDTO> boardMenuTypeList) {
 		this.boardMenuTypeList = boardMenuTypeList;
 	}
+	public int[] getBoardMenuNum() {
+		return boardMenuNum;
+	}
+	public void setBoardMenuNum(int[] boardMenuNum) {
+		this.boardMenuNum = boardMenuNum;
+	}
+	public String[] getBoardMenuName() {
+		return boardMenuName;
+	}
+	public void setBoardMenuName(String[] boardMenuName) {
+		this.boardMenuName = boardMenuName;
+	}
 	public int getTOTAL_BOARD_NUM() {
 		return TOTAL_BOARD_NUM;
 	}
@@ -54,6 +66,9 @@ public class BoardMenuType {
 	}
 	public int getGRADE_BOARD_NUM() {
 		return GRADE_BOARD_NUM;
+	}
+	public int getMEMO_BOARD_NUM() {
+		return MEMO_BOARD_NUM;
 	}
 	public int getATTENDANCE_BOARD_NUM() {
 		return ATTENDANCE_BOARD_NUM;
@@ -69,6 +84,9 @@ public class BoardMenuType {
 	}
 	public String getGRADE_BOARD_NAME() {
 		return GRADE_BOARD_NAME;
+	}
+	public String getMEMO_BOARD_NAME() {
+		return MEMO_BOARD_NAME;
 	}
 	public String getATTENDANCE_BOARD_NAME() {
 		return ATTENDANCE_BOARD_NAME;
