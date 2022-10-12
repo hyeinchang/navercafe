@@ -26,5 +26,9 @@ public interface ReplyMapper {
 	public List<ReplyDTO> getSearchReplyList(MenuDTO menuDTO) throws Exception;
 	
 	public int insertReply(ReplyDTO replyDTO) throws Exception;
+	
+	public int getMaxStep(ReplyDTO replyDTO) throws Exception;
+	
+	public int updateReplyStep(ReplyDTO replyDTO) throws Exception;
 }
 

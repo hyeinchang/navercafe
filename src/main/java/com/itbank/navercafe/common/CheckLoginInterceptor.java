@@ -23,7 +23,7 @@ public class CheckLoginInterceptor extends HandlerInterceptorAdapter{
 			String xrw = request.getHeader("X-Requested-With");
 	
 			if("XMLHttpRequest".equals(xrw)) {
-				return true;
+				//return true;
 			}
 			
 			HttpSession session = request.getSession();
@@ -46,6 +46,7 @@ public class CheckLoginInterceptor extends HandlerInterceptorAdapter{
 			
 			// 로그인이 안되어있을 경우
 			if(loginId == null || loginId.length() == 0) {
+
 				message = "로그인 정보가 없습니다.";
 				forward = true;
 			} else {

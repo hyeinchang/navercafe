@@ -18,6 +18,7 @@ import com.itbank.navercafe.user.board.mapper.BoardMapper;
 import com.itbank.navercafe.user.menu.dto.MenuDTO;
 import com.itbank.navercafe.user.reply.dto.ReplyDTO;
 import com.itbank.navercafe.user.reply.mapper.ReplyMapper;
+import com.itbank.navercafe.user.reply.service.ReplyService;
 
 
 
@@ -26,7 +27,7 @@ public class BoardServiceImpl implements BoardService{
 	@Autowired BoardMapper bm;
 	@Autowired FileMapper fm;
 	@Autowired
-	private ReplyMapper replyMapper;
+	private ReplyService replyService;
 	
 	
 	//전체목록인데 수영이형이랑 상의.
@@ -88,17 +89,6 @@ public class BoardServiceImpl implements BoardService{
 		//System.out.println(bm.topList());
 	}
 
-	@Override
-	public void getFileList(Model model) {
-		ArrayList<FileDTO> list=fm.getFileList();
-		for(int i=0 ; i<list.size();i++) {
-//			System.out.println("파일 고유 번호 :"+list.get(i).getFileNum());
-//			System.out.println("사진 정보 :"+list.get(i).getFileOrgName());
-//			System.out.println("replyNum :"+list.get(i).getReplyNum());
-//			System.out.println("userImageNum :"+list.get(i).getCafeUserImageNum());
-		}
-		model.addAttribute("fileList",fm.getFileList());
-	}
 	
 	@Override
 	public BoardDTO getUserBoard(int boardNum,int boardMenuNum,Model model,int pageNum,String cafeId,int next,int preview) {
@@ -216,9 +206,9 @@ public class BoardServiceImpl implements BoardService{
 		List<BoardExtendDTO> boardList = null;
 		
 		try {
-			List<ReplyDTO> replyList = replyMapper.getSearchReplyList(menuDTO);
+			List<ReplyDTO> replyList = replyService.getSearchReplyList(menuDTO);
 			boardList = bm.getBoardList_paging(menuDTO);
-			
+	
 			for(BoardExtendDTO beDTO : boardList) {
 				List<ReplyDTO> boardReplyList = new ArrayList<>();
 				

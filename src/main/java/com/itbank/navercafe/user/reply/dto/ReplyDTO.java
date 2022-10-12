@@ -1,6 +1,9 @@
 package com.itbank.navercafe.user.reply.dto;
 
 import java.sql.Timestamp;
+import java.util.List;
+
+import com.itbank.navercafe.common.file.dto.FileDTO;
 
 public class ReplyDTO {
 	private int replyNum;
@@ -10,11 +13,21 @@ public class ReplyDTO {
 	private String userId;
 	private int replyGroup;
 	private int replyStep;
+	private int replyIndent;
+	private int replyParent;
 	
 	private String cafeUserNickname;
 	private int cafeUserImageNum;
 	private int cafeUserGrade;
+	
+	private List<FileDTO> fileList;
 
+	public int getReplyNum() {
+		return replyNum;
+	}
+	public void setReplyNum(int replyNum) {
+		this.replyNum = replyNum;
+	}
 	public int getReplyGroup() {
 		return replyGroup;
 	}
@@ -27,11 +40,17 @@ public class ReplyDTO {
 	public void setReplyStep(int replyStep) {
 		this.replyStep = replyStep;
 	}
-	public int getReplyNum() {
-		return replyNum;
+	public int getReplyIndent() {
+		return replyIndent;
 	}
-	public void setReplyNum(int replyNum) {
-		this.replyNum = replyNum;
+	public void setReplyIndent(int replyIndent) {
+		this.replyIndent = replyIndent;
+	}
+	public int getReplyParent() {
+		return replyParent;
+	}
+	public void setReplyParent(int replyParent) {
+		this.replyParent = replyParent;
 	}
 	public int getBoardNum() {
 		return boardNum;
@@ -75,5 +94,12 @@ public class ReplyDTO {
 	}
 	public void setCafeUserGrade(int cafeUserGrade) {
 		this.cafeUserGrade = cafeUserGrade;
+	}
+	
+	public List<FileDTO> getFileList() {
+		return fileList;
+	}
+	public void setFileList(List<FileDTO> fileList) {
+		this.fileList = fileList;
 	}
 }

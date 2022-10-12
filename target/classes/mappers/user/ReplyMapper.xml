@@ -13,13 +13,13 @@
 		<result property="userId" column="user_id"/>
 		<result property="replyGroup" column="reply_group"/>
 		<result property="replyStep" column="reply_step"/>
-		
+		<result property="replyIndent" column="reply_indent"/>
+		<result property="replyParent" column="reply_parent"/>
+
 		<result property="cafeUserNickname" column="cafe_user_nickname"/>
 		<result property="cafeUserImageNum" column="cafe_user_image_num"/>
 		<result property="cafeUserGrade" column="cafe_user_grade"/>
 	</resultMap>
-	
-	
 	
 	<!-- 댓글 갯수 -->
 	<select id="getReplyCount" resultType="int">
@@ -58,57 +58,67 @@
 	
 	<select id="getSearchReplyList" resultMap="project_reply">
 		<![CDATA[
-		    SELECT replyData.* FROM
-	            (SELECT * FROM
-			        (SELECT ROWNUM rn, boardData.* FROM
-			            (SELECT boardMenu.cafe_id, boardMenu.board_menu_name, boardMenu.board_menu_type, board.*, 
-			            cafeMember.cafe_user_nickname, cafeMember.cafe_user_image_num, cafeMember.cafe_user_grade
-			            FROM
-			                (SELECT cafe_id, board_menu_num, board_menu_name, board_menu_type FROM project_board_type
-			                WHERE cafe_id = #{cafeId}
-			                AND board_menu_num = #{boardMenuNum}
-			                ) boardMenu,
-			                (SELECT * FROM project_board 
-			                WHERE board_title LIKE '%' || #{boardTitle} || '%'
-			                AND board_content LIKE '%' || #{boardContent} || '%'
-			                ]]>
-			                <if test="startSearchDate != null and endSearchDate != null">
-			                <![CDATA[
-			                AND board_savedate BETWEEN TO_DATE(#{startSearchDate}, 'YYYY-MM-DD') AND TO_DATE(#{endSearchDate}, 'YYYY-MM-DD')
-			                ]]>
-			                </if>
-			                <![CDATA[
-			                ) board,
-			                (SELECT * FROM project_cafe_member
-			                WHERE cafe_user_nickname  LIKE '%' || #{cafeUserNickname} || '%'
-			                ) cafeMember
-			            WHERE
-			            boardMenu.board_menu_num = board.board_menu_num
-			            AND
-			            board.user_id = cafeMember.user_id  AND boardMenu.cafe_id = cafeMember.cafe_id 
-			            ORDER BY board_num DESC) boardData
-	                )
-	            WHERE rn BETWEEN #{startRow} and #{endRow}    
-	            ) boardData 
-            INNER JOIN
-                (SELECT reply.*, replayMember.cafe_user_nickname, cafe_user_image_num, cafe_user_grade FROM
-                    (SELECT * FROM project_reply
-                    WHERE reply_content LIKE '%' || #{replyContent} || '%'
-                    ORDER BY reply_num, reply_group, reply_step) reply
-                INNER JOIN 
-                    (SELECT * FROM project_cafe_member
-                    WHERE cafe_user_nickname LIKE '%' || #{replyUserNickname} || '%') replayMember
-                ON reply.user_id = replayMember.user_id) replyData        
-            ON boardData.board_num = replyData.board_num
+		    SELECT REPLY_DATA.*
+			FROM
+			    (SELECT BOARD.*, CAFE_MEMBER.CAFE_USER_NICKNAME, CAFE_MEMBER.CAFE_USER_IMAGE_NUM, CAFE_MEMBER.CAFE_USER_GRADE
+			    FROM
+			        (SELECT CAFE_ID, BOARD_MENU_NUM FROM PROJECT_BOARD_TYPE
+			        WHERE CAFE_ID = #{cafeId}
+			        AND BOARD_MENU_NUM = #{boardMenuNum}
+			        ) BOARD_TYPE
+			    INNER JOIN
+			        (SELECT * FROM PROJECT_BOARD
+			        WHERE BOARD_TITLE LIKE '%' || #{boardTitle} || '%'
+			        AND BOARD_CONTENT LIKE '%' || #{boardContent} || '%'
+		        	]]>
+					<if test="startSearchDate != null and endSearchDate != null">	        
+			        AND BOARD_SAVEDATE BETWEEN TO_DATE(#{startSearchDate}, 'YYYY-MM-DD') AND TO_DATE(#{endSearchDate}, 'YYYY-MM-DD')+1
+			        </if>
+			        <![CDATA[
+			        ) BOARD
+			    ON BOARD_TYPE.BOARD_MENU_NUM = BOARD.BOARD_MENU_NUM
+			    INNER JOIN
+			        (SELECT * FROM PROJECT_CAFE_MEMBER
+			        WHERE CAFE_USER_NICKNAME LIKE '%' || #{cafeUserNickname} || '%'
+			        ) CAFE_MEMBER
+			    ON BOARD.USER_ID = CAFE_MEMBER.USER_ID AND BOARD_TYPE.CAFE_ID = CAFE_MEMBER.CAFE_ID
+			    ) BOARD_DATA
+			INNER JOIN
+			    (SELECT REPLY.*, REPLY_MEMBER.CAFE_USER_NICKNAME, REPLY_MEMBER.CAFE_USER_IMAGE_NUM, REPLY_MEMBER.CAFE_USER_GRADE FROM
+			        (SELECT * FROM PROJECT_REPLY
+			        WHERE REPLY_CONTENT LIKE '%' || #{replyContent} || '%'
+			        ) REPLY
+			        INNER JOIN
+			        (SELECT * FROM PROJECT_CAFE_MEMBER
+			        WHERE CAFE_USER_NICKNAME LIKE '%' || #{replyUserNickname} || '%'
+			        ) REPLY_MEMBER
+			    ON REPLY.USER_ID = REPLY_MEMBER.USER_ID
+			    ) REPLY_DATA
+			ON BOARD_DATA.BOARD_NUM = REPLY_DATA.BOARD_NUM
+			ORDER BY BOARD_DATA.BOARD_NUM DESC, REPLY_GROUP, REPLY_STEP, REPLY_NUM
 		]]>		
 	</select>
 	
 	<insert id="insertReply">
 		<![CDATA[
 			INSERT INTO project_reply
-				(REPLY_NUM, BOARD_NUM, REPLY_CONTENT, USER_ID, REPLY_GROUP, REPLY_STEP, REPLY_SAVEDATE)
+				(REPLY_NUM, BOARD_NUM, REPLY_CONTENT, USER_ID, REPLY_GROUP, REPLY_STEP, REPLY_INDENT, REPLY_PARENT, REPLY_SAVEDATE)
         	VALUES
-        		(#{replyNum}, #{boardNum}, #{replyContent}, #{userId}, #{replyGroup}, #{replyStep}, sysdate)
+        		(#{replyNum}, #{boardNum}, #{replyContent}, #{userId}, #{replyGroup}, #{replyStep}, #{replyIndent}, #{replyParent}, sysdate)
 		]]>
 	</insert>
+	
+	<select id="getMaxStep" resultType="Integer">
+		<![CDATA[
+			SELECT NVL(MAX(REPLY_STEP), -1) + 1 MAX_SIBLING_STEP FROM PROJECT_REPLY WHERE REPLY_PARENT = #{replyParent}
+		]]>
+	</select>
+	
+	<update id="updateReplyStep">
+		<![CDATA[
+			UPDATE PROJECT_REPLY SET
+			REPLY_STEP = REPLY_STEP + 1
+			WHERE REPLY_GROUP = #{replyGroup} AND REPLY_STEP >= #{replyStep}
+		]]>
+	</update>
 </mapper>

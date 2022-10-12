@@ -34,26 +34,41 @@
 .post-meta-area {padding-bottom: 10px;}
 .post-meta-area > div {display:inline-block; vertical-align:middle;}
 .post-meta-area > div {margin-right: 5px;}
-.post-meta-area > div:last-child {float:right;}
+.post-meta-area .memo-date {float:right;}
 .post-meta-area .memo-action a {color:#696E74;}
 .post-meta-area .memo-action a:hover {text-decoration:underline;}
 .post-meta-area .memo-date {color: #aaa;}
 .memo-board{padding:10px 0;}
+.memo-board-content {resize:none;}
 .memo-list-area .memo-board:not(:last-child) {border-bottom: 1px solid #ccc;}
 .board-post-desc .memo-content {padding: 20px 0 40px;}
 
 /* 댓글 쪽 */
 .reply-list-area li {list-style:none;}
-.reply-list-area .comment-content > span {margin-right: 5px;}
+.reply-list-area li:not(:last-child){padding-bottom: 25px;margin-bottom: 25px;border-bottom: 1px dotted #aaa;}
+.reply-list-area .comment-content {margin-bottom:0;}
+.reply-list-area .comment-content li > span {margin-right: 5px;}
 .reply-list-area .comment-content .reply-action {float:right;}
 .reply-list-area .comment-content .reply-action > a {color: #000;}
 .reply-list-area .comment-content .reply-action > a:hover {text-decoration:underline;}
+.reply-list-area .comment-content .reply-input-area .reply-input{width:100%;}
+.reply-list-area .comment-content .reply-file-btns{float:right;}
 .reply-list-area .reply-content {margin-top:10px;}
+.reply-list-area .writer{color: #2f8cff; border: 1px solid; border-radius: 15px; padding: 2px 4px;font-size: 12px; margin-left: 2px; background: #fff;}
+.reply-list-area .reReply {cursor:pointer;}
+.reply-list-area .reReply:hover {text-decoration:underline;}
 .replyA:hover {text-decoration: underline;}
 .reply-file-attach{width:50%; padding-left: 10px;}
 .reply-file-attach .imageAttach{width:30px; cursor:pointer;}
 .reply-file-attach .replyImage {width:0;height:0;}
-.reply-btns{text-align: right;}
+.reply-input-area {margin-top:20px;}
+.reply-input-area .reply-input {border:1px solid #ccc; border-radius: 5px; display:inline-block; width:87.8%;padding: 10px;overflow:hidden;background: #fff;}
+.reply-input-area .reply-input textarea{width:100%;resize:none;border:none;outline: none;}
+.reply-input-area .previewReplyArea a {color:#000;}
+.reply-input-area .previewReplyArea a:hover{text-decoration: underline;}
+
+.reply-input-area button {width: 80px; vertical-align: top;height: 80px; border-radius: 5px;}
+
 .board-post-desc{}
 .board-post-desc img{
 	width:100%;
@@ -71,7 +86,7 @@
 
 <script>
 function replyClick(boardNum){
-	var replyArea = document.getElementById('reply_' + boardNum);
+	var replyArea = document.getElementById('replyArea_' + boardNum);
 	
 	if(replyArea.style.display == 'none') {
 		replyArea.style.display = 'block';
@@ -102,7 +117,7 @@ function back(obj){
 		            	<input type="hidden" name="boardTitle" value="${_cafeDTO.menuDTO.boardMenuName}의 글">
 		            	
 		              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-		                <textarea class="form-control" name="boardContent" id="comments" rows="6" placeholder="글을 입력해 주세요."></textarea>
+		                <textarea class="form-control memo-board-content" name="boardContent" rows="6" placeholder="글을 입력해 주세요."></textarea>
 		                <span style="display:none;">
 		               	 	<input type="checkbox" name="checkbox" value="" style="zoom: 1.5; cursor:pointer;"> 스탭만 보기
 		                </span>
@@ -119,7 +134,7 @@ function back(obj){
 		        <c:forEach var="board" items="${boardList}">
 		         	<div class="memo-board">
 			          <header class="page-header blog-title">
-			            <div class="post-meta-area">
+			          	<div class="post-meta-area">
 			              	<div class="memo-profile">
 			              	<c:choose>
 			              		<c:when test="${board.cafeUserImageNum eq null || board.cafeUserImageNum == 0}">
@@ -154,12 +169,16 @@ function back(obj){
 			          </div>
 			          
 			          <!-- 댓글 클릭시 생성되는 div  -->
-			          <div id="reply_${board.boardNum}" class="reply-list-area" style="display:none;">
+			          <div id="replyArea_${board.boardNum}" class="reply-list-area" style="display:none;">
 			          	<!--  	근데 메모는 답글들 먼저 보여주고. 답글view		 -->
-			          	<ul>
-			          	<c:forEach var="reply" items="${board.replyList}">
-                      		<li>
-				            	<article class="comment-content" style="color:black;">
+			          	<c:if test="${board.replyList ne null && board.replyList.size() > 0}">
+			          	<article class="comment-content" style="color:black;">
+			          		<ul>
+			          			<c:forEach var="reply" items="${board.replyList}">
+                      			<li id="reply_${reply.replyNum}" style="padding-left:${15 * reply.replyIndent}px;">
+                      				<c:if test="${reply.replyIndent > 0}">
+                      				<span>└</span>
+                      				</c:if>
 				            		<span>
 					              	<c:choose>
 				              			<c:when test="${reply.cafeUserImageNum eq null || reply.cafeUserImageNum == 0}">
@@ -179,78 +198,115 @@ function back(obj){
 											|| board.cafeUserGrade == 999}">
 					              		<img src="${contextPath}/resources/img/grade/icon/level${board.cafeUserGrade}.gif">
 					              		</c:if>
+					              		<c:if test="${board.userId == reply.userId}">
+					              		<span class="writer">작성자</span>
+					              		</c:if>
 									</span>
 									<span>
-										<small class="comment-meta">${reply.replySaveDate}</small>
+										<small class="comment-meta"><fmt:formatDate value="${reply.replySaveDate}" pattern="YYYY.MM.dd. HH:mm"/></small>
+									</span>
+									<span class="reReply" onclick="showReReplyArea('${board.boardNum}_${reply.replyNum}')">
+										<img src="${contextPath}/resources/img/bu_arr.png"> 답글
 									</span>
 									<span class="reply-action">
 										<a href="#">수정</a> | <a href="#">삭제</a>
 									</span>
 				                  	<div class="reply-content">
-			                   		${reply.replyContent}
-			                   		</div>
-		                   			<!-- 내용에 이미지가 있다면 보여주고 -->
-		                   		
-		                   		<c:forEach var="file" items="${fileList}">
-		                   			<c:if test="${file.memoReplyNum == reply.replyNum}">
-		                   				<img src="download?fileNum=${reply.replyNum}" 
-										width="30%">
-		                   			</c:if>
-		                   		</c:forEach>	                   		
-				                   		
-			                      </article>
-                   			   </li>
-	                      	</c:forEach>
-			          	</ul>
-	                      	
+				                  		<div>${reply.replyContent}</div>
+				                  		<c:forEach var="replyFile" items="${reply.fileList}">
+				                  		<img alt="${replyFile.fileOrgName}" src="${contextPath}/file/download?replyNum=${replyFile.replyNum}" style="max-width:70%;">
+				                  		</c:forEach>
+				                  	</div>
+				                  	<!-- 답글의 답글 입력 -->
+				                  	<form name="reReplyForm" id="replyForm_${board.boardNum}_${reply.replyNum}" class="row reReplyForm" method="post" 
+				                  		enctype="multipart/form-data" style="display:none;">
+								  		<input type="hidden" name="cafeId" value="${_cafeDTO.cafeId}">
+								  		<input type="hidden" name="userId" value="${_cafeDTO.loginUser.userId}">
+								  		<input type="hidden" name="boardMenuNum" value="${_cafeDTO.menuDTO.boardMenuNum}">
+								  		<input type="hidden" name="boardNum" value="${reply.boardNum}">
+								  		<input type="hidden" name="replyGroup" value="${reply.replyGroup}">
+								  		<input type="hidden" name="replyParent" value="${reply.replyNum}">
+								  		<input type="hidden" name="replyStep" value="${reply.replyStep+1}">
+								  		<input type="hidden" name="replyIndent" value="${reply.replyIndent+1}">
+								  		
+								    	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								    		<div class="reply-input-area">
+									    		<div class="reply-input">
+									    			<textarea name="replyContent" rows="2" placeholder="└> ${reply.cafeUserNickname}님에게 답글쓰기"></textarea>
+									    			<div id="previewReplyArea_${board.boardNum}_${reply.replyNum}" class="previewReplyArea" style="display:none;">
+									    				<img id="previewReplyImg_${board.boardNum}_${reply.replyNum}" style="max-width:70%;">
+									    				<a href="javascript:deleteReplyImage('${board.boardNum}_${reply.replyNum}')">삭제 X</a>
+									    			</div>
+									    		</div>
+								    		</div>
+									      	
+											<div class="post-meta-area">
+											  	<div class=reply-file-attach>
+											  		<img src="${contextPath}/resources/img/camera-icon.png" title="답글 이미지 첨부" alt="답글 이미지 첨부"
+											  			class="imageAttach" onclick="this.nextElementSibling.click()">
+											  		<input type="file" id="replyImage_${board.boardNum}_${reply.replyNum}" name="replyImage" class="replyImage" onchange="previewReplyImage('${board.boardNum}_${reply.replyNum}')">
+											  	</div>
+											  	<div class="reply-file-btns">
+											  	<button type="button" onclick="writeReply('${board.boardNum}_${reply.replyNum}')">등록</button>
+											  	</div>
+										  	</div>
+								  		</div>
+								  	</form>
+								</li>
+	                      		</c:forEach>
+			          		</ul>
+	                    </article>
+	                    </c:if>
+	                    <!-- 답글 입력 -->
                     	<form name="replyForm" id="replyForm_${board.boardNum}" class="row" method="post" enctype="multipart/form-data">
 					  		<input type="hidden" name="cafeId" value="${_cafeDTO.cafeId}">
 					  		<input type="hidden" name="userId" value="${_cafeDTO.loginUser.userId}">
 					  		<input type="hidden" name="boardMenuNum" value="${_cafeDTO.menuDTO.boardMenuNum}">
 					  		<input type="hidden" name="boardNum" value="${board.boardNum}">
-					  		<input type="hidden" name="replyGroup" value="${board.boardNum}">
+					  		<input type="hidden" name="replyGroup" value="0">
+					  		<input type="hidden" name="replyParent" value="0">
 					  		<input type="hidden" name="replyStep" value="0">
+					  		<input type="hidden" name="replyIndent" value="0">
 					  		
 					    	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-					    	
-						      	<textarea class="form-control" name="replyContent"
-						      		rows="6" placeholder="답글을 남겨보세요"></textarea>
+					    		<div class="reply-input-area">
+						    		<div class="reply-input">
+						    			<textarea name="replyContent" rows="2" placeholder="답글을 남겨보세요"></textarea>
+						    			<div id="previewReplyArea_${board.boardNum}" class="previewReplyArea" style="display:none;">
+						    				<img id="previewReplyImg_${board.boardNum}" style="max-width:70%;">
+						    				<a href="javascript:deleteReplyImage(${board.boardNum})">삭제 X</a>
+						    			</div>
+						    		</div>
+						    		<button type="button" onclick="writeReply(${board.boardNum})">등록</button>
+					    		</div>
+						      	
 								<div class="post-meta-area">
 								  	<div class=reply-file-attach>
 								  		<img src="${contextPath}/resources/img/camera-icon.png" title="답글 이미지 첨부" alt="답글 이미지 첨부"
 								  			class="imageAttach" onclick="this.nextElementSibling.click()">
-								  		<input type="file" name="replyImage" class="replyImage" onchange="">
-								  	</div>
-								  	<div class="reply-btns"> 
-								  		<button type="button" onclick="back(this)" id="${memoList.boardNum}" class="button">취소</button>
-								  		<button type="button" class="button" onclick="writeReply(${board.boardNum})">등록</button>
+								  		<input type="file" id="replyImage_${board.boardNum}" name="replyImage" class="replyImage" onchange="previewReplyImage(${board.boardNum})">
 								  	</div>
 							  	</div>
-							  	
 					  		</div>
-					  </form>
-						  
+					  	</form>
                 	</div>		
-	          
 				</div>
 		     </c:forEach>
 		     </div>
 		     <!-- end 메모 작성글 들 -->
 		     
-		     	<!--	페이징  -->
-				  <div class="paging" align="center">
-					  <ul class="pagination">
-					  <c:if test="${menuDTO.prevActive}">
-				      	<li><a href="javascript:searchBoardList(${menuDTO.startPage-1})">«</a></li>
-				      </c:if>
-			          <c:forEach var="page" begin="${menuDTO.startPage}" end="${menuDTO.endPage}">
-			            <li${menuDTO.page eq page ? ' class="active"' : ''}><a href="javascript:searchBoardList(${page})">${page}</a></li>
-			          </c:forEach>
-			          <c:if test="${menuDTO.nextActive}">
-			          	<li><a href="javascript:searchBoardList(${menuDTO.endPage+1})">»</a></li>
-			          </c:if>
-					  </ul>
-				  </div>
+		    <!-- 페이징  -->
+			<div class="paging" align="center">
+				<ul class="pagination">
+					<li><a href="javascript:searchBoardList(1)">&lt;&lt;</a></li>
+			      	<li><a href="javascript:searchBoardList(${menuDTO.startPage > 1 ? menuDTO.startPage-1 : 1})">&lt;</a></li>
+		          	<c:forEach var="page" begin="${menuDTO.startPage}" end="${menuDTO.endPage}">
+		            <li${menuDTO.page eq page ? ' class="active"' : ''}><a href="javascript:searchBoardList(${page})">${page}</a></li>
+		          	</c:forEach>
+		          	<li><a href="javascript:searchBoardList(${menuDTO.endPage < menuDTO.totalPage ? menuDTO.endPage+1 : menuDTO.totalPage })">&gt;</a></li>
+		          	<li><a href="javascript:searchBoardList(${menuDTO.totalPage})">&gt;&gt;</a></li>
+				</ul>
+			</div>
 				
 		      </div>
 		      <!-- end content -->
@@ -265,6 +321,7 @@ function back(obj){
 	<input type="hidden" name="page" value="${menuDTO.page}">
 </form>
 <script type="text/javascript">
+	// 글 작성
 	function writeBoard() {
 		var form = document.boardWriteForm;
 		var xhr = new XMLHttpRequest();
@@ -288,10 +345,10 @@ function back(obj){
 	 			var message = '';
 	 			
 	 			if(Number(xhr.response) == 1) {
-	 				var cafeId = form.cafeId.value;
-	 				var boardMenuNum = form.boardMenuNum.value;
+	 				var boardListForm = document.boardListForm;
 	 				
-	 				location.href = '${contextPath}/user/board/goBoardList?cafeId=' + cafeId + '&boardMenuNum=' + boardMenuNum;
+	 				boardListForm.action = '${contextPath}/user/board/goBoardList';
+	 				boardListForm.submit();
 	 			} else {
 	 				alert('저장에 실패했습니다.');
 	 			}
@@ -301,6 +358,7 @@ function back(obj){
 		xhr.send(JSON.stringify(data));
 	}
 	
+	// 답글 작성
 	function writeReply(boardNum) {
 		var form = document.getElementById('replyForm_' + boardNum);
 		var xhr = new XMLHttpRequest();
@@ -320,10 +378,10 @@ function back(obj){
 	 			var message = '';
 	 			
 	 			if(Number(xhr.response) == 1) {
-	 				var cafeId = form.cafeId.value;
-	 				var boardMenuNum = form.boardMenuNum.value;
+					var boardListForm = document.boardListForm;
 	 				
-	 				location.href = '${contextPath}/user/board/goBoardList?cafeId=' + cafeId + '&boardMenuNum=' + boardMenuNum;
+	 				boardListForm.action = '${contextPath}/user/board/goBoardList';
+	 				boardListForm.submit();
 	 			} else {
 	 				alert('저장에 실패했습니다.');
 	 			}
@@ -345,6 +403,54 @@ function back(obj){
 		}
 		
 		return data;
+	}
+	
+	// 답글 이미지 미리보기
+	function previewReplyImage(boardNum) {
+		var fileInput = event.target;
+		var file = fileInput.files[0];
+		var fileReader = null;
+		
+		if(file.type.indexOf('image') < 0) {
+			alert('이미지 파일이 아닙니다.');
+			fileInput.files = null;
+			fileInput.value = '';
+			return;
+		}
+		
+		fileReader = new FileReader();
+		fileReader.readAsDataURL(file);
+		fileReader.onload = function() {
+			var previewReplyArea = document.getElementById('previewReplyArea_' + boardNum);
+			var previewReplyImg = document.getElementById('previewReplyImg_' + boardNum);
+			
+			previewReplyImg.src = fileReader.result;
+			previewReplyArea.style.display = '';
+		}
+	}
+	
+	// 답글 이미지 삭제
+	function deleteReplyImage(boardNum) {
+		var replyImage = document.getElementById('replyImage_' + boardNum);
+		var previewReplyArea = document.getElementById('previewReplyArea_' + boardNum);
+		var previewReplyImg = document.getElementById('previewReplyImg_' + boardNum);
+		
+		replyImage.files = null;
+		replyImage.value = '';
+		previewReplyImg.src = '';
+		previewReplyArea.style.display = 'none';
+	}
+	
+	// 답글 - 답글 영역 생성
+	function showReReplyArea(boardNum_replyNum) {
+		var forms = document.getElementsByClassName('reReplyForm');
+		var form = document.getElementById('replyForm_' + boardNum_replyNum);
+		
+		for(var i=0;i<forms.length;i++) {
+			forms[i].style.display = 'none';
+		}
+		
+		form.style.display = '';
 	}
 	
 	function searchBoardList(page) {

@@ -133,15 +133,13 @@
         </table>
         <div class=" text-center">
           <ul class="pagination">
-          <c:if test="${pagination.prevActive}">
-          	<li><a href="javascript:searchCafe(${startPage-1})">«</a></li>
-          </c:if>
-          <c:forEach var="page" begin="${pagination.startPage}" end="${pagination.endPage}">
+          	<li><a href="javascript:searchCafe(1)">&lt;&lt;</a></li>
+	      	<li><a href="javascript:searchCafe(${pagination.startPage > 1 ? pagination.startPage-1 : 1})">&lt;</a></li>
+          	<c:forEach var="page" begin="${pagination.startPage}" end="${pagination.endPage}">
             <li${pagination.page eq page ? ' class="active"' : ''}><a href="javascript:searchCafe(${page})">${page}</a></li>
-          </c:forEach>
-          <c:if test="${pagination.nextActive}">
-          	<li><a href="javascript:searchCafe(${endPage+1})">»</a></li>
-          </c:if>
+          	</c:forEach>
+          	<li><a href="javascript:searchCafe(${pagination.endPage < pagination.totalPage ? pagination.endPage+1 : pagination.totalPage })">&gt;</a></li>
+          	<li><a href="javascript:searchCafe(${pagination.totalPage})">&gt;&gt;</a></li>
           </ul>
         </div>
       </div>

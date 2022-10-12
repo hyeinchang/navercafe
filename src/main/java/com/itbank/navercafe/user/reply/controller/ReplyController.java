@@ -40,6 +40,10 @@ public class ReplyController {
 			replyDTO = (ReplyDTO) commonUtils.setDTO(multiRequest, replyDTO);
 			replyDTO.setReplyNum(replyNum);
 			
+			if(replyDTO.getReplyGroup() == 0) {
+				replyDTO.setReplyGroup(replyNum);
+			}
+			
 			if(replyImage != null && replyImage.getSize() > 0) {
 				String cafeId = multiRequest.getParameter("cafeId");
 				String userId = multiRequest.getParameter("userId");

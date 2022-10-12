@@ -1,5 +1,7 @@
 package com.itbank.navercafe.common.file.service;
 
+import java.util.List;
+
 import com.itbank.navercafe.common.file.dto.FileDTO;
 
 public interface FileService {
@@ -9,4 +11,5 @@ public interface FileService {
 	public int insertAttachFile(FileDTO fileDTO) throws Exception;
 	public int updateAttachFile(FileDTO fileDTO) throws Exception;
 	public int deleteAttachFile(int fileNum) throws Exception;
+	public List<FileDTO> getFileList(FileDTO fileDTO) throws Exception;
 }

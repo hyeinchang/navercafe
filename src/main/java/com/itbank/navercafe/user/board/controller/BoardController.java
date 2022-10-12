@@ -79,7 +79,7 @@ public class BoardController {
 		if(page == 0) {
 			page = 1;
 		}
-		
+	
 		// 게시판 타입에 따라 다른 view 설정
 		switch(boardMenuType) {
 		case 4 :	// 등업게시판
@@ -88,9 +88,7 @@ public class BoardController {
 			break;
 		case 5 :	// 메모게시판
 			totalCount = ser.getBoardTotalCount(menuDTO);
-			
-			menuDTO.setPageination(page, totalCount, 5, 5);
-			
+			menuDTO.setPageination(page, totalCount, 5, 5);	
 			boardList = ser.getBoardList_paging(menuDTO);
 			returnUrl = "user/board/memoBoardList";
 			break;
@@ -144,7 +142,7 @@ public class BoardController {
 		//인기글 리스트
 		ser.topList(model,cafeId);
 		//파일테이블리스트
-		ser.getFileList(model);
+		//ser.getFileList(model);
 
 		return "user/board/boardInside";
 	}
