@@ -414,7 +414,9 @@ $(function() {
 		
 		clearDate();
 		form.action = '${contextPath}/user/board/goBoardList';
-		form.page.value = page;
+		if(Number(page) > 0) {
+			form.page.value = page;
+		}
 		form.submit();
 	}
 	
@@ -481,7 +483,7 @@ $(function() {
 		xhr.onreadystatechange = function() {
 			if(xhr.readyState == 4 && xhr.status == 200) {
 	 			if(Number(xhr.response) == 1) {
-	 				searchBoardList(1);
+	 				searchBoardList(0);
 	 			} else {
 	 				alert('저장에 실패했습니다.');
 	 			}
@@ -602,7 +604,7 @@ $(function() {
 			xhr.onreadystatechange = function() {
 				if(xhr.readyState == 4 && xhr.status == 200) {
 		 			if(Number(xhr.response) == 1) {
-		 				searchBoardList(1);
+		 				searchBoardList(0);
 		 			} else {
 		 				alert('삭제에 실패했습니다.');
 		 			}
@@ -659,7 +661,7 @@ $(function() {
 		xhr.onreadystatechange = function() {
 			if(xhr.readyState == 4 && xhr.status == 200) {
 	 			if(Number(xhr.response) == 1) {
-	 				searchBoardList(1);
+	 				searchBoardList(0);
 	 			} else {
 	 				alert('저장에 실패했습니다.');
 	 			}
@@ -683,7 +685,7 @@ $(function() {
 			xhr.onreadystatechange = function() {
 				if(xhr.readyState == 4 && xhr.status == 200) {
 		 			if(Number(xhr.response) == 1) {
-		 				searchBoardList(1);
+		 				searchBoardList(0);
 		 			} else {
 		 				alert('삭제에 실패했습니다.');
 		 			}
