@@ -4,6 +4,7 @@
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
 <style>
+.indentSpan {color: #2f8cff;}
 .select-div {vertical-align:top;cursor: pointer;}
 .option-div {cursor: pointer; line-height:30px;padding: 0 12px;color: #555;}
 .option-div:hover {background:#e2faea;color:#03c75a;border-radius: 4px;}
@@ -110,7 +111,7 @@ $(function() {
 			          			<c:forEach var="reply" items="${board.replyList}">
                       				<li id="reply_${reply.replyNum}" style="padding-left:${15 * reply.replyIndent}px;">
 	                      				<c:if test="${reply.replyIndent > 0}">
-	                      				<span>└</span>
+	                      				<span class="indentSpan">└</span>
 	                      				</c:if>
 					            		<span>
 						              	<c:choose>
@@ -319,12 +320,22 @@ $(function() {
       <!-- end content -->
 
 <script type="text/javascript">
+	// 검색 옵션을 보여줌
 	function showOption(optionId) {
-		var option = document.getElementById(optionId);
-
-		option.style.display = 'block';
+		var selectModal = document.getElementsByClassName('select-modal');
+		
+		for(var i=0;i<selectModal.length;i++) {
+			var option = selectModal[i];
+			
+			if(option.id == optionId) {
+				option.style.display = 'block';
+			} else {
+				option.style.display = 'none';
+			}
+		}
 	}
 	
+	// 검색 옵션 선택
 	function selectOption(fieldName, inputId) {
 		var conditionInput = document.getElementById(inputId);
 		var option = document.getElementById(inputId + 'Option');
@@ -353,6 +364,7 @@ $(function() {
 		text.innerText = event.target.innerText;
 	}
 	
+	// 검색
 	function searchBoardList(page) {
 		var form = boardListForm;
 		var searchDate = document.getElementById('searchDate');

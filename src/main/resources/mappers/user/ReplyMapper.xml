@@ -4,7 +4,6 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.itbank.navercafe.user.reply.mapper.ReplyMapper">
 
-	
 	<resultMap type="com.itbank.navercafe.user.reply.dto.ReplyDTO" id="project_reply">
 		<id property="replyNum" column="reply_num"/>
 		<result property="boardNum" column="board_num"/>
