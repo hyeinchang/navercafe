@@ -83,7 +83,7 @@
 	    <if test="boardMenuNum != null and boardMenuNum > 0">AND board_menu_num = #{boardMenuNum}</if>
 		<![CDATA[
 	                ) boardMenu,
-			        (SELECT * FROM project_board WHERE board_title LIKE '%' || '' || '%') board,
+			        (SELECT * FROM project_board) board,
 			        (SELECT * FROM project_cafe_member) cafeMember
 			    WHERE
 			    boardMenu.board_menu_num = board.board_menu_num
