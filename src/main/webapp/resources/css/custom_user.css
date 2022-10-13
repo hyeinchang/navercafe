@@ -253,3 +253,60 @@ button.button.info {background-color: #5bc0de;}
 .formProfileImg {width:58px;height:58px;border-radius:100%;margin-right:10px;}
 img.profileImg {border:none !important;border-radius:100%;width:58px;height:58px;}
 img.profileImg-small {border:none !important;border-radius:100%;width:24px;height:24px;}
+
+/* 메모 게시판 */
+.memo-list-area {border: 1px solid #eee;padding:10px 20px;}
+.post-meta-area {padding-bottom: 10px;}
+.post-meta-area > div {display:inline-block; vertical-align:middle;}
+.post-meta-area > div {margin-right: 5px;}
+.post-meta-area .memo-date {float:right;}
+.post-meta-area .memo-action a {color:#696E74;}
+.post-meta-area .memo-action a:hover {text-decoration:underline;}
+.post-meta-area .memo-date {color: #aaa;}
+.memo-board{padding:10px 0;}
+.memo-board-content {resize:none;}
+.memo-list-area .memo-board:not(:last-child) {border-bottom: 1px solid #ccc;}
+.board-post-desc .memo-content {padding: 20px 0 40px;}
+
+/* 댓글 쪽 */
+.reply-list-area li {list-style:none;}
+.reply-list-area li:not(:last-child){padding-bottom: 25px;margin-bottom: 25px;border-bottom: 1px dotted #aaa;}
+.reply-list-area .comment-content {margin-bottom:0;}
+.reply-list-area .comment-content li > span {margin-right: 5px;}
+.reply-list-area .comment-content .reply-action {float:right;}
+.reply-list-area .comment-content .reply-action > a {color: #000;}
+.reply-list-area .comment-content .reply-action > a:hover {text-decoration:underline;}
+.reply-list-area .comment-content .reply-input-area .reply-input{width:100%;}
+.reply-list-area .comment-content .reply-file-btns{float:right;}
+.reply-list-area .reply-content {margin-top:10px;}
+.reply-list-area .writer{color: #2f8cff; border: 1px solid; border-radius: 15px; padding: 2px 4px;font-size: 12px; margin-left: 2px; background: #fff;}
+.reply-list-area .reReply {cursor:pointer;}
+.reply-list-area .reReply:hover {text-decoration:underline;}
+.replyA:hover {text-decoration: underline;}
+.reply-file-attach{width:50%; padding-left: 10px;}
+.reply-file-attach .imageAttach{width:30px; cursor:pointer;}
+.reply-file-attach .replyImage {width:0;height:0;}
+.reply-input-area {margin-top:20px;}
+.reply-input-area .reply-input {border:1px solid #ccc; border-radius: 5px; display:inline-block; width:87.8%;padding: 10px;overflow:hidden;background: #fff;}
+.reply-input-area .reply-input textarea{width:100%;resize:none;border:none;outline: none;}
+.reply-input-area .previewReplyArea a {color:#000;}
+.reply-input-area .previewReplyArea a:hover{text-decoration: underline;}
+
+.reply-input-area button {width: 80px; vertical-align: top;height: 80px; border-radius: 5px;}
+
+.board-post-desc{}
+.board-post-desc img{
+	width:100%;
+}
+/* ///////////////// 게시물쪽 //////////////// */
+.blog-wrap-test{
+  background: #ffffff;
+  padding: 0;
+  position: relative;
+  display: block;
+  z-index: 1;
+}
+
+.memo-search {text-align:center;margin-bottom:60px;}
+.memo-search .button {vertical-align: middle;}
+.select-div::after {background-image: url(../img/sp_icon_06952b76.svg);}

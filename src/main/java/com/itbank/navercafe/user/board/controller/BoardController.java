@@ -57,7 +57,7 @@ public class BoardController {
 	
 	//전체목록인데 수영이형이랑 상의.
 	@GetMapping("/goBoardList")	
-	public String goBoardList(Model model, String cafeId, MenuDTO menuDTO) throws Exception{
+	public String goBoardList(Model model, MenuDTO menuDTO) throws Exception{
 		int boardMenuNum = menuDTO.getBoardMenuNum();
 		int boardMenuType = 1;
 		List<BoardExtendDTO> boardList = null;
@@ -65,20 +65,21 @@ public class BoardController {
 		String returnUrl = "user/board/boardList";
 		int page = menuDTO.getPage();
 		int totalCount = 0;
-	
-		if(cafeId != null) {
-			menuDTO.setCafeId(cafeId);
-		}
-		
-		if(boardMenuNum > 0) {
-			menuDTO = menuService.selectBoardMenu(boardMenuNum);
-			boardMenuType = menuDTO.getBoardMenuType();
-			boardMenuName = menuDTO.getBoardMenuName();
-		}
 		
 		if(page == 0) {
 			page = 1;
 		}
+		
+		// 게시판 메뉴 번호가 있을 경우 특정 게시판 메뉴의 정보 조회
+		if(boardMenuNum > 0) {
+			MenuDTO boardInfoMenuDTO = new MenuDTO();
+			boardInfoMenuDTO = menuService.selectBoardMenu(boardMenuNum);
+			boardMenuType = boardInfoMenuDTO.getBoardMenuType();
+			boardMenuName = boardInfoMenuDTO.getBoardMenuName();
+		}
+		
+		// 검색 키워드 설정
+		menuDTO.setKeyword();
 	
 		// 게시판 타입에 따라 다른 view 설정
 		switch(boardMenuType) {
@@ -100,7 +101,7 @@ public class BoardController {
 		model.addAttribute("boardMenuName",boardMenuName);
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("menuDTO", menuDTO);
-		model.addAttribute("cafeId",cafeId);
+		model.addAttribute("cafeId", menuDTO.getCafeId());
 		
 		return returnUrl;
 	}

@@ -118,7 +118,7 @@
 			        WHERE BOARD_TITLE LIKE '%' || #{boardTitle} || '%'
 			        AND BOARD_CONTENT LIKE '%' || #{boardContent} || '%'
 					]]>
-					<if test="startSearchDate != null and endSearchDate != null">	        
+					<if test="(startSearchDate != null and startSearchDate != '') and (endSearchDate != null and endSearchDate != '')">      
 			        AND BOARD_SAVEDATE BETWEEN TO_DATE(#{startSearchDate}, 'YYYY-MM-DD') AND TO_DATE(#{endSearchDate}, 'YYYY-MM-DD')+1
 			        </if>
 			        <![CDATA[
@@ -132,7 +132,7 @@
 			    ) BOARD_DATA
 			]]>
 			<choose>
-			<when test="replyContent != null or replyUserNickname != null">
+			<when test="(replyContent != null and replyContent != '') or (replyUserNickname != null and replyUserNickname != '')">
 			INNER JOIN
 			</when>
 			<otherwise>
@@ -174,7 +174,7 @@
 				        WHERE BOARD_TITLE LIKE '%' || #{boardTitle} || '%'
 				        AND BOARD_CONTENT LIKE '%' || #{boardContent} || '%'
 				       	]]>
-						<if test="startSearchDate != null and endSearchDate != null">	        
+						<if test="(startSearchDate != null and startSearchDate != '') and (endSearchDate != null and endSearchDate != '')">        
 				        AND BOARD_SAVEDATE BETWEEN TO_DATE(#{startSearchDate}, 'YYYY-MM-DD') AND TO_DATE(#{endSearchDate}, 'YYYY-MM-DD')+1
 				        </if>
 				        <![CDATA[
@@ -188,7 +188,7 @@
 				    ) BOARD_DATA
 					]]>
 					<choose>
-					<when test="replyContent != null or replyUserNickname != null">
+					<when test="(replyContent != null and replyContent != '') or (replyUserNickname != null and replyUserNickname != '')">
 					INNER JOIN
 					</when>
 					<otherwise>

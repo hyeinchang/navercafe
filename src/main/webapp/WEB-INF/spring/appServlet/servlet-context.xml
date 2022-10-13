@@ -61,6 +61,7 @@
 			<mapping path="/user/*/*save*"/>
 			<mapping path="/user/*/*save*"/>
 			<mapping path="/user/*/*write*"/>
+			<mapping path="/user/*/*modify*"/>
 			<mapping path="/user/*/*update*"/>
 			<mapping path="/user/*/*delete*"/>
 			<mapping path="/admin/**"/>

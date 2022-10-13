@@ -90,7 +90,7 @@
   <div class="dmtop" style="overflow: hidden;">Scroll to Top</div>
 
   <!-- JavaScript Libraries -->
-  <script src="${contextPath}/resources/MaxiBiz/lib/jquery/jquery.min.js"></script>
+  <!-- <script src="${contextPath}/resources/MaxiBiz/lib/jquery/jquery.min.js"></script> -->
   <script src="${contextPath}/resources/MaxiBiz/lib/bootstrap/js/bootstrap.min.js"></script>
   <script src="${contextPath}/resources/MaxiBiz/lib/php-mail-form/validate.js"></script>
   <script src="${contextPath}/resources/MaxiBiz/lib/prettyphoto/js/prettyphoto.js"></script>

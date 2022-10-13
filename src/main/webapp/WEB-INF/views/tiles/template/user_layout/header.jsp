@@ -47,8 +47,16 @@
   
   <!-- 2022-08-26 chi9148 custom css 추가 -->
   <link href="${contextPath}/resources/css/custom_user.css" rel="stylesheet">
+  
   <!-- 2022-09-28 chi9148 common js 추가 -->
   <script type="text/javascript" src="${contextPath}/resources/js/common.js"></script>
+  
+  <!-- 2022-10-13 chi9148 jquery-ui & bootstrap datapicker 추가 -->
+  <script src="${contextPath}/resources/MaxiBiz/lib/jquery/jquery.min.js"></script>
+  <script src="${contextPath}/resources/jquery-ui-1.13.2/jquery-ui.js"></script>
+  <link rel="stylesheet" href="${contextPath}/resources/bootstrap-datepicker-1.9.0-dist/css/bootstrap-datepicker3.standalone.css">
+  <script type="text/javascript" src="${contextPath}/resources/bootstrap-datepicker-1.9.0-dist/js/bootstrap-datepicker.min.js"></script>
+  <script type="text/javascript" src="${contextPath}/resources/bootstrap-datepicker-1.9.0-dist/locales/bootstrap-datepicker.ko.min.js"></script>
 </head>
 
 <body>

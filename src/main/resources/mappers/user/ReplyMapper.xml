@@ -71,7 +71,7 @@
 			        WHERE BOARD_TITLE LIKE '%' || #{boardTitle} || '%'
 			        AND BOARD_CONTENT LIKE '%' || #{boardContent} || '%'
 		        	]]>
-					<if test="startSearchDate != null and endSearchDate != null">	        
+					<if test="(startSearchDate != null and startSearchDate != '') and (endSearchDate != null and endSearchDate != '')">   
 			        AND BOARD_SAVEDATE BETWEEN TO_DATE(#{startSearchDate}, 'YYYY-MM-DD') AND TO_DATE(#{endSearchDate}, 'YYYY-MM-DD')+1
 			        </if>
 			        <![CDATA[
@@ -86,11 +86,9 @@
 			INNER JOIN
 			    (SELECT REPLY.*, REPLY_MEMBER.CAFE_USER_NICKNAME, REPLY_MEMBER.CAFE_USER_IMAGE_NUM, REPLY_MEMBER.CAFE_USER_GRADE FROM
 			        (SELECT * FROM PROJECT_REPLY
-			        WHERE REPLY_CONTENT LIKE '%' || #{replyContent} || '%'
 			        ) REPLY
 			        INNER JOIN
 			        (SELECT * FROM PROJECT_CAFE_MEMBER
-			        WHERE CAFE_USER_NICKNAME LIKE '%' || #{replyUserNickname} || '%'
 			        ) REPLY_MEMBER
 			    ON REPLY.USER_ID = REPLY_MEMBER.USER_ID
 			    ) REPLY_DATA

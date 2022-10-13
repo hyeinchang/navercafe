@@ -211,13 +211,16 @@ public class BoardServiceImpl implements BoardService{
 	
 			for(BoardExtendDTO beDTO : boardList) {
 				List<ReplyDTO> boardReplyList = new ArrayList<>();
+				int replyCount = 0;
 				
 				for(ReplyDTO replyDTO : replyList) {
 					if(beDTO.getBoardNum() == replyDTO.getBoardNum()) {
 						boardReplyList.add(replyDTO);
+						replyCount++;
 					}
 				}
 				
+				beDTO.setReplyCount(replyCount);
 				beDTO.setReplyList(boardReplyList);
 			}
 		} catch (Exception e) {
