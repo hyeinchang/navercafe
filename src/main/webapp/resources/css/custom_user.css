@@ -310,3 +310,17 @@ img.profileImg-small {border:none !important;border-radius:100%;width:24px;heigh
 .memo-search {text-align:center;margin-bottom:60px;}
 .memo-search .button {vertical-align: middle;}
 .select-div::after {background-image: url(../img/sp_icon_06952b76.svg);}
+.indentSpan {color: #2f8cff;}
+.select-div {vertical-align:top;cursor: pointer;}
+.option-div {cursor: pointer; line-height:30px;padding: 0 12px;color: #555;}
+.option-div:hover {background:#e2faea;color:#03c75a;border-radius: 4px;}
+.option-div a {color: #555;}
+.option-div a:hover {background:#e2faea; color:#03c75a;text-decoration:underline;}
+.select-div::after {content: "";display: inline-block;margin-left: 10px; background-position: -229px -185px;width: 12px;height: 5px;}
+.select-modal {position:absolute;background:#fff;text-align: left;display:block;z-index:100;display:none;color: #555;background-color: #fff; border: 1px solid #ccc;border-radius: 4px;-webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%); box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);}
+.select-modal span.wave {vertical-align:middle;}
+.select-modal label {margin:0 5px 0 0;vertical-align:middle;font-weight:normal;cursor:pointer;}
+.select-modal input {width: 95px;font-size: 13px;height: auto;padding: 5px 10px; margin:0;}
+.select-modal .button {vertical-align:middle; margin:0 0 0 5px}
+#searchConditionOption{margin-left: -13px;margin-top: 5px;width: 122px;}
+#searchDateOption{margin-top: 5px;margin-left: -13px;}

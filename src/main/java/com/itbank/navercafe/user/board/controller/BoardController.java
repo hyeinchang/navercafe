@@ -54,12 +54,49 @@ public class BoardController {
 		return "user/board/writeForm";
 	}
 	
+	@RequestMapping("/modifyForm")
+	public String modifyForm(Model model, MenuDTO menuDTO, BoardExtendDTO boardDTO) {
+		int boardMenuNum = menuDTO.getBoardMenuNum();
+		int boardMenuType = 0;
+		String boardMenuName = "";
+		String returnUrl = "user/board/writeForm";
+		
+		try {
+			// 게시판 메뉴 번호가 있을 경우 특정 게시판 메뉴의 정보 조회
+			if(boardMenuNum > 0) {
+				MenuDTO boardInfoMenuDTO = new MenuDTO();
+				boardInfoMenuDTO = menuService.selectBoardMenu(boardMenuNum);
+				boardMenuType = boardInfoMenuDTO.getBoardMenuType();
+				boardMenuName = boardInfoMenuDTO.getBoardMenuName();
+			}
+			
+			// 게시판 타입에 따라 다른 view 설정
+			switch(boardMenuType) {
+			case 5 :	// 메모게시판
+				returnUrl = "user/board/memoBoardModify";
+				break;
+			default :
+				break;
+			}
+			
+			boardDTO = ser.getExtendBoard(boardDTO.getBoardNum());
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		model.addAttribute("boardMenuName",boardMenuName);
+		model.addAttribute("menuDTO", menuDTO);
+		model.addAttribute("boardDTO", boardDTO);
+
+		return returnUrl;
+	}
+	
 	
 	//전체목록인데 수영이형이랑 상의.
 	@GetMapping("/goBoardList")	
 	public String goBoardList(Model model, MenuDTO menuDTO) throws Exception{
 		int boardMenuNum = menuDTO.getBoardMenuNum();
-		int boardMenuType = 1;
+		int boardMenuType = 0;
 		List<BoardExtendDTO> boardList = null;
 		String boardMenuName = "전체글보기";
 		String returnUrl = "user/board/boardList";
@@ -70,39 +107,43 @@ public class BoardController {
 			page = 1;
 		}
 		
-		// 게시판 메뉴 번호가 있을 경우 특정 게시판 메뉴의 정보 조회
-		if(boardMenuNum > 0) {
-			MenuDTO boardInfoMenuDTO = new MenuDTO();
-			boardInfoMenuDTO = menuService.selectBoardMenu(boardMenuNum);
-			boardMenuType = boardInfoMenuDTO.getBoardMenuType();
-			boardMenuName = boardInfoMenuDTO.getBoardMenuName();
-		}
+		try {
+			// 게시판 메뉴 번호가 있을 경우 특정 게시판 메뉴의 정보 조회
+			if(boardMenuNum > 0) {
+				MenuDTO boardInfoMenuDTO = new MenuDTO();
+				boardInfoMenuDTO = menuService.selectBoardMenu(boardMenuNum);
+				boardMenuType = boardInfoMenuDTO.getBoardMenuType();
+				boardMenuName = boardInfoMenuDTO.getBoardMenuName();
+			}
+			
+			// 검색 키워드 설정
+			menuDTO.setKeyword();
 		
-		// 검색 키워드 설정
-		menuDTO.setKeyword();
-	
-		// 게시판 타입에 따라 다른 view 설정
-		switch(boardMenuType) {
-		case 4 :	// 등업게시판
-			boardList = ser.getBoardList(menuDTO);
-			returnUrl = "user/board/gradeBoardList";
-			break;
-		case 5 :	// 메모게시판
-			totalCount = ser.getBoardTotalCount(menuDTO);
-			menuDTO.setPageination(page, totalCount, 5, 5);	
-			boardList = ser.getBoardList_paging(menuDTO);
-			returnUrl = "user/board/memoBoardList";
-			break;
-		default :
-			boardList = ser.getBoardList(menuDTO);
-			break;
+			// 게시판 타입에 따라 다른 view 설정
+			switch(boardMenuType) {
+			case 4 :	// 등업게시판
+				boardList = ser.getBoardList(menuDTO);
+				returnUrl = "user/board/gradeBoardList";
+				break;
+			case 5 :	// 메모게시판
+				totalCount = ser.getBoardTotalCount(menuDTO);
+				menuDTO.setPageination(page, totalCount, 5, 5);	
+				boardList = ser.getBoardList_paging(menuDTO);
+				returnUrl = "user/board/memoBoardList";
+				break;
+			default :
+				boardList = ser.getBoardList(menuDTO);
+				break;
+			}
+			
+		} catch(Exception e) {
+			e.printStackTrace();
 		}
 		
 		model.addAttribute("boardMenuName",boardMenuName);
 		model.addAttribute("boardList", boardList);
 		model.addAttribute("menuDTO", menuDTO);
-		model.addAttribute("cafeId", menuDTO.getCafeId());
-		
+
 		return returnUrl;
 	}
 	
@@ -176,8 +217,7 @@ public class BoardController {
 		return "user/board/gradeBoardList";
 	}
 	
-
-	
+	// 게시글 작성
 	@PostMapping(value="writeBoard", produces="application/json; charset=utf-8")
 	@ResponseBody
 	public int writeBoard(@RequestBody Map<String, Object> map) {
@@ -188,6 +228,39 @@ public class BoardController {
 		try {
 			boardDTO = (BoardDTO) commonUtils.setDTO(map, boardDTO);
 			result = ser.insertBoard(boardDTO);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	// 게시글 수정
+	@PostMapping(value="modifyBoard", produces="application/json; charset=utf-8")
+	@ResponseBody
+	public int modifyBoard(@RequestBody Map<String, Object> map) {
+		int result = 0;
+		CommonUtils commonUtils = new CommonUtils();
+		BoardDTO boardDTO = new BoardDTO();
+		
+		try {
+			boardDTO = (BoardDTO) commonUtils.setDTO(map, boardDTO);
+			result = ser.updateBoard(boardDTO);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
+	
+	// 게시글 삭제
+	@PostMapping(value="deleteBoard", produces="application/json; charset=utf-8")
+	@ResponseBody
+	public int deleteBoard(@RequestBody BoardDTO boardDTO) {
+		int result = 0;
+
+		try {
+			result = ser.deleteBoard_returnResult(boardDTO.getBoardNum());
 		} catch(Exception e) {
 			e.printStackTrace();
 		}

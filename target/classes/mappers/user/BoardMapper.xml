@@ -66,8 +66,19 @@
 		<result property="upCutName" column="up_cut_name"/>
 		
 		<result property="replyCount" column="reply_count"/>
+		
+        <result column="BOARD_MENU_NAME" property="boardMenuName"/>
+        <result column="BOARD_MENU_DESC" property="boardMenuDesc"/>
+       	<result column="BOARD_MENU_TYPE" property="boardMenuType"/>
+        <result column="BOARD_WRITE_AUTH" property="boardWriteAuth"/>
+        <result column="BOARD_REPLY_AUTH" property="boardReplyAuth"/>
+        <result column="BOARD_READ_AUTH" property="boardReadAuth"/>
+        <result column="BOARD_ORDER" property="boardOrder"/>
+        <result column="BOARD_LIKES_FLAG" property="boardLikesFlag"/>
+        <result column="BOARD_REPLY_FLAG" property="boardReplyFlag"/>
+        <result column="BOARD_PREFIXES_FLAG" property="boardPrefixesFlag"/>
+        <result column="BOARD_PUBLIC_FLAG" property="boardPublicFlag"/>
 	</resultMap>
-	
 
 	<select id="getBoardList" resultMap="boardExtend">
 		<![CDATA[
@@ -79,9 +90,19 @@
 	            FROM
 	                (SELECT cafe_id, board_menu_num, board_menu_name, board_menu_type FROM project_board_type
 	                WHERE cafe_id = #{cafeId}
-		]]>
-	    <if test="boardMenuNum != null and boardMenuNum > 0">AND board_menu_num = #{boardMenuNum}</if>
-		<![CDATA[
+				]]>
+				<choose>
+				<when test="boardMenuNum != null and boardMenuNum > 0">
+	    			AND board_menu_num = #{boardMenuNum}
+	    		</when>
+	    		<otherwise>
+	    			AND BOARD_READ_AUTH = 0 
+					AND BOARD_PUBLIC_FLAG = 'Y' 
+					AND NOT BOARD_MENU_NUM IN(4)
+	    		</otherwise>
+				</choose>
+	    		
+				<![CDATA[
 	                ) boardMenu,
 			        (SELECT * FROM project_board) board,
 			        (SELECT * FROM project_cafe_member) cafeMember
@@ -100,16 +121,20 @@
 			ORDER BY boardData.board_num DESC
 		]]>		
 	</select>
-	
+  
 	<select id="getBoardList_paging" resultMap="boardExtend">
 		<![CDATA[
 			SELECT * FROM
 			(SELECT ROWNUM RN, ALL_DATA.* FROM
 			(SELECT BOARD_DATA.*, REPLY_DATA.REPLY_COUNT
 			FROM
-			    (SELECT BOARD.*, CAFE_MEMBER.CAFE_USER_NICKNAME, CAFE_MEMBER.CAFE_USER_IMAGE_NUM, CAFE_MEMBER.CAFE_USER_GRADE
+			    (SELECT BOARD.*
+			    	, BOARD_TYPE.BOARD_MENU_NAME, BOARD_TYPE.BOARD_MENU_DESC, BOARD_TYPE.BOARD_MENU_TYPE, BOARD_TYPE.CAFE_ID
+			    	, BOARD_TYPE.BOARD_WRITE_AUTH, BOARD_TYPE.BOARD_REPLY_AUTH, BOARD_TYPE.BOARD_READ_AUTH, BOARD_TYPE.BOARD_ORDER
+			    	, BOARD_TYPE.BOARD_LIKES_FLAG, BOARD_TYPE.BOARD_REPLY_FLAG, BOARD_TYPE.BOARD_PREFIXES_FLAG, BOARD_TYPE.BOARD_PUBLIC_FLAG
+			   	 	, CAFE_MEMBER.CAFE_USER_NICKNAME, CAFE_MEMBER.CAFE_USER_IMAGE_NUM, CAFE_MEMBER.CAFE_USER_GRADE
 			    FROM
-			        (SELECT CAFE_ID, BOARD_MENU_NUM FROM PROJECT_BOARD_TYPE
+			        (SELECT * FROM PROJECT_BOARD_TYPE
 			        WHERE CAFE_ID = #{cafeId}
 			        AND BOARD_MENU_NUM = #{boardMenuNum}
 			        ) BOARD_TYPE
@@ -118,6 +143,9 @@
 			        WHERE BOARD_TITLE LIKE '%' || #{boardTitle} || '%'
 			        AND BOARD_CONTENT LIKE '%' || #{boardContent} || '%'
 					]]>
+					<if test="boardNum != null and boardNum > 0">
+			        AND BOARD_NUM = #{boardNum}
+			        </if>
 					<if test="(startSearchDate != null and startSearchDate != '') and (endSearchDate != null and endSearchDate != '')">      
 			        AND BOARD_SAVEDATE BETWEEN TO_DATE(#{startSearchDate}, 'YYYY-MM-DD') AND TO_DATE(#{endSearchDate}, 'YYYY-MM-DD')+1
 			        </if>
@@ -163,9 +191,13 @@
 		<![CDATA[
 			SELECT COUNT(*) COUNT
 				FROM
-				    (SELECT BOARD.*, CAFE_MEMBER.CAFE_USER_NICKNAME, CAFE_MEMBER.CAFE_USER_IMAGE_NUM, CAFE_MEMBER.CAFE_USER_GRADE
+				    (SELECT BOARD.*
+				    	, BOARD_TYPE.BOARD_MENU_NAME, BOARD_TYPE.BOARD_MENU_DESC, BOARD_TYPE.BOARD_MENU_TYPE, BOARD_TYPE.CAFE_ID
+				    	, BOARD_TYPE.BOARD_WRITE_AUTH, BOARD_TYPE.BOARD_REPLY_AUTH, BOARD_TYPE.BOARD_READ_AUTH, BOARD_TYPE.BOARD_ORDER
+				    	, BOARD_TYPE.BOARD_LIKES_FLAG, BOARD_TYPE.BOARD_REPLY_FLAG, BOARD_TYPE.BOARD_PREFIXES_FLAG, BOARD_TYPE.BOARD_PUBLIC_FLAG
+				   	 	, CAFE_MEMBER.CAFE_USER_NICKNAME, CAFE_MEMBER.CAFE_USER_IMAGE_NUM, CAFE_MEMBER.CAFE_USER_GRADE
 				    FROM
-				        (SELECT CAFE_ID, BOARD_MENU_NUM FROM PROJECT_BOARD_TYPE
+				        (SELECT * FROM PROJECT_BOARD_TYPE
 				        WHERE CAFE_ID = #{cafeId}
 				        AND BOARD_MENU_NUM = #{boardMenuNum}
 				        ) BOARD_TYPE
@@ -174,6 +206,9 @@
 				        WHERE BOARD_TITLE LIKE '%' || #{boardTitle} || '%'
 				        AND BOARD_CONTENT LIKE '%' || #{boardContent} || '%'
 				       	]]>
+				       	<if test="boardNum != null and boardNum > 0">
+				        AND BOARD_NUM = #{boardNum}
+				        </if>
 						<if test="(startSearchDate != null and startSearchDate != '') and (endSearchDate != null and endSearchDate != '')">        
 				        AND BOARD_SAVEDATE BETWEEN TO_DATE(#{startSearchDate}, 'YYYY-MM-DD') AND TO_DATE(#{endSearchDate}, 'YYYY-MM-DD')+1
 				        </if>
@@ -305,10 +340,46 @@
 		delete project_board where board_num=#{boardNum}
 	</delete>
 	
-	
 	<delete id="deleteReply">
 		delete project_reply where reply_num=#{replyNum}
 	</delete>
 	
+	<select id="getExtendBoard" resultMap="boardExtend">
+		<![CDATA[
+			SELECT BOARD.*
+		    	, BOARD_TYPE.BOARD_MENU_NAME, BOARD_TYPE.BOARD_MENU_DESC, BOARD_TYPE.BOARD_MENU_TYPE, BOARD_TYPE.CAFE_ID
+		    	, BOARD_TYPE.BOARD_WRITE_AUTH, BOARD_TYPE.BOARD_REPLY_AUTH, BOARD_TYPE.BOARD_READ_AUTH, BOARD_TYPE.BOARD_ORDER
+		    	, BOARD_TYPE.BOARD_LIKES_FLAG, BOARD_TYPE.BOARD_REPLY_FLAG, BOARD_TYPE.BOARD_PREFIXES_FLAG, BOARD_TYPE.BOARD_PUBLIC_FLAG
+		   	 	, CAFE_MEMBER.CAFE_USER_NICKNAME, CAFE_MEMBER.CAFE_USER_IMAGE_NUM, CAFE_MEMBER.CAFE_USER_GRADE
+		    FROM
+		        (SELECT * FROM PROJECT_BOARD_TYPE
+		        ) BOARD_TYPE
+		    INNER JOIN
+		        (SELECT * FROM PROJECT_BOARD
+		        WHERE BOARD_NUM = #{boardNum}
+		        ) BOARD
+		    ON BOARD_TYPE.BOARD_MENU_NUM = BOARD.BOARD_MENU_NUM
+		    INNER JOIN
+		        (SELECT * FROM PROJECT_CAFE_MEMBER
+		        ) CAFE_MEMBER
+		    ON BOARD.USER_ID = CAFE_MEMBER.USER_ID AND BOARD_TYPE.CAFE_ID = CAFE_MEMBER.CAFE_ID
+		]]>
+	</select>
+
+	<update id="updateBoard">
+		<![CDATA[
+			UPDATE PROJECT_BOARD SET
+			BOARD_TITLE = #{boardTitle}
+			, BOARD_CONTENT = #{boardContent}
+			, BOARD_NOTICE = #{boardNotice}
+			WHERE BOARD_NUM	= #{boardNum}
+		]]>
+	</update>
+	
+	<delete id="deleteBoard_returnResult">
+		<![CDATA[
+			DELETE FROM PROJECT_BOARD WHERE BOARD_NUM = #{boardNum}
+		]]>
+	</delete>
 </mapper>
 

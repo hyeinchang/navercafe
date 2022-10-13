@@ -16,6 +16,7 @@ public class MenuDTO extends BoardSearchDTO {
 	private String boardReplyFlag;
 	private String boardPrefixesFlag;
 	private String boardPublicFlag;
+	private int boardNum;
 	
 	public int getBoardMenuNum() {
 		return boardMenuNum;
@@ -94,5 +95,11 @@ public class MenuDTO extends BoardSearchDTO {
 	}
 	public void setBoardPublicFlag(String boardPublicFlag) {
 		this.boardPublicFlag = boardPublicFlag;
+	}
+	public int getBoardNum() {
+		return boardNum;
+	}
+	public void setBoardNum(int boardNum) {
+		this.boardNum = boardNum;
 	}
 }

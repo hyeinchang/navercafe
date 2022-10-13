@@ -14,27 +14,27 @@
 		      <div class="col-lg-8 col-md-8 col-sm-8 clearfix">
 		      	<!--  메모 작성 부분-->
 		        <div class="memo-board">
-		            <form name="boardWriteForm" id="boardWriteForm" action="memoSave" class="row" method="post">
-		            	<input type="hidden" name="cafeId" value="${_cafeDTO.cafeId}">
-		            	<input type="hidden" name="userId" value="${_cafeDTO.loginUser.userId}">
-		            	<input type="hidden" name="boardMenuNum" value="${_cafeDTO.menuDTO.boardMenuNum}">
-		            	<input type="hidden" name="boardNotice" value="N">
-		            	<input type="hidden" name="boardTitle" value="${_cafeDTO.menuDTO.boardMenuName}의 글">
+		            <form name="boardModifyForm" id="boardModifyForm" method="post">
+		            	<input type="hidden" name="cafeId" value="${boardDTO.cafeId}">
+		            	<input type="hidden" name="userId" value="${boardDTO.userId}">
+		            	<input type="hidden" name="boardMenuNum" value="${boardDTO.boardMenuNum}">
+		            	<input type="hidden" name="boardNotice" value="${boardDTO.boardNotice}">
+		            	<input type="hidden" name="boardTitle" value="${boardDTO.boardTitle}">
+		            	<input type="hidden" name="boardNum" value="${boardDTO.boardNum}">
 		            	
-		              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
-		                <textarea class="form-control memo-board-content" name="boardContent" rows="6" placeholder="글을 입력해 주세요."></textarea>
-		                <span style="display:none;">
-		               	 	<input type="checkbox" name="checkbox" value="" style="zoom: 1.5; cursor:pointer;"> 스탭만 보기
-		                </span>
-	                	<span style="float: right;">
-	                		<button type="button" class="button" onclick="writeBoard()">등록</button>
-	                	</span>
+		              	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+		                	<textarea class="form-control memo-board-content" name="boardContent" rows="6" placeholder="글을 입력해 주세요.">${boardDTO.boardContent}</textarea>
+			                <span style="display:none;">
+			               	 	<input type="checkbox" name="checkbox" value="" style="zoom: 1.5; cursor:pointer;"> 스탭만 보기
+			                </span>
+		                	<span style="float: right;">
+		                		<button type="button" class="button" onclick="goBoardList()" style="background:#ccc;">취소</button>
+		                		<button type="button" class="button" onclick="modifyBoard()">수정</button>
+		                	</span>
 		              </div>
-		            </form>
+		           </form>
 			    </div>
 		      	<!-- end 메모 작성 부분 -->
-		      	
-		 
 				
 		      </div>
 		      <!-- end content -->
@@ -43,15 +43,21 @@
 		  </section>
       </div>
       <!-- end content -->
-<form name="boardListForm" action="${contextPath}/user/board/goBoardList">
-	<input type="hidden" name="cafeId" value="${menuDTO.cafeId}">
-	<input type="hidden" name="boardMenuNum" value="${menuDTO.boardMenuNum}">
+<form name="boardListForm">
+	<input type="hidden" name="cafeId" value="${boardDTO.cafeId}">
+   	<input type="hidden" name="userId" value="${boardDTO.userId}">
+   	<input type="hidden" name="boardMenuNum" value="${boardDTO.boardMenuNum}">
+    <input type="hidden" name="startSearchDate" value="${menuDTO.startSearchDate}">
+	<input type="hidden" name="endSearchDate" value="${menuDTO.endSearchDate}">
+	<input type="hidden" name="searchDate" value="${menuDTO.searchDate}">
+	<input type="hidden" name="searchCondition" value="${menuDTO.searchCondition}">
+	<input type="hidden" name="searchKeyword" value="${menuDTO.searchKeyword}">	
 	<input type="hidden" name="page" value="${menuDTO.page}">
 </form>
 <script type="text/javascript">
-	// 글 작성
-	function writeBoard() {
-		var form = document.boardWriteForm;
+	//게시글 수정
+	function modifyBoard() {
+		var form = document.boardModifyForm;
 		var xhr = new XMLHttpRequest();
 		var boardContent = form.boardContent;
 		var data = new Object();
@@ -64,7 +70,7 @@
 		
 		data = getData(form);
 		
-		xhr.open('post', '${contextPath}/user/board/writeBoard', false);
+		xhr.open('post', '${contextPath}/user/board/modifyBoard', false);
 		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
 		xhr.setRequestHeader('Content-Type', 'application/json');
 		
@@ -73,10 +79,7 @@
 	 			var message = '';
 	 			
 	 			if(Number(xhr.response) == 1) {
-	 				var boardListForm = document.boardListForm;
-	 				
-	 				boardListForm.action = '${contextPath}/user/board/goBoardList';
-	 				boardListForm.submit();
+	 				goBoardList();
 	 			} else {
 	 				alert('저장에 실패했습니다.');
 	 			}
@@ -84,39 +87,6 @@
 		}
 		
 		xhr.send(JSON.stringify(data));
-	}
-	
-	// 답글 작성
-	function writeReply(boardNum) {
-		var form = document.getElementById('replyForm_' + boardNum);
-		var xhr = new XMLHttpRequest();
-		var replyContent = form.replyContent;
-		
-		if(replyContent.value == '') {
-			alert('내용을 입력해주세요.');
-			replyContent.focus();
-			return;
-		}
-		
-		xhr.open('post', '${contextPath}/user/reply/writeReply', false);
-		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
-		
-		xhr.onreadystatechange = function() {
-			if(xhr.readyState == 4 && xhr.status == 200) {
-	 			var message = '';
-	 			
-	 			if(Number(xhr.response) == 1) {
-					var boardListForm = document.boardListForm;
-	 				
-	 				boardListForm.action = '${contextPath}/user/board/goBoardList';
-	 				boardListForm.submit();
-	 			} else {
-	 				alert('저장에 실패했습니다.');
-	 			}
-			}
-		}
-		
-		xhr.send(new FormData(form));
 	}
 	
 	// form data를 object로 반환
@@ -134,79 +104,25 @@
 		return data;
 	}
 	
-	// 답글 이미지 미리보기
-	function previewReplyImage(boardNum) {
-		var fileInput = event.target;
-		var file = fileInput.files[0];
-		var fileReader = null;
+	// 게시판 목록으로 이동
+	function goBoardList() {
+		var form = document.boardListForm;
 		
-		if(file.type.indexOf('image') < 0) {
-			alert('이미지 파일이 아닙니다.');
-			fileInput.files = null;
-			fileInput.value = '';
-			return;
-		}
-		
-		fileReader = new FileReader();
-		fileReader.readAsDataURL(file);
-		fileReader.onload = function() {
-			var previewReplyArea = document.getElementById('previewReplyArea_' + boardNum);
-			var previewReplyImg = document.getElementById('previewReplyImg_' + boardNum);
-			
-			previewReplyImg.src = fileReader.result;
-			previewReplyArea.style.display = '';
-		}
-	}
-	
-	// 답글 이미지 삭제
-	function deleteReplyImage(boardNum) {
-		var replyImage = document.getElementById('replyImage_' + boardNum);
-		var previewReplyArea = document.getElementById('previewReplyArea_' + boardNum);
-		var previewReplyImg = document.getElementById('previewReplyImg_' + boardNum);
-		
-		replyImage.files = null;
-		replyImage.value = '';
-		previewReplyImg.src = '';
-		previewReplyArea.style.display = 'none';
-	}
-	
-	// 답글 - 답글 영역 생성
-	function showReReplyArea(boardNum_replyNum) {
-		var forms = document.getElementsByClassName('reReplyForm');
-		var form = document.getElementById('replyForm_' + boardNum_replyNum);
-		
-		for(var i=0;i<forms.length;i++) {
-			forms[i].style.display = 'none';
-		}
-		
-		form.style.display = '';
-	}
-	
-	// 댓글 보기
-	function replyClick(boardNum){
-		var replyArea = document.getElementById('replyArea_' + boardNum);
-		
-		if(replyArea.style.display == 'none') {
-			replyArea.style.display = 'block';
-		} else {
-			replyArea.style.display = 'none';
-		}
-	}
-	
-	// 게시글 수정
-	function modifyBoard(boardNum) {
-		
-	}
-	
-	// 게시글 삭제
-	function deleteBoard(boardNum) {
-		
-	}
-	
-	function searchBoardList(page) {
-		var form = boardListForm;
-		
-		form.page.value = page;
+		clearDate(form);
+		form.action = '${contextPath}/user/board/goBoardList';
 		form.submit();
+	}
+	
+	// 기간 입력으로 검색하지 않을 경우 기간 삭제
+	function clearDate() {
+		var form = document.boardListForm;
+		var searchDate = form.searchDate;
+		
+		if(searchDate.value != 'inputDate') {
+			var startSearchDate = form.startSearchDate;
+			var endSearchDate = form.endSearchDate;
+			startSearchDate.parentElement.removeChild(startSearchDate);
+			endSearchDate.parentElement.removeChild(endSearchDate);
+		}
 	}
 </script>      

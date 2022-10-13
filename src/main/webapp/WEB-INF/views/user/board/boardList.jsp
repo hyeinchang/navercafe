@@ -3,6 +3,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
+<jsp:useBean id="boardType" class="com.itbank.navercafe.common.menu.BoardMenuType"/>
 <style type="text/css">
 	/* 필터링 (검색) */
 	div.dataTables_filter {
@@ -19,6 +20,7 @@
 	.grade-button{background-color: white;color:black; border:1px solid black;}
 	tr.notice_Y {background:#eee;}
 	td.notice_Y a::before {content: "공지"; display: inline-block; padding: 0 5px;  background: #fff; border: 1px solid;font-size: 12px; border-radius: 5px;margin-right: 2px;}
+	td > a.boardTit {white-space: nowrap;display: inline-block; max-width: 360px;text-overflow: ellipsis; overflow: hidden;}
 </style>
 <script	src="https://cdn.datatables.net/t/bs-3.3.6/jqc-1.12.0,dt-1.10.11/datatables.min.js"></script>
 <script>
@@ -34,12 +36,12 @@
 			// 열 넓이 설정
 			columnDefs: [
 				// visible 숨김, orderable 정렬기능
-					{ orderable: false, 	visible: false,  targets: 0, width: 50 },
-				{ orderable: false, 	visible: true,  targets: 1, width: 50 },
-				{ orderable: false, visible: true, targets: 2, width: 200 },
+					{ orderable: false, 	visible: false,  targets: 0, width: 0 },
+				{ orderable: false, 	visible: true,  targets: 1, width: 60 },
+				{ orderable: false, visible: true, targets: 2, width: 300 },
 				{ orderable: false, visible: true, targets: 3, width: 100 },
 				{ orderable: false, visible: true, targets: 4, width: 100 },
-				{ orderable: false, 	visible: true, targets: 5, width: 50 }
+				{ orderable: false, 	visible: true, targets: 5, width: 60 }
 			],
 			lengthMenu: [ 5, 10, 15, 20, 30, 40, 50 ],// 표시 건수 단위 설정
 			// 기본 표시 건수를 15건으로 설정
@@ -119,11 +121,30 @@
 							<td>${dto.boardNotice}</td>
 							<td>${dto.boardNum}</td>
 							<td class="${className}">
-								<a href="${contextPath}/user/board/goBoardInside?boardNum=${dto.boardNum}&cafeId=${cafeId}&boardMenuNum=${dto.boardMenuNum}">
-								${dto.boardTitle}</a>
+							<c:choose>
+					            <c:when test="${dto.boardMenuType == boardType.TOTAL_BOARD_NUM}">
+				               	<a class="boardTit" href="${contextPath}/user/board/goBoardInside?cafeId=${_cafeDTO.cafeId}&boardMenuNum=${dto.boardMenuNum}&boardNum=${dto.boardNum}"
+				               		title="${dto.boardTitle}">
+									${dto.boardTitle}</a>
+				               	</c:when>
+				               	
+				               	<c:when test="${dto.boardMenuType == boardType.GRADE_BOARD_NUM}">
+				             	<!-- 등업 게시글은 가져오지 않음 -->
+				               	</c:when>
+				               	
+				               	<c:when test="${dto.boardMenuType == boardType.SIMPLE_BOARD_NUM 
+				               	 	|| dto.boardMenuType == boardType.MEMO_BOARD_NUM 
+				               	 	|| dto.boardMenuType == boardType.ATTENDANCE_BOARD_NUM}">
+				               	<a class="boardTit" href="${contextPath}/user/board/goBoardList?cafeId=${_cafeDTO.cafeId}&boardMenuNum=${dto.boardMenuNum}&boardNum=${dto.boardNum}"
+				               		title="${dto.boardContent}">
+				               		${dto.boardContent}
+				               	</a>
+				               	</c:when>
+				               	<c:otherwise></c:otherwise>
+					        </c:choose>
 							</td>
 							<td>${dto.cafeUserNickname}</td>
-							<td>${dto.boardSaveDate}</td>
+							<td><fmt:formatDate value="${dto.boardSaveDate}" pattern="YYYY-MM-dd HH:mm"/></td>
 							<td>${dto.hit}</td>
 						</tr>
 					</c:forEach>

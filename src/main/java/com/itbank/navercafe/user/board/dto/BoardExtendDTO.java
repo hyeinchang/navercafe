@@ -4,9 +4,10 @@ import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.List;
 
+import com.itbank.navercafe.user.menu.dto.MenuDTO;
 import com.itbank.navercafe.user.reply.dto.ReplyDTO;
 
-public class BoardExtendDTO {
+public class BoardExtendDTO extends MenuDTO {
 	private int boardNum;
 	private String boardTitle;
 	private String boardContent;

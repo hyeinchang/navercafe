@@ -145,6 +145,7 @@ public class ReplyServiceImpl implements ReplyService{
 		try {
 			replyList = rm.getSearchReplyList(menuDTO);
 			
+			// 첨부파일 설정
 			for(ReplyDTO replyDTO : replyList) {
 				List<FileDTO> fileList = new ArrayList<>();
 				FileDTO fileDTO = new FileDTO();
@@ -163,4 +164,78 @@ public class ReplyServiceImpl implements ReplyService{
 		return replyList;
 	}
 
+	@Override
+	public List<ReplyDTO> getBoardReplyList(int boardNum) throws Exception {
+		List<ReplyDTO> replyList = null;
+		try {
+			replyList = rm.getBoardReplyList(boardNum);
+			
+			// 첨부파일 설정
+			for(ReplyDTO replyDTO : replyList) {
+				List<FileDTO> fileList = new ArrayList<>();
+				FileDTO fileDTO = new FileDTO();
+				
+				fileDTO.setReplyNum(replyDTO.getReplyNum());
+				fileList = fileService.getFileList(fileDTO);
+				
+				if(fileList != null) {
+					replyDTO.setFileList(fileList);
+				}
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return replyList;
+	}
+
+	@Override
+	public int deleteReplyList(int boardNum) throws Exception {
+		int result = 0;
+		try {
+			// 첨부파일 삭제
+			List<ReplyDTO> replyList = rm.getBoardReplyList(boardNum);
+			for(ReplyDTO replyDTO : replyList) {
+				FileDTO fileDTO = new FileDTO();
+				
+				fileDTO.setReplyNum(replyDTO.getReplyNum());
+				fileUtils.deleteFile(fileDTO);
+			}
+			
+			result = rm.deleteReplyList(boardNum);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public int deleteReply(ReplyDTO replyDTO) throws Exception {
+		int result = 0;
+		try {
+			int replyNum = replyDTO.getReplyNum();
+			// 첨부파일 삭제
+			FileDTO fileDTO = new FileDTO();
+			fileDTO.setReplyNum(replyNum);
+			fileUtils.deleteFile(fileDTO);
+			
+			// 정렬
+			rm.updateReplyStep_minus(replyDTO);
+			
+			result = rm.deleteReply(replyNum);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@Override
+	public int updateReply(ReplyDTO replyDTO) throws Exception {
+		int result = 0;
+		try {
+			result = rm.updateReply(replyDTO);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
 }

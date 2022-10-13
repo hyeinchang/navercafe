@@ -8,13 +8,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.itbank.navercafe.common.pagination.Pagination;
-import com.itbank.navercafe.user.board.dto.BoardDTO;
+import com.itbank.navercafe.user.board.dto.BoardExtendDTO;
 import com.itbank.navercafe.user.cafe.dto.CafeDTO;
 import com.itbank.navercafe.user.cafe.dto.CafeJoinQuestionDTO;
 import com.itbank.navercafe.user.cafe.dto.CafeMemberGradeDTO;
 import com.itbank.navercafe.user.cafe.mapper.CafeMapper;
 import com.itbank.navercafe.user.cafemember.dto.CafeMemberDTO;
-import com.itbank.navercafe.user.cafemember.mapper.CafeMemberMapper;
 import com.itbank.navercafe.user.cafemember.service.CafeMemberService;
 import com.itbank.navercafe.user.menu.dto.MenuDTO;
 import com.itbank.navercafe.user.menu.service.MenuService;
@@ -58,9 +57,9 @@ public class CafeServiceImpl implements CafeService {
 		List<CafeJoinQuestionDTO> questionList = null;
 		CafeMemberDTO loginUser = null;
 		
-		List<BoardDTO> mainBoardList;
-		List<BoardDTO> mainRecentList;
-		List<BoardDTO> mainRecentReplyList;
+		List<BoardExtendDTO> mainBoardList;
+		List<BoardExtendDTO> mainRecentList;
+		List<BoardExtendDTO> mainRecentReplyList;
 		
 		try {
 			String cafeId = cafeDTO.getCafeId();

@@ -4,7 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
-import com.itbank.navercafe.user.board.dto.BoardDTO;
+import com.itbank.navercafe.user.board.dto.BoardExtendDTO;
 import com.itbank.navercafe.user.cafemember.dto.CafeMemberDTO;
 import com.itbank.navercafe.user.menu.dto.MenuDTO;
 
@@ -34,9 +34,9 @@ public class CafeDTO {
 	private List<CafeJoinQuestionDTO> questionList;
 	private CafeMemberDTO loginUser;
 	
-	private List<BoardDTO> mainBoardList;
-	private List<BoardDTO> mainRecentList;
-	private List<BoardDTO> mainRecentReplyList;
+	private List<BoardExtendDTO> mainBoardList;
+	private List<BoardExtendDTO> mainRecentList;
+	private List<BoardExtendDTO> mainRecentReplyList;
 	
 	public String getCafeId() {
 		return cafeId;
@@ -141,7 +141,6 @@ public class CafeDTO {
 		this.loginId = loginId;
 	}
 	
-	
 	public int getBoardMenuNum() {
 		return boardMenuNum;
 	}
@@ -179,23 +178,22 @@ public class CafeDTO {
 		this.loginUser = loginUser;
 	}
 	
-	
-	public List<BoardDTO> getMainBoardList() {
+	public List<BoardExtendDTO> getMainBoardList() {
 		return mainBoardList;
 	}
-	public void setMainBoardList(List<BoardDTO> mainBoardList) {
+	public void setMainBoardList(List<BoardExtendDTO> mainBoardList) {
 		this.mainBoardList = mainBoardList;
 	}
-	public List<BoardDTO> getMainRecentList() {
+	public List<BoardExtendDTO> getMainRecentList() {
 		return mainRecentList;
 	}
-	public void setMainRecentList(List<BoardDTO> mainRecentList) {
+	public void setMainRecentList(List<BoardExtendDTO> mainRecentList) {
 		this.mainRecentList = mainRecentList;
 	}
-	public List<BoardDTO> getMainRecentReplyList() {
+	public List<BoardExtendDTO> getMainRecentReplyList() {
 		return mainRecentReplyList;
 	}
-	public void setMainRecentReplyList(List<BoardDTO> mainRecentReplyList) {
+	public void setMainRecentReplyList(List<BoardExtendDTO> mainRecentReplyList) {
 		this.mainRecentReplyList = mainRecentReplyList;
 	}
 }

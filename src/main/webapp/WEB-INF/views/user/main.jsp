@@ -44,25 +44,21 @@
              <ul>
              <c:forEach  var="mainBoard" items="${_cafeDTO.mainBoardList}">
                 <c:choose>
-	            <c:when test="${mainBoard.boardMenuNum == boardType.TOTAL_BOARD_NUM}">
+	            <c:when test="${mainBoard.boardMenuType == boardType.TOTAL_BOARD_NUM}">
                	<li>
 	               	<a href="${contextPath}/user/board/goBoardInside?cafeId=${_cafeDTO.cafeId}&boardMenuNum=${mainBoard.boardMenuNum}&boardNum=${mainBoard.boardNum}">
 	               	${mainBoard.boardTitle}
 	               	</a>
                	</li>
                	</c:when>
-               	<c:when test="${mainBoard.boardMenuNum == boardType.GRADE_BOARD_NUM}">
-               	<li>
-	               	<a href="${contextPath}/user/board/goBoardInside?cafeId=${_cafeDTO.cafeId}&boardMenuNum=${mainBoard.boardMenuNum}&boardNum=${mainBoard.boardNum}">
-	               	${mainBoard.boardTitle}
-	               	</a>
-               	</li>
+               	<c:when test="${mainBoard.boardMenuType == boardType.GRADE_BOARD_NUM}">
+             	<!-- 등업 게시글은 가져오지 않음 -->
                	</c:when>
-               	<c:when test="${mainBoard.boardMenuNum == boardType.SIMPLE_BOARD_NUM 
-               	 	|| mainBoard.boardMenuNum == boardType.MEMO_BOARD_NUM 
-               	 	|| mainBoard.boardMenuNum == boardType.ATTENDANCE_BOARD_NUM}">
+               	<c:when test="${mainBoard.boardMenuType == boardType.SIMPLE_BOARD_NUM 
+               	 	|| mainBoard.boardMenuType == boardType.MEMO_BOARD_NUM 
+               	 	|| mainBoard.boardMenuType == boardType.ATTENDANCE_BOARD_NUM}">
                	<li>
-	               	<a href="${contextPath}/user/board/goBoardInside?cafeId=${_cafeDTO.cafeId}&boardMenuNum=${mainBoard.boardMenuNum}&boardNum=${mainBoard.boardNum}">
+	               	<a href="${contextPath}/user/board/goBoardList?cafeId=${_cafeDTO.cafeId}&boardMenuNum=${mainBoard.boardMenuNum}&boardNum=${mainBoard.boardNum}">
 	               	${mainBoard.boardContent}
 	               	</a>
                	</li>
@@ -80,10 +76,28 @@
               </h4>
               <ul>            
                 <c:forEach var="mainRecent" items="${_cafeDTO.mainRecentList}"> 
-               <li>
-               	<a 
-               		href="${contextPath}/user/board/goBoardInside?cafeId=${_cafeDTO.cafeId}&boardMenuNum=${mainRecent.boardMenuNum}&boardNum=${mainRecent.boardNum}">
-               	${mainRecent.boardTitle}</a></li>
+	               	<c:choose>
+		            <c:when test="${mainRecent.boardMenuType == boardType.TOTAL_BOARD_NUM}">
+	               	<li>
+		               	<a href="${contextPath}/user/board/goBoardInside?cafeId=${_cafeDTO.cafeId}&boardMenuNum=${mainRecent.boardMenuNum}&boardNum=${mainRecent.boardNum}">
+		               	${mainRecent.boardTitle}
+		               	</a>
+	               	</li>
+	               	</c:when>
+	               	<c:when test="${mainRecent.boardMenuType == boardType.GRADE_BOARD_NUM}">
+	             	<!-- 등업 게시글은 가져오지 않음 -->
+	               	</c:when>
+	               	<c:when test="${mainRecent.boardMenuType == boardType.SIMPLE_BOARD_NUM 
+	               	 	|| mainRecent.boardMenuType == boardType.MEMO_BOARD_NUM 
+	               	 	|| mainRecent.boardMenuType == boardType.ATTENDANCE_BOARD_NUM}">
+	               	<li>
+		               	<a href="${contextPath}/user/board/goBoardList?cafeId=${_cafeDTO.cafeId}&boardMenuNum=${mainRecent.boardMenuNum}&boardNum=${mainRecent.boardNum}">
+		               	${mainRecent.boardContent}
+		               	</a>
+	               	</li>
+	               	</c:when>
+	               	<c:otherwise></c:otherwise>
+		            </c:choose>
                </c:forEach> 
               </ul>
            </div>
@@ -95,11 +109,28 @@
               </h4>
               <ul>            
                 <c:forEach var="mainRecentReply" items="${_cafeDTO.mainRecentReplyList}"> 
-               <li>
-	               	<a 
-	               		href="${contextPath}/user/board/goBoardInside?cafeId=${_cafeDTO.cafeId}&boardMenuNum=${mainRecentReply.boardMenuNum}&boardNum=${mainRecentReply.boardNum}">
-	               	${mainRecentReply.boardTitle}</a>
-               	</li>
+               		<c:choose>
+		            <c:when test="${mainRecentReply.boardMenuType == boardType.TOTAL_BOARD_NUM}">
+	               	<li>
+		               	<a href="${contextPath}/user/board/goBoardInside?cafeId=${_cafeDTO.cafeId}&boardMenuNum=${mainRecentReply.boardMenuNum}&boardNum=${mainRecentReply.boardNum}">
+		               	${mainRecentReply.boardTitle}
+		               	</a>
+	               	</li>
+	               	</c:when>
+	               	<c:when test="${mainRecentReply.boardMenuType == boardType.GRADE_BOARD_NUM}">
+	             	<!-- 등업 게시글은 가져오지 않음 -->
+	               	</c:when>
+	               	<c:when test="${mainRecentReply.boardMenuType == boardType.SIMPLE_BOARD_NUM 
+	               	 	|| mainRecentReply.boardMenuType == boardType.MEMO_BOARD_NUM 
+	               	 	|| mainRecentReply.boardMenuType == boardType.ATTENDANCE_BOARD_NUM}">
+	               	<li>
+		               	<a href="${contextPath}/user/board/goBoardList?cafeId=${_cafeDTO.cafeId}&boardMenuNum=${mainRecentReply.boardMenuNum}&boardNum=${mainRecentReply.boardNum}">
+		               	${mainRecentReply.boardContent}
+		               	</a>
+	               	</li>
+	               	</c:when>
+	               	<c:otherwise></c:otherwise>
+		            </c:choose>
                </c:forEach> 
               </ul>
            </div>

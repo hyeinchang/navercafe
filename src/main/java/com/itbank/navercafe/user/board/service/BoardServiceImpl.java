@@ -208,20 +208,21 @@ public class BoardServiceImpl implements BoardService{
 		try {
 			List<ReplyDTO> replyList = replyService.getSearchReplyList(menuDTO);
 			boardList = bm.getBoardList_paging(menuDTO);
-	
-			for(BoardExtendDTO beDTO : boardList) {
+			
+			// 리플 목록 설정
+			for(BoardExtendDTO extendDTO : boardList) {
 				List<ReplyDTO> boardReplyList = new ArrayList<>();
 				int replyCount = 0;
 				
 				for(ReplyDTO replyDTO : replyList) {
-					if(beDTO.getBoardNum() == replyDTO.getBoardNum()) {
+					if(extendDTO.getBoardNum() == replyDTO.getBoardNum()) {
 						boardReplyList.add(replyDTO);
 						replyCount++;
 					}
 				}
 				
-				beDTO.setReplyCount(replyCount);
-				beDTO.setReplyList(boardReplyList);
+				extendDTO.setReplyCount(replyCount);
+				extendDTO.setReplyList(boardReplyList);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -242,6 +243,52 @@ public class BoardServiceImpl implements BoardService{
 		}
 		
 		return totalCount;
+	}
+
+
+	@Override
+	public BoardExtendDTO getExtendBoard(int boardNum) throws Exception {
+		BoardExtendDTO extendDTO = null;
+		
+		try {
+			extendDTO = bm.getExtendBoard(boardNum);
+			List<ReplyDTO> replyList = replyService.getBoardReplyList(boardNum);
+			
+			// 리플 목록 설정
+			if(replyList != null) {
+				extendDTO.setReplyCount(replyList.size());
+				extendDTO.setReplyList(replyList);
+			}
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return extendDTO;
+	}
+
+
+	@Override
+	public int updateBoard(BoardDTO boardDTO) throws Exception {
+		int result = 0;
+		try {
+			result = bm.updateBoard(boardDTO);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+
+	@Override
+	public int deleteBoard_returnResult(int boardNum) throws Exception {
+		int result = 0;
+		try {
+			// 리플 목록 삭제
+			replyService.deleteReplyList(boardNum);
+			result = bm.deleteBoard_returnResult(boardNum);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 }

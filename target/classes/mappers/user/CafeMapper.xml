@@ -27,7 +27,7 @@
         <result column="CAFE_QUESTION_CONTENT" property="cafeQuestionContent"/>
     </resultMap>
     
-    <resultMap type="com.itbank.navercafe.user.board.dto.BoardDTO" id="cafeBoard">
+    <resultMap type="com.itbank.navercafe.user.board.dto.BoardExtendDTO" id="cafeBoard">
 		<id property="boardNum" column="board_num"/>
 		<result property="boardTitle" column="board_title"/>
 		<result property="boardContent" column="board_content"/>
@@ -40,6 +40,35 @@
 		<result property="boardMenuNum" column="board_menu_num"/>
 		<result property="hit" column="hit"/>
 		<result property="cafeId" column="cafe_id"/>
+		
+		<result property="cafeUserNickname" column="cafe_user_nickname"/>
+		<result property="cafeUserImageNum" column="cafe_user_image_num"/>
+		<result property="cafeUserGrade" column="cafe_user_grade"/>
+		<result property="cafeUserVisit" column="cafe_user_visit"/>
+		<result property="cafeUserVisit" column="cafe_user_write"/>
+		<result property="cafeUserReply" column="cafe_user_reply"/>
+		<result property="cafeUserVisitCheck" column="cafe_user_visiy_check"/>
+		<result property="cafeUserRegdate" column="cafe_user_regdate"/>
+		<result property="cafeUserApplydate" column="cafe_user_applydate"/>
+		<result property="cafeUserStatus" column="cafe_user_status"/>
+		
+		<result property="cutName" column="cut_name"/>
+		<result property="upCafeUserGrade" column="up_cafe_user_grade"/>
+		<result property="upCutName" column="up_cut_name"/>
+		
+		<result property="replyCount" column="reply_count"/>
+		
+        <result column="BOARD_MENU_NAME" property="boardMenuName"/>
+        <result column="BOARD_MENU_DESC" property="boardMenuDesc"/>
+       	<result column="BOARD_MENU_TYPE" property="boardMenuType"/>
+        <result column="BOARD_WRITE_AUTH" property="boardWriteAuth"/>
+        <result column="BOARD_REPLY_AUTH" property="boardReplyAuth"/>
+        <result column="BOARD_READ_AUTH" property="boardReadAuth"/>
+        <result column="BOARD_ORDER" property="boardOrder"/>
+        <result column="BOARD_LIKES_FLAG" property="boardLikesFlag"/>
+        <result column="BOARD_REPLY_FLAG" property="boardReplyFlag"/>
+        <result column="BOARD_PREFIXES_FLAG" property="boardPrefixesFlag"/>
+        <result column="BOARD_PUBLIC_FLAG" property="boardPublicFlag"/>
 	</resultMap>
     
 	<insert id="insertCafe">
@@ -209,9 +238,14 @@
 	<select id="selectMainBoardList" resultMap="cafeBoard">
 		<![CDATA[
 			SELECT * FROM
-				(SELECT ROW_NUMBER() OVER(ORDER BY  BOARD_NUM DESC) rn, board.* FROM
-					(SELECT BOARD_MENU_NUM, CAFE_ID FROM PROJECT_BOARD_TYPE 
-						WHERE BOARD_READ_AUTH = 0 AND BOARD_PUBLIC_FLAG = 'Y' AND CAFE_ID = #{cafeId}) boardMenu
+				(SELECT ROW_NUMBER() OVER(ORDER BY  BOARD_NUM DESC) rn, 
+					board.*, boardMenu.BOARD_MENU_TYPE
+				FROM
+					(SELECT * FROM PROJECT_BOARD_TYPE 
+						WHERE BOARD_READ_AUTH = 0 
+						AND BOARD_PUBLIC_FLAG = 'Y' 
+						AND NOT BOARD_MENU_NUM IN(4)
+						AND CAFE_ID = #{cafeId}) boardMenu
 					INNER JOIN
 					PROJECT_BOARD  board
 					ON boardMenu.BOARD_MENU_NUM = board.BOARD_MENU_NUM
@@ -223,9 +257,14 @@
 	<select id="selectMainRecentList" resultMap="cafeBoard">
 		<![CDATA[
 			SELECT * FROM
-				(SELECT ROW_NUMBER() OVER(ORDER BY  BOARD_NUM DESC) rn, board.* FROM
-					(SELECT BOARD_MENU_NUM, CAFE_ID FROM PROJECT_BOARD_TYPE 
-						WHERE BOARD_READ_AUTH = 0 AND BOARD_PUBLIC_FLAG = 'Y' AND CAFE_ID = #{cafeId}) boardMenu
+				(SELECT ROW_NUMBER() OVER(ORDER BY  BOARD_NUM DESC) rn, 
+					board.*, boardMenu.BOARD_MENU_TYPE 
+				FROM	
+					(SELECT * FROM PROJECT_BOARD_TYPE 
+						WHERE BOARD_READ_AUTH = 0 
+						AND BOARD_PUBLIC_FLAG = 'Y' 
+						AND NOT BOARD_MENU_NUM IN(4)
+						AND CAFE_ID = #{cafeId}) boardMenu
 					INNER JOIN
 					(SELECT * FROM PROJECT_BOARD WHERE TO_CHAR(SYSDATE, 'YYYMMDD') = TO_CHAR(BOARD_SAVEDATE, 'YYYMMDD')) board
 					ON boardMenu.BOARD_MENU_NUM = board.BOARD_MENU_NUM
@@ -237,9 +276,14 @@
 	<select id="selectMainRecentReplyList" resultMap="cafeBoard">
 		<![CDATA[
 			SELECT * FROM
-				(SELECT ROW_NUMBER() OVER(ORDER BY  board.BOARD_NUM DESC) rn, board.* FROM
-					(SELECT BOARD_MENU_NUM, CAFE_ID FROM PROJECT_BOARD_TYPE 
-						WHERE BOARD_READ_AUTH = 0 AND BOARD_PUBLIC_FLAG = 'Y' AND CAFE_ID = #{cafeId}) boardMenu
+				(SELECT ROW_NUMBER() OVER(ORDER BY  board.BOARD_NUM DESC) rn, 
+					board.*, boardMenu.BOARD_MENU_TYPE
+				FROM
+					(SELECT * FROM PROJECT_BOARD_TYPE 
+						WHERE BOARD_READ_AUTH = 0 
+						AND BOARD_PUBLIC_FLAG = 'Y' 
+						AND NOT BOARD_MENU_NUM IN(4)
+						AND CAFE_ID = #{cafeId}) boardMenu
 					INNER JOIN
 					(SELECT * FROM PROJECT_BOARD) board
 					ON boardMenu.BOARD_MENU_NUM = board.BOARD_MENU_NUM

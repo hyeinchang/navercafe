@@ -168,6 +168,7 @@
 	
 	function checkBoardType() {
 		var form = document.writeBoardForm;
+		var cafeId = form.cafeId;
 		var boardMenuNum = form.boardMenuNum;
 		var boardType = 0;
 		
@@ -180,7 +181,11 @@
 			}
 		}
 		
-		console.log(boardType);
+		switch(Number(boardType)) {
+		case 5 :	// 메모 게시판일 경우 이동
+			location.href = '${contextPath}/user/board/goBoardList?cafeId='+cafeId.value+'&boardMenuNum='+boardMenuNum.value;
+			break;
+		}
 	}
 	
 	function getData() {

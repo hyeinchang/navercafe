@@ -19,6 +19,9 @@ public interface BoardService {
 	// 페이징 & 검색 처리된 게시글
 	public List<BoardExtendDTO> getBoardList_paging(MenuDTO menuDTO) throws Exception;
 	public int getBoardTotalCount(MenuDTO menuDTO) throws Exception;
+	public BoardExtendDTO getExtendBoard(int boardNum) throws Exception;
+	public int updateBoard(BoardDTO boardDTO) throws Exception;
+	public int deleteBoard_returnResult(int boardNum) throws Exception;
 	
 	//조회수
 	public void hit(int boardNum,int num);

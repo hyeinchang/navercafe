@@ -25,10 +25,21 @@ public interface ReplyMapper {
 	// 검색된 답글 리스트를 가져옴
 	public List<ReplyDTO> getSearchReplyList(MenuDTO menuDTO) throws Exception;
 	
+	// board 1개에 해당하는 답글 리스트를 가져옴
+	public List<ReplyDTO> getBoardReplyList(int boardNum) throws Exception;
+	
 	public int insertReply(ReplyDTO replyDTO) throws Exception;
 	
 	public int getMaxStep(ReplyDTO replyDTO) throws Exception;
 	
 	public int updateReplyStep(ReplyDTO replyDTO) throws Exception;
+	
+	public int deleteReplyList(int boardNum) throws Exception;
+	
+	public int deleteReply(int replyNum) throws Exception;
+	
+	public int updateReply(ReplyDTO replyDTO) throws Exception;
+	
+	public int updateReplyStep_minus(ReplyDTO replyDTO) throws Exception;
 }
 

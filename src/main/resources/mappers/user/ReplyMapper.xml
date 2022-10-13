@@ -59,7 +59,7 @@
 		<![CDATA[
 		    SELECT REPLY_DATA.*
 			FROM
-			    (SELECT BOARD.*, CAFE_MEMBER.CAFE_USER_NICKNAME, CAFE_MEMBER.CAFE_USER_IMAGE_NUM, CAFE_MEMBER.CAFE_USER_GRADE
+			    (SELECT BOARD.BOARD_NUM
 			    FROM
 			        (SELECT CAFE_ID, BOARD_MENU_NUM FROM PROJECT_BOARD_TYPE
 			        WHERE CAFE_ID = #{cafeId}
@@ -96,6 +96,30 @@
 		]]>		
 	</select>
 	
+	<select id="getBoardReplyList" resultMap="project_reply">
+		<![CDATA[
+		    SELECT REPLY_DATA.*
+			FROM
+			    (SELECT BOARD_NUM
+			    FROM
+			        (SELECT BOARD_NUM FROM PROJECT_BOARD
+			        WHERE BOARD_NUM = #{boardNum}
+			        ) BOARD
+			    ) BOARD_DATA
+			INNER JOIN
+			    (SELECT REPLY.*, REPLY_MEMBER.CAFE_USER_NICKNAME, REPLY_MEMBER.CAFE_USER_IMAGE_NUM, REPLY_MEMBER.CAFE_USER_GRADE FROM
+			        (SELECT * FROM PROJECT_REPLY
+			        ) REPLY
+			        INNER JOIN
+			        (SELECT * FROM PROJECT_CAFE_MEMBER
+			        ) REPLY_MEMBER
+			    ON REPLY.USER_ID = REPLY_MEMBER.USER_ID
+			    ) REPLY_DATA
+			ON BOARD_DATA.BOARD_NUM = REPLY_DATA.BOARD_NUM
+			ORDER BY BOARD_DATA.BOARD_NUM DESC, REPLY_GROUP, REPLY_STEP, REPLY_NUM
+		]]>		
+	</select>
+	
 	<insert id="insertReply">
 		<![CDATA[
 			INSERT INTO project_reply
@@ -116,6 +140,34 @@
 			UPDATE PROJECT_REPLY SET
 			REPLY_STEP = REPLY_STEP + 1
 			WHERE REPLY_GROUP = #{replyGroup} AND REPLY_STEP >= #{replyStep}
+		]]>
+	</update>
+	
+	<delete id="deleteReplyList">
+		<![CDATA[
+			DELETE FROM PROJECT_REPLY WHERE BOARD_NUM = #{boardNum}
+		]]>
+	</delete>
+	
+	<delete id="deleteReply">
+		<![CDATA[
+			DELETE FROM PROJECT_REPLY WHERE REPLY_NUM = #{replyNum}
+		]]>
+	</delete>
+
+	<update id="updateReply">
+		<![CDATA[
+			UPDATE PROJECT_REPLY SET
+			REPLY_CONTENT = #{replyContent}
+			WHERE REPLY_NUM = #{replyNum}
+		]]>
+	</update>
+	
+	<update id="updateReplyStep_minus">
+		<![CDATA[
+			UPDATE PROJECT_REPLY SET
+			REPLY_STEP = REPLY_STEP - 1
+			WHERE REPLY_GROUP = #{replyGroup} AND REPLY_STEP > #{replyStep}
 		]]>
 	</update>
 </mapper>

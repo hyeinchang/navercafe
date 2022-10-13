@@ -23,7 +23,7 @@ public class CheckLoginInterceptor extends HandlerInterceptorAdapter{
 			String xrw = request.getHeader("X-Requested-With");
 	
 			if("XMLHttpRequest".equals(xrw)) {
-				//return true;
+				return true;
 			}
 			
 			HttpSession session = request.getSession();

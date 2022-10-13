@@ -3,23 +3,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
 
-<style>
-.indentSpan {color: #2f8cff;}
-.select-div {vertical-align:top;cursor: pointer;}
-.option-div {cursor: pointer; line-height:30px;padding: 0 12px;color: #555;}
-.option-div:hover {background:#e2faea;color:#03c75a;border-radius: 4px;}
-.option-div a {color: #555;}
-.option-div a:hover {background:#e2faea; color:#03c75a;text-decoration:underline;}
-.select-div::after {content: "";display: inline-block;margin-left: 10px; background-position: -229px -185px;width: 12px;height: 5px;}
-.select-modal {position:absolute;background:#fff;text-align: left;display:block;z-index:100;display:none;color: #555;background-color: #fff; border: 1px solid #ccc;border-radius: 4px;-webkit-box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%); box-shadow: inset 0 1px 1px rgb(0 0 0 / 8%);}
-.select-modal span.wave {vertical-align:middle;}
-.select-modal label {margin:0 5px 0 0;vertical-align:middle;font-weight:normal;cursor:pointer;}
-.select-modal input {width: 95px;font-size: 13px;height: auto;padding: 5px 10px; margin:0;}
-.select-modal .button {vertical-align:middle; margin:0 0 0 5px}
-#searchConditionOption{margin-left: -13px;margin-top: 5px;width: 122px;}
-#searchDateOption{margin-top: 5px;margin-left: -13px;}
-</style>
-
 <script>
 $(function() {
 	$('.datepicker').datepicker({
@@ -67,6 +50,9 @@ $(function() {
 		      	
 		      	<!-- 메모 작성글들   -->
 		      	<div class="memo-list-area">
+		      	<c:if test="${boardList eq null || boardList.size() == 0}">
+		      		<p>등록된 글이 없습니다.</p>
+		      	</c:if>
 		        <c:forEach var="board" items="${boardList}">
 		         	<div class="memo-board">
 			        	<header class="page-header blog-title">
@@ -90,7 +76,9 @@ $(function() {
 			              			</c:if>
 								</div>
 								<div class="memo-action">
+									<c:if test="${loginId ne null && _cafeDTO.isCafeMember eq 'true' && _cafeDTO.loginUser.userId eq board.userId}">
 									<a href="javascript:modifyBoard(${board.boardNum})">수정</a> | <a href="javascript:deleteBoard(${board.boardNum})">삭제</a>
+									</c:if>
 								</div>
 								<div class="memo-date"><fmt:formatDate value="${board.boardSaveDate}" pattern="YYYY-MM-dd hh:mm"/></div>
 			           		</div>
@@ -104,7 +92,7 @@ $(function() {
 			          
 			          	<!-- 댓글 클릭시 생성되는 div  -->
 			          	<div id="replyArea_${board.boardNum}" class="reply-list-area" style="display:none;">
-			          	<!--  	근데 메모는 답글들 먼저 보여주고. 답글view		 -->
+			          	<!--  	근데 메모는 댓글들 먼저 보여주고. 댓글view		 -->
 			          		<c:if test="${board.replyList ne null && board.replyList.size() > 0}">
 			          		<article class="comment-content" style="color:black;">
 			          			<ul>
@@ -140,18 +128,73 @@ $(function() {
 											<small class="comment-meta"><fmt:formatDate value="${reply.replySaveDate}" pattern="YYYY.MM.dd. HH:mm"/></small>
 										</span>
 										<span class="reReply" onclick="showReReplyArea('${board.boardNum}_${reply.replyNum}')">
-											<img src="${contextPath}/resources/img/bu_arr.png"> 답글
+											<img src="${contextPath}/resources/img/bu_arr.png"> 댓글
 										</span>
 										<span class="reply-action">
-											<a href="#">수정</a> | <a href="#">삭제</a>
+											<c:if test="${loginId ne null && _cafeDTO.isCafeMember eq 'true' && _cafeDTO.loginUser.userId eq reply.userId}">
+											<a href="javascript:showReplyModifyForm(${reply.replyNum})">수정</a> | <a href="javascript:deleteReply(${reply.replyNum})">삭제</a>
+											</c:if>
 										</span>
-					                  	<div class="reply-content">
+					                  	<div class="reply-content" id="reply-content_${reply.replyNum}">
 					                  		<div>${reply.replyContent}</div>
 					                  		<c:forEach var="replyFile" items="${reply.fileList}">
 					                  		<img alt="${replyFile.fileOrgName}" src="${contextPath}/file/download?replyNum=${replyFile.replyNum}" style="max-width:70%;">
 					                  		</c:forEach>
 					                  	</div>
-				                  		<!-- 답글의 답글 입력 -->
+					                  	<!-- 댓글 수정 입력 -->
+					                  	<form name="replyModifyForm" id="replyModifyForm_${reply.replyNum}" class="row replyModifyForm" method="post" 
+					                  		enctype="multipart/form-data" style="display:none;">
+									  		<input type="hidden" name="cafeId" value="${_cafeDTO.cafeId}">
+									  		<input type="hidden" name="userId" value="${_cafeDTO.loginUser.userId}">
+									  		<input type="hidden" name="boardMenuNum" value="${_cafeDTO.menuDTO.boardMenuNum}">
+									  		<input type="hidden" name="boardNum" value="${reply.boardNum}">
+									  		<input type="hidden" name="replyNum" value="${reply.replyNum}">
+									  		<input type="hidden" name="replyGroup" value="${reply.replyGroup}">
+									  		<input type="hidden" name="replyParent" value="${reply.replyNum}">
+									  		<input type="hidden" name="replyStep" value="${reply.replyStep}">
+									  		<input type="hidden" name="replyIndent" value="${reply.replyIndent}">
+									  		<input type="hidden" name="attachFile" value="${reply.fileList ne null && reply.fileList.size() > 0 ? 'true' : 'false'}">
+									  		<input type="hidden" name="deleteReplyImage" value="N">
+								  		
+								    		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
+								    			<div class="reply-input-area">
+									    			<div class="reply-input">
+									    				<textarea name="replyContent" rows="2" placeholder="내용을 입력해주세요.">${reply.replyContent}</textarea>
+									    				<div id="previewReplyArea_modify_${reply.replyNum}" class="previewReplyArea" 
+									    					${reply.fileList ne null && reply.fileList.size() > 0 ? '' : ' style="display:none"'}>
+									    					<c:choose>
+									    					<c:when test="${reply.fileList ne null && reply.fileList.size() > 0}">
+									    					<c:forEach var="replyFile" items="${reply.fileList}">
+									                  		<img id="previewReplyImg_modify_${reply.replyNum}" 
+									                  			alt="${replyFile.fileOrgName}" src="${contextPath}/file/download?replyNum=${replyFile.replyNum}"
+									                  		 	style="max-width:70%;">
+									                  		<a href="javascript:deleteReplyImage('modify_${reply.replyNum}')">삭제 X</a> 	
+									                  		</c:forEach>
+									    					</c:when>
+									    					<c:otherwise>
+									    					<img id="previewReplyImg_modify_${reply.replyNum}" style="max-width:70%;">
+									    					<a href="javascript:deleteReplyImage('modify_${reply.replyNum}')">삭제 X</a>
+									    					</c:otherwise>
+									    					</c:choose>
+									    				</div>
+									    			</div>
+								    			</div>
+									      	
+												<div class="post-meta-area">
+											  		<div class=reply-file-attach>
+											  			<img src="${contextPath}/resources/img/camera-icon.png" title="댓글 이미지 첨부" alt="댓글 이미지 첨부"
+											  				class="imageAttach" onclick="this.nextElementSibling.click()">
+											  			<input type="file" id="replyImage_modify_${reply.replyNum}" name="replyImage" class="replyImage" 
+											  				onchange="previewReplyImage('modify_${reply.replyNum}')">
+											  		</div>
+											  		<div class="reply-file-btns">
+											  			<button type="button" onclick="hideRepluModifyForm('${reply.replyNum}')" style="background:#ccc;">취소</button>
+											  			<button type="button" onclick="modifyReply('${reply.replyNum}')">수정</button>
+											  		</div>
+										  		</div>
+								  			</div>
+								  		</form>
+				                  		<!-- 댓글의 댓글 입력 -->
 					                  	<form name="reReplyForm" id="replyForm_${board.boardNum}_${reply.replyNum}" class="row reReplyForm" method="post" 
 					                  		enctype="multipart/form-data" style="display:none;">
 									  		<input type="hidden" name="cafeId" value="${_cafeDTO.cafeId}">
@@ -166,7 +209,7 @@ $(function() {
 								    		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 								    			<div class="reply-input-area">
 									    			<div class="reply-input">
-									    				<textarea name="replyContent" rows="2" placeholder="└> ${reply.cafeUserNickname}님에게 답글쓰기"></textarea>
+									    				<textarea name="replyContent" rows="2" placeholder="└> ${reply.cafeUserNickname}님에게 댓글쓰기"></textarea>
 									    				<div id="previewReplyArea_${board.boardNum}_${reply.replyNum}" class="previewReplyArea" style="display:none;">
 									    					<img id="previewReplyImg_${board.boardNum}_${reply.replyNum}" style="max-width:70%;">
 									    					<a href="javascript:deleteReplyImage('${board.boardNum}_${reply.replyNum}')">삭제 X</a>
@@ -176,7 +219,7 @@ $(function() {
 									      	
 												<div class="post-meta-area">
 											  		<div class=reply-file-attach>
-											  			<img src="${contextPath}/resources/img/camera-icon.png" title="답글 이미지 첨부" alt="답글 이미지 첨부"
+											  			<img src="${contextPath}/resources/img/camera-icon.png" title="댓글 이미지 첨부" alt="댓글 이미지 첨부"
 											  				class="imageAttach" onclick="this.nextElementSibling.click()">
 											  			<input type="file" id="replyImage_${board.boardNum}_${reply.replyNum}" name="replyImage" class="replyImage" 
 											  				onchange="previewReplyImage('${board.boardNum}_${reply.replyNum}')">
@@ -192,7 +235,7 @@ $(function() {
 			          			</ul>
 	                    	</article>
 	                    	</c:if>
-		                    <!-- 답글 입력 -->
+		                    <!-- 댓글 입력 -->
 	                    	<form name="replyForm" id="replyForm_${board.boardNum}" class="row" method="post" enctype="multipart/form-data">
 						  		<input type="hidden" name="cafeId" value="${_cafeDTO.cafeId}">
 						  		<input type="hidden" name="userId" value="${_cafeDTO.loginUser.userId}">
@@ -206,7 +249,7 @@ $(function() {
 					    		<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 						    		<div class="reply-input-area">
 							    		<div class="reply-input">
-							    			<textarea name="replyContent" rows="2" placeholder="답글을 남겨보세요"></textarea>
+							    			<textarea name="replyContent" rows="2" placeholder="댓글을 남겨보세요"></textarea>
 							    			<div id="previewReplyArea_${board.boardNum}" class="previewReplyArea" style="display:none;">
 							    				<img id="previewReplyImg_${board.boardNum}" style="max-width:70%;">
 							    				<a href="javascript:deleteReplyImage(${board.boardNum})">삭제 X</a>
@@ -217,7 +260,7 @@ $(function() {
 						      	
 									<div class="post-meta-area">
 									  	<div class=reply-file-attach>
-									  		<img src="${contextPath}/resources/img/camera-icon.png" title="답글 이미지 첨부" alt="답글 이미지 첨부"
+									  		<img src="${contextPath}/resources/img/camera-icon.png" title="댓글 이미지 첨부" alt="댓글 이미지 첨부"
 									  			class="imageAttach" onclick="this.nextElementSibling.click()">
 									  		<input type="file" id="replyImage_${board.boardNum}" name="replyImage" class="replyImage" onchange="previewReplyImage(${board.boardNum})">
 									  	</div>
@@ -248,15 +291,16 @@ $(function() {
 					<form name="boardListForm" action="${contextPath}/user/board/goBoardList">
 						<input type="hidden" name="cafeId" value="${menuDTO.cafeId}">
 						<input type="hidden" name="boardMenuNum" value="${menuDTO.boardMenuNum}">
+						<input type="hidden" name="boardNum" value="0">
 						<input type="hidden" name="page" value="${menuDTO.page}">
 						
 						<div class="select-div form-control-inline" onclick="showOption('searchDateOption')">
 							<c:set var="dateText" value="전체기간"/>
 							<c:choose>
-								<c:when test="${menuDTO.searchCondition eq ''}">
+								<c:when test="${menuDTO.searchDate eq ''}">
 									<c:set var="dateText" value="전체기간"/>
 								</c:when>
-								<c:when test="${menuDTO.searchCondition eq 'inputDate'}">
+								<c:when test="${menuDTO.searchDate eq 'inputDate'}">
 									<c:set var="dateText" value="기간입력"/>
 								</c:when>
 							</c:choose>
@@ -367,6 +411,16 @@ $(function() {
 	// 검색
 	function searchBoardList(page) {
 		var form = boardListForm;
+		
+		clearDate();
+		form.action = '${contextPath}/user/board/goBoardList';
+		form.page.value = page;
+		form.submit();
+	}
+	
+	// 기간 입력으로 검색하지 않을 경우 기간 삭제
+	function clearDate() {
+		var form = boardListForm;
 		var searchDate = document.getElementById('searchDate');
 		
 		if(searchDate.value != 'inputDate') {
@@ -375,9 +429,6 @@ $(function() {
 			startSearchDate.parentElement.removeChild(startSearchDate);
 			endSearchDate.parentElement.removeChild(endSearchDate);
 		}
-		
-		form.page.value = page;
-		form.submit();
 	}
 	
 	// 글 작성
@@ -401,13 +452,8 @@ $(function() {
 		
 		xhr.onreadystatechange = function() {
 			if(xhr.readyState == 4 && xhr.status == 200) {
-	 			var message = '';
-	 			
 	 			if(Number(xhr.response) == 1) {
-	 				var boardListForm = document.boardListForm;
-	 				
-	 				boardListForm.action = '${contextPath}/user/board/goBoardList';
-	 				boardListForm.submit();
+	 				searchBoardList(1);
 	 			} else {
 	 				alert('저장에 실패했습니다.');
 	 			}
@@ -417,7 +463,7 @@ $(function() {
 		xhr.send(JSON.stringify(data));
 	}
 	
-	// 답글 작성
+	// 댓글 작성
 	function writeReply(boardNum) {
 		var form = document.getElementById('replyForm_' + boardNum);
 		var xhr = new XMLHttpRequest();
@@ -434,13 +480,8 @@ $(function() {
 		
 		xhr.onreadystatechange = function() {
 			if(xhr.readyState == 4 && xhr.status == 200) {
-	 			var message = '';
-	 			
 	 			if(Number(xhr.response) == 1) {
-					var boardListForm = document.boardListForm;
-	 				
-	 				boardListForm.action = '${contextPath}/user/board/goBoardList';
-	 				boardListForm.submit();
+	 				searchBoardList(1);
 	 			} else {
 	 				alert('저장에 실패했습니다.');
 	 			}
@@ -465,7 +506,8 @@ $(function() {
 		return data;
 	}
 	
-	// 답글 이미지 미리보기
+	// 댓글 이미지 미리보기 
+	/** (댓글 -> boardNum, 대댓글 -> boardNum_replyNum, 댓글수정 -> modify_replyNum) */
 	function previewReplyImage(boardNum) {
 		var fileInput = event.target;
 		var file = fileInput.files[0];
@@ -487,9 +529,16 @@ $(function() {
 			previewReplyImg.src = fileReader.result;
 			previewReplyArea.style.display = '';
 		}
+		
+		if(boardNum.indexOf('modify') > -1) {
+			var replyNum = boardNum.split('_')[1];
+			var modifyForm = document.getElementById('replyModifyForm_' + replyNum);
+			modifyForm.deleteReplyImage.value= 'N';	
+		}
 	}
 	
-	// 답글 이미지 삭제
+	// 댓글 이미지 삭제
+	/** (댓글 -> boardNum, 대댓글 -> boardNum_replyNum, 댓글수정 -> modify_replyNum) */
 	function deleteReplyImage(boardNum) {
 		var replyImage = document.getElementById('replyImage_' + boardNum);
 		var previewReplyArea = document.getElementById('previewReplyArea_' + boardNum);
@@ -499,9 +548,15 @@ $(function() {
 		replyImage.value = '';
 		previewReplyImg.src = '';
 		previewReplyArea.style.display = 'none';
+		
+		if(boardNum.indexOf('modify') > -1) {
+			var replyNum = boardNum.split('_')[1];
+			var modifyForm = document.getElementById('replyModifyForm_' + replyNum);
+			modifyForm.deleteReplyImage.value = 'Y';	
+		}
 	}
 	
-	// 답글 - 답글 영역 생성
+	// 댓글 - 댓글 영역 생성
 	function showReReplyArea(boardNum_replyNum) {
 		var forms = document.getElementsByClassName('reReplyForm');
 		var form = document.getElementById('replyForm_' + boardNum_replyNum);
@@ -526,11 +581,116 @@ $(function() {
 	
 	// 게시글 수정
 	function modifyBoard(boardNum) {
+		var form = document.boardListForm;
 		
+		clearDate();
+		form.action = '${contextPath}/user/board/modifyForm';
+		form.boardNum.value = boardNum;
+		form.submit();
 	}
 	
 	// 게시글 삭제
 	function deleteBoard(boardNum) {
+		if(confirm('게시글을 삭제하시겠습니까?')) {
+			var xhr = new XMLHttpRequest();
+			var data = {'boardNum' : boardNum};
+			
+			xhr.open('post', '${contextPath}/user/board/deleteBoard', false);
+			xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+			xhr.setRequestHeader('Content-Type', 'application/json');
+			
+			xhr.onreadystatechange = function() {
+				if(xhr.readyState == 4 && xhr.status == 200) {
+		 			if(Number(xhr.response) == 1) {
+		 				searchBoardList(1);
+		 			} else {
+		 				alert('삭제에 실패했습니다.');
+		 			}
+				}
+			}
+			
+			xhr.send(JSON.stringify(data));
+		}
+	}
+	
+	// 댓글 수정 form 보여줌
+	function showReplyModifyForm(replyNum) {
+		var replyModifyForm = document.getElementsByClassName('replyModifyForm');
+		var replyContent = document.getElementsByClassName('reply-content');
 		
+		for(var i=0;i<replyModifyForm.length;i++) {
+			var form = replyModifyForm[i];
+			var content = replyContent[i];
+			
+			if(form.id == 'replyModifyForm_' + replyNum) {
+				form.style.display = 'block';
+				content.style.display = 'none';
+			} else {
+				form.style.display = 'none';
+				content.style.display = 'block';
+			}
+		}
+	}
+	
+	// 댓글 수정 form 숨김
+	function hideRepluModifyForm(replyNum) {
+		var replyModifyForm = document.getElementById('replyModifyForm_' + replyNum);
+		var replyContent = document.getElementById('reply-content_' + replyNum);
+	
+		replyModifyForm.style.display = 'none';
+		replyContent.style.display = 'block';
+	}
+	
+	// 댓글 수정
+	function modifyReply(replyNum) {
+		var form = document.getElementById('replyModifyForm_' + replyNum);
+		var xhr = new XMLHttpRequest();
+		var replyContent = form.replyContent;
+		
+		if(replyContent.value == '') {
+			alert('내용을 입력해주세요.');
+			replyContent.focus();
+			return;
+		}
+		
+		xhr.open('post', '${contextPath}/user/reply/modifyReply', false);
+		xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+		
+		xhr.onreadystatechange = function() {
+			if(xhr.readyState == 4 && xhr.status == 200) {
+	 			if(Number(xhr.response) == 1) {
+	 				searchBoardList(1);
+	 			} else {
+	 				alert('저장에 실패했습니다.');
+	 			}
+			}
+		}
+		
+		xhr.send(new FormData(form));
+	}
+	
+	// 댓글 삭제
+	function deleteReply(replyNum) {
+		if(confirm('댓글을 삭제하시겠습니까?')) {
+			var form = document.getElementById('replyModifyForm_' + replyNum);
+			var xhr = new XMLHttpRequest();
+			var data = getData(form);
+			
+			xhr.open('post', '${contextPath}/user/reply/deleteReply', false);
+			xhr.setRequestHeader('X-Requested-With', 'XMLHttpRequest');
+			xhr.setRequestHeader('Content-Type', 'application/json');
+			
+			xhr.onreadystatechange = function() {
+				if(xhr.readyState == 4 && xhr.status == 200) {
+		 			if(Number(xhr.response) == 1) {
+		 				searchBoardList(1);
+		 			} else {
+		 				alert('삭제에 실패했습니다.');
+		 			}
+				}
+			}
+			
+			xhr.send(JSON.stringify(data));
+		}
 	}
 </script>      
