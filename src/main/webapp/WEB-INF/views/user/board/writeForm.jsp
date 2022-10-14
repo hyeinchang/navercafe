@@ -182,9 +182,12 @@
 		}
 		
 		switch(Number(boardType)) {
-		case 5 :	// 메모 게시판일 경우 이동
+		case 5 :	// 메모게시판일 경우 이동
 			location.href = '${contextPath}/user/board/goBoardList?cafeId='+cafeId.value+'&boardMenuNum='+boardMenuNum.value;
 			break;
+		case 6 :	// 출석게시판일 경우 이동
+			location.href = '${contextPath}/user/board/goBoardList?cafeId='+cafeId.value+'&boardMenuNum='+boardMenuNum.value;
+			break;	
 		}
 	}
 	

@@ -67,7 +67,11 @@ public class CafeServiceImpl implements CafeService {
 			int boardMenuNum = cafeDTO.getBoardMenuNum();
 			
 			cafeDTO = cafeMapper.selectCafe(cafeDTO);
-			menuDTO = menuService.selectBoardMenu(boardMenuNum);
+			
+			if(boardMenuNum > 0) {
+				menuDTO = menuService.selectBoardMenu(boardMenuNum);
+			}
+			
 			cafeMenuList = menuService.selectBoardMenuList(cafeId);
 			countMap = this.getCafeCount(cafeId);
 			questionList = this.selectQuestionList(cafeId);
