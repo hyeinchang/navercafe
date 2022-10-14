@@ -3,6 +3,7 @@
 
 <jsp:useBean id="boardType" class="com.itbank.navercafe.common.menu.BoardMenuType"/>
 <c:set var="contextPath" value="${pageContext.request.contextPath}"/>
+<c:set var="address" value="${pageContext.request.scheme}://${pageContext.request.serverName}:${pageContext.request.serverPort}"/>
 
 <c:if test="${message ne null}">
 <script type="text/javascript">
@@ -20,7 +21,7 @@
 			  혼자보단 둘이, 둘보단 셋이 더 재미있을 거예요.<br><br>함께 재미있는 이야기 나누며 행복한 카페를 만들어가요!<br><br>
 			<c:if test="${_cafeDTO.isCafeManager eq 'true'}">
 			<a id="cafeGateModifiableBtn"  target="_parent" class="link_default" 
-				href="http://localhost:9090/navercafe/admin/deco/frontdoor?cafeId=${_cafeDTO.cafeId}"
+				href="${address}${contextPath}/admin/deco/frontdoor?cafeId=${_cafeDTO.cafeId}"
 				style="visibility: visible; cursor: pointer;">카페 대문 꾸미기</a>
 			</c:if>
 		   </div>
