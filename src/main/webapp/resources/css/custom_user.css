@@ -44,7 +44,7 @@ table.cstmTbl1 th, table.cstmTbl1 td:nth-child(2) > div {width:452px;}
 .ico_vst,
 .ico_wrt,
 .ico,
-.ico_cmt { isplay: inline-block;background-image: url(../img/sp_icon_white_72ca546e.svg); background-repeat: no-repeat; vertical-align: middle; margin-right: 5px;}
+.ico_cmt { display: inline-block;background-image: url(../img/sp_icon_white_72ca546e.svg); background-repeat: no-repeat; vertical-align: middle; margin-right: 5px;}
 .ico_stat { background-position: -119px -61px; width: 10px; height: 10px;}
 .lab_thmb {display:block; position: absolute;margin: 40px; font-size: 0;  line-height: 0; background-position: -172px -226px;width: 16px; height: 16px;cursor: pointer;}
 .ico_vst { background-position: -119px -4px; width: 10px; height: 12px;}
