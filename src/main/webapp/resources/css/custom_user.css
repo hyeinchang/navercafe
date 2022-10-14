@@ -340,3 +340,7 @@ img.profileImg-small {border:none !important;border-radius:100%;width:24px;heigh
 .article-attendance .list_attendance .rank2 {float: left; background-position: -103px -32px; width: 48px; height: 20px; margin: 2px 6px 0 0; font-size: 0; line-height: 0;color: transparent;}
 .article-attendance .list_attendance .rank1 { float: left; background-position: -103px -4px; width: 48px; height: 20px; margin: 2px 6px 0 0; font-size: 0;line-height: 0; color: transparent;}
 .article-attendance li {list-style:none;}
+
+
+.pagination > .active > a, .pagination > .active > span, .pagination > .active > a:hover, .pagination > li > a, .pagination > li > span,
+.pagination > .active > span:hover, .pagination > .active > a:focus, .pagination > .active > span:focus {outline: none;}

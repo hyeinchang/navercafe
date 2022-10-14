@@ -208,8 +208,8 @@
           	<li>등록된 게시판이 없습니다.</li>
           	</c:when>
           	<c:otherwise>
-          	<li>
-            	<a href="${contextPath}/user/board/goBoardList?cafeId=${_cafeDTO.cafeId}">전체글보기</a>
+          	<li${board != null && board eq 'total' ? ' class="active"' : ''}>
+            	<a id="totalBoard" href="${contextPath}/user/board/goBoardList?cafeId=${_cafeDTO.cafeId}&board=total">전체글보기</a>
             	<span class="text-primary">${_cafeDTO.countMap.totalBoardCount}</span>
             </li>
           	</c:otherwise>	
@@ -225,7 +225,9 @@
             <c:forEach var="cafeMenu" items="${_cafeDTO.cafeMenuList}">
             <!-- 공개 게시판이이거나 카페 회원일 때 공개 -->
             <c:if test="${cafeMenu.boardPublicFlag eq 'Y' || _cafeDTO.isCafeMember eq 'true'}">
-              <li><a href="${contextPath}/user/board/goBoardList?cafeId=${_cafeDTO.cafeId}&boardMenuNum=${cafeMenu.boardMenuNum}">${cafeMenu.boardMenuName}</a></li>
+              <li${_cafeDTO.menuDTO.boardMenuNum != null && _cafeDTO.menuDTO.boardMenuNum == cafeMenu.boardMenuNum ? 
+              	' class="active"' : ''}>
+              	<a href="${contextPath}/user/board/goBoardList?cafeId=${_cafeDTO.cafeId}&boardMenuNum=${cafeMenu.boardMenuNum}">${cafeMenu.boardMenuName}</a></li>
             </c:if>
             </c:forEach>
             <c:if test="${_cafeDTO.cafeMenuList eq null || _cafeDTO.cafeMenuList.size() == 0}">

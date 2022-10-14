@@ -65,7 +65,7 @@ public class CafeServiceImpl implements CafeService {
 			String cafeId = cafeDTO.getCafeId();
 			String loginId = cafeDTO.getLoginId();
 			int boardMenuNum = cafeDTO.getBoardMenuNum();
-			
+
 			cafeDTO = cafeMapper.selectCafe(cafeDTO);
 			
 			if(boardMenuNum > 0) {

@@ -156,9 +156,15 @@ document.body.onload = function() {
 
 function setTitle() {
 	var titleList = document.querySelectorAll('.component1 > ul > li > a');
+	var titleList2 = document.querySelectorAll('.component2 > ul > li > a');
 	
 	for(var i=0; i<titleList.length; i++){
 		var title = titleList[i];
+		title.title = title.innerText;
+	}
+	
+	for(var i=0; i<titleList2.length; i++){
+		var title = titleList2[i];
 		title.title = title.innerText;
 	}
 }

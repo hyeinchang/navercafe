@@ -163,3 +163,5 @@
 	.transparent-wrap {
 		background-color: rgba(42, 205, 201, 0.6);
 	}
+	
+	.categories .active > a {color: #c0392b !important;}
