@@ -98,7 +98,7 @@
 	    		<otherwise>
 	    			AND BOARD_READ_AUTH = 0 
 					AND BOARD_PUBLIC_FLAG = 'Y' 
-					AND NOT BOARD_MENU_NUM IN(4)
+					AND NOT BOARD_MENU_NUM IN(4, 6)
 	    		</otherwise>
 				</choose>
 	    		
@@ -381,5 +381,26 @@
 			DELETE FROM PROJECT_BOARD WHERE BOARD_NUM = #{boardNum}
 		]]>
 	</delete>
+	
+	<select id="getTodayWriterCount" resultType="Integer">
+		<![CDATA[
+			SELECT COUNT(*) COUNT FROM
+				(SELECT DISTINCT(USER_ID) FROM PROJECT_BOARD 
+				WHERE BOARD_MENU_NUM = #{boardMenuNum} 
+				AND TO_CHAR(BOARD_SAVEDATE, 'YYYY-MM-DD') = #{searchDate})
+		]]>
+	</select>
+	
+	<select id="getTodayRank3List" resultType="Integer">
+		<![CDATA[
+			SELECT BOARD_NUM FROM
+                (SELECT ROWNUM RN, BOARD_NUM FROM PROJECT_BOARD 
+                WHERE BOARD_MENU_NUM = #{boardMenuNum}
+                AND TO_CHAR(BOARD_SAVEDATE, 'YYYY-MM-DD') = #{searchDate}
+                ORDER BY BOARD_NUM)
+            WHERE RN BETWEEN 1 AND 3
+		]]>
+	</select>
+
 </mapper>
 

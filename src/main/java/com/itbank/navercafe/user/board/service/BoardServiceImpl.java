@@ -44,17 +44,14 @@ public class BoardServiceImpl implements BoardService{
 		return boardList;
 	}
 
-
 	@Override
 	public void hit(int boardNum,int num) {
 		if(num == 0) {
 			bm.hitUp(boardNum);
 		}
 	}
-
 	
 	//					좋아요
-	
 	@Override
 	public void likeChk(int boardNum, String userId,Model model) {
 		//System.out.println("서비스 : "+boardNum+" - "+userId);
@@ -89,7 +86,6 @@ public class BoardServiceImpl implements BoardService{
 		//System.out.println(bm.topList());
 	}
 
-	
 	@Override
 	public BoardDTO getUserBoard(int boardNum,int boardMenuNum,Model model,int pageNum,String cafeId,int next,int preview) {
 
@@ -231,7 +227,6 @@ public class BoardServiceImpl implements BoardService{
 		return boardList;
 	}
 
-
 	@Override
 	public int getBoardTotalCount(MenuDTO menuDTO) throws Exception {
 		int totalCount = 0;
@@ -244,7 +239,6 @@ public class BoardServiceImpl implements BoardService{
 		
 		return totalCount;
 	}
-
 
 	@Override
 	public BoardExtendDTO getExtendBoard(int boardNum) throws Exception {
@@ -265,7 +259,6 @@ public class BoardServiceImpl implements BoardService{
 		return extendDTO;
 	}
 
-
 	@Override
 	public int updateBoard(BoardDTO boardDTO) throws Exception {
 		int result = 0;
@@ -276,7 +269,6 @@ public class BoardServiceImpl implements BoardService{
 		}
 		return result;
 	}
-
 
 	@Override
 	public int deleteBoard_returnResult(int boardNum) throws Exception {
@@ -289,6 +281,32 @@ public class BoardServiceImpl implements BoardService{
 			e.printStackTrace();
 		}
 		return result;
+	}
+
+	@Override
+	public int getTodayWriterCount(MenuDTO menuDTO) throws Exception {
+		int count = 0;
+		
+		try {
+			count = bm.getTodayWriterCount(menuDTO);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return count;
+	}
+
+	@Override
+	public List<Integer> getTodayRank3List(MenuDTO menuDTO) throws Exception {
+		List<Integer> rankList = new ArrayList<>();
+		
+		try {
+			rankList = bm.getTodayRank3List(menuDTO);
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+				
+		return rankList;
 	}
 
 }

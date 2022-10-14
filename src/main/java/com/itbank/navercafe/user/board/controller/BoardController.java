@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartHttpServletRequest;
 
 import com.itbank.navercafe.common.CommonUtils;
+import com.itbank.navercafe.common.DateInformation;
 import com.itbank.navercafe.user.board.dto.BoardDTO;
 import com.itbank.navercafe.user.board.dto.BoardExtendDTO;
 import com.itbank.navercafe.user.board.service.BoardService;
@@ -95,6 +96,7 @@ public class BoardController {
 	//전체목록인데 수영이형이랑 상의.
 	@GetMapping("/goBoardList")	
 	public String goBoardList(Model model, MenuDTO menuDTO) throws Exception{
+		String searchDate = menuDTO.getSearchDate();
 		int boardMenuNum = menuDTO.getBoardMenuNum();
 		int boardMenuType = 0;
 		List<BoardExtendDTO> boardList = null;
@@ -131,6 +133,30 @@ public class BoardController {
 				boardList = ser.getBoardList_paging(menuDTO);
 				returnUrl = "user/board/memoBoardList";
 				break;
+			case 6 :	// 출석게시판
+				DateInformation dateInfo = null;
+				List<Integer> rankList = ser.getTodayRank3List(menuDTO);
+				int userCount = ser.getTodayWriterCount(menuDTO);
+				
+				if(searchDate != null && searchDate.length() > 0) {
+					dateInfo = new DateInformation(searchDate);
+					dateInfo.setDateInformation();
+				} else {
+					dateInfo = new DateInformation();
+				}
+				
+				menuDTO.setStartSearchDate(searchDate);
+				menuDTO.setEndSearchDate(searchDate);
+				
+				totalCount = ser.getBoardTotalCount(menuDTO);
+				menuDTO.setPageination(page, totalCount, 5, 5);	
+				boardList = ser.getBoardList_paging(menuDTO);
+				returnUrl = "user/board/attentanceBoard";
+				
+				model.addAttribute("dateInfo", dateInfo);
+				model.addAttribute("rankList", rankList);
+				model.addAttribute("userCount", userCount);
+				break;	
 			default :
 				boardList = ser.getBoardList(menuDTO);
 				break;

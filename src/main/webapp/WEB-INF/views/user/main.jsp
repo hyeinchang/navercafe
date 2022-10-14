@@ -51,12 +51,12 @@
 	               	</a>
                	</li>
                	</c:when>
-               	<c:when test="${mainBoard.boardMenuType == boardType.GRADE_BOARD_NUM}">
-             	<!-- 등업 게시글은 가져오지 않음 -->
+               	<c:when test="${mainBoard.boardMenuType == boardType.GRADE_BOARD_NUM
+               		|| mainBoard.boardMenuType == boardType.ATTENDANCE_BOARD_NUM}">
+             	<!-- 등업 게시글, 출석 게시글은 가져오지 않음 -->
                	</c:when>
                	<c:when test="${mainBoard.boardMenuType == boardType.SIMPLE_BOARD_NUM 
-               	 	|| mainBoard.boardMenuType == boardType.MEMO_BOARD_NUM 
-               	 	|| mainBoard.boardMenuType == boardType.ATTENDANCE_BOARD_NUM}">
+               	 	|| mainBoard.boardMenuType == boardType.MEMO_BOARD_NUM}">
                	<li>
 	               	<a href="${contextPath}/user/board/goBoardList?cafeId=${_cafeDTO.cafeId}&boardMenuNum=${mainBoard.boardMenuNum}&boardNum=${mainBoard.boardNum}">
 	               	${mainBoard.boardContent}
@@ -65,7 +65,10 @@
                	</c:when>
                	<c:otherwise></c:otherwise>
 	            </c:choose>
-             </c:forEach>          
+             </c:forEach>
+             <c:if test="${_cafeDTO.mainBoardList eq null || _cafeDTO.mainBoardList.size() == 0}">
+               	<li>등록된 게시글이 없습니다.</li>
+             </c:if>          
              </ul>
            </div>
          
@@ -84,12 +87,12 @@
 		               	</a>
 	               	</li>
 	               	</c:when>
-	               	<c:when test="${mainRecent.boardMenuType == boardType.GRADE_BOARD_NUM}">
-	             	<!-- 등업 게시글은 가져오지 않음 -->
+	               	<c:when test="${mainRecent.boardMenuType == boardType.GRADE_BOARD_NUM
+	               		|| mainRecent.boardMenuType == boardType.ATTENDANCE_BOARD_NUM}">
+	             	<!-- 등업 게시글, 출석 게시글은 가져오지 않음 -->
 	               	</c:when>
 	               	<c:when test="${mainRecent.boardMenuType == boardType.SIMPLE_BOARD_NUM 
-	               	 	|| mainRecent.boardMenuType == boardType.MEMO_BOARD_NUM 
-	               	 	|| mainRecent.boardMenuType == boardType.ATTENDANCE_BOARD_NUM}">
+	               	 	|| mainRecent.boardMenuType == boardType.MEMO_BOARD_NUM}">
 	               	<li>
 		               	<a href="${contextPath}/user/board/goBoardList?cafeId=${_cafeDTO.cafeId}&boardMenuNum=${mainRecent.boardMenuNum}&boardNum=${mainRecent.boardNum}">
 		               	${mainRecent.boardContent}
@@ -98,7 +101,10 @@
 	               	</c:when>
 	               	<c:otherwise></c:otherwise>
 		            </c:choose>
-               </c:forEach> 
+               </c:forEach>
+               <c:if test="${_cafeDTO.mainRecentList eq null || _cafeDTO.mainRecentList.size() == 0}">
+               		<li>등록된 게시글이 없습니다.</li>
+               </c:if>
               </ul>
            </div>
            
@@ -117,12 +123,12 @@
 		               	</a>
 	               	</li>
 	               	</c:when>
-	               	<c:when test="${mainRecentReply.boardMenuType == boardType.GRADE_BOARD_NUM}">
-	             	<!-- 등업 게시글은 가져오지 않음 -->
+	               	<c:when test="${mainRecentReply.boardMenuType == boardType.GRADE_BOARD_NUM
+	               		|| mainRecentReply.boardMenuType == boardType.ATTENDANCE_BOARD_NUM}">
+	             	<!-- 등업 게시글, 출석 게시글은 가져오지 않음 -->
 	               	</c:when>
 	               	<c:when test="${mainRecentReply.boardMenuType == boardType.SIMPLE_BOARD_NUM 
-	               	 	|| mainRecentReply.boardMenuType == boardType.MEMO_BOARD_NUM 
-	               	 	|| mainRecentReply.boardMenuType == boardType.ATTENDANCE_BOARD_NUM}">
+	               	 	|| mainRecentReply.boardMenuType == boardType.MEMO_BOARD_NUM}">
 	               	<li>
 		               	<a href="${contextPath}/user/board/goBoardList?cafeId=${_cafeDTO.cafeId}&boardMenuNum=${mainRecentReply.boardMenuNum}&boardNum=${mainRecentReply.boardNum}">
 		               	${mainRecentReply.boardContent}
@@ -131,7 +137,10 @@
 	               	</c:when>
 	               	<c:otherwise></c:otherwise>
 		            </c:choose>
-               </c:forEach> 
+               </c:forEach>
+               <c:if test="${_cafeDTO.mainRecentReplyList eq null || _cafeDTO.mainRecentReplyList.size() == 0}">
+               		<li>등록된 게시글이 없습니다.</li>
+               </c:if>
               </ul>
            </div>
          </div>

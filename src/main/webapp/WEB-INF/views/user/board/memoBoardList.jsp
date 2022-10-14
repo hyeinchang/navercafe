@@ -33,7 +33,7 @@ $(function() {
 		            	<input type="hidden" name="userId" value="${_cafeDTO.loginUser.userId}">
 		            	<input type="hidden" name="boardMenuNum" value="${_cafeDTO.menuDTO.boardMenuNum}">
 		            	<input type="hidden" name="boardNotice" value="N">
-		            	<input type="hidden" name="boardTitle" value="${_cafeDTO.menuDTO.boardMenuName}의 글">
+		            	<input type="hidden" name="boardTitle" value="${_cafeDTO.menuDTO.boardMenuName}의 게시글">
 		            	
 		              <div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 		                <textarea class="form-control memo-board-content" name="boardContent" rows="6" placeholder="글을 입력해 주세요."></textarea>
@@ -275,6 +275,7 @@ $(function() {
 			     
 				<!-- 페이징  -->
 				<div class="paging" align="center">
+					<c:if test="${menuDTO.totalPage > 0}">
 					<ul class="pagination">
 						<li><a href="javascript:searchBoardList(1)">&lt;&lt;</a></li>
 				      	<li><a href="javascript:searchBoardList(${menuDTO.startPage > 1 ? menuDTO.startPage-1 : 1})">&lt;</a></li>
@@ -284,6 +285,7 @@ $(function() {
 			          	<li><a href="javascript:searchBoardList(${menuDTO.endPage < menuDTO.totalPage ? menuDTO.endPage+1 : menuDTO.totalPage })">&gt;</a></li>
 			          	<li><a href="javascript:searchBoardList(${menuDTO.totalPage})">&gt;&gt;</a></li>
 					</ul>
+					</c:if>
 				</div>
 				
 				<!-- 검색 -->

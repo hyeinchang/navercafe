@@ -128,13 +128,13 @@
 									${dto.boardTitle}</a>
 				               	</c:when>
 				               	
-				               	<c:when test="${dto.boardMenuType == boardType.GRADE_BOARD_NUM}">
-				             	<!-- 등업 게시글은 가져오지 않음 -->
+				               	<c:when test="${dto.boardMenuType == boardType.GRADE_BOARD_NUM
+				               		|| dto.boardMenuType == boardType.ATTENDANCE_BOARD_NUM}">
+				             	<!-- 등업 게시글, 출석 게시글은 가져오지 않음 -->
 				               	</c:when>
 				               	
 				               	<c:when test="${dto.boardMenuType == boardType.SIMPLE_BOARD_NUM 
-				               	 	|| dto.boardMenuType == boardType.MEMO_BOARD_NUM 
-				               	 	|| dto.boardMenuType == boardType.ATTENDANCE_BOARD_NUM}">
+				               	 	|| dto.boardMenuType == boardType.MEMO_BOARD_NUM}">
 				               	<a class="boardTit" href="${contextPath}/user/board/goBoardList?cafeId=${_cafeDTO.cafeId}&boardMenuNum=${dto.boardMenuNum}&boardNum=${dto.boardNum}"
 				               		title="${dto.boardContent}">
 				               		${dto.boardContent}
@@ -150,7 +150,6 @@
 					</c:forEach>
 					</tbody>
 				</table>
-				
 		      </div>
 		      <!-- end content -->
 		    </div>

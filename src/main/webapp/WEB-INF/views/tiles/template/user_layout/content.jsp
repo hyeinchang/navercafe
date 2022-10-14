@@ -133,6 +133,7 @@
         </table>
         <div class=" text-center">
           <ul class="pagination">
+          	<c:if test="${pagination.totalPage > 0}">
           	<li><a href="javascript:searchCafe(1)">&lt;&lt;</a></li>
 	      	<li><a href="javascript:searchCafe(${pagination.startPage > 1 ? pagination.startPage-1 : 1})">&lt;</a></li>
           	<c:forEach var="page" begin="${pagination.startPage}" end="${pagination.endPage}">
@@ -140,6 +141,7 @@
           	</c:forEach>
           	<li><a href="javascript:searchCafe(${pagination.endPage < pagination.totalPage ? pagination.endPage+1 : pagination.totalPage })">&gt;</a></li>
           	<li><a href="javascript:searchCafe(${pagination.totalPage})">&gt;&gt;</a></li>
+          	</c:if>
           </ul>
         </div>
       </div>

@@ -156,7 +156,7 @@
 	<input type="hidden" name="cafeId" value="${_cafeDTO.cafeId}">
 	<input type="hidden" name="userId" value="${_cafeDTO.loginId}"> 
 	<input type="hidden" name="boardMenuNum" value="${_cafeDTO.menuDTO.boardMenuNum}">
-    <input type="hidden" name="boardTitle" value="등업게시글">
+    <input type="hidden" name="boardTitle" value="${_cafeDTO.menuDTO.boardMenuName}의 게시글">
     <input type="hidden" name="cafeUserGrade" value="${_cafeDTO.loginUser.cafeUserGrade}">
 </form>
 

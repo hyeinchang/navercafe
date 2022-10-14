@@ -42,4 +42,8 @@ public interface BoardService {
 	public void deleteBoard(int boardNum);
 	
 	public void deleteReply(int replyNum);
+	
+	public int getTodayWriterCount(MenuDTO menuDTO) throws Exception;
+	
+	public List<Integer> getTodayRank3List(MenuDTO menuDTO) throws Exception;
 }
