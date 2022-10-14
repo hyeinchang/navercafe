@@ -149,9 +149,9 @@
 		<![CDATA[
 			SELECT COUNT(*) count
 			FROM 
-			(SELECT * FROM project_board_type WHERE cafe_id = #{cafeId}) boardMenu
+				(SELECT * FROM project_board_type WHERE cafe_id = #{cafeId}) boardMenu
 			INNER JOIN
-			(SELECT * FROM project_board  WHERE  TO_CHAR(board_savedate, 'YYYYMMDD') =  TO_CHAR(sysdate, 'YYYYMMDD')) board
+				(SELECT * FROM project_board  WHERE  TO_CHAR(board_savedate, 'YYYYMMDD') =  TO_CHAR(sysdate, 'YYYYMMDD')) board
 			ON boardMenu.board_menu_num = board.board_menu_num
 		]]>
 	</select>
@@ -160,9 +160,9 @@
 		<![CDATA[
 			SELECT NVL(SUM(hit), 0) count
 			FROM 
-			(SELECT * FROM project_board_type WHERE cafe_id = #{cafeId}) boardMenu
+				(SELECT * FROM project_board_type WHERE cafe_id = #{cafeId}) boardMenu
 			INNER JOIN
-			(SELECT * FROM project_board WHERE TO_CHAR(board_savedate, 'YYYYMMDD') =  TO_CHAR(sysdate, 'YYYYMMDD')) board
+				(SELECT * FROM project_board WHERE TO_CHAR(board_savedate, 'YYYYMMDD') =  TO_CHAR(sysdate, 'YYYYMMDD')) board
 			ON boardMenu.board_menu_num = board.board_menu_num
 		]]>
 	</select>
@@ -171,11 +171,12 @@
 		<![CDATA[
 			SELECT COUNT(*) count
 			FROM 
-			(SELECT * FROM project_board_type  WHERE cafe_id = #{cafeId}) boardMenu
+				(SELECT board_menu_num FROM project_board_type  WHERE cafe_id = #{cafeId}) boardMenu
 			INNER JOIN
-			(SELECT * FROM project_board WHERE TO_CHAR(board_savedate, 'YYYYMMDD') =  TO_CHAR(sysdate, 'YYYYMMDD')) board
+				(SELECT board_menu_num, board_num FROM project_board) board
 			ON boardMenu.board_menu_num = board.board_menu_num
-			INNER JOIN project_reply reply
+			INNER JOIN 
+            	(SELECT reply_num, board_num FROM project_reply WHERE TO_CHAR(reply_savedate, 'YYYYMMDD') =  TO_CHAR(sysdate, 'YYYYMMDD')) reply
 			ON board.board_num = reply.board_num
 		]]>
 	</select>
@@ -190,9 +191,9 @@
 		<![CDATA[
 			SELECT COUNT(*) count
 			FROM 
-			(SELECT * FROM project_board_type WHERE cafe_id = #{cafeId}) boardMenu
+				(SELECT * FROM project_board_type WHERE cafe_id = #{cafeId}) boardMenu
 			INNER JOIN
-			(SELECT * FROM project_board) board
+				(SELECT * FROM project_board) board
 			ON boardMenu.board_menu_num = board.board_menu_num
 		]]>
 	</select>
@@ -201,9 +202,9 @@
 		<![CDATA[
 			SELECT NVL(SUM(hit), 0) count
 			FROM 
-			(SELECT * FROM project_board_type WHERE cafe_id = #{cafeId}) boardMenu
+				(SELECT * FROM project_board_type WHERE cafe_id = #{cafeId}) boardMenu
 			INNER JOIN
-			(SELECT * FROM project_board) board
+				(SELECT * FROM project_board) board
 			ON boardMenu.board_menu_num = board.board_menu_num
 		]]>
 	</select>
@@ -212,9 +213,9 @@
 		<![CDATA[
 			SELECT COUNT(*) count
 			FROM 
-			(SELECT * FROM project_board_type  WHERE cafe_id = #{cafeId}) boardMenu
+				(SELECT * FROM project_board_type  WHERE cafe_id = #{cafeId}) boardMenu
 			INNER JOIN
-			(SELECT * FROM project_board) board
+				(SELECT * FROM project_board) board
 			ON boardMenu.board_menu_num = board.board_menu_num
 			INNER JOIN project_reply reply
 			ON board.board_num = reply.board_num
