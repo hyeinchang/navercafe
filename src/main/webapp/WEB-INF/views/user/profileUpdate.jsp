@@ -45,6 +45,7 @@
 									<c:otherwise>
 									<img id ="profileImg" class="formProfileImg" 
 										src="${contextPath}/file/download?cafeUserImageNum=${_cafeDTO.loginUser.cafeUserImageNum}" alt="프로필 이미지 ">
+										<input type="hidden" value="${_cafeDTO.loginUser.cafeUserImageNum}" name="cafeUserImageNum">
 									</c:otherwise>
 								</c:choose>
 									

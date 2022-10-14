@@ -42,6 +42,7 @@
 				          	  			</c:when>
 				          	  			<c:otherwise>
 				          	  			<img src="${contextPath}/file/download?cafeIconNum=${_cafeDTO.cafeIconNum}" width="112" height="112" alt="카페 아이콘" id="iconImg">
+				          	  			<input type="hidden" value="${_cafeDTO.cafeIconNum}" name="cafeIconNum">
 				          	  			</c:otherwise>
 				          	  		</c:choose>
 				          			</span>

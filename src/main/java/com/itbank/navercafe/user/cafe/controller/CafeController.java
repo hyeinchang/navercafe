@@ -141,36 +141,37 @@ public class CafeController {
 			cafeId = cafeMemberDTO.getCafeId();
 			userId = cafeMemberDTO.getUserId();
 			
+			
 			if("Y".equals(multiRequest.getParameter("userImageDel"))) {
 				FileDTO fileDTO = new FileDTO();
 				
 				fileDTO.setCafeUserImageNum(cafeUserImageNum);
 				fileUtils.deleteFile(fileDTO);
-			} 
-			
-			if(profileImage != null && profileImage.getSize() > 0) {
-				String directory = "profile/" +  cafeId + "/" + userId;
-				
-				if(cafeUserImageNum > 0) {
-					FileDTO fileDTO = new FileDTO();
-					fileDTO.setCafeUserImageNum(cafeUserImageNum);
-					FileResult fileResult = fileUtils.updateFile(profileImage, fileDTO);
+			} else {
+				if(profileImage != null && profileImage.getSize() > 0) {
+					String directory = "profile/" +  cafeId + "/" + userId;
 					
-					if(fileResult.getState() == fileResult.SUCCESS) {
-						fileDTO = fileResult.getFileDTO();
-						fileService.updateAttachFile(fileDTO);
-					}
-				} else {
-					FileResult fileResult = fileUtils.uploadFile(profileImage, directory);
-					
-					if(fileResult.getState() == fileResult.SUCCESS) {
-						FileDTO fileDTO = fileResult.getFileDTO();
-					
-						cafeUserImageNum = cms.getUserImageSeq();
-						cafeMemberDTO.setCafeUserImageNum(cafeUserImageNum);
+					if(cafeUserImageNum > 0) {
+						FileDTO fileDTO = new FileDTO();
 						fileDTO.setCafeUserImageNum(cafeUserImageNum);
+						FileResult fileResult = fileUtils.updateFile(profileImage, fileDTO);
 						
-						fileService.insertAttachFile(fileDTO);
+						if(fileResult.getState() == fileResult.SUCCESS) {
+							fileDTO = fileResult.getFileDTO();
+							fileService.updateAttachFile(fileDTO);
+						}
+					} else {
+						FileResult fileResult = fileUtils.uploadFile(profileImage, directory);
+						
+						if(fileResult.getState() == fileResult.SUCCESS) {
+							FileDTO fileDTO = fileResult.getFileDTO();
+						
+							cafeUserImageNum = cms.getUserImageSeq();
+							cafeMemberDTO.setCafeUserImageNum(cafeUserImageNum);
+							fileDTO.setCafeUserImageNum(cafeUserImageNum);
+							
+							fileService.insertAttachFile(fileDTO);
+						}
 					}
 				}
 			}
