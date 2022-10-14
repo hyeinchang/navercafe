@@ -135,15 +135,18 @@ public class BoardController {
 				break;
 			case 6 :	// 출석게시판
 				DateInformation dateInfo = null;
-				List<Integer> rankList = ser.getTodayRank3List(menuDTO);
-				int userCount = ser.getTodayWriterCount(menuDTO);
 				
 				if(searchDate != null && searchDate.length() > 0) {
 					dateInfo = new DateInformation(searchDate);
 					dateInfo.setDateInformation();
 				} else {
 					dateInfo = new DateInformation();
+					searchDate = dateInfo.getTodayText();
+					menuDTO.setSearchDate(searchDate);
 				}
+				
+				List<Integer> rankList = ser.getTodayRank3List(menuDTO);
+				int userCount = ser.getTodayWriterCount(menuDTO);
 				
 				menuDTO.setStartSearchDate(searchDate);
 				menuDTO.setEndSearchDate(searchDate);
