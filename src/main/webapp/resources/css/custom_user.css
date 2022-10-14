@@ -35,7 +35,7 @@ table.cstmTbl1 th, table.cstmTbl1 td:nth-child(2) > div {width:452px;}
 .cstmAside .cafeInfo{font-size: 12px;}
 
 /* 카페 메뉴 */
-.mananger_info {white-space:nowrap;overflow:hidden;text-overflow: ellipsis;}
+.mananger_info {white-space:nowrap;overflow:hidden;text-overflow: ellipsis;padding-top: 1px;}
 
 .ico_setting {background-position: -41px -112px;width: 10px;height: 10px;}
 
