@@ -98,7 +98,7 @@
 	    		<otherwise>
 	    			AND BOARD_READ_AUTH = 0 
 					AND BOARD_PUBLIC_FLAG = 'Y' 
-					AND NOT BOARD_MENU_NUM IN(4, 6)
+					AND NOT BOARD_MENU_TYPE IN(4, 6)
 	    		</otherwise>
 				</choose>
 	    		

@@ -55,8 +55,8 @@
 				            <form name="attendanceForm" id="attendanceForm" method="post" action="">
 				            	<input type="hidden" name="cafeId" value="${_cafeDTO.cafeId}">
 				            	<input type="hidden" name="userId" value="${_cafeDTO.loginUser.userId}">
-				            	<input type="hidden" name="boardMenuNum" value="${menuDTO.boardMenuNum}">
-				            	<input type="hidden" name="boardTitle" value="${menuDTO.boardMenuName}의 게시글">
+				            	<input type="hidden" name="boardMenuNum" value="${_cafeDTO.menuDTO.boardMenuNum}">
+				            	<input type="hidden" name="boardTitle" value="${_cafeDTO.menuDTO.boardMenuName}의 게시글">
 
 				              	<div class="col-lg-12 col-md-12 col-sm-12 col-xs-12">
 				                	<textarea class="form-control memo-board-content" name="boardContent" rows="6" placeholder="글을 입력해 주세요."></textarea>
