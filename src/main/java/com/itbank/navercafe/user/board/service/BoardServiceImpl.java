@@ -12,6 +12,7 @@ import org.springframework.ui.Model;
 
 import com.itbank.navercafe.common.file.dto.FileDTO;
 import com.itbank.navercafe.common.file.mapper.FileMapper;
+import com.itbank.navercafe.common.file.service.FileService;
 import com.itbank.navercafe.user.board.dto.BoardDTO;
 import com.itbank.navercafe.user.board.dto.BoardExtendDTO;
 import com.itbank.navercafe.user.board.mapper.BoardMapper;
@@ -28,6 +29,8 @@ public class BoardServiceImpl implements BoardService{
 	@Autowired FileMapper fm;
 	@Autowired
 	private ReplyService replyService;
+	@Autowired
+	private FileService fileService;
 	
 	
 	//전체목록인데 수영이형이랑 상의.
@@ -202,12 +205,16 @@ public class BoardServiceImpl implements BoardService{
 		List<BoardExtendDTO> boardList = null;
 		
 		try {
+			int boardMenuNum = menuDTO.getBoardMenuNum();
+			
 			List<ReplyDTO> replyList = replyService.getSearchReplyList(menuDTO);
+			List<FileDTO> fileList = fileService.getBoardFileList(boardMenuNum);
 			boardList = bm.getBoardList_paging(menuDTO);
 			
 			// 리플 목록 설정
 			for(BoardExtendDTO extendDTO : boardList) {
 				List<ReplyDTO> boardReplyList = new ArrayList<>();
+				List<FileDTO> boardFileList = new ArrayList<>();
 				int replyCount = 0;
 				
 				for(ReplyDTO replyDTO : replyList) {
@@ -217,8 +224,15 @@ public class BoardServiceImpl implements BoardService{
 					}
 				}
 				
+				for(FileDTO fileDTO : fileList) {
+					if(extendDTO.getBoardNum() == fileDTO.getBoardNum()) {
+						boardFileList.add(fileDTO);
+					}
+				}
+				
 				extendDTO.setReplyCount(replyCount);
 				extendDTO.setReplyList(boardReplyList);
+				extendDTO.setFileList(boardFileList);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

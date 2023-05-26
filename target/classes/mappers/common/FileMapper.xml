@@ -66,5 +66,15 @@
 			NVL(REPLY_NUM, 0) = #{replyNum} AND NVL(MEMO_REPLY_NUM, 0) = #{memoReplyNum}
 		]]>
 	</select>
+	
+	<select id="getBoardFileList" resultMap="file">
+		<![CDATA[
+			SELECT FILE_DATA.* FROM 
+			    (SELECT * FROM PROJECT_FILE WHERE NOT BOARD_NUM IS NULL AND BOARD_NUM > 0) FILE_DATA
+			INNER JOIN
+			    (SELECT BOARD_NUM FROM PROJECT_BOARD WHERE BOARD_MENU_NUM = #{boardMenuNum} ORDER BY BOARD_NUM DESC) BOARD_DATA
+			ON FILE_DATA.BOARD_NUM = BOARD_DATA.BOARD_NUM
+		]]>
+	</select>
 </mapper>
 

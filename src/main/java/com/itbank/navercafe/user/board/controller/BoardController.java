@@ -1,9 +1,12 @@
 package com.itbank.navercafe.user.board.controller;
 
 
+import java.io.File;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -73,6 +76,9 @@ public class BoardController {
 			
 			// 게시판 타입에 따라 다른 view 설정
 			switch(boardMenuType) {
+			case 2 :	// 간편게시판
+				returnUrl = "user/board/simplesBoardModify";
+				break;
 			case 5 :	// 메모게시판
 				returnUrl = "user/board/memoBoardModify";
 				break;
@@ -123,6 +129,12 @@ public class BoardController {
 		
 			// 게시판 타입에 따라 다른 view 설정
 			switch(boardMenuType) {
+			case 2 :	// 간편게시판
+				totalCount = ser.getBoardTotalCount(menuDTO);
+				menuDTO.setPageination(page, totalCount, 5, 5);	
+				boardList = ser.getBoardList_paging(menuDTO);
+				returnUrl = "user/board/simpleBoardList";
+				break;
 			case 4 :	// 등업게시판
 				boardList = ser.getBoardList(menuDTO);
 				returnUrl = "user/board/gradeBoardList";
@@ -331,6 +343,87 @@ public class BoardController {
 		"&boardMenuNum="+res.getParameter("boardMenuNum")+"&cafeId="+res.getParameter("cafeId");
 	}
 	
+	@PostMapping(value="getBoardList", produces="application/json; charset=utf-8")
+	@ResponseBody
+	public Map<String, Object> getBoardList(HttpServletRequest request, @RequestBody MenuDTO menuDTO) throws Exception {
+		Map<String, Object> result = new HashMap<>();
+		
+		try {
+			String contextPath = request.getContextPath();
+			List<BoardExtendDTO> boardList = null;
+			int page = menuDTO.getPage();
+			int totalCount = 0;
+			
+			// 검색 키워드 설정
+			menuDTO.setKeyword();
+			
+			if(page == 0) {
+				page = 1;
+			}
+			totalCount = ser.getBoardTotalCount(menuDTO);
+			menuDTO.setPageination(page, totalCount, 5, 5);	
+			
+			boardList = ser.getBoardList_paging(menuDTO);
+
+			ServletContext servletContext = request.getSession().getServletContext();
+		    String realPath = servletContext.getRealPath("/");
+		   
+		    System.out.println("realPath : " + realPath);
+		    System.out.println( servletContext.getResource("/WEB-INF/"));
+		    System.out.println( servletContext.getResourcePaths("/"));
+			File file = new File(realPath + "/src/main/webapp/WEB-INF/views/user/board/simple");
+			
+			
+			System.out.println(file.exists());
+			
+			for(BoardExtendDTO boardDTO : boardList) {
+				Map<String, Object> htmlData = new HashMap<>();
+				int boardNum = boardDTO.getBoardNum();
+				String[] compoents = {"cafeUserImage", "cafeUserNickname", "boardOwner", "boardSaveDate"};				
+				
+				for(int i=0; i<compoents.length; i++) {
+					Map<String, Object> component = new HashMap<>();
+					String type = "";
+					switch(i) {
+					case 0 :
+						break;
+					case 1 :
+						break;
+					case 2 :
+						break;
+					}
+				}
+				
+				
+				String cafeUserImage = "<img src=\"cafeUserImageSrc\" alt=\"프로필 이미지\">";
+				String cafeUserImageSrc = contextPath;
+				String boardOwner = "<a href=\"javascript:modifyBoard("+boardNum+")\">수정</a> "
+						+ "| <a href=\"javascript:deleteBoard("+boardNum+")\">삭제</a>";
+				
+				int cafeUserImageNum = boardDTO.getCafeUserImageNum();
+				
+				if(cafeUserImageNum > 0) {
+					cafeUserImageSrc += "/file/download?cafeUserImageNum=" + cafeUserImageNum;
+				} else {
+					cafeUserImageSrc += "/resources/img/Users-Folder-icon.png";
+				}
+				
+				cafeUserImage = cafeUserImage.replace("cafeUserImageSrc", cafeUserImageSrc);
+				
+				htmlData.put("cafeUserImage", cafeUserImage);
+				
+				boardDTO.setAddData(htmlData);
+			
+			}
+			
+			result.put("boardList", boardList);
+			
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		return result;
+	}
 	
 }
 

@@ -47,4 +47,9 @@ public class FileServiceImpl implements FileService {
 	public List<FileDTO> getFileList(FileDTO fileDTO) throws Exception {
 		return fileMapper.getFileList(fileDTO);
 	}
+
+	@Override
+	public List<FileDTO> getBoardFileList(int boardMenuNum) throws Exception {
+		return fileMapper.getBoardFileList(boardMenuNum);
+	}
 }

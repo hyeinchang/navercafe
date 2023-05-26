@@ -12,4 +12,5 @@ public interface FileService {
 	public int updateAttachFile(FileDTO fileDTO) throws Exception;
 	public int deleteAttachFile(int fileNum) throws Exception;
 	public List<FileDTO> getFileList(FileDTO fileDTO) throws Exception;
+	public List<FileDTO> getBoardFileList(int boardMenuNum) throws Exception;
 }

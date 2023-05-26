@@ -74,11 +74,10 @@
                     </div>
                   </li>
                   <li>
-
                     <c:if test="${_cafeDTO.isCafeManager eq 'true' || _cafeDTO.isCafeMember eq 'true'}">
                   	<input type="button" class="button" value="카페 글쓰기" onclick="changeCafeMenu('${contextPath}/user/board/writeForm')" style="width:100%;">
                   	</c:if>
-                  	<c:if test="${_cafeDTO.loginUser.userId ne null && _cafeDTO.isCafeMember eq 'false'}">
+                  	<c:if test="${loginId ne null && _cafeDTO.isCafeMember eq 'false'}">
                   	<input type="button" class="button" value="카페 가입하기" onclick="changeCafeMenu('${contextPath}/user/cafeSignup?cafeId=${_cafeDTO.cafeId }')" style="width:100%;">
                   	</c:if>
                   </li>
@@ -182,7 +181,7 @@
                     <input type="button" class="button" value="카페 글쓰기" onclick="changeCafeMenu('/navercafe/user/board/writeForm')" style="width:100%;">
                   </c:when>
                   <c:otherwise>
-                  	<c:if test="${_cafeDTO.loginUser.userId ne null &&  _cafeDTO.isCafeMember eq 'false'}">
+                  	<c:if test="${loginId ne null &&  _cafeDTO.isCafeMember eq 'false'}">
                     <input type="button" class="button" value="카페 가입하기" onclick="changeCafeMenu('${contextPath}/user/cafeSignup?cafeId=${_cafeDTO.cafeId }')" style="width:100%;">
                   	</c:if>
                   </c:otherwise>
