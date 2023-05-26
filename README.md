@@ -29,7 +29,7 @@
 
 <h2>사용된 라이브러리</h2>
 <ul>
-  <li>Bootstrap/li>
+  <li>Bootstrap</li>
   <li>Tiles3 - Apache</li>
   <li>JSTL</li>
   <li>Jackson</li>
