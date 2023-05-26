@@ -78,7 +78,7 @@
 			    ON BOARD_TYPE.BOARD_MENU_NUM = BOARD.BOARD_MENU_NUM
 			    INNER JOIN
 			        (SELECT * FROM PROJECT_CAFE_MEMBER
-			        WHERE CAFE_USER_NICKNAME LIKE '%' || #{cafeUserNickname} || '%'
+			        WHERE CAFE_USER_NICKNAME LIKE '%' || #{cafeUserNickname} || '%' AND CAFE_ID = #{cafeId}
 			        ) CAFE_MEMBER
 			    ON BOARD.USER_ID = CAFE_MEMBER.USER_ID AND BOARD_TYPE.CAFE_ID = CAFE_MEMBER.CAFE_ID
 			    ) BOARD_DATA
@@ -87,7 +87,7 @@
 			        (SELECT * FROM PROJECT_REPLY
 			        ) REPLY
 			        INNER JOIN
-			        (SELECT * FROM PROJECT_CAFE_MEMBER
+			        (SELECT * FROM PROJECT_CAFE_MEMBER WHERE CAFE_ID = #{cafeId}
 			        ) REPLY_MEMBER
 			    ON REPLY.USER_ID = REPLY_MEMBER.USER_ID
 			    ) REPLY_DATA
