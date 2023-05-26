@@ -195,6 +195,7 @@ $(function() {
 								  			</div>
 								  		</form>
 				                  		<!-- 댓글의 댓글 입력 -->
+				                  		<c:if test="${_cafeDTO.isCafeMember eq 'true'}">
 					                  	<form name="reReplyForm" id="replyForm_${board.boardNum}_${reply.replyNum}" class="row reReplyForm" method="post" 
 					                  		enctype="multipart/form-data" style="display:none;">
 									  		<input type="hidden" name="cafeId" value="${_cafeDTO.cafeId}">
@@ -230,12 +231,14 @@ $(function() {
 										  		</div>
 								  			</div>
 								  		</form>
+								  		</c:if>
 									</li>
 	                      			</c:forEach>
 			          			</ul>
 	                    	</article>
 	                    	</c:if>
 		                    <!-- 댓글 입력 -->
+		                    <c:if test="${_cafeDTO.isCafeMember eq 'true'}">
 	                    	<form name="replyForm" id="replyForm_${board.boardNum}" class="row" method="post" enctype="multipart/form-data">
 						  		<input type="hidden" name="cafeId" value="${_cafeDTO.cafeId}">
 						  		<input type="hidden" name="userId" value="${_cafeDTO.loginUser.userId}">
@@ -267,6 +270,7 @@ $(function() {
 							  		</div>
 					  			</div>
 					  		</form>
+					  		</c:if>
                 		</div>		
 					</div>
 		    		</c:forEach>
