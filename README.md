@@ -22,10 +22,7 @@
 
 <h2>사용된 오픈소스 API</h2>
 <ul>
-  <li>네이버 스마트 에디터 2.0</li>
-  <li>DataTables</li>
   <li>다음주소찾기 API</li>
-  <li>Datepicker - jQuery UI</li>
 </ul>
 
 <h2>사용된 라이브러리</h2>
@@ -38,6 +35,9 @@
   <li>JDBC</li>
   <li>javax.mail</li>
   <li>servlet-api</li>
+  <li>Datepicker - jQuery UI</li>
+  <li>DataTables</li>
+  <li>네이버 스마트 에디터 2.0</li>
 </ul> 
 
 <h2>동영상</h2>
